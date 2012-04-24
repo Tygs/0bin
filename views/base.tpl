@@ -29,7 +29,7 @@
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
+        <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse"
              data-target=".nav-collapse">
             <span class="icon-bar"></span>
@@ -41,66 +41,119 @@
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#download">Download 0bin</a></li>
+              <li><a href="#faq">Faq</a></li>
             </ul>
-            <p class="navbar-text pull-right">Right stuff</p>
+            <p class="navbar-text pull-right"><i>"A client side encrypted PasteBin..."</i></p>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
+    <div class="container">
+      <div class="row">
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Mes précédents pastes</li>
+              <li class="nav-header">Previous pastes</li>
               <li class="active"><a href="#">paste 1</a></li> 
               <li><a href="#">Paste 2</a></li>
             </ul>
           </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span10">
-          <div class="hero-unit">
-            <h1>Bienvenue sur 0bin.net!</h1>
-            <p>Vous copiez, ça encrypte, vous faites passer. Blablablabla...</p>
-            <!-- 
-            <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p> -->
-            %include
-          </div>
-          <div class="row-fluid"> 
-            <div class="span12">
-                <form class="well">
-                  <fieldset> 
-                    <div class="control-group"> 
-                      <label >New Paste:</label>
-                        <textarea rows="30"  style="width:800px;" class="input-xlarge" id="paste"></textarea>
-                      <label >Syntax Highlighting:</label>
-                        <input type="text" class="input-xlarge" id="syntax">
-                      <label >Paste expiration:</label>
-                        <select id="expiration">
-                          <option>Never</option>
-                          <option>10 minutes</option>
-                          <option></option>
-                          <option>4</option>
-                          <option>5</option>
-                      </select>
-                      <button type="submit" class="btn">Submit</button> 
-                    </div>
-                  </fieldset>
-                </form>
+        </div><!--/span--> 
+          %include 
 
-            </div><!--/span-->
-          </div><!--/row-->
-        </div><!--/span-->
+        <div class="span10">
+
+          <form class="well">  
+
+            <ul class="form-options">
+              <li> 
+                <div class="btn-group">
+                  <button class="btn active">New Paste</button>
+                  <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button> 
+                </div> 
+              </li>
+
+              <li> 
+                  <label >Syntax Highlighting:</label>
+                    <select id="syntax">
+                      <option>AutoDetect</option>
+                      <option>PHP</option>
+                      <option>Python</option> 
+                  </select>
+              </li>
+              <li>
+                  <label >Paste expiration:</label>
+                    <select id="expiration">
+                      <option>Never</option>
+                      <option>Burn after reading</option>
+                      <option>10 minutes</option>
+                      <option>1 hour</option>
+                      <option>1 day</option>
+                      <option>1 month</option>
+                  </select>
+              </li>
+              <li>
+                  <button type="submit" class="btn btn-primary">Submit</button>  
+              </li>
+            </ul>
+
+            <p> 
+                <textarea rows="10"  style="width:100%;" class="input-xlarge" id="paste"></textarea>
+            </p>
+
+
+            <ul class="form-options">
+              <li> 
+                <div class="btn-group">
+                  <button class="btn active">New Paste</button>
+                  <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button> 
+                </div> 
+              </li>
+
+              <li> 
+                  <label >Syntax Highlighting:</label>
+                    <select id="syntax">
+                      <option>AutoDetect</option>
+                      <option>PHP</option>
+                      <option>Python</option> 
+                  </select>
+              </li>
+              <li>
+                  <label >Paste expiration:</label>
+                    <select id="expiration">
+                      <option>Never</option>
+                      <option>Burn after reading</option>
+                      <option>10 minutes</option>
+                      <option>1 hour</option>
+                      <option>1 day</option>
+                      <option>1 month</option>
+                  </select>
+              </li>
+              <li>
+                  <button type="submit" class="btn btn-primary">Submit</button>  
+              </li>
+            </ul>
+
+          </form>  
+
+        </div><!--/span--> 
+
       </div><!--/row-->
 
       <hr>
 
       <footer>
+       <blockquote>
+        <p>«Few persons can be made to believe that it is not quite an easy thing to invent a method of secret writing which shall baffle investigation. Yet it may be roundly asserted that human ingenuity cannot concoct a cipher which human ingenuity cannot resolve...»</p>
+        <small>Edgar Allan Poe</small>
+      </blockquote>
+      </br>
         <p>
             Based on an original idea from
            <a href="http://sebsauvage.net/paste/">sebsauvage.net</a>
        </p>
+
       </footer>
 
     </div><!--/.fluid-container-->
