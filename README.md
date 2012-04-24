@@ -1,0 +1,4 @@
+0bin
+====
+
+encrypted pastebin
