@@ -1,28 +1,53 @@
 # -*- coding: utf-8 -*-
 
 import os
+import hashlib
+import sys
 
-from bottle import route, run, static_file, debug, view
+from bottle import (Bottle, route, run, static_file, debug, view, request)
 
-DEBUG = True
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_FILES_ROOT = os.path.join(ROOT_DIR, 'static')
+import settings
+
+# ensure we got the project module on the python path to avoid import problems
+sys.path.insert(0, os.path.dirname(settings.ROOT_DIR))
+
+from src.paste import Paste
+
+app = Bottle()
 
 
-@route('/')
+@app.route('/')
 @view('home')
 def index():
     return {}
 
 
-@route('/static/<filename:re:.*>')
+@app.route('/paste/create', method='POST')
+def create_paste():
+
+    try:
+        content = unicode(request.forms.get('content', ''), 'utf8')
+    except UnicodeDecodeError:
+        content = u''
+
+    if content:
+        expire_in = request.forms.get('expire_in', u'burn_after_reading')
+        paste = Paste(expire_in=expire_in, content=content)
+        paste.save()
+
+        return paste.uuid
+
+    return ''
+
+
+@app.route('/static/<filename:re:.*>')
 def server_static(filename):
-    return static_file(filename, root=STATIC_FILES_ROOT)
+    return static_file(filename, root=settings.STATIC_FILES_ROOT)
 
 
 if __name__ == "__main__":
-    if DEBUG:
+    if settings.DEBUG:
         debug(True)
-        run(host='localhost', port=8080, reloader=True)
+        run(app, host='localhost', port=8080, reloader=True)
     else:
-        run(host='localhost', port=8080)
+        run(app, host='localhost', port=8080)

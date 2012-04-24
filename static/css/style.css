@@ -4,7 +4,7 @@
 .brand {
 font-size: 38px !important;
 padding: 0px 55px 3px !important;
- 
+
 text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
 -webkit-transition: all .2s linear;
 -moz-transition: all .2s linear;
@@ -35,8 +35,11 @@ padding: 9px 0;
 }
 
 .btn-group {
-display: inline;
-margin-right: 30px;
+    float:left;
+}
+
+.paste-option {
+    float:right;
 }
 
 select {
@@ -61,20 +64,20 @@ p {
 	margin: 0 0 0px;
 }
 
-.form-options li{
-
-float: left;
+form li{
 list-style-type: none;
-
 }
 
-button.btn, input[type="submit"].btn {
+.btn {
 	margin-left: 5px;
 }
 
-.well {
-	padding-bottom: 40px;
+form {
+    padding-bottom:3em !important;
 	padding-right: 17px;
 }
 
-
+.btn-primary {
+position:relative;
+top:-4px;
+}

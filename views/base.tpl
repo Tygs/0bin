@@ -11,7 +11,6 @@
     <!-- Le styles -->
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
-    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -20,9 +19,6 @@
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/static/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="/static/ico/apple-touch-icon-57-precomposed.png">
   </head>
 
   <body>
@@ -55,89 +51,17 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Previous pastes</li>
-              <li class="active"><a href="#">paste 1</a></li> 
+              <li><a href="#">paste 1</a></li>
               <li><a href="#">Paste 2</a></li>
             </ul>
           </div><!--/.well -->
-        </div><!--/span--> 
-          %include 
+        </div><!--/span-->
 
         <div class="span10">
 
-          <form class="well">  
+           %include
 
-            <ul class="form-options">
-              <li> 
-                <div class="btn-group">
-                  <button class="btn active">New Paste</button>
-                  <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button> 
-                </div> 
-              </li>
-
-              <li> 
-                  <label >Syntax Highlighting:</label>
-                    <select id="syntax">
-                      <option>AutoDetect</option>
-                      <option>PHP</option>
-                      <option>Python</option> 
-                  </select>
-              </li>
-              <li>
-                  <label >Paste expiration:</label>
-                    <select id="expiration">
-                      <option>Never</option>
-                      <option>Burn after reading</option>
-                      <option>10 minutes</option>
-                      <option>1 hour</option>
-                      <option>1 day</option>
-                      <option>1 month</option>
-                  </select>
-              </li>
-              <li>
-                  <button type="submit" class="btn btn-primary">Submit</button>  
-              </li>
-            </ul>
-
-            <p> 
-                <textarea rows="10"  style="width:100%;" class="input-xlarge" id="paste"></textarea>
-            </p>
-
-
-            <ul class="form-options">
-              <li> 
-                <div class="btn-group">
-                  <button class="btn active">New Paste</button>
-                  <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button> 
-                </div> 
-              </li>
-
-              <li> 
-                  <label >Syntax Highlighting:</label>
-                    <select id="syntax">
-                      <option>AutoDetect</option>
-                      <option>PHP</option>
-                      <option>Python</option> 
-                  </select>
-              </li>
-              <li>
-                  <label >Paste expiration:</label>
-                    <select id="expiration">
-                      <option>Never</option>
-                      <option>Burn after reading</option>
-                      <option>10 minutes</option>
-                      <option>1 hour</option>
-                      <option>1 day</option>
-                      <option>1 month</option>
-                  </select>
-              </li>
-              <li>
-                  <button type="submit" class="btn btn-primary">Submit</button>  
-              </li>
-            </ul>
-
-          </form>  
-
-        </div><!--/span--> 
+        </div><!--/span-->
 
       </div><!--/row-->
 
@@ -158,9 +82,11 @@
 
     </div><!--/.fluid-container-->
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/sjcl.js"></script>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/behavior.js"></script>
+
+    <!--
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/bootstrap-transition.js"></script>
     <script src="/static/js/bootstrap-alert.js"></script>
@@ -174,6 +100,8 @@
     <script src="/static/js/bootstrap-collapse.js"></script>
     <script src="/static/js/bootstrap-carousel.js"></script>
     <script src="/static/js/bootstrap-typeahead.js"></script>
+
+    -->
 
   </body>
 </html>
