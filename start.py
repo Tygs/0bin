@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
 
+"""
+    Main script including controller, rooting, dependancy management, and
+    server run.
+"""
+
 import os
 import hashlib
-import sys
+
+from src import settings, setup_path, Paste
+
+setup_path()
 
 from bottle import (Bottle, route, run, abort,
                     static_file, debug, view, request)
 
-import settings
-
-# ensure we got the project module on the python path to avoid import problems
-sys.path.insert(0, os.path.dirname(settings.ROOT_DIR))
-
-from src.paste import Paste
 
 app = Bottle()
 
