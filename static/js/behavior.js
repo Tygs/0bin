@@ -28,11 +28,11 @@ $('button[type=submit]').click(function(e){
     var data = {content: zerobin.encrypt(key, paste), expiration: expiration}
 
     $.post('/paste/create', data)
-     .error(function() {
+     .error(function(error) {
         alert('Paste could not be saved. Please try again later.');
      })
      .success(function(data) {
-        window.location = '/paste/' + data + '#' + key;
+        window.location = ('/paste/' + data['paste'] + '#' + key);
      });
   }
 
