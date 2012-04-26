@@ -8,7 +8,7 @@
           content="0bin is a client-side-encrypted
                    pastebin with a burn after reading feature">
 
-    <!-- Le styles -->
+    <link rel="shortcut icon" href="/static/ico/favicon.ico">
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
 
@@ -17,8 +17,10 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="/static/ico/favicon.ico">
+    <script src="/static/js/sjcl.js"></script>
+    <script src="/static/js/jquery-1.7.2.min.js"></script>
+    <script src="/static/js/behavior.js"></script>
+
   </head>
 
   <body>
@@ -82,9 +84,7 @@
 
     </div><!--/.fluid-container-->
 
-    <script src="/static/js/sjcl.js"></script>
-    <script src="/static/js/jquery.js"></script>
-    <script src="/static/js/behavior.js"></script>
+    <script src="/static/js/lzw.js"></script>
 
     <!--
     <script src="/static/js/jquery.js"></script>

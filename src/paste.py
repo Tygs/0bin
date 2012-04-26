@@ -26,24 +26,24 @@ class Paste(object):
 
 
     def __init__(self, uuid=None, content=None,
-                 expire_in=u'burn_after_reading',
+                 expiration=u'burn_after_reading',
                  comments=None):
 
         self.content = content.encode('utf8')
         self.uuid = uuid or hashlib.sha1(self.content).hexdigest()
-        self.expire_in = self.get_expiration(expire_in)
+        self.expiration = self.get_expiration(expiration)
         self.comments = comments
 
 
 
 
-    def get_expiration(self, expire_in):
+    def get_expiration(self, expiration):
         """
             Return a tuple with the date at which the Paste will expire
             or if it should be destroyed after first reading.
         """
         try:
-            return datetime.now() + timedelta(seconds=self.DURATIONS[expire_in])
+            return datetime.now() + timedelta(seconds=self.DURATIONS[expiration])
         except KeyError:
             return u'burn_after_reading'
 
@@ -82,19 +82,19 @@ class Paste(object):
         try:
             paste = open(path)
             uuid = os.path.basename(path)
-            expire_in = paste.next()
+            expiration = paste.next()
             data = paste.next()
             comments = paste.read()[:-1] # remove the last coma
 
-            if expire_in != u'burn_after_reading':
-                expire_in = datetime.strptime(expire_in, '%Y-%m-%d %H:%M:%S.%f')
+            if expiration != u'burn_after_reading':
+                expiration = datetime.strptime(expiration, '%Y-%m-%d %H:%M:%S.%f')
 
         except StopIteration:
             raise TypeError(u'File %s is malformed' % path)
         except (IOError, OSError):
             raise ValueError(u'Can not open paste from file %s' % path)
 
-        return Paste(uuid=uuid, comments=comments, expire_in=expire_in, **data)
+        return Paste(uuid=uuid, comments=comments, expiration=expiration, **data)
 
 
     @classmethod
@@ -136,7 +136,7 @@ class Paste(object):
             self.DIR_CACHE.add((head, tail))
 
         with open(self.path, 'w') as f:
-            f.write(unicode(self.expire_in) + '\n')
+            f.write(unicode(self.expiration) + '\n')
             f.write(self.content + '\n')
             if self.comments:
                 f.write(comments)

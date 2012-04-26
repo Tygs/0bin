@@ -31,8 +31,26 @@ def create_paste():
         content = u''
 
     if content:
-        expire_in = request.forms.get('expire_in', u'burn_after_reading')
-        paste = Paste(expire_in=expire_in, content=content)
+        expiration = request.forms.get('expiration', u'burn_after_reading')
+        paste = Paste(expiration=expiration, content=content)
+        paste.save()
+
+        return paste.uuid
+
+    return ''
+
+
+@app.route('/paste/<paste_id>')
+def display_paste(paste_id):
+
+    try:
+        paste = Paste.load(paste_id)
+    except (TypeError, ValueError):
+        return ''
+
+    if content:
+        expiration = request.forms.get('expiration', u'burn_after_reading')
+        paste = Paste(expiration=expiration, content=content)
         paste.save()
 
         return paste.uuid
