@@ -87,7 +87,8 @@ class Paste(object):
             comments = paste.read()[:-1] # remove the last coma
 
             if expiration != u'burn_after_reading':
-                expiration = datetime.strptime(expiration, '%Y-%m-%d %H:%M:%S.%f')
+                expiration = datetime.strptime(expiration.strip(),
+                                               '%Y-%m-%d %H:%M:%S.%f')
 
         except StopIteration:
             raise TypeError(u'File %s is malformed' % path)
