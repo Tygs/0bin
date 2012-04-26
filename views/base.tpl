@@ -34,7 +34,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#"><span>ø</span>bin<p>.net</p></a>
+          <a class="brand" href="/"><span>ø</span>bin<em>.net</em></a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>

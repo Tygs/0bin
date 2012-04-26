@@ -29,7 +29,10 @@ class Paste(object):
                  expiration=u'burn_after_reading',
                  comments=None):
 
-        self.content = content.encode('utf8')
+        self.content = content
+        if isinstance(self.content, unicode):
+           self.content = self.content.encode('utf8')
+
         self.uuid = uuid or hashlib.sha1(self.content).hexdigest()
         self.expiration = self.get_expiration(expiration)
         self.comments = comments
@@ -82,20 +85,18 @@ class Paste(object):
         try:
             paste = open(path)
             uuid = os.path.basename(path)
-            expiration = paste.next()
-            data = paste.next()
+            expiration = paste.next().strip()
+            content = paste.next().strip()
             comments = paste.read()[:-1] # remove the last coma
-
             if expiration != u'burn_after_reading':
-                expiration = datetime.strptime(expiration.strip(),
-                                               '%Y-%m-%d %H:%M:%S.%f')
+                expiration = datetime.strptime(expiration,'%Y-%m-%d %H:%M:%S.%f')
 
         except StopIteration:
             raise TypeError(u'File %s is malformed' % path)
         except (IOError, OSError):
             raise ValueError(u'Can not open paste from file %s' % path)
-
-        return Paste(uuid=uuid, comments=comments, expiration=expiration, **data)
+        return Paste(uuid=uuid, comments=comments,
+                     expiration=expiration, content=content)
 
 
     @classmethod
@@ -136,11 +137,14 @@ class Paste(object):
                 os.mkdir(path)
             self.DIR_CACHE.add((head, tail))
 
-        with open(self.path, 'w') as f:
-            f.write(unicode(self.expiration) + '\n')
-            f.write(self.content + '\n')
-            if self.comments:
-                f.write(comments)
+        try:
+            with open(self.path, 'w') as f:
+                f.write(unicode(self.expiration) + '\n')
+                f.write(self.content + '\n')
+                if self.comments:
+                    f.write(comments)
+        except:
+            import ipdb; ipdb.set_trace()
 
         return self
 

@@ -16,7 +16,7 @@ font-size: 48px;
 line-height: 0;
 
 }
-.brand p {
+.brand em {
 display: inline;
 color: #D40202;
 margin: 0px !important;

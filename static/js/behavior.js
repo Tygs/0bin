@@ -2,23 +2,31 @@
 // Start random number generator seeding ASAP
 sjcl.random.startCollectors();
 
+var zerobin = function() {
+  that = {};
+  that.base64 =  {
+    decode: function(content) {
+      return sjcl.codec.utf8String.fromBits(sjcl.codec.base64.toBits(content));
+    },
+    encode: function(content) {
+      return sjcl.codec.base64.fromBits(sjcl.codec.utf8String.toBits(content));
+    }
+  };
+  that.encrypt = function(key, content) {
+    var encrypted = sjcl.encrypt(key, content);
+    return lzw.compress(encrypted);
+  };
+  that.decrypt = function(key, content) {
+    var uncompressed = lzw.decompress(content)
+    return sjcl.decrypt(key, uncompressed);
+  };
+  that.make_key = function() {
+    return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
+  };
+  return that;
+}();
+
 $(function(){
-
-function encrypt(key, content) {
-  content = lzw.compress(sjcl.encrypt(key, content));
-  content = sjcl.codec.utf8String.toBits(content);
-  return sjcl.codec.base64.fromBits(content);
-}
-
-function decrypt(key, content) {
-  content = sjcl.codec.base64.toBits(content);
-  content = sjcl.codec.utf8String.fromBits(content);
-  return sjcl.decrypt(key, lzw.decompress(content));
-}
-
-function make_key() {
-  return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
-}
 
 $('button[type=submit]').click(function(e){
 
@@ -27,8 +35,8 @@ $('button[type=submit]').click(function(e){
 
   if (paste.trim()) {
     var expiration = $('#expiration').val();
-    var key = make_key();
-    var data = {content: encrypt(key, paste), expiration: expiration}
+    var key = zerobin.make_key();
+    var data = {content: zerobin.encrypt(key, paste), expiration: expiration}
 
     $.post('/paste/create', data)
      .error(function() {
@@ -42,5 +50,14 @@ $('button[type=submit]').click(function(e){
 
 });
 
+var content = $('#paste-content').text().trim();
+var key = window.location.hash.substring(1);
+if (content && key) {
+    try {
+        $('#paste-content').text(zerobin.decrypt(key, content));
+    } catch(err) {
+        alert('Could not decrypt data (Wrong key ?)');
+    }
+}
 
 });
