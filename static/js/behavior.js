@@ -1,30 +1,19 @@
 ;
+
 // Start random number generator seeding ASAP
 sjcl.random.startCollectors();
 
-var zerobin = function() {
-  that = {};
-  that.base64 =  {
-    decode: function(content) {
-      return sjcl.codec.utf8String.fromBits(sjcl.codec.base64.toBits(content));
-    },
-    encode: function(content) {
-      return sjcl.codec.base64.fromBits(sjcl.codec.utf8String.toBits(content));
-    }
-  };
-  that.encrypt = function(key, content) {
-    var encrypted = sjcl.encrypt(key, content);
-    return lzw.compress(encrypted);
-  };
-  that.decrypt = function(key, content) {
-    var uncompressed = lzw.decompress(content)
-    return sjcl.decrypt(key, uncompressed);
-  };
-  that.make_key = function() {
+var zerobin = {
+  encrypt: function(key, content) {
+    return sjcl.encrypt(key, lzw.compress(content));
+  },
+  decrypt: function(key, content) {
+    return lzw.decompress(sjcl.decrypt(key, content));
+  },
+  make_key: function() {
     return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
-  };
-  return that;
-}();
+  }
+};
 
 $(function(){
 
@@ -43,7 +32,6 @@ $('button[type=submit]').click(function(e){
         alert('Paste could not be saved. Please try again later.');
      })
      .success(function(data) {
-        alert('success');
         window.location = '/paste/' + data + '#' + key;
      });
   }
@@ -55,6 +43,7 @@ var key = window.location.hash.substring(1);
 if (content && key) {
     try {
         $('#paste-content').text(zerobin.decrypt(key, content));
+        hljs.highlightBlock($('#paste-content')[0]);
     } catch(err) {
         alert('Could not decrypt data (Wrong key ?)');
     }

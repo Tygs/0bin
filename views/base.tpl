@@ -9,6 +9,7 @@
                    pastebin with a burn after reading feature">
 
     <link rel="shortcut icon" href="/static/ico/favicon.ico">
+    <link href="/static/css/vs.css" rel="stylesheet" />
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
 
@@ -85,7 +86,7 @@
     </div><!--/.fluid-container-->
 
     <script src="/static/js/lzw.js"></script>
-
+    <script src="/static/js/highlight.pack.js"></script>
     <!--
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/bootstrap-transition.js"></script>

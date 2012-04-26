@@ -8,9 +8,13 @@
 <p>
 
 <p>
-  <pre id="paste-content">
+
+  <pre id="paste-content" class="prettyprint">
+    <code>
       {{ paste.content }}
+    </code>
   </pre>
+
 </p>
 
 <p class="paste-option btn-group">

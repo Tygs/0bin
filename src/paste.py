@@ -126,25 +126,24 @@ class Paste(object):
         # each worker. If the dir is not in cache, we check the FS, and
         # if the dir is not in there, we create the dir
         if head not in self.DIR_CACHE:
-            first_dir = self.build_path(head)
-            if not os.path.isdir(first_dir):
+
+            self.DIR_CACHE.add(head)
+
+            if not os.path.isdir(self.build_path(head)):
                 os.makedirs(self.build_path(head, tail))
-            self.DIR_CACHE.update((head, (head, tail)))
+                self.DIR_CACHE.add((head, tail))
 
-        elif (head, tail) not in self.DIR_CACHE:
-            path = self.build_path(head, tail)
-            if not os.path.isdir(path):
-                os.mkdir(path)
-            self.DIR_CACHE.add((head, tail))
+            elif (head, tail) not in self.DIR_CACHE:
+                path = self.build_path(head, tail)
+                self.DIR_CACHE.add((head, tail))
+                if not os.path.isdir(path):
+                    os.mkdir(path)
 
-        try:
-            with open(self.path, 'w') as f:
-                f.write(unicode(self.expiration) + '\n')
-                f.write(self.content + '\n')
-                if self.comments:
-                    f.write(comments)
-        except:
-            import ipdb; ipdb.set_trace()
+        with open(self.path, 'w') as f:
+            f.write(unicode(self.expiration) + '\n')
+            f.write(self.content + '\n')
+            if self.comments:
+                f.write(comments)
 
         return self
 

@@ -42,6 +42,10 @@ padding: 9px 0;
     float:right;
 }
 
+#paste-content {
+background-color:white;
+}
+
 select {
 	width: 135px;
 }
