@@ -18,7 +18,7 @@
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="/static/ico/favicon.ico">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
   </head>
 
   <body>
@@ -50,19 +50,17 @@
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Previous pastes</li>
+              <li class="nav-header">Prev. pastes</li>
               <li><a href="#">paste 1</a></li>
               <li><a href="#">Paste 2</a></li>
             </ul>
-          </div><!--/.well -->
+          </div><!--/.well --> 
         </div><!--/span-->
 
         <div class="span10">
 
-           %include
-
+          %include
         </div><!--/span-->
-
       </div><!--/row-->
 
       <hr>
@@ -73,9 +71,12 @@
         <small>Edgar Allan Poe</small>
       </blockquote>
       </br>
-        <p>
-            Based on an original idea from
+        <p class="legal">
+            based on an original idea from
            <a href="http://sebsauvage.net/paste/">sebsauvage.net</a>
+
+        <br>
+          Made with <a href="http://bottlepy.org/docs/dev/">bottle</a> &amp; <a href="http://twitter.github.com/bootstrap/">bootstrap</a>
        </p>
 
       </footer>

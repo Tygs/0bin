@@ -64,8 +64,28 @@ p {
 	margin: 0 0 0px;
 }
 
-form li{
+
+.form-options li{
+
+float: left;
 list-style-type: none;
+
+}
+
+button.btn, input[type="submit"].btn {
+	margin-left: 5px;
+}
+
+.well {
+	padding-bottom: 40px;
+	padding-right: 17px;
+} 
+
+.legal {
+	margin: 0 auto;
+	width: 300px;
+	text-align: center;
+	margin-top: 30px;
 }
 
 .btn {
@@ -75,9 +95,28 @@ list-style-type: none;
 form {
     padding-bottom:3em !important;
 	padding-right: 17px;
-}
+} 
+
 
 .btn-primary {
 position:relative;
 top:-4px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

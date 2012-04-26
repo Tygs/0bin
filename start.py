@@ -48,6 +48,6 @@ def server_static(filename):
 if __name__ == "__main__":
     if settings.DEBUG:
         debug(True)
-        run(app, host='localhost', port=8080, reloader=True)
+        run(app, host='localhost', port=8000, reloader=True)
     else:
-        run(app, host='localhost', port=8080)
+        run(app, host='localhost', port=8000)
