@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 
+"""
+    Main script including controller, rooting, dependancy management, and
+    server run.
+"""
+
 import os
 import hashlib
-import sys
 
-from bottle import (Bottle, route, run, static_file, debug, view, request)
+from datetime import datetime, timedelta
 
-import settings
+from src import settings, setup_path, Paste
 
-# ensure we got the project module on the python path to avoid import problems
-sys.path.insert(0, os.path.dirname(settings.ROOT_DIR))
+setup_path()
 
-from src.paste import Paste
+from bottle import (Bottle, route, run, abort,
+                    static_file, debug, view, request)
+
 
 app = Bottle()
 
@@ -28,19 +33,55 @@ def create_paste():
     try:
         content = unicode(request.forms.get('content', ''), 'utf8')
     except UnicodeDecodeError:
-        content = u''
+        return {'status': 'error',
+                'message': u"Encoding error: the paste couldn't be saved."}
 
     if content:
-        expire_in = request.forms.get('expire_in', u'burn_after_reading')
-        paste = Paste(expire_in=expire_in, content=content)
+        expiration = request.forms.get('expiration', u'burn_after_reading')
+        paste = Paste(expiration=expiration, content=content)
         paste.save()
+        return {'status': 'ok',
+                'paste': paste.uuid}
 
-        return paste.uuid
+    return {'status': 'error',
+            'message': u"Serveur error: the paste couldn't be saved. Please try later."}
 
-    return ''
+
+@app.route('/paste/:paste_id')
+@view('paste')
+def display_paste(paste_id):
 
 
-@app.route('/static/<filename:re:.*>')
+    now = datetime.now()
+    keep_alive = False
+    try:
+        paste = Paste.load(paste_id)
+        # Delete the paste if it expired:
+        if 'burn_after_reading' in str(paste.expiration):
+            # burn_after_reading contains the paste creation date
+            # if this read appends 10 seconds after the creation date
+            # we don't delete the paste because it means it's the redirection
+            # to the paste that happens during the paste creation
+            try:
+                keep_alive = paste.expiration.split('#')[1]
+                keep_alive = datetime.strptime(keep_alive,'%Y-%m-%d %H:%M:%S.%f')
+                keep_alive = now < keep_alive + timedelta(seconds=10)
+            except IndexError:
+                keep_alive = False
+            if not keep_alive:
+                paste.delete()
+
+        elif paste.expiration < now:
+            paste.delete()
+            raise ValueError()
+
+    except (TypeError, ValueError):
+        abort(404, u"This paste doesn't exist or has expired")
+
+    return {'paste': paste, 'keep_alive': keep_alive}
+
+
+@app.route('/static/<filename:path>')
 def server_static(filename):
     return static_file(filename, root=settings.STATIC_FILES_ROOT)
 
@@ -48,6 +89,6 @@ def server_static(filename):
 if __name__ == "__main__":
     if settings.DEBUG:
         debug(True)
-        run(app, host='localhost', port=8000, reloader=True)
+        run(app, host='localhost', port=8000, reloader=True, server="cherrypy")
     else:
-        run(app, host='localhost', port=8000)
+        run(app, host='localhost', port=8000, server="cherrypy")

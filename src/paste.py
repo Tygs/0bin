@@ -26,24 +26,30 @@ class Paste(object):
 
 
     def __init__(self, uuid=None, content=None,
-                 expire_in=u'burn_after_reading',
+                 expiration=None,
                  comments=None):
 
-        self.content = content.encode('utf8')
-        self.uuid = uuid or hashlib.sha1(self.content).hexdigest()
-        self.expire_in = self.get_expiration(expire_in)
+        self.content = content
+        self.expiration = expiration
         self.comments = comments
 
+        if isinstance(self.content, unicode):
+           self.content = self.content.encode('utf8')
+
+        if (not isinstance(expiration, datetime) and
+            'burn_after_reading' not in str(expiration)):
+            self.expiration = self.get_expiration(self.expiration)
+
+        self.uuid = uuid or hashlib.sha1(self.content).hexdigest()
 
 
-
-    def get_expiration(self, expire_in):
+    def get_expiration(self, expiration):
         """
             Return a tuple with the date at which the Paste will expire
             or if it should be destroyed after first reading.
         """
         try:
-            return datetime.now() + timedelta(seconds=self.DURATIONS[expire_in])
+            return datetime.now() + timedelta(seconds=self.DURATIONS[expiration])
         except KeyError:
             return u'burn_after_reading'
 
@@ -54,7 +60,7 @@ class Paste(object):
             Generic static content path builder. Return a path to
             a location in the static content file dir.
         """
-        return os.path.join(settings.STATIC_FILES_ROOT, u'content', *dirs)
+        return os.path.join(settings.PASTE_FILES_ROOT, *dirs)
 
 
     @classmethod
@@ -82,19 +88,19 @@ class Paste(object):
         try:
             paste = open(path)
             uuid = os.path.basename(path)
-            expire_in = paste.next()
-            data = paste.next()
+            expiration = paste.next().strip()
+            content = paste.next().strip()
             comments = paste.read()[:-1] # remove the last coma
-
-            if expire_in != u'burn_after_reading':
-                expire_in = datetime.strptime(expire_in, '%Y-%m-%d %H:%M:%S.%f')
+            if "burn_after_reading" not in str(expiration):
+                expiration = datetime.strptime(expiration,'%Y-%m-%d %H:%M:%S.%f')
 
         except StopIteration:
             raise TypeError(u'File %s is malformed' % path)
         except (IOError, OSError):
             raise ValueError(u'Can not open paste from file %s' % path)
 
-        return Paste(uuid=uuid, comments=comments, expire_in=expire_in, **data)
+        return Paste(uuid=uuid, comments=comments,
+                     expiration=expiration, content=content)
 
 
     @classmethod
@@ -113,7 +119,6 @@ class Paste(object):
             If comments are passed, they are expected to be serialized
             already.
         """
-        data = {'content': self.content}
         head, tail = self.uuid[:2], self.uuid[2:4]
 
         # the static files are saved in project_dir/static/xx/yy/uuid
@@ -124,19 +129,28 @@ class Paste(object):
         # each worker. If the dir is not in cache, we check the FS, and
         # if the dir is not in there, we create the dir
         if head not in self.DIR_CACHE:
-            first_dir = self.build_path(head)
-            if not os.path.isdir(first_dir):
+
+            self.DIR_CACHE.add(head)
+
+            if not os.path.isdir(self.build_path(head)):
                 os.makedirs(self.build_path(head, tail))
-            self.DIR_CACHE.update((head, (head, tail)))
+                self.DIR_CACHE.add((head, tail))
 
-        elif (head, tail) not in self.DIR_CACHE:
-            path = self.build_path(head, tail)
-            if not os.path.isdir(path):
-                os.mkdir(path)
-            self.DIR_CACHE.add((head, tail))
+            elif (head, tail) not in self.DIR_CACHE:
+                path = self.build_path(head, tail)
+                self.DIR_CACHE.add((head, tail))
+                if not os.path.isdir(path):
+                    os.mkdir(path)
 
+        # add a timestamp to burn after reading to allow
+        # a quick period of time where you can redirect to the page without
+        # deleting the paste
+        if self.expiration == "burn_after_reading":
+            self.expiration = self.expiration + '#%s' % datetime.now()
+
+        # writethe paste
         with open(self.path, 'w') as f:
-            f.write(unicode(self.expire_in) + '\n')
+            f.write(unicode(self.expiration) + '\n')
             f.write(self.content + '\n')
             if self.comments:
                 f.write(comments)
@@ -148,7 +162,7 @@ class Paste(object):
         """
             Delete the paste file.
         """
-        os.path.remove(self.path)
+        os.remove(self.path)
 
 
     @classmethod

@@ -8,7 +8,8 @@
           content="0bin is a client-side-encrypted
                    pastebin with a burn after reading feature">
 
-    <!-- Le styles -->
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link href="/static/css/vs.css" rel="stylesheet" />
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
 
@@ -17,8 +18,10 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <script src="/static/js/sjcl.js"></script>
+    <script src="/static/js/jquery-1.7.2.min.js"></script>
+    <script src="/static/js/behavior.js"></script>
+
   </head>
 
   <body>
@@ -32,7 +35,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#"><span>ø</span>bin<p>.net</p></a>
+          <a class="brand" href="/"><span>ø</span>bin<em>.net</em></a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -50,17 +53,19 @@
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Prev. pastes</li>
+              <li class="nav-header">Previous pastes</li>
               <li><a href="#">paste 1</a></li>
               <li><a href="#">Paste 2</a></li>
             </ul>
-          </div><!--/.well --> 
+          </div><!--/.well -->
         </div><!--/span-->
 
         <div class="span10">
 
-          %include
+           %include
+
         </div><!--/span-->
+
       </div><!--/row-->
 
       <hr>
@@ -71,22 +76,17 @@
         <small>Edgar Allan Poe</small>
       </blockquote>
       </br>
-        <p class="legal">
-            based on an original idea from
+        <p>
+            Based on an original idea from
            <a href="http://sebsauvage.net/paste/">sebsauvage.net</a>
-
-        <br>
-          Made with <a href="http://bottlepy.org/docs/dev/">bottle</a> &amp; <a href="http://twitter.github.com/bootstrap/">bootstrap</a>
        </p>
 
       </footer>
 
     </div><!--/.fluid-container-->
 
-    <script src="/static/js/sjcl.js"></script>
-    <script src="/static/js/jquery.js"></script>
-    <script src="/static/js/behavior.js"></script>
-
+    <script src="/static/js/lzw.js"></script>
+    <script src="/static/js/highlight.pack.js"></script>
     <!--
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/bootstrap-transition.js"></script>
