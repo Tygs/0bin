@@ -3,7 +3,7 @@
    <div class="alert alert-info">
       <strong>Ok!</strong>
       This paste will be deleted the next time it is read.
-      </div>
+    </div>
   %else:
    <div class="alert">
    <strong>Warning!</strong>
@@ -13,11 +13,15 @@
   %end
 %end
 
-<div class="well paste-form">
+<div id="copy-success" class="alert alert-success">
+  The paste is now in your clipboad
+</div>
+
+<div class="well">
 <form action="/" method="get" accept-charset="utf-8">
 <p>
-  <span id="downloadify">
-        Download
+  <span id="clip-container" style="position:relative">
+      <a id="clip-button">Copy To Clipboard</a>
   </span>
   <span class="paste-option btn-group top">
       <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
@@ -25,20 +29,20 @@
   </span>
 </p>
 
-	<p>
-	  <pre id="paste-content"  class="prettyprint linenums">
-	    <code>
-	      {{ paste.content }}
-	    </code>
-	  </pre>
-	</p>
+<p>
+  <pre id="paste-content"  class="prettyprint linenums">
+    <code>
+      {{ paste.content }}
+    </code>
+  </pre>
+</p>
 
-	<p class="paste-option btn-group bottom">
-	    <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
-	    <button class="btn">New Paste</button>
-	</p>
+<p class="paste-option btn-group bottom">
+    <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+    <button class="btn">New Paste</button>
+</p>
 
-	</form>
+</form>
 </div>
 
 <!-- For cloning -->

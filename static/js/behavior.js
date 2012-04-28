@@ -7,10 +7,12 @@ $.ajaxSetup({ cache: true });
 
 zerobin = {
   encrypt: function(key, content) {
+    content = sjcl.codec.base64.fromBits(sjcl.codec.utf8String.toBits(content));
     return sjcl.encrypt(key, lzw.compress(content));
   },
   decrypt: function(key, content) {
-    return lzw.decompress(sjcl.decrypt(key, content));
+    content = lzw.decompress(sjcl.decrypt(key, content));
+    return sjcl.codec.utf8String.fromBits(sjcl.codec.base64.toBits(content));
   },
   make_key: function() {
     return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
@@ -31,9 +33,9 @@ zerobin = {
   },
   support_localstorage: function(){
     if (localStorage){
-      return true;  
-    }else{  
-      return false;  
+      return true;
+    }else{
+      return false;
     }
   },
   store_paste: function(url){
@@ -46,11 +48,11 @@ zerobin = {
     }
   },
   get_pastes: function(){
-    if (zerobin.support_localstorage){ 
-      var pastes = ''; 
+    if (zerobin.support_localstorage){
+      var pastes = '';
 
-      for (i=localStorage.length-1; i>=0; i--)  
-      { 
+      for (i=localStorage.length-1; i>=0; i--)
+      {
         if (localStorage.getItem(i).split(';')[0].split(' ')[0] == zerobin.get_date()){
           var display_date = localStorage.getItem(i).split(';')[0].split(' ')[1];
           var on_at = 'at ';
@@ -103,42 +105,43 @@ $('button[type=submit]').live("click", function(e){
 });
 
 /** On the display paste page.
-    Decrypt and decompress the paste content, add syntax coloration
-    then insert the flash code to download the paste.
+    Decrypt and decompress the paste content, add syntax coloration then
+    setup the copy to clipboard button.
 */
 var content = $('#paste-content').text().trim();
 var key = window.location.hash.substring(1);
+var error = false;
 if (content && key) {
     try {
         $('#paste-content').text(zerobin.decrypt(key, content));
     } catch(err) {
+        error = true;
         alert('Could not decrypt data (Wrong key ?)');
     }
-    prettyPrint();
 
-    /** Load dynamically the flash code (it's pretty heavy so doing it
-       now will make the page appear to load faster)
-       And create the download button.
-    */
-    $.getScript("/static/js/swfobject.js", function(script, textStatus) {
-      $.getScript("/static/js/downloadify.min.js", function(){
-        Downloadify.create('downloadify',{
-          filename: function(){
-            return 'test.txt';
-          },
-          data: function(){
-            return $('#paste-content').text();
-          },
-          onError: function(){ alert("Sorry, the file couldn't be downloaded. :("); },
-          swf: '/static/js/downloadify.swf',
-          downloadImage: '/static/img/download.png',
-          width: 96,
-          height: 28,
-          transparent: true,
-          append: false
-        });
+    content = '';
+
+    if (!error) {
+
+      prettyPrint();
+
+      /* Setup flash clipboard button */
+      ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf' );
+      var clip = new ZeroClipboard.Client();
+
+      clip.addEventListener('onMouseUp', function(){
+        clip.setText($('#paste-content').text());
       });
-    });
+      clip.addEventListener('complete', function(){
+        $('#copy-success').show();
+      });
+      clip.addEventListener('onLoad', function(){
+      });
+      clip.glue('clip-button', 'clip-container' );
+
+      window.onresize = clip.reposition;
+    }
+
 }
 
 /* Synchronize expiration select boxes value */
