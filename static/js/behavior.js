@@ -77,7 +77,11 @@ $('.paste-option select').live('change', function(){
 /* Resize Textarea content */
 $('#content').elastic();
 
+
 /* Display bottom paste option buttons when needed */
+if($('#content').height() < 600 ){
+  $('.paste-option.bottom').remove();
+};
 $('#content').live('keyup change', function(){
    if($('#content').height() < 600 ){
       $('.paste-option.down').remove();
