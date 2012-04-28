@@ -16,3 +16,14 @@ DEBUG = True
 # default in projectdirectory/static/content/
 # use "/" even under Windows
 PASTE_FILES_ROOT = os.path.join(STATIC_FILES_ROOT, 'content')
+
+# Port and host the embeded python server should be using in prod and in dev
+PROD_HOST = "0.0.0.0"
+PROD_PORT= "80"
+DEV_HOST = "127.0.0.1"
+DEV_PORT= "8000"
+
+# User and group the server should run as. Set to None if it should be the
+# current user
+USER = "kevin"
+GROUP = "kevin"
