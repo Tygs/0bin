@@ -201,9 +201,9 @@ $('.previous-pastes .items').html(zerobin.get_pastes());
 /* clone a paste */
 $('.btn-clone').click(function(e){
   e.preventDefault();
-  content_clone = '' ;
-  $("#paste-content li").each(function(index) {
-    content_clone = content_clone + $(this).text() + '\n';
+  var content_clone = '' ;
+  $("#paste-content li").each(function(index) { 
+    content_clone = content_clone + $(this).text() + '\n'; 
   });
   $('.submit-form').show();
   $('.paste-form').remove();

@@ -19,7 +19,7 @@
 
 <div id="short-url-success" class="alert alert-success"></div>
 
-<div class="well">
+<div class="well paste-form">
 <form action="/" method="get" accept-charset="utf-8">
 <p>
   <a id="short-url" href=""
@@ -42,7 +42,7 @@
 </p>
 
 <p class="paste-option btn-group bottom">
-    <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+    <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
     <button class="btn">New Paste</button>
 </p>
 
