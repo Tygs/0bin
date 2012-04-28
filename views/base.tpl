@@ -52,10 +52,9 @@
       <div class="row">
         <div class="span2">
           <div class="well sidebar-nav">
-            <ul class="nav nav-list">
+            <ul class="nav nav-list previous-pastes">
               <li class="nav-header">Previous pastes</li>
-              <li><a href="#">paste 1</a></li>
-              <li><a href="#">Paste 2</a></li>
+              <li class="items"></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

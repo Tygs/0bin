@@ -14,6 +14,57 @@ zerobin = {
   },
   make_key: function() {
     return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
+  },
+  get_date: function(){
+    var date = new Date();
+    return date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
+  },
+  get_time: function(){
+    var date = new Date();
+    var h=date.getHours();
+    var m=date.getMinutes();
+    var s=date.getSeconds();
+    if (h<10) {h = "0" + h}
+    if (m<10) {m = "0" + m}
+    if (s<10) {s = "0" + s}
+    return h+":"+m+":"+s;
+  },
+  support_localstorage: function(){
+    if (localStorage){
+      return true;  
+    }else{  
+      return false;  
+    }
+  },
+  store_paste: function(url){
+    if (zerobin.support_localstorage){
+      var date = new Date();
+      var paste = zerobin.get_date()+" "+zerobin.get_time()+";"+url;
+      if (localStorage.length > 19)
+        void removeItem(0);
+      localStorage.setItem(localStorage.length, paste);
+    }
+  },
+  get_pastes: function(){
+    if (zerobin.support_localstorage){ 
+      var pastes = ''; 
+
+      for (i=localStorage.length-1; i>=0; i--)  
+      { 
+        if (localStorage.getItem(i).split(';')[0].split(' ')[0] == zerobin.get_date()){
+          var display_date = localStorage.getItem(i).split(';')[0].split(' ')[1];
+        }else{
+          var display_date = zerobin.get_date();
+        }
+        pastes = pastes + '<li><a class="items" href="' + localStorage.getItem(i).split(';')[1] + '">' + display_date + '</a></li>';
+      }
+      if (!pastes){
+        return '<i class="grey">Your previous pastes will be saved in your browser <a href="http://www.w3.org/TR/webstorage/">localStorage</a>.</i>';
+      }
+      return pastes;
+    }else{
+      return 'Sorry your browser does not support LocalStorage, We cannot display your previous pastes.';
+    }
   }
 };
 
@@ -41,7 +92,9 @@ $('button[type=submit]').live("click", function(e){
         alert('Paste could not be saved. Please try again later.');
      })
      .success(function(data) {
-        window.location = ('/paste/' + data['paste'] + '#' + key);
+        var paste_url = '/paste/' + data['paste'] + '#' + key;
+        window.location = (paste_url);
+        zerobin.store_paste(paste_url);
      });
   }
 
@@ -106,7 +159,7 @@ $('#content').live('keyup change', function(){
     if ($('.paste-option').length == 1) {
       $('.paste-option').clone().addClass('down').appendTo('form.well');
     }
-   };
+   }
 });
 
 });
