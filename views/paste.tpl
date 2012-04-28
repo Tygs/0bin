@@ -14,14 +14,16 @@
 %end
 
 <div class="well paste-form">
-	<form action="/" method="get" accept-charset="utf-8">
-	<p>
-	  <a href="#">Download</a>
-	  <span class="paste-option btn-group top">
-	      <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
-	      <button class="btn">New Paste</button>
-	  </span>
-	</p>
+<form action="/" method="get" accept-charset="utf-8">
+<p>
+  <span id="downloadify">
+        Download
+  </span>
+  <span class="paste-option btn-group top">
+      <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+      <button class="btn">New Paste</button>
+  </span>
+</p>
 
 	<p>
 	  <pre id="paste-content"  class="prettyprint linenums">
