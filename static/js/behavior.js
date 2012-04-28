@@ -26,6 +26,31 @@ zerobin = {
       if(this.width + this.height != 2){no()} else {yes()}
     }
     data.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+  },
+  support_localstorage: function(){
+    if (localStorage){
+      return true;  
+    }else{  
+      return false;  
+    }
+  },
+  store_paste: function(url){
+    if (zerobin.support_localstorage){
+      localStorage.setItem(localStorage.length, url);
+    }
+  },
+  get_pastes: function(){
+    if (zerobin.support_localstorage){ 
+      var val = '';
+      for (i=0; i<=localStorage.length-1; i++)  
+      {
+        key = localStorage.key(i);  
+        val = val + '<li><a class="items" href="' + localStorage.getItem(key) + '">paste ' + (i+1) + '</a></li>';
+      }
+      return val;
+    }else{
+      return 'Sorry your browser does not support LocalStorage, We cannot display your previous pastes.';
+    }
   }
 };
 
@@ -50,7 +75,9 @@ $('button[type=submit]').click(function(e){
         alert('Paste could not be saved. Please try again later.');
      })
      .success(function(data) {
-        window.location = ('/paste/' + data['paste'] + '#' + key);
+        var paste_url = '/paste/' + data['paste'] + '#' + key;
+        window.location = (paste_url);
+        zerobin.store_paste(paste_url);
      });
   }
 
@@ -81,7 +108,7 @@ $('#content').elastic();
 /* Display bottom paste option buttons when needed */
 if($('#content').height() < 600 ){
   $('.paste-option.bottom').remove();
-};
+}
 $('#content').live('keyup change', function(){
    if($('#content').height() < 600 ){
       $('.paste-option.down').remove();
@@ -90,8 +117,27 @@ $('#content').live('keyup change', function(){
     if ($('.paste-option').length == 1) {
       $('.paste-option').clone().addClass('down').appendTo('form.well');
     }
-   };
+   }
+});
+
+/* Display previous pastes */
+$('.previous-pastes .items').html(zerobin.get_pastes());
+ 
+
 });
 
 
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
