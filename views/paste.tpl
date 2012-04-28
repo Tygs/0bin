@@ -17,9 +17,13 @@
   The paste is now in your clipboad
 </div>
 
+<div id="short-url-success" class="alert alert-success"></div>
+
 <div class="well">
 <form action="/" method="get" accept-charset="utf-8">
 <p>
+  <a id="short-url" href=""
+     target="_blank">Get short url</a> |
   <span id="clip-container" style="position:relative">
       <a id="clip-button">Copy To Clipboard</a>
   </span>

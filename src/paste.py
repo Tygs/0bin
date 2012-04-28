@@ -153,7 +153,7 @@ class Paste(object):
         if self.expiration == "burn_after_reading":
             self.expiration = self.expiration + '#%s' % datetime.now()
 
-        # writethe paste
+        # write the paste
         with open(self.path, 'w') as f:
             f.write(unicode(self.expiration) + '\n')
             f.write(self.content + '\n')

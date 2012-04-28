@@ -31,6 +31,18 @@ zerobin = {
     if (s<10) {s = "0" + s}
     return h+":"+m+":"+s;
   },
+  /** Get a tinyurl using JSONP */
+  getTinyURL: function(longURL, success) {
+
+    callback = 'zerobin_tiny_url_callback';
+    window[callback] = function(response){
+      success(response.tinyurl);
+      delete window[callback];
+    };
+
+    var api = 'http://json-tinyurl.appspot.com/?url=';
+    $.getJSON(api + encodeURIComponent(longURL) + '&callback=' + callback);
+  },
   support_localstorage: function(){
     if (localStorage){
       return true;
@@ -123,17 +135,31 @@ if (content && key) {
 
     if (!error) {
 
+      ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf' );
+      var clip = new ZeroClipboard.Client();
+
+      $('#short-url').click(function(e) {
+        e.preventDefault();
+        $('#short-url').text('Loading short url...');
+        zerobin.getTinyURL(window.location.toString(), function(tinyurl){
+          clip.setText(tinyurl);
+          $('#copy-success').hide();
+          $('#short-url-success')
+           .html('Short url: <a href="' + tinyurk + '">' + tinyurk + '</a>')
+           .show('fadeUp');
+          $('#short-url').text('Get short url');
+        });
+      });
+
       prettyPrint();
 
       /* Setup flash clipboard button */
-      ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf' );
-      var clip = new ZeroClipboard.Client();
 
       clip.addEventListener('onMouseUp', function(){
         clip.setText($('#paste-content').text());
       });
       clip.addEventListener('complete', function(){
-        $('#copy-success').show();
+        $('#copy-success').show('fadeUp');
       });
       clip.addEventListener('onLoad', function(){
       });
@@ -169,15 +195,15 @@ $('#content').live('keyup change', function(){
 
 /* Display previous pastes */
 $('.previous-pastes .items').html(zerobin.get_pastes());
- 
+
 
 
 /* clone a paste */
 $('.btn-clone').click(function(e){
   e.preventDefault();
   content_clone = '' ;
-  $("#paste-content li").each(function(index) { 
-    content_clone = content_clone + $(this).text() + '\n'; 
+  $("#paste-content li").each(function(index) {
+    content_clone = content_clone + $(this).text() + '\n';
   });
   $('.submit-form').show();
   $('.paste-form').remove();
