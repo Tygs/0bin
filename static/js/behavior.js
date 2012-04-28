@@ -60,7 +60,7 @@ $(function(){
 
 var language = null;
 
-$('button[type=submit]').click(function(e){
+$('button[type=submit]').live("click", function(e){
 
   e.preventDefault();
   var paste = $('textarea').val();

@@ -18,8 +18,8 @@
 <p>
   <a href="#">Download</a>
   <span class="paste-option btn-group top">
-      <button class="btn">New Paste</button>
       <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+      <button class="btn">New Paste</button>
   </span>
 </p>
 
@@ -32,8 +32,8 @@
 </p>
 
 <p class="paste-option btn-group bottom">
-    <button class="btn">New Paste</button>
     <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+    <button class="btn">New Paste</button>
 </p>
 
 </form>
