@@ -111,8 +111,12 @@ top:-4px;
 }
 
 
-.linenums{
-padding:1em 50px;
+pre {
+padding:1em 20px !important;
+}
+
+.linenums {
+padding-left: 35px;
 }
 
 ol.linenums li {
