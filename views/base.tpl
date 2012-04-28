@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
           content="0bin is a client-side-encrypted
-                   pastebin with a burn after reading feature">
+                   pastebin featuring burn after reading, an history and
+                   a clipboard">
 
     <link rel="shortcut icon" href="/static/ico/favicon.ico">
     <link href="/static/css/prettify.css" rel="stylesheet" />
@@ -86,7 +87,7 @@
     <script src="/static/js/jquery.elastic.source.js"></script>
     <script src="/static/js/lzw.js"></script>
     <script src="/static/js/prettify.min.js"></script>
-
+    <script src="/static/js/ZeroClipboard.js"></script>
     <!--
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/bootstrap-transition.js"></script>

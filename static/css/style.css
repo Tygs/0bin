@@ -144,3 +144,14 @@ li.L5, li.L6, li.L7, li.L8, li.L9
     list-style-type: decimal;
     background:inherit;
 }
+
+#clip-container div:hover,
+#clip-button:hover,
+#clip-button a:hover{
+cursor:pointer;
+}
+
+#copy-success {
+	display:none;
+}
+
