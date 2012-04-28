@@ -135,9 +135,6 @@ if (content && key) {
 
     if (!error) {
 
-      ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf' );
-      var clip = new ZeroClipboard.Client();
-
       $('#short-url').click(function(e) {
         e.preventDefault();
         $('#short-url').text('Loading short url...');
@@ -154,6 +151,8 @@ if (content && key) {
       prettyPrint();
 
       /* Setup flash clipboard button */
+      ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf' );
+      var clip = new ZeroClipboard.Client();
 
       clip.addEventListener('onMouseUp', function(){
         clip.setText($('#paste-content').text());
@@ -202,8 +201,8 @@ $('.previous-pastes .items').html(zerobin.get_pastes());
 $('.btn-clone').click(function(e){
   e.preventDefault();
   var content_clone = '' ;
-  $("#paste-content li").each(function(index) { 
-    content_clone = content_clone + $(this).text() + '\n'; 
+  $("#paste-content li").each(function(index) {
+    content_clone = content_clone + $(this).text() + '\n';
   });
   $('.submit-form').show();
   $('.paste-form').remove();
