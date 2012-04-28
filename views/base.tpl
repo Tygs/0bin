@@ -9,7 +9,7 @@
                    pastebin featuring burn after reading, an history and
                    a clipboard">
 
-    <link rel="shortcut icon" href="/static/ico/favicon.ico">
+    <link rel="shortcut icon" href="/static/ico/favicon.ico"> 
     <link href="/static/css/prettify.css" rel="stylesheet" />
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
