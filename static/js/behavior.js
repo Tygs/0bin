@@ -169,8 +169,6 @@ $('#content').live('keyup change', function(){
 
 /* Display previous pastes */
 $('.previous-pastes .items').html(zerobin.get_pastes());
- 
-
 
 /* clone a paste */
 $('.btn-clone').click(function(e){
