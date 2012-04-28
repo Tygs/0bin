@@ -22,9 +22,8 @@
 <div class="well paste-form">
 <form action="/" method="get" accept-charset="utf-8">
 <p>
-  <span id="clip-container" style="position:relative">
-      <a id="clip-button">Copy To Clipboard</a>
-  </span> |
+  <a id="clip-button">Copy To Clipboard</a>
+  |
   <a id="short-url" href=""
      target="_blank">Get short url</a>
 
