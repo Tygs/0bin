@@ -82,8 +82,7 @@
        </p>
 
       </footer>
-
-    </div><!--/.fluid-container-->
+ 
 
     <script src="/static/js/lzw.js"></script>
     <script src="/static/js/highlight.pack.js"></script>

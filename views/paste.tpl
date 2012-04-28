@@ -12,28 +12,31 @@
 
 <div class="well">
 
-<form action="/paste/clone" method="get" accept-charset="utf-8">
-</form>
-<p class="paste-option btn-group">
-  <button class="btn">New Paste</button>
-  <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
-<p>
+	<p class="paste-option btn-group">
+	  <button class="btn">New Paste</button>
+	  <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+	</p>
 
-<p>
+	<form action="/paste/clone" method="get" accept-charset="utf-8">
+	</form>
 
-  <pre id="paste-content" class="prettyprint">
-    <code>
-      {{ paste.content }}
-    </code>
-  </pre>
+	<p>
 
-</p>
+	  <pre id="paste-content" class="prettyprint">
+	    <code>
+	      {{ paste.content }}
+	    </code>
+	  </pre>
 
-<p class="paste-option btn-group">
-  <button class="btn">New Paste</button>
-  <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
-<p>
+	</p>
 
-</form>
+	<p class="paste-option btn-group">
+	  <button class="btn">New Paste</button>
+	  <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+	<p>
+
+	</form>
+
+</div>
 
 %rebase base
