@@ -14,28 +14,30 @@
 %end
 
 <div class="well">
-<form action="/" method="get" accept-charset="utf-8">
-<p>
-  <a href="{{ paste.path }}">Raw</a>
-  <span class="paste-option btn-group top">
-      <button class="btn">New Paste</button>
-      <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
-  </span>
-</p>
+	<form action="/" method="get" accept-charset="utf-8">
+	<p>
+	  <a href="{{ paste.path }}">Raw</a>
+	  <span class="paste-option btn-group top">
+	      <button class="btn">New Paste</button>
+	      <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+	  </span>
+	</p>
+	
+	<p></p>
 
-<p>
-  <pre id="paste-content" class="prettyprint">
-    <code>
-      {{ paste.content }}
-    </code>
-  </pre>
-</p>
+	<p>
+	  <pre id="paste-content" class="prettyprint">
+	    <code>
+	      {{ paste.content }}
+	    </code>
+	  </pre>
+	</p>
 
-<p class="paste-option btn-group bottom">
-    <button class="btn">New Paste</button>
-    <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
-<p>
+	<p class="paste-option btn-group bottom">
+	    <button class="btn">New Paste</button>
+	    <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+	</p>
 
-</form>
+	</form>
 </div>
 %rebase base
