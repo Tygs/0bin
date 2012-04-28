@@ -17,7 +17,7 @@
   The paste is now in your clipboad
 </div>
 
-<div class="well">
+<div class="well paste-form">
 <form action="/" method="get" accept-charset="utf-8">
 <p>
   <span id="clip-container" style="position:relative">
@@ -38,7 +38,7 @@
 </p>
 
 <p class="paste-option btn-group bottom">
-    <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+    <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
     <button class="btn">New Paste</button>
 </p>
 
