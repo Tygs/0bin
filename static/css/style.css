@@ -156,10 +156,9 @@ li.L5, li.L6, li.L7, li.L8, li.L9
     background: inherit;
 }
 
-#clip-container div:hover,
-#clip-button:hover,
-#clip-button a:hover{
+a#clip-button.hover{
 cursor:pointer;
+text-decoration:underline;
 }
 
 #copy-success, #short-url-success {

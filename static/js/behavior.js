@@ -81,6 +81,13 @@ zerobin = {
     }else{
       return 'Sorry your browser does not support LocalStorage, We cannot display your previous pastes.';
     }
+  },
+  get_paste_content: function(){
+    var content_clone = '' ;
+    $("#paste-content li").each(function(index) {
+      content_clone = content_clone + $(this).text() + '\n';
+    });
+    return content_clone;
   }
 };
 
@@ -152,17 +159,15 @@ if (content && key) {
 
       /* Setup flash clipboard button */
       ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf' );
-      var clip = new ZeroClipboard.Client();
 
-      clip.addEventListener('onMouseUp', function(){
-        clip.setText($('#paste-content').text());
+      var clip = new ZeroClipboard.Client();
+      clip.addEventListener('mouseup', function(){
+        clip.setText(zerobin.get_paste_content());
       });
       clip.addEventListener('complete', function(){
-        $('#copy-success').show('fadeUp');
+        $('#copy-success').show('fadeUp', function(){clip.reposition()});
       });
-      clip.addEventListener('onLoad', function(){
-      });
-      clip.glue('clip-button', 'clip-container' );
+      clip.glue('clip-button');
 
       window.onresize = clip.reposition;
     }
@@ -200,10 +205,7 @@ $('.previous-pastes .items').html(zerobin.get_pastes());
 /* clone a paste */
 $('.btn-clone').click(function(e){
   e.preventDefault();
-  var content_clone = '' ;
-  $("#paste-content li").each(function(index) {
-    content_clone = content_clone + $(this).text() + '\n';
-  });
+  var content_clone = zerobin.get_paste_content();
   $('.submit-form').show();
   $('.paste-form').remove();
   $('#content').val(content_clone);
