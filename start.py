@@ -7,12 +7,18 @@
 
 import os
 import hashlib
+import thread
+import time
+import tempfile
+import glob
 
 from datetime import datetime, timedelta
 
 from src import settings, setup_path, Paste
 
 setup_path()
+
+from privilege import drop_privileges_permanently, coerce_user, coerce_group
 
 from bottle import (Bottle, route, run, abort,
                     static_file, debug, view, request)
@@ -86,8 +92,32 @@ def server_static(filename):
 
 
 if __name__ == "__main__":
+
+    def drop_privileges():
+        time.sleep(5)
+        if settings.USER:
+            settings.GROUP = settings.GROUP or settings.USER
+            try:
+                user = coerce_user(settings.USER)
+                group = coerce_group(settings.GROUP)
+
+                lock_files =  glob.glob(os.path.join(tempfile.gettempdir(),
+                                                     'bottle.*.lock'))
+                for lock_file in lock_files:
+                    os.chown(lock_file, user, group)
+
+                drop_privileges_permanently(settings.USER, settings.GROUP, ())
+            except Exception:
+                print "Failed to drop privileges. Running with current user."
+
+    thread.start_new_thread(drop_privileges, ())
+
     if settings.DEBUG:
         debug(True)
-        run(app, host='localhost', port=8000, reloader=True, server="cherrypy")
+        run(app, host=settings.DEV_HOST, port=settings.DEV_PORT,
+                 reloader=True, server="cherrypy")
     else:
-        run(app, host='localhost', port=8000, server="cherrypy")
+        run(app, host=settings.PROD_HOST,
+            port=settings.PROD_PORT, server="cherrypy")
+
+
