@@ -20,7 +20,7 @@
         Download
   </span>
   <span class="paste-option btn-group top">
-      <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
+      <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
       <button class="btn">New Paste</button>
   </span>
 </p>

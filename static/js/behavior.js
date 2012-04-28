@@ -177,9 +177,9 @@ $('.btn-clone').click(function(e){
     content_clone = content_clone + $(this).text() + '\n'; 
   });
   $('.submit-form').show();
-  $('.paste-form').hide();
+  $('.paste-form').remove();
   $('#content').val(content_clone);
-  $('#content').resize();
+  $('#content').trigger('change');
 
 });
 
