@@ -65,10 +65,12 @@ zerobin = {
       { 
         if (localStorage.getItem(i).split(';')[0].split(' ')[0] == zerobin.get_date()){
           var display_date = localStorage.getItem(i).split(';')[0].split(' ')[1];
+          var on_at = 'at ';
         }else{
           var display_date = zerobin.get_date();
+          var on_at = 'on ';
         }
-        pastes = pastes + '<li><a class="items" href="' + localStorage.getItem(i).split(';')[1] + '">' + display_date + '</a></li>';
+        pastes = pastes + '<li><a class="items" href="' + localStorage.getItem(i).split(';')[1] + '">' + on_at +  display_date + '</a></li>';
       }
       if (!pastes){
         return '<i class="grey">Your previous pastes will be saved in your browser <a href="http://www.w3.org/TR/webstorage/">localStorage</a>.</i>';
@@ -149,6 +151,21 @@ $('#content').live('keyup change', function(){
 /* Display previous pastes */
 $('.previous-pastes .items').html(zerobin.get_pastes());
  
+
+/* clone a paste */
+$('.btn-clone').click(function(e){
+  e.preventDefault();
+  content_clone = '' ;
+  $("#paste-content li").each(function(index) { 
+    content_clone = content_clone + $(this).text() + '\n'; 
+  });
+  $('.submit-form').show();
+  $('.paste-form').hide();
+  $('#content').val(content_clone);
+  $('#content').resize();
+
+});
+
 
 });
 

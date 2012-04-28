@@ -13,29 +13,52 @@
   %end
 %end
 
-<div class="well">
-<form action="/" method="get" accept-charset="utf-8">
-<p>
-  <a href="#">Download</a>
-  <span class="paste-option btn-group top">
-      <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
-      <button class="btn">New Paste</button>
-  </span>
-</p>
+<div class="well paste-form">
+	<form action="/" method="get" accept-charset="utf-8">
+	<p>
+	  <a href="#">Download</a>
+	  <span class="paste-option btn-group top">
+	      <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
+	      <button class="btn">New Paste</button>
+	  </span>
+	</p>
 
-<p>
-  <pre id="paste-content"  class="prettyprint linenums">
-    <code>
-      {{ paste.content }}
-    </code>
-  </pre>
-</p>
+	<p>
+	  <pre id="paste-content"  class="prettyprint linenums">
+	    <code>
+	      {{ paste.content }}
+	    </code>
+	  </pre>
+	</p>
 
-<p class="paste-option btn-group bottom">
-    <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
-    <button class="btn">New Paste</button>
-</p>
+	<p class="paste-option btn-group bottom">
+	    <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
+	    <button class="btn">New Paste</button>
+	</p>
 
-</form>
+	</form>
 </div>
+
+<!-- For cloning -->
+<span class="submit-form">
+	<form class="well" method="post" action="/paste/create">
+	<p class="paste-option">
+	<label for="expiration" >Expiration:</label>
+	  <select id="expiration" name="expiration">
+	    <option value="burn_after_reading">Burn after reading</option>
+	    <option selected value="1_day">1 day</option>
+	    <option value="1_month">1 month</option>
+	    <option value="never">Never</option>
+	  </select>
+	<button type="submit" class="btn btn-primary">Submit</button>
+	<p>
+	<p>
+	    <textarea rows="10"  style="width:100%;"
+	              class="input-xlarge"
+	              id="content" name="content"></textarea>
+	</p>
+	</form>
+</span>
+
+
 %rebase base
