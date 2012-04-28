@@ -33,7 +33,13 @@ zerobin = {
   },
   get_time: function(){
     var date = new Date();
-    return date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    var h=date.getHours();
+    var m=date.getMinutes();
+    var s=date.getSeconds();
+    if (h<10) {h = "0" + h}
+    if (m<10) {m = "0" + m}
+    if (s<10) {s = "0" + s}
+    return h+":"+m+":"+s;
   },
   support_localstorage: function(){
     if (localStorage){
@@ -47,25 +53,22 @@ zerobin = {
       var date = new Date();
       var paste = zerobin.get_date()+" "+zerobin.get_time()+";"+url;
       if (localStorage.length > 19)
-        void removeItem(localStorage.length);
+        void removeItem(0);
       localStorage.setItem(localStorage.length, paste);
     }
   },
   get_pastes: function(){
-    if (zerobin.support_localstorage){
-      var date = new Date();
-      var pastes = '';
-      var key = ''; 
+    if (zerobin.support_localstorage){ 
+      var pastes = ''; 
 
-      for (i=0; i<=localStorage.length-1; i++)  
-      {
-        key = localStorage.key(i);
-        if (localStorage.getItem(key).split(';')[0].split(' ')[0] == zerobin.get_date()){
-          var display_date = localStorage.getItem(key).split(';')[0].split(' ')[1];
+      for (i=localStorage.length-1; i>=0; i--)  
+      { 
+        if (localStorage.getItem(i).split(';')[0].split(' ')[0] == zerobin.get_date()){
+          var display_date = localStorage.getItem(i).split(';')[0].split(' ')[1];
         }else{
           var display_date = zerobin.get_date();
         }
-        pastes = pastes + '<li><a class="items" href="' + localStorage.getItem(key).split(';')[1] + '">' + display_date + '</a></li>';
+        pastes = pastes + '<li><a class="items" href="' + localStorage.getItem(i).split(';')[1] + '">' + display_date + '</a></li>';
       }
       if (!pastes){
         return '<i class="grey">Your previous pastes will be saved in your browser <a href="http://www.w3.org/TR/webstorage/">localStorage</a>.</i>';
