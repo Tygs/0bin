@@ -1,8 +1,8 @@
 <form class="well" method="post" action="/paste/create">
 
 <p class="paste-option">
-<label >Expiration:</label>
-  <select id="expiration" name="expiration">
+<label for="expiration">Expiration:</label>
+  <select name="expiration" >
     <option value="burn_after_reading">Burn after reading</option>
     <option value="10_minutes">10 minutes</option>
     <option value="1_hour">1 hour</option>
@@ -20,9 +20,9 @@
 </p>
 
 
-<p class="paste-option">
-<label >Expiration:</label>
-  <select id="expiration" name="expiration">
+<p class="paste-option paste-option-down">
+<label for="expiration" >Expiration:</label>
+  <select name="expiration" >
     <option value="burn_after_reading">Burn after reading</option>
     <option value="10_minutes">10 minutes</option>
     <option value="1_hour">1 hour</option>

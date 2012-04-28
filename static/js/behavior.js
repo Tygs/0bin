@@ -49,4 +49,27 @@ if (content && key) {
     }
 }
 
+/* expiration flip/flop */
+$('.paste-option select').change(function(){
+  var value = $(this).val();
+  $('.paste-option select').val(value);
+});
+
+
+/* Resize Textarea content */
+$('#content').elastic();
+
+/* Display bottom paste option buttons when needed */
+$('.paste-option-down').hide();
+$('#content').live('keyup', function(){
+   if($('#content').height() < 600 ){
+      $('.paste-option-down').hide();
+   }
+   else {
+      $(window).scrollTop($(this).height()); 
+      $('.paste-option-down').show();
+   };
+});
+
+
 });

@@ -86,6 +86,8 @@
 
     <script src="/static/js/lzw.js"></script>
     <script src="/static/js/highlight.pack.js"></script>
+    <script src="/static/js/jquery.elastic.source.js"></script>
+
     <!--
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/bootstrap-transition.js"></script>
@@ -100,7 +102,6 @@
     <script src="/static/js/bootstrap-collapse.js"></script>
     <script src="/static/js/bootstrap-carousel.js"></script>
     <script src="/static/js/bootstrap-typeahead.js"></script>
-
     -->
 
   </body>
