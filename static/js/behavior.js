@@ -1,7 +1,9 @@
 ;
 
-// Start random number generator seeding ASAP
+/* Start random number generator seeding ASAP *%
 sjcl.random.startCollectors();
+/* Ensure jquery use cache for ajax requests */
+$.ajaxSetup({ cache: true });
 
 zerobin = {
   encrypt: function(key, content) {
@@ -12,29 +14,18 @@ zerobin = {
   },
   make_key: function() {
     return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
-  },
-  /**
-  Check for data uri support by trying to insert a 1x1px image.
-  You can pass optional callbacks: "yes" for success, "no" for no support.
-  Default behavior is to add data-uri or no-data-uri as a class in the body
-  */
-  support_data_uri: function(yes, no){
-    var data = new Image();
-    var yes = yes || function(){ document.body.className += " data-uri"; };
-    var no = no || function(){ document.body.className += " no-data-uri"; };
-    data.onload = data.onerror = function(){
-      if(this.width + this.height != 2){no()} else {yes()}
-    }
-    data.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
   }
 };
 
 
-document.documentElement.className += " no-data-uri";
 $(function(){
 
-var language = null;
-
+/**
+  On the create paste page:
+  On click on the send button, compress and encrypt data before
+   posting it using ajax. Then redirect to the address of the
+   newly created paste, adding the key in the hash.
+*/
 $('button[type=submit]').live("click", function(e){
 
   e.preventDefault();
@@ -56,34 +47,59 @@ $('button[type=submit]').live("click", function(e){
 
 });
 
+/** On the display paste page.
+    Decrypt and decompress the paste content, add syntax coloration
+    then insert the flash code to download the paste.
+*/
 var content = $('#paste-content').text().trim();
 var key = window.location.hash.substring(1);
 if (content && key) {
     try {
         $('#paste-content').text(zerobin.decrypt(key, content));
-        prettyPrint();
     } catch(err) {
         alert('Could not decrypt data (Wrong key ?)');
     }
+    prettyPrint();
+
+    /** Load dynamically the flash code (it's pretty heavy so doing it
+       now will make the page appear to load faster)
+       And create the download button.
+    */
+    $.getScript("/static/js/swfobject.js", function(script, textStatus) {
+      $.getScript("/static/js/downloadify.min.js", function(){
+        Downloadify.create('downloadify',{
+          filename: function(){
+            return 'test.txt';
+          },
+          data: function(){
+            return $('#paste-content').text();
+          },
+          onError: function(){ alert("Sorry, the file couldn't be downloaded. :("); },
+          swf: '/static/js/downloadify.swf',
+          downloadImage: '/static/img/download.png',
+          width: 96,
+          height: 28,
+          transparent: true,
+          append: false
+        });
+      });
+    });
 }
 
-/* expiration flip/flop */
+/* Synchronize expiration select boxes value */
 $('.paste-option select').live('change', function(){
   var value = $(this).val();
   $('.paste-option select').val(value);
 });
 
 
-/* Resize Textarea content */
+/* Resize Textarea according to content */
 $('#content').elastic();
 
 
 /* Display bottom paste option buttons when needed */
-if($('#content').height() < 600 ){
-  $('.paste-option.bottom').remove();
-};
 $('#content').live('keyup change', function(){
-   if($('#content').height() < 600 ){
+   if($('#content').height() < 400 ){
       $('.paste-option.down').remove();
    }
    else {
@@ -92,6 +108,5 @@ $('#content').live('keyup change', function(){
     }
    };
 });
-
 
 });

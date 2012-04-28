@@ -87,6 +87,7 @@
     <script src="/static/js/jquery.elastic.source.js"></script>
     <script src="/static/js/lzw.js"></script>
     <script src="/static/js/prettify.min.js"></script>
+
     <!--
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/bootstrap-transition.js"></script>

@@ -16,7 +16,9 @@
 <div class="well">
 <form action="/" method="get" accept-charset="utf-8">
 <p>
-  <a href="#">Download</a>
+  <span id="downloadify">
+        Download
+  </span>
   <span class="paste-option btn-group top">
       <button class="btn"><i class="icon-camera"></i>&nbsp;Clone</button>
       <button class="btn">New Paste</button>
