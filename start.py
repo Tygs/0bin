@@ -51,7 +51,6 @@ def create_paste():
 @view('paste')
 def display_paste(paste_id):
 
-
     now = datetime.now()
     keep_alive = False
     try:

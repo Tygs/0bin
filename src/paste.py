@@ -18,7 +18,6 @@ class Paste(object):
     DIR_CACHE = set()
 
     DURATIONS = {
-        u'10_minutes': 600,
         u'1_day': 24 * 3600,
         u'1_month': 30 * 24 * 3600,
         u'never': 365 * 24 * 3600 * 100,
@@ -36,9 +35,7 @@ class Paste(object):
         if isinstance(self.content, unicode):
            self.content = self.content.encode('utf8')
 
-        if (not isinstance(expiration, datetime) and
-            'burn_after_reading' not in str(expiration)):
-            self.expiration = self.get_expiration(self.expiration)
+        self.expiration = self.get_expiration(expiration)
 
         self.uuid = uuid or hashlib.sha1(self.content).hexdigest()
 
@@ -47,7 +44,15 @@ class Paste(object):
         """
             Return a tuple with the date at which the Paste will expire
             or if it should be destroyed after first reading.
+
+            Do not modify the value if it's already a date object or
+            if it's burn_after_reading
         """
+
+        if (isinstance(expiration, datetime) or
+            'burn_after_reading' in str(expiration)):
+            return expiration
+
         try:
             return datetime.now() + timedelta(seconds=self.DURATIONS[expiration])
         except KeyError:

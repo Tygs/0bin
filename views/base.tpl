@@ -8,8 +8,8 @@
           content="0bin is a client-side-encrypted
                    pastebin with a burn after reading feature">
 
-    <link rel="shortcut icon" href="/static/img/favicon.ico">
-    <link href="/static/css/vs.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/ico/favicon.ico">
+    <link href="/static/css/prettify.css" rel="stylesheet" />
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
 
@@ -39,7 +39,7 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
-              <li><a href="https://github.com/sametmax/0bin/downloads">Download 0bin</a></li>
+              <li><a href="#download">Download 0bin</a></li>
               <li><a href="#faq">Faq</a></li>
             </ul>
             <p class="navbar-text pull-right"><i>"A client side encrypted PasteBin..."</i></p>
@@ -82,12 +82,11 @@
        </p>
 
       </footer>
- 
 
-    <script src="/static/js/lzw.js"></script>
-    <script src="/static/js/highlight.pack.js"></script>
+
     <script src="/static/js/jquery.elastic.source.js"></script>
-
+    <script src="/static/js/lzw.js"></script>
+    <script src="/static/js/prettify.min.js"></script>
     <!--
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/bootstrap-transition.js"></script>
@@ -102,6 +101,7 @@
     <script src="/static/js/bootstrap-collapse.js"></script>
     <script src="/static/js/bootstrap-carousel.js"></script>
     <script src="/static/js/bootstrap-typeahead.js"></script>
+
     -->
 
   </body>
