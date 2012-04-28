@@ -27,6 +27,14 @@ zerobin = {
     }
     data.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
   },
+  get_date: function(){
+    var date = new Date();
+    return date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
+  },
+  get_time: function(){
+    var date = new Date();
+    return date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+  },
   support_localstorage: function(){
     if (localStorage){
       return true;  
@@ -36,18 +44,33 @@ zerobin = {
   },
   store_paste: function(url){
     if (zerobin.support_localstorage){
-      localStorage.setItem(localStorage.length, url);
+      var date = new Date();
+      var paste = zerobin.get_date()+" "+zerobin.get_time()+";"+url;
+      if (localStorage.length > 19)
+        void removeItem(localStorage.length);
+      localStorage.setItem(localStorage.length, paste);
     }
   },
   get_pastes: function(){
-    if (zerobin.support_localstorage){ 
-      var val = '';
+    if (zerobin.support_localstorage){
+      var date = new Date();
+      var pastes = '';
+      var key = ''; 
+
       for (i=0; i<=localStorage.length-1; i++)  
       {
-        key = localStorage.key(i);  
-        val = val + '<li><a class="items" href="' + localStorage.getItem(key) + '">paste ' + (i+1) + '</a></li>';
+        key = localStorage.key(i);
+        if (localStorage.getItem(key).split(';')[0].split(' ')[0] == zerobin.get_date()){
+          var display_date = localStorage.getItem(key).split(';')[0].split(' ')[1];
+        }else{
+          var display_date = zerobin.get_date();
+        }
+        pastes = pastes + '<li><a class="items" href="' + localStorage.getItem(key).split(';')[1] + '">' + display_date + '</a></li>';
       }
-      return val;
+      if (!pastes){
+        return '<i class="grey">Your previous pastes will be saved in your browser <a href="http://www.w3.org/TR/webstorage/">localStorage</a>.</i>';
+      }
+      return pastes;
     }else{
       return 'Sorry your browser does not support LocalStorage, We cannot display your previous pastes.';
     }

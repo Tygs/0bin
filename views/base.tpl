@@ -54,7 +54,7 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list previous-pastes">
               <li class="nav-header">Previous pastes</li>
-              <li><a class="items" href="#"></a></li> 
+              <li class="items"></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

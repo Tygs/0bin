@@ -11,27 +11,27 @@ text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125)
 transition: all .2s linear;
 
 }
+
 .brand span {
-font-size: 48px;
-line-height: 0;
-
+	font-size: 48px;
+	line-height: 0;
 }
-.brand em {
-display: inline;
-color: #D40202;
-margin: 0px !important;
-font-size: 27px;
 
+.brand em {
+	display: inline;
+	color: #D40202;
+	margin: 0px !important;
+	font-size: 27px;
 }
 
 /* body & other stuff */
 
 body {
-padding-top: 60px;
-padding-bottom: 40px;
+	padding-top: 60px;
+	padding-bottom: 40px;
 }
 .sidebar-nav {
-padding: 9px 0;
+	padding: 9px 0;
 }
 
 .btn-group {
@@ -43,7 +43,7 @@ padding: 9px 0;
 }
 
 #paste-content {
-background-color:white;
+	background-color:white;
 }
 
 select {
@@ -51,25 +51,33 @@ select {
 }
 
 label {
-
-display: inline;
-margin-left: 18px;
-font-style: italic;
-font-size: 11px;
-color: #888;
+	display: inline;
+	margin-left: 18px;
+	font-style: italic;
+	font-size: 11px;
+	color: #888;
 }
 
 ul, ol {
-padding: 0;
-margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 p {
 	margin: 0 0 20px;
 }
 
-.nav-header {
-	font-size: 10px;
+.grey {
+	color: #999;
+}
+
+.items {
+	text-align: center;
+}
+
+.nav-list {
+	padding-right: 0px !important;
+	font-size: 12px;
 }
 
 .form-options li{
@@ -113,11 +121,11 @@ form {
 
 
 pre {
-padding:1em 20px !important;
+	padding:1em 20px !important;
 }
 
 .linenums {
-padding-left: 35px;
+	padding-left: 35px;
 }
 
 
