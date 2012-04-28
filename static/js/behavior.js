@@ -60,13 +60,11 @@ $('.paste-option select').change(function(){
 $('#content').elastic();
 
 /* Display bottom paste option buttons when needed */
-$('.paste-option-down').hide();
-$('#content').live('keyup', function(){
+$('#content').live('keyup change', function(){
    if($('#content').height() < 600 ){
       $('.paste-option-down').hide();
    }
    else {
-      $(window).scrollTop($(this).height()); 
       $('.paste-option-down').show();
    };
 });

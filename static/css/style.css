@@ -76,6 +76,10 @@ list-style-type: none;
 
 }
 
+form textarea {
+    overflow-y:auto;
+}
+
 button.btn, input[type="submit"].btn {
 	margin-left: 5px;
 }
@@ -83,7 +87,7 @@ button.btn, input[type="submit"].btn {
 .well {
 	padding-bottom: 40px;
 	padding-right: 17px;
-} 
+}
 
 .legal {
 	margin: 0 auto;
@@ -99,7 +103,7 @@ button.btn, input[type="submit"].btn {
 form {
     padding-bottom:3em !important;
 	padding-right: 17px;
-} 
+}
 
 
 .btn-primary {
@@ -107,7 +111,9 @@ position:relative;
 top:-4px;
 }
 
-
+.paste-option-down {
+    display:none;
+}
 
 
 
