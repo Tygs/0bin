@@ -5,6 +5,7 @@
     server run.
 """
 
+import sys
 import os
 import hashlib
 import thread
@@ -18,7 +19,10 @@ from src import settings, setup_path, Paste
 
 setup_path()
 
-from privilege import drop_privileges_permanently, coerce_user, coerce_group
+try:
+    from privilege import drop_privileges_permanently, coerce_user, coerce_group
+except AttributeError:
+    pass # privilege does't work on several plateform
 
 from bottle import (Bottle, route, run, abort,
                     static_file, debug, view, request)
