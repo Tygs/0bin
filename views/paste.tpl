@@ -33,6 +33,10 @@
   </span>
 </p>
 
+<div class="progress progress-striped active">
+  <div class="bar"></div>
+</div>
+
 <p>
   <pre id="paste-content"  class="prettyprint linenums">
     <code>

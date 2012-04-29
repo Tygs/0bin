@@ -165,3 +165,20 @@ text-decoration:underline;
 	display:none;
 }
 
+/** Progress bar */
+
+.progress {
+	display:none;
+}
+
+.progress .bar {
+	width: 25%;
+	text-indent: 10px;
+	text-align:left;
+}
+
+-webkit-transition: width 0.1s ease;
+-moz-transition: width 0.1s ease;
+-ms-transition: width 0.1s ease;
+-o-transition: width 0.1s ease;
+transition: width 0.1s ease;

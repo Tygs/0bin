@@ -14,6 +14,9 @@
               class="input-xlarge"
               id="content" name="content"></textarea>
 </p>
+<div class="progress progress-striped active">
+  <div class="bar"></div>
+</div>
 </form>
 
 
