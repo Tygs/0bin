@@ -75,12 +75,17 @@
         <p>«Few persons can be made to believe that it is not quite an easy thing to invent a method of secret writing which shall baffle investigation. Yet it may be roundly asserted that human ingenuity cannot concoct a cipher which human ingenuity cannot resolve...»</p>
         <small>Edgar Allan Poe</small>
       </blockquote>
+
+      <h4 id="pixels-total" >
+        <p>ø</p>
+        <strong>41,017,923,819</strong> pastes øbinned
+      </h4>
+
       </br>
-        <p>
+        <p class="greetings span12">
             Based on an original idea from
            <a href="http://sebsauvage.net/paste/">sebsauvage.net</a>
        </p>
-
       </footer>
 
 

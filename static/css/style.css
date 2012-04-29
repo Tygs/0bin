@@ -2,14 +2,13 @@
 
 
 .brand {
-font-size: 38px !important;
-padding: 0px 55px 3px !important;
+	font-size: 38px !important;
+	padding: 0px 55px 3px !important;
 
-text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
--webkit-transition: all .2s linear;
--moz-transition: all .2s linear;
-transition: all .2s linear;
-
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
+	-webkit-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
 }
 
 .brand span {
@@ -34,15 +33,6 @@ body {
 	padding: 9px 0;
 }
 
-.btn-group {
-    float:left;
-}
-
-.paste-option {
-    float:right;
-}
-
-
 select {
 	width: 135px;
 }
@@ -61,7 +51,7 @@ ul, ol {
 }
 
 li {
-	margin-left: -4px;
+	margin-left: -9px;
 }
 
 
@@ -73,24 +63,169 @@ p {
 	color: #999;
 }
 
-.items {
-	text-align: center;
-}
-
 .nav-list {
 	padding-right: 0px !important;
 	font-size: 12px;
 }
 
-.form-options li{
+blockquote {
+	width: 630px;
 	float: left;
-	list-style-type: none;
+}
+
+h4 p {
+	float: left;
+	font-size: 80px;
+	text-shadow: 1px 3px 1px #DDD, 0 0 4px #333;
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+	margin-right: 7px;
+	margin-top: 3px;
+}
+
+h4#pixels-total {
+	position: relative;
+	width: 166px;
+	float: right;
+	margin: 8px 0 0 0;
+	padding: 0 0 0 54px;
+	font-size: 1.1em;
+	line-height: 1.4;
+	font-weight: normal;
+	color: #777;
+	-webkit-border-top-right-radius: 6px;
+	-webkit-border-top-left-radius: 20px;
+	-moz-border-top-right-radius: 6px;
+	-moz-border-top-left-radius: 20px;
+	border-top-right-radius: 6px;
+	border-top-left-radius: 20px;
+}
+
+.greetings {
+	clear: both;
+	margin: 0 auto;
+	text-align: center;
+}
+
+/* Home */
+
+.btn-group {
+    float:left;
+}
+
+.file-upload {
+	float: left;
+	margin: 22px 0px 0px 21px;
+	display: none;
+}
+
+input.btn-upload {
+	position: relative;
+	left: -6px;
+	width: 100px;
+	z-index: 1;
+	margin-top: -13px; 
+}
+
+input.hide-upload {
+	position: relative;
+	left: -110px;
+	-moz-opacity: 0;
+	filter: alpha(opacity: 0);
+	opacity: 0 ;
+	z-index: 2;
+	width: 100px;
+	margin-top: -20px;
+	cursor: pointer;
+	cursor: hand;
+	height: 49px;
+}
+ 
+/* Paste Page */
+
+.items {
+	text-align: center;
 }
 
 #paste-content {
 	background-color: white;
 }
 
+#copy-success, 
+#short-url-success, 
+.submit-form {
+	display:none;
+} 
+
+.paste-option {
+    float:right;
+} 
+
+a#clip-button.hover{
+	cursor:pointer;
+	text-decoration:underline;
+}
+
+li.L0, li.L1, li.L2, li.L3, li.L4,
+li.L5, li.L6, li.L7, li.L8, li.L9
+{
+    list-style-type: decimal;
+    background: inherit;
+}
+
+.prettyprint.linenums {
+  -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+     -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+          box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+}
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums {
+  margin: 0 0 0 55px; /* IE indents via margin-left */
+}
+ol.linenums li { 
+  color: #bebec5;
+  line-height: 18px;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.prettyprint {
+  padding: 8px;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+}
+
+pre {
+	font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, monospace, serif;
+	line-height: 21px;
+	font-size: 12px;
+
+}
+
+.kwd {
+color: #66F;
+}
+
+.pun, .opn, .clo {
+color: #0A0;
+}
+
+.lit {
+color: #933;
+}
+
+.com {
+color: #C0C;
+}
+
+
+/* Common css */
+
+form {
+    padding-bottom:3em !important;
+	padding-right: 17px;
+}
 
 form textarea {
     overflow-y:auto;
@@ -98,10 +233,6 @@ form textarea {
 
 button.btn, input[type="submit"].btn {
 	margin-left: 5px;
-}
-
-.submit-form {
-	display: none;
 }
 
 .well {
@@ -120,48 +251,9 @@ button.btn, input[type="submit"].btn {
 	margin-left: 5px;
 }
 
-form {
-    padding-bottom:3em !important;
-	padding-right: 17px;
-}
-
 .btn-primary {
 	position:relative;
 	top:-4px;
 }
 
-
-pre {
-	padding:1em 20px !important;
-}
-
-.linenums {
-	padding-left: 35px;
-}
-
-
-ol.linenums li {
-    line-height:14px;
-}
-
-ol.linenums span:first-child {
-    border-left: solid 1px #999;
-    padding-left:1em;
-}
-
-li.L0, li.L1, li.L2, li.L3, li.L4,
-li.L5, li.L6, li.L7, li.L8, li.L9
-{
-    list-style-type: decimal;
-    background: inherit;
-}
-
-a#clip-button.hover{
-cursor:pointer;
-text-decoration:underline;
-}
-
-#copy-success, #short-url-success {
-	display:none;
-}
 

@@ -1,3 +1,8 @@
+<p class="file-upload"> 
+	<input type="button" class="btn btn-upload"  value="Upload File"> 
+	<input type="file" class="hide-upload" id="file-upload" >
+</p>
+
 <form class="well" method="post" action="/paste/create">
 <p class="paste-option">
 <label for="expiration" >Expiration:</label>

@@ -6,7 +6,6 @@ sjcl.random.startCollectors();
 $.ajaxSetup({ cache: true });
 
 
-
 zerobin = {
   encrypt: function(key, content) {
     content = sjcl.codec.base64.fromBits(sjcl.codec.utf8String.toBits(content));
@@ -233,6 +232,38 @@ $('.btn-clone').click(function(e){
   $('#content').trigger('change');
 
 });
+
+
+/* Upload file using HTML5 File API */
+ 
+if (window.File && window.FileReader && window.FileList && window.Blob) { 
+  $('.file-upload').show(); 
+} 
+
+var file_upload = function(file) {
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    var content = event.target.result;
+    $('#content').val(content);
+    $('#content').trigger('change');
+  };
+
+  reader.readAsText(file[0]);
+}
+
+try {
+  $('#file-upload').change(function() {
+    file_upload(this.files);
+  });
+}
+catch (e) {
+  alert(e);
+}
+
+$('#file-upload').mouseover(function(){
+  $(this).css( 'cursor', 'pointer' );
+});
+
 
 });
 
