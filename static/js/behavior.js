@@ -5,7 +5,6 @@ sjcl.random.startCollectors();
 /* Ensure jquery use cache for ajax requests */
 $.ajaxSetup({ cache: true });
 
-zerobin = {
 
     /** Base64 + compress + encrypt, with callbacks before each operation,
         and all of them are executed in a timed continuation to give
@@ -141,7 +140,6 @@ zerobin = {
     }
     return keys.sort(zerobin.numOrdA);
   },
-
   /** Get a tinyurl using JSONP */
   getTinyURL: function(longURL, success) {
 
@@ -212,6 +210,19 @@ zerobin = {
       content_clone = content_clone + $(this).text() + '\n';
     });
     return content_clone;
+  },
+    count: function(text, options) {
+    // Set option defaults
+    var crlf = /(\r?\n|\r)/g;
+    var whitespace = /(\r?\n|\r|\s+)/g;
+    options = options || {};
+    options.lineBreaks = options.lineBreaks || 1; 
+    
+    var length = text.length,
+      nonAscii = length - text.replace(/[\u0100-\uFFFF]/g, '').length,
+        lineBreaks = length - text.replace(crlf, '').length; 
+    
+      return length + nonAscii + Math.max(0, options.lineBreaks * (lineBreaks - 1)); 
   }
 };
 
@@ -229,7 +240,14 @@ $('button[type=submit]').live("click", function(e){
   e.preventDefault();
   var paste = $('textarea').val();
 
-  if (paste.trim()) {
+  var sizebytes = zerobin.count($('#content').val(), { });
+  var oversized = sizebytes > zerobin.max_size;
+  if (oversized){
+    $('.max-size-reached').show();
+    $('.file-size').text(Math.round(sizebytes/1024));
+  }
+
+  if (!oversized && paste.trim()) {
 
     $('form.well p').hide();
     $loading = $('form.well .progress').show();
@@ -281,7 +299,7 @@ $('button[type=submit]').live("click", function(e){
 
 });
 
-/**
+**
     DECRYPTION:
     On the display paste page, decrypt and decompress the paste content,
     add syntax coloration then setup the copy to clipboard button.
@@ -361,15 +379,16 @@ if (content && key) {
 
 } /* End of "DECRYPTION" */
 
-
 /* Synchronize expiration select boxes value */
 $('.paste-option select').live('change', function(){
   var value = $(this).val();
   $('.paste-option select').val(value);
 });
 
+
 /* Resize Textarea according to content */
 $('#content').elastic();
+
 
 /* Display bottom paste option buttons when needed */
 $('#content').live('keyup change', function(){
@@ -381,6 +400,7 @@ $('#content').live('keyup change', function(){
       $('.paste-option').clone().addClass('down').appendTo('form.well');
     }
    }
+    
 });
 
 /* Display previous pastes */
@@ -394,6 +414,48 @@ $('.btn-clone').click(function(e){
   $('.paste-form').remove();
   $('#content').val(content_clone);
   $('#content').trigger('change');
+
+});
+
+
+/* Upload file using HTML5 File API */
+ 
+if (window.File && window.FileReader && window.FileList && window.Blob) { 
+  $('.file-upload').show(); 
+} 
+
+var file_upload = function(file) {
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    var content = event.target.result;
+    $('#content').val(content);
+    $('#content').trigger('change');
+  };
+
+  reader.readAsText(file[0]);
+}
+
+try {
+  $('#file-upload').change(function() {
+    file_upload(this.files);
+  });
+}
+catch (e) {
+  alert(e);
+}
+
+$('#file-upload').mouseover(function(){
+  $(this).css( 'cursor', 'pointer' );
+});
+
+
+/* Alerts */
+
+$(".close").click(function(){
+  $(this).parent().fadeOut();
 });
 
 }); /* End of "document ready" jquery callback */
+
+
+

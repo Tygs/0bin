@@ -1,3 +1,14 @@
+<div class="alert alert-error max-size-reached">
+  <a class="close" data-dismiss="alert" href="#">×</a>
+  <strong>Warning!</strong><br>
+  Your file is <strong class="file-size"></strong>KB You have reached the maximum size limit of {{ max_size_kb }}KB.
+</div>
+
+<p class="file-upload">
+	<input type="button" class="btn btn-upload"  value="Upload File"> 
+	<input type="file" class="hide-upload" id="file-upload" >
+</p> 
+
 <form class="well" method="post" action="/paste/create">
 <p class="paste-option">
 <label for="expiration" >Expiration:</label>
@@ -20,4 +31,4 @@
 </form>
 
 
-%rebase base
+%rebase base max_size=max_size

@@ -22,6 +22,9 @@
     <script src="/static/js/sjcl.js"></script>
     <script src="/static/js/jquery-1.7.2.min.js"></script>
     <script src="/static/js/behavior.js"></script>
+    <script type="text/javascript">
+      zerobin.max_size = {{ max_size }};
+    </script>
 
   </head>
 
@@ -75,12 +78,18 @@
         <p>«Few persons can be made to believe that it is not quite an easy thing to invent a method of secret writing which shall baffle investigation. Yet it may be roundly asserted that human ingenuity cannot concoct a cipher which human ingenuity cannot resolve...»</p>
         <small>Edgar Allan Poe</small>
       </blockquote>
-      </br>
-        <p>
-            Based on an original idea from
-           <a href="http://sebsauvage.net/paste/">sebsauvage.net</a>
-       </p>
 
+      <h4 id="pixels-total" >
+        <p>ø</p>
+        <strong>41,017,923,819</strong> pastes øbinned
+      </h4>
+
+      </br> 
+        <p class="greetings span12">
+            Based on an original idea from
+           <a href="http://sebsauvage.net/paste/">sebsauvage.net</a><br>
+           <a href="http://sametmax.com">Sam &amp; Max</a>
+       </p>
       </footer>
 
 

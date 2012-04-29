@@ -154,12 +154,14 @@ class Paste(object):
             self.expiration = self.expiration + '#%s' % datetime.now()
 
         # write the paste
-        with open(self.path, 'w') as f:
-            f.write(unicode(self.expiration) + '\n')
-            f.write(self.content + '\n')
-            if self.comments:
-                f.write(comments)
-
+        try:
+            with open(self.path, 'w') as f:
+                f.write(unicode(self.expiration) + '\n')
+                f.write(self.content + '\n')
+                if self.comments:
+                    f.write(comments)
+        except Exception as e:
+            import ipdb; ipdb.set_trace()
         return self
 
 
