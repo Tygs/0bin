@@ -1,11 +1,11 @@
 ;
 
-/* Start random number generator seeding ASAP *%
+/* Start random number generator seeding ASAP */
 sjcl.random.startCollectors();
 /* Ensure jquery use cache for ajax requests */
 $.ajaxSetup({ cache: true });
 
-
+zerobin = {
     /** Base64 + compress + encrypt, with callbacks before each operation,
         and all of them are executed in a timed continuation to give
         a change to the UI to respond.
@@ -211,18 +211,31 @@ $.ajaxSetup({ cache: true });
     });
     return content_clone;
   },
-    count: function(text, options) {
+  count: function(text, options) {
     // Set option defaults
     var crlf = /(\r?\n|\r)/g;
     var whitespace = /(\r?\n|\r|\s+)/g;
     options = options || {};
-    options.lineBreaks = options.lineBreaks || 1; 
-    
+    options.lineBreaks = options.lineBreaks || 1;
+
     var length = text.length,
       nonAscii = length - text.replace(/[\u0100-\uFFFF]/g, '').length,
-        lineBreaks = length - text.replace(crlf, '').length; 
-    
-      return length + nonAscii + Math.max(0, options.lineBreaks * (lineBreaks - 1)); 
+        lineBreaks = length - text.replace(crlf, '').length;
+
+      return length + nonAscii + Math.max(0, options.lineBreaks * (lineBreaks - 1));
+  },
+  message: function(type, message, title, flush, callback) {
+
+    if (flush) {$('.alert-'+type).remove()}
+
+    $message = $('#alert-template').clone().attr('id', null)
+                                   .addClass('alert alert-' + type);
+    $('.message', $message).html(message);
+
+    if (title) {$('.title', $message).html(title)}
+    else {$('.title', $message).remove()}
+
+    $message.prependTo($('#main')).show('fadeUp', callback);
   }
 };
 
@@ -242,14 +255,20 @@ $('button[type=submit]').live("click", function(e){
 
   var sizebytes = zerobin.count($('#content').val(), { });
   var oversized = sizebytes > zerobin.max_size;
+  var readable_fsize = Math.round(sizebytes/1024);
+  var readable_maxsize = Math.round(zerobin.max_size/1024)
   if (oversized){
-    $('.max-size-reached').show();
-    $('.file-size').text(Math.round(sizebytes/1024));
+    zerobin.message('error',
+                    ('Your file is <strong class="file-size">' + readable_fsize +
+                    '</strong>KB. You have reached the maximum size limit of ' +
+                    readable_maxsize + 'KB.'),
+                    'Warning!', true)
   }
 
   if (!oversized && paste.trim()) {
 
-    $('form.well p').hide();
+    $form = $('input, textarea, select, button').prop('disabled', true);
+    $form.prop('disabled', true);
     $loading = $('form.well .progress').show();
     var $loading = $('form.well .progress .bar')
                     .css('width', '25%')
@@ -278,9 +297,14 @@ $('button[type=submit]').live("click", function(e){
 
           $.post('/paste/create', data)
            .error(function(error) {
-              $('form.well p').show();
+              $form.prop('disabled', false);
               $loading.hide();
-              alert('Error: paste could not be saved. Please try again later.');
+              zerobin.message(
+                'error',
+                'Paste could not be saved. Please try again later.',
+                'Error'
+              );
+
            })
            .success(function(data) {
               $loading.text('Redirecting to new paste...').css('width', '100%');
@@ -291,15 +315,16 @@ $('button[type=submit]').live("click", function(e){
         }
       );
     } catch (err) {
-      $('form.well p').show();
+      $form.prop('disabled', false);
       $loading.hide();
-      alert('Error: paste could not be encrypted. Aborting.');
+      zerobin.message('error', 'Paste could not be encrypted. Aborting.',
+                      'Error');
     }
   }
 
 });
 
-**
+/**
     DECRYPTION:
     On the display paste page, decrypt and decompress the paste content,
     add syntax coloration then setup the copy to clipboard button.
@@ -318,7 +343,8 @@ if (content && key) {
     /* On error*/
     function(){
       $bar.hide();
-      alert('Could not decrypt data (Wrong key ?)');
+      zerobin.message('error', 'Could not decrypt data (Wrong key ?)',
+                      'Error');
     },
 
     /* Update progress bar */
@@ -345,9 +371,10 @@ if (content && key) {
           zerobin.getTinyURL(window.location.toString(), function(tinyurl){
             clip.setText(tinyurl);
             $('#copy-success').hide();
-            $('#short-url-success')
-             .html('Short url: <a href="' + tinyurk + '">' + tinyurk + '</a>')
-             .show('fadeUp');
+            zerobin.message('success',
+                            '<a href="' + tinyurk + '">' + tinyurk + '</a>',
+                            'Short url'
+            )
             $('#short-url').text('Get short url');
           });
         });
@@ -360,7 +387,8 @@ if (content && key) {
           clip.setText(zerobin.getPasteContent());
         });
         clip.addEventListener('complete', function(){
-          $('#copy-success').show('fadeUp', function(){clip.reposition()});
+          zerobin.message('info', 'The paste is now in your clipboard',
+                          '', false, function(){clip.reposition()});
         });
         clip.glue('clip-button');
 
@@ -400,7 +428,7 @@ $('#content').live('keyup change', function(){
       $('.paste-option').clone().addClass('down').appendTo('form.well');
     }
    }
-    
+
 });
 
 /* Display previous pastes */
@@ -419,10 +447,10 @@ $('.btn-clone').click(function(e){
 
 
 /* Upload file using HTML5 File API */
- 
-if (window.File && window.FileReader && window.FileList && window.Blob) { 
-  $('.file-upload').show(); 
-} 
+
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  $('.file-upload').show();
+}
 
 var file_upload = function(file) {
   var reader = new FileReader();
@@ -441,7 +469,7 @@ try {
   });
 }
 catch (e) {
-  alert(e);
+  zerobin.message('error', 'Could no upload the file', 'Error');
 }
 
 $('#file-upload').mouseover(function(){
@@ -451,7 +479,7 @@ $('#file-upload').mouseover(function(){
 
 /* Alerts */
 
-$(".close").click(function(){
+$(".close").live('click', function(){
   $(this).parent().fadeOut();
 });
 

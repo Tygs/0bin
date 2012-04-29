@@ -109,6 +109,10 @@ h4#pixels-total {
 	margin-top: 40px;
 }
 
+.alert .title {
+	display:block;
+}
+
 /* Home */
 
 .btn-group {
@@ -126,7 +130,7 @@ input.btn-upload {
 	left: -6px;
 	width: 100px;
 	z-index: 1;
-	margin-top: -13px; 
+	margin-top: -13px;
 }
 
 input.hide-upload {
@@ -143,10 +147,6 @@ input.hide-upload {
 	height: 49px;
 }
 
-.max-size-reached {
-	display: none;
-}
-
 /* Paste Page */
 
 .items {
@@ -157,15 +157,13 @@ input.hide-upload {
 	background-color: white;
 }
 
-#copy-success, 
-#short-url-success, 
 .submit-form {
 	display:none;
-} 
+}
 
 .paste-option {
     float:right;
-} 
+}
 
 a#clip-button.hover{
 	cursor:pointer;
@@ -189,7 +187,7 @@ li.L5, li.L6, li.L7, li.L8, li.L9
 ol.linenums {
   margin: 0 0 0 55px; /* IE indents via margin-left */
 }
-ol.linenums li { 
+ol.linenums li {
   color: #bebec5;
   line-height: 18px;
   text-shadow: 0 1px 0 #fff;

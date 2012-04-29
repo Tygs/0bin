@@ -1,31 +1,31 @@
 %if "burn_after_reading" in str(paste.expiration):
   %if keep_alive:
-   <div class="alert alert-info">
-      <strong>Ok!</strong>
-      This paste will be deleted the next time it is read.
-    </div>
+    <p class="alert alert-info">
+      <a class="close" data-dismiss="alert" href="#">×</a>
+      <strong class="title">Ok!</strong>
+      <span class="message">
+        This paste will be deleted the next time it is read.
+      </span>
+    </p>
   %else:
-   <div class="alert">
-   <strong>Warning!</strong>
-      This paste has self-destructed. If you close this windows, there is not way
-      to recover it.
-   </div>
+    <p class="alert">
+      <a class="close" data-dismiss="alert" href="#">×</a>
+      <strong class="title">Warning!</strong>
+      <span class="message">
+        This paste has self-destructed. If you close this windows,
+        there is not way to recover it.
+      </span>
+    </p>
   %end
 %end
 
-<div id="copy-success" class="alert alert-success">
-  The paste is now in your clipboad
-</div>
-
-<div id="short-url-success" class="alert alert-success"></div>
-
 <div class="well paste-form">
 <form action="/" method="get" accept-charset="utf-8">
-<p class="lnk-option"> 
+<p class="lnk-option">
 	  <a id="clip-button">Copy To Clipboard</a>
 	  |
 	  <a id="short-url" href=""
-	     target="_blank">Get short url</a> 
+	     target="_blank">Get short url</a>
   <span class="paste-option btn-group top">
       <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
       <button class="btn">New Paste</button>

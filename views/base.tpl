@@ -23,7 +23,7 @@
     <script src="/static/js/jquery-1.7.2.min.js"></script>
     <script src="/static/js/behavior.js"></script>
     <script type="text/javascript">
-      zerobin.max_size = {{ max_size }};
+      zerobin.max_size = {{ get('max_size', -1)}};
     </script>
 
   </head>
@@ -63,7 +63,7 @@
           </div><!--/.well -->
         </div><!--/span-->
 
-        <div class="span10">
+        <div id='main' class="span10">
 
            %include
 
@@ -84,7 +84,7 @@
         <strong>41,017,923,819</strong> pastes øbinned
       </h4>
 
-      </br> 
+      </br>
         <p class="greetings span12">
             Based on an original idea from
            <a href="http://sebsauvage.net/paste/">sebsauvage.net</a><br>
@@ -114,5 +114,12 @@
 
     -->
 
+    <p id="alert-template">
+      <a class="close" data-dismiss="alert" href="#">×</a>
+      <strong class="title"></strong>
+      <span class="message"></span>
+    </p>
+
   </body>
+
 </html>
