@@ -26,3 +26,7 @@ DEV_PORT= "8000"
 # current user
 USER = None
 GROUP = None
+
+# limit size of pasted text in bytes. Be carefull allowing too much size can slow down user's
+# browser
+MAX_SIZE = 500 * 1

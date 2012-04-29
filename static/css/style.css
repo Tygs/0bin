@@ -106,6 +106,7 @@ h4#pixels-total {
 	clear: both;
 	margin: 0 auto;
 	text-align: center;
+	margin-top: 40px;
 }
 
 /* Home */
@@ -141,7 +142,11 @@ input.hide-upload {
 	cursor: hand;
 	height: 49px;
 }
- 
+
+.max-size-reached {
+	display: none;
+}
+
 /* Paste Page */
 
 .items {

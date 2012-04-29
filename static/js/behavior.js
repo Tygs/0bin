@@ -108,6 +108,19 @@ zerobin = {
       content_clone = content_clone + $(this).text() + '\n';
     });
     return content_clone;
+  },
+    count: function(text, options) {
+    // Set option defaults
+    var crlf = /(\r?\n|\r)/g;
+    var whitespace = /(\r?\n|\r|\s+)/g;
+    options = options || {};
+    options.lineBreaks = options.lineBreaks || 1; 
+    
+    var length = text.length,
+      nonAscii = length - text.replace(/[\u0100-\uFFFF]/g, '').length,
+        lineBreaks = length - text.replace(crlf, '').length; 
+    
+      return length + nonAscii + Math.max(0, options.lineBreaks * (lineBreaks - 1)); 
   }
 };
 
@@ -125,22 +138,32 @@ $('button[type=submit]').live("click", function(e){
   e.preventDefault();
   var paste = $('textarea').val();
 
-  if (paste.trim()) {
-    var expiration = $('#expiration').val();
-    var key = zerobin.make_key();
-    var data = {content: zerobin.encrypt(key, paste), expiration: expiration}
+  var sizebytes = zerobin.count($('#content').val(), { });
 
-    $.post('/paste/create', data)
-     .error(function(error) {
-        alert('Paste could not be saved. Please try again later.');
-     })
-     .success(function(data) {
-        var paste_url = '/paste/' + data['paste'] + '#' + key;
-        window.location = (paste_url);
-        zerobin.store_paste(paste_url);
-     });
+  if (sizebytes > zerobin.max_size ){
+  
+    $('.max-size-reached').show();
+    $('.file-size').text(Math.round(sizebytes/1024));
+  
+  }else{
+
+    if (paste.trim()) {
+      var expiration = $('#expiration').val();
+      var key = zerobin.make_key();
+      var data = {content: zerobin.encrypt(key, paste), expiration: expiration}
+
+      $.post('/paste/create', data)
+       .error(function(error) {
+          alert('Paste could not be saved. Please try again later.');
+       })
+       .success(function(data) {
+          var paste_url = '/paste/' + data['paste'] + '#' + key;
+          window.location = (paste_url);
+          zerobin.store_paste(paste_url);
+       });
+    }
+
   }
-
 });
 
 /** On the display paste page.
@@ -215,6 +238,7 @@ $('#content').live('keyup change', function(){
       $('.paste-option').clone().addClass('down').appendTo('form.well');
     }
    }
+    
 });
 
 /* Display previous pastes */
@@ -263,6 +287,14 @@ catch (e) {
 $('#file-upload').mouseover(function(){
   $(this).css( 'cursor', 'pointer' );
 });
+
+
+/* Alerts */
+
+$(".close").click(function(){
+  $(this).parent().fadeOut();
+});
+
 
 
 });

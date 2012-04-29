@@ -12,6 +12,7 @@ import thread
 import time
 import tempfile
 import glob
+import math
 
 from datetime import datetime, timedelta
 
@@ -30,11 +31,14 @@ from bottle import (Bottle, route, run, abort,
 
 app = Bottle()
 
+import settings
+
 
 @app.route('/')
 @view('home')
 def index():
-    return {}
+    max_size_kb = int(math.ceil(settings.MAX_SIZE/1024.0))
+    return {'max_size': settings.MAX_SIZE, 'max_size_kb': max_size_kb}
 
 
 @app.route('/paste/create', method='POST')
