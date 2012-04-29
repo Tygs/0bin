@@ -109,16 +109,16 @@ zerobin = {
 
   /** Create a random base64 string long enought to be suitable as
   an encryption key */
-  make_key: function() {
+  makeKey: function() {
     return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
   },
 
-  get_date: function(){
+  getDate: function(){
     var date = new Date();
     return date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
   },
 
-  get_time: function(){
+  getTime: function(){
     var date = new Date();
     var h=date.getHours();
     var m=date.getMinutes();
@@ -133,7 +133,7 @@ zerobin = {
     return (a-b);
   },
 
-  get_keys: function(){
+  getKeys: function(){
     var keys = new Array();
     for(i=0; i<=localStorage.length; i++){
       if(localStorage.key(i) != null)
@@ -155,19 +155,20 @@ zerobin = {
     $.getJSON(api + encodeURIComponent(longURL) + '&callback=' + callback);
   },
 
-  support_localstorage: function(){
-    if (localStorage){
-      return true;
-    }else{
-      return false;
+  support: {
+    localstorage: function(){
+      return !!(localStorage);
+    },
+    history: function(){
+      return !!(window.history && history.pushState);
     }
   },
 
-  store_paste: function(url){
-    if (zerobin.support_localstorage){
+  storatePaste: function(url){
+    if (zerobin.support.localstorage){
       var date = new Date();
-      var paste = zerobin.get_date()+" "+zerobin.get_time()+";"+url;
-      var keys = zerobin.get_keys();
+      var paste = zerobin.getDate()+" "+zerobin.getTime()+";"+url;
+      var keys = zerobin.getKeys();
 
       if(keys.length < 1)
         keys[0] = 0;
@@ -178,20 +179,20 @@ zerobin = {
     }
   },
 
-  get_pastes: function(){
-    if (zerobin.support_localstorage){
+  getPastes: function(){
+    if (zerobin.support.localstorage){
       var pastes = '';
-      var keys = zerobin.get_keys();
+      var keys = zerobin.getKeys();
       keys.reverse();
 
       for (i=0; i<=keys.length-1; i++)
       {
         var paste = localStorage.getItem(keys[i]);
-        if (paste.split(';')[0].split(' ')[0] == zerobin.get_date()){
+        if (paste.split(';')[0].split(' ')[0] == zerobin.getDate()){
           var display_date = paste.split(';')[0].split(' ')[1];
           var on_at = 'at ';
         }else{
-          var display_date = zerobin.get_date();
+          var display_date = zerobin.getDate();
           var on_at = 'on ';
         }
         pastes = pastes + '<li><a class="items" href="' + paste.split(';')[1] + '">' + on_at +  display_date + '</a></li>';
@@ -243,7 +244,7 @@ $('button[type=submit]').live("click", function(e){
     try {
 
       var expiration = $('#expiration').val();
-      var key = zerobin.make_key();
+      var key = zerobin.makeKey();
 
       zerobin.encrypt(key, paste,
 
@@ -266,7 +267,7 @@ $('button[type=submit]').live("click", function(e){
            .success(function(data) {
               $loading.text('Redirecting to new paste...').css('width', '100%');
               var paste_url = '/paste/' + data['paste'] + '#' + key;
-              zerobin.store_paste(paste_url);
+              zerobin.storatePaste(paste_url);
               window.location = (paste_url);
            });
         }
@@ -334,7 +335,7 @@ if (content && key) {
         });
 
         /* Setup flash clipboard button */
-        ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf' );
+        ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf');
 
         var clip = new ZeroClipboard.Client();
         clip.addEventListener('mouseup', function(){
@@ -383,7 +384,7 @@ $('#content').live('keyup change', function(){
 });
 
 /* Display previous pastes */
-$('.previous-pastes .items').html(zerobin.get_pastes());
+$('.previous-pastes .items').html(zerobin.getPastes());
 
 /* clone a paste */
 $('.btn-clone').click(function(e){
