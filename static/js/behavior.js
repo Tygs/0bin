@@ -269,7 +269,7 @@ $('button[type=submit]').live("click", function(e){
 
     $form = $('input, textarea, select, button').prop('disabled', true);
     $form.prop('disabled', true);
-    $loading = $('form.well .progress').show();
+    $bar = $('form.well .progress').show();
     var $loading = $('form.well .progress .bar')
                     .css('width', '25%')
                     .text('Converting paste to bits...');
@@ -308,15 +308,22 @@ $('button[type=submit]').live("click", function(e){
            })
            .success(function(data) {
               $loading.text('Redirecting to new paste...').css('width', '100%');
-              var paste_url = '/paste/' + data['paste'] + '#' + key;
-              zerobin.storatePaste(paste_url);
-              window.location = (paste_url);
+
+              if (data['status'] == 'error') {
+                zerobin.message('error', data['message'], 'Error');
+                $form.prop('disabled', false);
+                $bar.hide();
+              } else {
+                var paste_url = '/paste/' + data['paste'] + '#' + key;
+                zerobin.storatePaste(paste_url);
+                window.location = (paste_url);
+              }
            });
         }
       );
     } catch (err) {
       $form.prop('disabled', false);
-      $loading.hide();
+      $bar.hide();
       zerobin.message('error', 'Paste could not be encrypted. Aborting.',
                       'Error');
     }
