@@ -5,6 +5,8 @@ sjcl.random.startCollectors();
 /* Ensure jquery use cache for ajax requests */
 $.ajaxSetup({ cache: true });
 
+
+
 zerobin = {
   encrypt: function(key, content) {
     content = sjcl.codec.base64.fromBits(sjcl.codec.utf8String.toBits(content));
@@ -31,6 +33,18 @@ zerobin = {
     if (s<10) {s = "0" + s}
     return h+":"+m+":"+s;
   },
+  numOrdA: function(a, b){ 
+    return (a-b); 
+  },
+  get_keys: function(){
+    var keys = new Array();
+      
+    for(i=0; i<=localStorage.length; i++){
+      if(localStorage.key(i) != null)
+        keys[i] = parseInt(localStorage.key(i),10);
+    }
+    return keys.sort(zerobin.numOrdA);
+  },
   support_localstorage: function(){
     if (localStorage){
       return true;
@@ -42,28 +56,36 @@ zerobin = {
     if (zerobin.support_localstorage){
       var date = new Date();
       var paste = zerobin.get_date()+" "+zerobin.get_time()+";"+url;
+      var keys = zerobin.get_keys();
+
+      if(keys.length < 1)
+        keys[0] = 0;
+
       if (localStorage.length > 19)
-        void removeItem(0);
-      localStorage.setItem(localStorage.length, paste);
+        void localStorage.removeItem(keys[0]);
+      localStorage.setItem(keys.reverse()[0]+1, paste);
     }
   },
   get_pastes: function(){
     if (zerobin.support_localstorage){
-      var pastes = '';
+      var pastes = ''; 
+      var keys = zerobin.get_keys();
+      keys.reverse();
 
-      for (i=localStorage.length-1; i>=0; i--)
+      for (i=0; i<=keys.length-1; i++)
       {
-        if (localStorage.getItem(i).split(';')[0].split(' ')[0] == zerobin.get_date()){
-          var display_date = localStorage.getItem(i).split(';')[0].split(' ')[1];
+        var paste = localStorage.getItem(keys[i]);
+        if (paste.split(';')[0].split(' ')[0] == zerobin.get_date()){
+          var display_date = paste.split(';')[0].split(' ')[1];
           var on_at = 'at ';
         }else{
           var display_date = zerobin.get_date();
           var on_at = 'on ';
         }
-        pastes = pastes + '<li><a class="items" href="' + localStorage.getItem(i).split(';')[1] + '">' + on_at +  display_date + '</a></li>';
-      }
+        pastes = pastes + '<li><a class="items" href="' + paste.split(';')[1] + '">' + on_at +  display_date + '</a></li>';
+      } 
       if (!pastes){
-        return '<i class="grey">Your previous pastes will be saved in your browser <a href="http://www.w3.org/TR/webstorage/">localStorage</a>.</i>';
+        return '<i class="grey">Your previous pastes will be saved in your browser using <a href="http://www.w3.org/TR/webstorage/">localStorage</a>.</i>';
       }
       return pastes;
     }else{
