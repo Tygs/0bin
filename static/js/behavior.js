@@ -38,12 +38,23 @@ zerobin = {
   },
   get_keys: function(){
     var keys = new Array();
-      
     for(i=0; i<=localStorage.length; i++){
       if(localStorage.key(i) != null)
         keys[i] = parseInt(localStorage.key(i),10);
     }
     return keys.sort(zerobin.numOrdA);
+  },
+  /** Get a tinyurl using JSONP */
+  getTinyURL: function(longURL, success) {
+
+    callback = 'zerobin_tiny_url_callback';
+    window[callback] = function(response){
+      success(response.tinyurl);
+      delete window[callback];
+    };
+
+    var api = 'http://json-tinyurl.appspot.com/?url=';
+    $.getJSON(api + encodeURIComponent(longURL) + '&callback=' + callback);
   },
   support_localstorage: function(){
     if (localStorage){
@@ -91,6 +102,13 @@ zerobin = {
     }else{
       return 'Sorry your browser does not support LocalStorage, We cannot display your previous pastes.';
     }
+  },
+  get_paste_content: function(){
+    var content_clone = '' ;
+    $("#paste-content li").each(function(index) {
+      content_clone = content_clone + $(this).text() + '\n';
+    });
+    return content_clone;
   }
 };
 
@@ -145,21 +163,32 @@ if (content && key) {
 
     if (!error) {
 
+      $('#short-url').click(function(e) {
+        e.preventDefault();
+        $('#short-url').text('Loading short url...');
+        zerobin.getTinyURL(window.location.toString(), function(tinyurl){
+          clip.setText(tinyurl);
+          $('#copy-success').hide();
+          $('#short-url-success')
+           .html('Short url: <a href="' + tinyurk + '">' + tinyurk + '</a>')
+           .show('fadeUp');
+          $('#short-url').text('Get short url');
+        });
+      });
+
       prettyPrint();
 
       /* Setup flash clipboard button */
       ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf' );
-      var clip = new ZeroClipboard.Client();
 
-      clip.addEventListener('onMouseUp', function(){
-        clip.setText($('#paste-content').text());
+      var clip = new ZeroClipboard.Client();
+      clip.addEventListener('mouseup', function(){
+        clip.setText(zerobin.get_paste_content());
       });
       clip.addEventListener('complete', function(){
-        $('#copy-success').show();
+        $('#copy-success').show('fadeUp', function(){clip.reposition()});
       });
-      clip.addEventListener('onLoad', function(){
-      });
-      clip.glue('clip-button', 'clip-container' );
+      clip.glue('clip-button');
 
       window.onresize = clip.reposition;
     }
@@ -192,13 +221,12 @@ $('#content').live('keyup change', function(){
 /* Display previous pastes */
 $('.previous-pastes .items').html(zerobin.get_pastes());
 
+
+
 /* clone a paste */
 $('.btn-clone').click(function(e){
   e.preventDefault();
-  var content_clone = '' ;
-  $("#paste-content li").each(function(index) { 
-    content_clone = content_clone + $(this).text() + '\n'; 
-  });
+  var content_clone = zerobin.get_paste_content();
   $('.submit-form').show();
   $('.paste-form').remove();
   $('#content').val(content_clone);

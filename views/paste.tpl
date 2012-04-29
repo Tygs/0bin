@@ -17,12 +17,16 @@
   The paste is now in your clipboad
 </div>
 
+<div id="short-url-success" class="alert alert-success"></div>
+
 <div class="well paste-form">
 <form action="/" method="get" accept-charset="utf-8">
 <p>
-  <span id="clip-container" style="position:relative">
-      <a id="clip-button">Copy To Clipboard</a>
-  </span>
+  <a id="clip-button">Copy To Clipboard</a>
+  |
+  <a id="short-url" href=""
+     target="_blank">Get short url</a>
+
   <span class="paste-option btn-group top">
       <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
       <button class="btn">New Paste</button>

@@ -41,7 +41,7 @@ body {
 .paste-option {
     float:right;
 }
- 
+
 
 select {
 	width: 135px;
@@ -152,17 +152,16 @@ ol.linenums span:first-child {
 li.L0, li.L1, li.L2, li.L3, li.L4,
 li.L5, li.L6, li.L7, li.L8, li.L9
 {
-    list-style-type: decimal; 
-    background: inherit; 
+    list-style-type: decimal;
+    background: inherit;
 }
 
-#clip-container div:hover,
-#clip-button:hover,
-#clip-button a:hover{
+a#clip-button.hover{
 cursor:pointer;
+text-decoration:underline;
 }
 
-#copy-success {
+#copy-success, #short-url-success {
 	display:none;
 }
 
