@@ -50,6 +50,9 @@ def create_paste():
         return {'status': 'error',
                 'message': u"Encoding error: the paste couldn't be saved."}
 
+    if '{"iv":' not in content: # reject silently non encrypted content
+        return ''
+
     if content:
         expiration = request.forms.get('expiration', u'burn_after_reading')
         paste = Paste(expiration=expiration, content=content)
