@@ -401,7 +401,7 @@ if (content && key) {
 
         /* Remap the message close handler to include the clipboard
            flash reposition */
-        $(".close").die().live('click') function(e){
+        $(".close").die().live('click'), function(e){
           e.preventDefault();
           $(this).parent().fadeOut(function(){clip.reposition()});
         });
