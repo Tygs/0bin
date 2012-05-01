@@ -9,35 +9,30 @@ import sys
 import os
 import hashlib
 import thread
-import time
-import tempfile
-import glob
 import math
 
 from datetime import datetime, timedelta
 
-from src import settings, setup_path, Paste
+import settings
+sys.path.insert(0, os.path.dirname(settings.ROOT_DIR))
+sys.path.append(os.path.join(settings.ROOT_DIR, 'libs'))
 
-setup_path()
-
-try:
-    from privilege import drop_privileges_permanently, coerce_user, coerce_group
-except AttributeError:
-    pass # privilege does't work on several plateform
-
+import bottle
 from bottle import (Bottle, route, run, abort,
                     static_file, debug, view, request)
 
+import clize
+
+from src import settings, Paste, drop_privileges
+
 
 app = Bottle()
-
-import settings
 
 
 @app.route('/')
 @view('home')
 def index():
-    max_size_kb = int(math.ceil(settings.MAX_SIZE/1024.0))
+    max_size_kb = int(math.ceil(settings.MAX_SIZE / 1024.0))
     return {'max_size': settings.MAX_SIZE, 'max_size_kb': max_size_kb}
 
 
@@ -97,38 +92,25 @@ def display_paste(paste_id):
     return {'paste': paste, 'keep_alive': keep_alive}
 
 
-@app.route('/static/<filename:path>')
-def server_static(filename):
-    return static_file(filename, root=settings.STATIC_FILES_ROOT)
+@clize.clize
+def runserver(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG,
+              serve_static=settings.DEBUG):
 
-
-if __name__ == "__main__":
-
-    def drop_privileges():
-        time.sleep(5)
-        if settings.USER:
-            settings.GROUP = settings.GROUP or settings.USER
-            try:
-                user = coerce_user(settings.USER)
-                group = coerce_group(settings.GROUP)
-
-                lock_files =  glob.glob(os.path.join(tempfile.gettempdir(),
-                                                     'bottle.*.lock'))
-                for lock_file in lock_files:
-                    os.chown(lock_file, user, group)
-
-                drop_privileges_permanently(settings.USER, settings.GROUP, ())
-            except Exception:
-                print "Failed to drop privileges. Running with current user."
+    if serve_static:
+        @app.route('/static/<filename:path>')
+        def server_static(filename):
+            return static_file(filename, root=settings.STATIC_FILES_ROOT)
 
     thread.start_new_thread(drop_privileges, ())
 
-    if settings.DEBUG:
-        debug(True)
-        run(app, host=settings.DEV_HOST, port=settings.DEV_PORT,
-                 reloader=True, server="cherrypy")
+    if debug:
+        bottle.debug(True)
+        run(app, host=host, port=port, reloader=True, server="cherrypy")
     else:
-        run(app, host=settings.PROD_HOST,
-            port=settings.PROD_PORT, server="cherrypy")
+        run(app, host=host,  port=port, server="cherrypy")
+
+
+if __name__ == "__main__":
+    clize.run(runserver)
 
 

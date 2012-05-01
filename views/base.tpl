@@ -79,10 +79,12 @@
         <small>Edgar Allan Poe</small>
       </blockquote>
 
+      <!--
       <h4 id="pixels-total" >
         <p>ø</p>
         <strong>41,017,923,819</strong> pastes øbinned
       </h4>
+      -->
 
       </br>
         <p class="greetings span12">
