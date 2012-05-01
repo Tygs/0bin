@@ -222,7 +222,7 @@ zerobin = {
   message: function(type, message, title, flush, callback) {
 
     $(window).scrollTop(0);
-    
+
     if (flush) {$('.alert-'+type).remove()}
 
     $message = $('#alert-template').clone().attr('id', null)
@@ -377,7 +377,7 @@ if (content && key) {
             $('#copy-success').hide();
             zerobin.message('success',
                             '<a href="' + tinyurl + '">' + tinyurl + '</a>',
-                            'Short url'
+                            'Short url', true
             )
             $('#short-url').text('Get short url');
           });
