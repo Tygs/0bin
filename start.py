@@ -54,11 +54,15 @@ def create_paste():
         return ''
 
     if content:
-        expiration = request.forms.get('expiration', u'burn_after_reading')
-        paste = Paste(expiration=expiration, content=content)
-        paste.save()
-        return {'status': 'ok',
-                'paste': paste.uuid}
+        # check size of the paste. if more than settings return error without saving paste.
+        # prevent from unusual use of the system.
+        # need to be improved
+        if len(content) < settings.MAX_SIZE:
+            expiration = request.forms.get('expiration', u'burn_after_reading')
+            paste = Paste(expiration=expiration, content=content)
+            paste.save()
+            return {'status': 'ok',
+                    'paste': paste.uuid}
 
     return {'status': 'error',
             'message': u"Serveur error: the paste couldn't be saved. Please try later."}

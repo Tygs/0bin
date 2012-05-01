@@ -153,15 +153,13 @@ class Paste(object):
         if self.expiration == "burn_after_reading":
             self.expiration = self.expiration + '#%s' % datetime.now()
 
-        # write the paste
-        try:
-            with open(self.path, 'w') as f:
-                f.write(unicode(self.expiration) + '\n')
-                f.write(self.content + '\n')
-                if self.comments:
-                    f.write(comments)
-        except Exception as e:
-            import ipdb; ipdb.set_trace()
+        # write the paste 
+        with open(self.path, 'w') as f:
+            f.write(unicode(self.expiration) + '\n')
+            f.write(self.content + '\n')
+            if self.comments:
+                f.write(comments)
+                
         return self
 
 
