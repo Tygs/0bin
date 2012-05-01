@@ -368,21 +368,6 @@ if (content && key) {
       /* Add a continuation to let the UI redraw */
       setTimeout(function(){
 
-        /* Setup link to get the paste short url*/
-        $('#short-url').click(function(e) {
-          e.preventDefault();
-          $('#short-url').text('Loading short url...');
-          zerobin.getTinyURL(window.location.toString(), function(tinyurl){
-            clip.setText(tinyurl);
-            $('#copy-success').hide();
-            zerobin.message('success',
-                            '<a href="' + tinyurl + '">' + tinyurl + '</a>',
-                            'Short url', true
-            )
-            $('#short-url').text('Get short url');
-          });
-        });
-
         /* Setup flash clipboard button */
         ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf');
 
@@ -397,6 +382,22 @@ if (content && key) {
         clip.glue('clip-button');
 
         window.onresize = clip.reposition;
+
+
+        /* Setup link to get the paste short url*/
+        $('#short-url').click(function(e) {
+          e.preventDefault();
+          $('#short-url').text('Loading short url...');
+          zerobin.getTinyURL(window.location.toString(), function(tinyurl){
+            clip.setText(tinyurl);
+            $('#copy-success').hide();
+            zerobin.message('success',
+                            '<a href="' + tinyurl + '">' + tinyurl + '</a>',
+                            'Short url', true, function(){clip.reposition()}
+            )
+            $('#short-url').text('Get short url');
+          });
+        });
 
         /** Syntaxic coloration */
         prettyPrint();
