@@ -1,13 +1,13 @@
 0bin
 ====
 
-Have try here: <a href="0bin.net">0bin.net</a>
+Have try here: <a href="http://0bin.net">0bin.net</a>
 
 0bin is client side encrypted pastebin that can run without a database.
 
-It allows anybody to host a pastebin while welcoming any type of content to be pasted in it. The idea is that one can (probably...) not be legally entitled to moderate the pastebin content (http://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336) as one has no way to decrypt it.
+It allows anybody to host a pastebin while welcoming any type of content to be pasted in it. The idea is that one can (probably...) not be legally entitled to <a href="http://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336">moderate the pastebin content</a> as he/she has no way to decrypt it.
 
-It's an Python implementation of the zerobin project (https://github.com/sebsauvage/ZeroBin/).
+It's an Python implementation of the <a href="https://github.com/sebsauvage/ZeroBin/">zerobin project</a>.
 
 How it works
 =============
@@ -56,5 +56,5 @@ What does 0bin not implement?
 =================================
 
 * Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations.
-* Hash collision: the ratio "probability it happens/consequence seriousness" is not worth it (http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions)
-* Comments: for now. It's no the todo list.
+* Hash collision: the ratio "probability it happens/consequence seriousness" <a href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions">is not worth it</a>
+* Comments: for now. It's on the todo list.
