@@ -259,6 +259,10 @@ button.btn, input[type="submit"].btn {
 	top:-4px;
 }
 
+#alert-template {
+	display: none;
+}
+
 /** Progress bar */
 
 .progress {

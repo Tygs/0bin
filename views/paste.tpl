@@ -74,4 +74,4 @@
 </span>
 
 
-%rebase base
+%rebase base max_size=max_size
