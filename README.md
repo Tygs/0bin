@@ -1,6 +1,8 @@
 0bin
 ====
 
+Have try here: <a href="0bin.net">0bin.net</a>
+
 0bin is client side encrypted pastebin that can run without a database.
 
 It allows anybody to host a pastebin while welcoming any type of content to be pasted in it. The idea is that one can (probably...) not be legally entitled to moderate the pastebin content (http://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336) as one has no way to decrypt it.
