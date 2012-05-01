@@ -28,4 +28,4 @@ GROUP = None
 
 # limit size of pasted text in bytes. Be carefull allowing too much size can slow down user's
 # browser
-MAX_SIZE = 1024 * 50
+MAX_SIZE = 1024 * 500

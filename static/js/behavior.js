@@ -226,6 +226,8 @@ zerobin = {
   },
   message: function(type, message, title, flush, callback) {
 
+    $(window).scrollTop(0);
+    
     if (flush) {$('.alert-'+type).remove()}
 
     $message = $('#alert-template').clone().attr('id', null)

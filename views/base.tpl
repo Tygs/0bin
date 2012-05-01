@@ -42,9 +42,9 @@
           <a class="brand" href="/"><span>ø</span>bin<em>.net</em></a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#download">Download 0bin</a></li>
-              <li><a href="#faq">Faq</a></li>
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="https://github.com/sametmax/0bin">Download 0bin</a></li>
+              <!-- <li><a href="#faq">Faq</a></li> -->
             </ul>
             <p class="navbar-text pull-right"><i>"A client side encrypted PasteBin..."</i></p>
           </div><!--/.nav-collapse -->
