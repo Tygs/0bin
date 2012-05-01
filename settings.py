@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import math
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_FILES_ROOT = os.path.join(ROOT_DIR, 'static')
 
@@ -29,3 +30,4 @@ GROUP = None
 # limit size of pasted text in bytes. Be carefull allowing too much size can slow down user's
 # browser
 MAX_SIZE = 1024 * 500
+MAX_SIZE_KB = int(math.ceil(MAX_SIZE / 1024.0))

@@ -32,8 +32,7 @@ app = Bottle()
 @app.route('/')
 @view('home')
 def index():
-    max_size_kb = int(math.ceil(settings.MAX_SIZE / 1024.0))
-    return {'max_size': settings.MAX_SIZE, 'max_size_kb': max_size_kb}
+    return {'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
 
 
 @app.route('/paste/create', method='POST')
@@ -93,7 +92,7 @@ def display_paste(paste_id):
     except (TypeError, ValueError):
         abort(404, u"This paste doesn't exist or has expired")
 
-    return {'paste': paste, 'keep_alive': keep_alive}
+    return {'paste': paste, 'keep_alive': keep_alive, 'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
 
 
 @clize.clize
