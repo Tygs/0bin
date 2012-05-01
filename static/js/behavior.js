@@ -142,15 +142,10 @@ zerobin = {
   },
   /** Get a tinyurl using JSONP */
   getTinyURL: function(longURL, success) {
-
-    callback = 'zerobin_tiny_url_callback';
-    window[callback] = function(response){
-      success(response.tinyurl);
-      delete window[callback];
-    };
-
     var api = 'http://json-tinyurl.appspot.com/?url=';
-    $.getJSON(api + encodeURIComponent(longURL) + '&callback=' + callback);
+    $.getJSON(api + encodeURIComponent(longURL) + '&callback=?', function(data){
+      success(data.tinyurl);
+    });
   },
 
   support: {
@@ -379,7 +374,7 @@ if (content && key) {
             clip.setText(tinyurl);
             $('#copy-success').hide();
             zerobin.message('success',
-                            '<a href="' + tinyurk + '">' + tinyurk + '</a>',
+                            '<a href="' + tinyurl + '">' + tinyurl + '</a>',
                             'Short url'
             )
             $('#short-url').text('Get short url');
