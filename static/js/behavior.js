@@ -399,6 +399,13 @@ if (content && key) {
           });
         });
 
+        /* Remap the message close handler to include the clipboard
+           flash reposition */
+        $(".close").die().live('click') function(e){
+          e.preventDefault();
+          $(this).parent().fadeOut(function(){clip.reposition()});
+        });
+
         /** Syntaxic coloration */
         prettyPrint();
 
@@ -484,7 +491,8 @@ $('#file-upload').mouseover(function(){
 
 /* Alerts */
 
-$(".close").live('click', function(){
+$(".close").live('click', function(e){
+  e.preventDefault();
   $(this).parent().fadeOut();
 });
 
