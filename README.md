@@ -1,7 +1,7 @@
 0bin
 ====
 
-Have try here: <a href="http://0bin.net">0bin.net</a>
+Have a try here: <a href="http://0bin.net">0bin.net</a>
 
 0bin is client side encrypted pastebin that can run without a database.
 
