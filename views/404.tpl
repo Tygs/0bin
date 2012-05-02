@@ -2,7 +2,7 @@
   <a class="close" data-dismiss="alert" href="#">×</a>
   <strong class="title">Error!</strong>
   <span class="message">
-    This paste no longer exist.
+    This paste has expired or wrong url, please check again.
   </span>
 </p>
 

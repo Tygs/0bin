@@ -27,7 +27,7 @@ from src import settings, Paste, drop_privileges
 
 
 app = Bottle()
-
+ 
 
 @app.route('/')
 @view('home')
@@ -91,14 +91,16 @@ def display_paste(paste_id):
 
     except (TypeError, ValueError):
         #abort(404, u"This paste doesn't exist or has expired")
-        return error404()
+        return error404(ValueError)
 
     return {'paste': paste, 'keep_alive': keep_alive, 'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
 
 
+@app.error(404)
 @view('404')
-def error404():
+def error404(code):
     return {'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
+
 
 @clize.clize
 def runserver(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG,
