@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(settings.ROOT_DIR))
 sys.path.append(os.path.join(settings.ROOT_DIR, 'libs'))
 
 import bottle
-from bottle import (Bottle, route, run, abort,
+from bottle import (Bottle, route, run, abort, error,
                     static_file, debug, view, request)
 
 import clize
@@ -90,10 +90,15 @@ def display_paste(paste_id):
             raise ValueError()
 
     except (TypeError, ValueError):
-        abort(404, u"This paste doesn't exist or has expired")
+        #abort(404, u"This paste doesn't exist or has expired")
+        return error404()
 
     return {'paste': paste, 'keep_alive': keep_alive, 'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
 
+
+@view('404')
+def error404():
+    return {'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
 
 @clize.clize
 def runserver(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG,
