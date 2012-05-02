@@ -142,15 +142,10 @@ zerobin = {
   },
   /** Get a tinyurl using JSONP */
   getTinyURL: function(longURL, success) {
-
-    callback = 'zerobin_tiny_url_callback';
-    window[callback] = function(response){
-      success(response.tinyurl);
-      delete window[callback];
-    };
-
     var api = 'http://json-tinyurl.appspot.com/?url=';
-    $.getJSON(api + encodeURIComponent(longURL) + '&callback=' + callback);
+    $.getJSON(api + encodeURIComponent(longURL) + '&callback=?', function(data){
+      success(data.tinyurl);
+    });
   },
 
   support: {
@@ -227,7 +222,7 @@ zerobin = {
   message: function(type, message, title, flush, callback) {
 
     $(window).scrollTop(0);
-    
+
     if (flush) {$('.alert-'+type).remove()}
 
     $message = $('#alert-template').clone().attr('id', null)
@@ -373,21 +368,6 @@ if (content && key) {
       /* Add a continuation to let the UI redraw */
       setTimeout(function(){
 
-        /* Setup link to get the paste short url*/
-        $('#short-url').click(function(e) {
-          e.preventDefault();
-          $('#short-url').text('Loading short url...');
-          zerobin.getTinyURL(window.location.toString(), function(tinyurl){
-            clip.setText(tinyurl);
-            $('#copy-success').hide();
-            zerobin.message('success',
-                            '<a href="' + tinyurk + '">' + tinyurk + '</a>',
-                            'Short url'
-            )
-            $('#short-url').text('Get short url');
-          });
-        });
-
         /* Setup flash clipboard button */
         ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf');
 
@@ -402,6 +382,29 @@ if (content && key) {
         clip.glue('clip-button');
 
         window.onresize = clip.reposition;
+
+
+        /* Setup link to get the paste short url*/
+        $('#short-url').click(function(e) {
+          e.preventDefault();
+          $('#short-url').text('Loading short url...');
+          zerobin.getTinyURL(window.location.toString(), function(tinyurl){
+            clip.setText(tinyurl);
+            $('#copy-success').hide();
+            zerobin.message('success',
+                            '<a href="' + tinyurl + '">' + tinyurl + '</a>',
+                            'Short url', true, function(){clip.reposition()}
+            )
+            $('#short-url').text('Get short url');
+          });
+        });
+
+        /* Remap the message close handler to include the clipboard
+           flash reposition */
+        $(".close").die().live('click', function(e){
+          e.preventDefault();
+          $(this).parent().fadeOut(function(){clip.reposition()});
+        });
 
         /** Syntaxic coloration */
         prettyPrint();
@@ -488,7 +491,8 @@ $('#file-upload').mouseover(function(){
 
 /* Alerts */
 
-$(".close").live('click', function(){
+$(".close").live('click', function(e){
+  e.preventDefault();
   $(this).parent().fadeOut();
 });
 
