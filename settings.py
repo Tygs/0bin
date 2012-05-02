@@ -11,7 +11,7 @@ STATIC_FILES_ROOT = os.path.join(ROOT_DIR, 'static')
 
 # debug will get you error message and auto reload
 # don't set this to True in production
-DEBUG = True
+DEBUG = False
 
 # absolute path where the paste files should be store
 # default in projectdirectory/static/content/
@@ -31,3 +31,11 @@ GROUP = None
 # browser
 MAX_SIZE = 1024 * 500
 MAX_SIZE_KB = int(math.ceil(MAX_SIZE / 1024.0))
+
+# this import a file named settings_local.py if it exists
+# you may want to create such a file to have different settings
+# on each machine
+try:
+    from settings_local import *
+except ImportError:
+    pass

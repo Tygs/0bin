@@ -27,7 +27,7 @@ from src import settings, Paste, drop_privileges
 
 
 app = Bottle()
- 
+
 
 @app.route('/')
 @view('home')
@@ -93,7 +93,9 @@ def display_paste(paste_id):
         #abort(404, u"This paste doesn't exist or has expired")
         return error404(ValueError)
 
-    return {'paste': paste, 'keep_alive': keep_alive, 'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
+    return {'paste': paste, 'keep_alive': keep_alive,
+            'max_size': settings.MAX_SIZE,
+            'max_size_kb': settings.MAX_SIZE_KB}
 
 
 @app.error(404)
