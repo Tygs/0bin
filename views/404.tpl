@@ -1,4 +1,4 @@
-<p class="alert">
+<p class="alert alert-error">
   <a class="close" data-dismiss="alert" href="#">×</a>
   <strong class="title">Error!</strong>
   <span class="message">
