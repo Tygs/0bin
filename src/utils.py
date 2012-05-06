@@ -30,3 +30,16 @@ def drop_privileges():
             drop_privileges_permanently(settings.USER, settings.GROUP, ())
         except Exception:
             print "Failed to drop privileges. Running with current user."
+
+
+def dmerge(*args):
+    """
+        return new directionay being the sum of all merged dictionaries passed as arguments
+    """
+
+    dictionary = {}
+
+    for arg in args:
+        dictionary.update(arg)
+
+    return dictionary

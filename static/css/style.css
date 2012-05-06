@@ -176,8 +176,8 @@ li.L5, li.L6, li.L7, li.L8, li.L9
     list-style-type: decimal;
     background: inherit;
 }
-
-.prettyprint.linenums {
+ 
+.margin-color {
   -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
      -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
           box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
@@ -274,9 +274,4 @@ button.btn, input[type="submit"].btn {
 	text-indent: 10px;
 	text-align:left;
 }
-
--webkit-transition: width 0.1s ease;
--moz-transition: width 0.1s ease;
--ms-transition: width 0.1s ease;
--o-transition: width 0.1s ease;
-transition: width 0.1s ease;
+ 

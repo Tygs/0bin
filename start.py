@@ -23,16 +23,19 @@ from bottle import (Bottle, route, run, abort, error,
 
 import clize
 
-from src import settings, Paste, drop_privileges
-
+from src import settings, Paste, drop_privileges, dmerge
 
 app = Bottle()
- 
+
+global_vars = { 
+    'settings' : settings
+}
+
 
 @app.route('/')
 @view('home')
-def index():
-    return {'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
+def index():  
+    return global_vars
 
 
 @app.route('/paste/create', method='POST')
@@ -66,6 +69,7 @@ def create_paste():
 @view('paste')
 def display_paste(paste_id):
 
+
     now = datetime.now()
     keep_alive = False
     try:
@@ -93,14 +97,15 @@ def display_paste(paste_id):
         #abort(404, u"This paste doesn't exist or has expired")
         return error404(ValueError)
 
-    return {'paste': paste, 'keep_alive': keep_alive, 'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
+    context = {'paste': paste, 'keep_alive': keep_alive}
+
+    return dmerge(context, global_vars)
 
 
 @app.error(404)
 @view('404')
 def error404(code):
-    return {'max_size': settings.MAX_SIZE, 'max_size_kb': settings.MAX_SIZE_KB}
-
+    return global_vars
 
 @clize.clize
 def runserver(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG,
@@ -118,6 +123,8 @@ def runserver(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG,
         run(app, host=host, port=port, reloader=True, server="cherrypy")
     else:
         run(app, host=host,  port=port, server="cherrypy")
+
+
 
 
 if __name__ == "__main__":

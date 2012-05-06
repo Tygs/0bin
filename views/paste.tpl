@@ -37,7 +37,7 @@
 </div>
 
 <p>
-  <pre id="paste-content"  class="prettyprint linenums">
+  <pre id="paste-content" class="prettyprint linenums">
     <code>
       {{ paste.content }}
     </code>
@@ -74,4 +74,4 @@
 </span>
 
 
-%rebase base max_size=max_size
+%rebase base settings=settings

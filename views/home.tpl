@@ -25,4 +25,4 @@
 </form>
 
 
-%rebase base max_size=max_size
+%rebase base settings=settings

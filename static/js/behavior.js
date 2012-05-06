@@ -409,6 +409,9 @@ if (content && key) {
         /** Syntaxic coloration */
         prettyPrint();
 
+        /** Add margin color */
+        $("#paste-content").addClass("margin-color");
+
         /* Display result */
         $loading.text('Done').css('width', '100%');
         $bar.hide();

@@ -9,5 +9,5 @@ import sys
 
 import settings
 from paste import Paste
-from utils import drop_privileges
+from utils import drop_privileges, dmerge
 

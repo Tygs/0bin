@@ -31,3 +31,7 @@ GROUP = None
 # browser
 MAX_SIZE = 1024 * 500
 MAX_SIZE_KB = int(math.ceil(MAX_SIZE / 1024.0))
+
+
+# Email for contact
+EMAIL = "your@email.com"
