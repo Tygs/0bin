@@ -13,6 +13,8 @@ import math
 
 from datetime import datetime, timedelta
 
+# add project dir and libs dir to the PYTHON PATH to ensure they are
+# importable
 import settings
 sys.path.insert(0, os.path.dirname(settings.ROOT_DIR))
 sys.path.append(os.path.join(settings.ROOT_DIR, 'libs'))
@@ -23,7 +25,8 @@ from bottle import (Bottle, route, run, abort, error,
 
 import clize
 
-from src import settings, Paste, drop_privileges
+from src.paste import Paste
+from src.utils import drop_privileges
 
 
 app = Bottle()

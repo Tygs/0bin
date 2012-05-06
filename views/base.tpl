@@ -19,9 +19,10 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script src="/static/js/sjcl.js"></script>
     <script src="/static/js/jquery-1.7.2.min.js"></script>
+    <script src="/static/js/sjcl.js"></script>
     <script src="/static/js/behavior.js"></script>
+
     <script type="text/javascript">
       zerobin.max_size = {{ get('max_size', -1)}};
     </script>
@@ -58,7 +59,19 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list previous-pastes">
               <li class="nav-header">Previous pastes</li>
-              <li class="items"></li>
+              <li class="item local-storage">
+                <em class="grey">
+                  Your previous pastes will be saved in  your browser using
+                  <a href="http://www.w3.org/TR/webstorage/">localStorage</a>.
+                </em>
+              </li>
+              <li class="item no-local-storage">
+                <em class="grey">
+                  Sorry your browser does not support
+                  <a href="http://www.w3.org/TR/webstorage/">LocalStorage</a>,
+                  We cannot display your previous pastes.
+                </em>
+              </li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -94,27 +107,10 @@
        </p>
       </footer>
 
-
     <script src="/static/js/jquery.elastic.source.js"></script>
     <script src="/static/js/lzw.js"></script>
     <script src="/static/js/prettify.min.js"></script>
     <script src="/static/js/ZeroClipboard.js"></script>
-    <!--
-    <script src="/static/js/jquery.js"></script>
-    <script src="/static/js/bootstrap-transition.js"></script>
-    <script src="/static/js/bootstrap-alert.js"></script>
-    <script src="/static/js/bootstrap-modal.js"></script>
-    <script src="/static/js/bootstrap-dropdown.js"></script>
-    <script src="/static/js/bootstrap-scrollspy.js"></script>
-    <script src="/static/js/bootstrap-tab.js"></script>
-    <script src="/static/js/bootstrap-tooltip.js"></script>
-    <script src="/static/js/bootstrap-popover.js"></script>
-    <script src="/static/js/bootstrap-button.js"></script>
-    <script src="/static/js/bootstrap-collapse.js"></script>
-    <script src="/static/js/bootstrap-carousel.js"></script>
-    <script src="/static/js/bootstrap-typeahead.js"></script>
-
-    -->
 
     <p id="alert-template">
       <a class="close" data-dismiss="alert" href="#">×</a>

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-# import default settings value from src/default_settings.py
-# you can refer to this file if you forgot what
-# settings is for and what it is set to by default
-# DO NOT ALTER THIS LINE
-from src.default_settings import *
+import os
+import math
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STATIC_FILES_ROOT = os.path.join(ROOT_DIR, 'static')
 
 # debug will get you error message and auto reload
 # don't set this to True in production
@@ -26,15 +26,8 @@ PORT= "8000"
 USER = None
 GROUP = None
 
-# limit size of pasted text in bytes. Be carefull allowing too much
-# size can slow down user's browser
+# limit size of pasted text in bytes. Be carefull allowing too much size can slow down user's
+# browser
 MAX_SIZE = 1024 * 500
 MAX_SIZE_KB = int(math.ceil(MAX_SIZE / 1024.0))
 
-# this import a file named settings_local.py if it exists
-# you may want to create such a file to have different settings
-# on each machine
-try:
-    from settings_local import *
-except ImportError:
-    pass
