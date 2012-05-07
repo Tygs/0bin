@@ -33,6 +33,7 @@ zerobin = {
         and all of them are executed in a timed continuation to give
         a change to the UI to respond.
     */
+    version: '0.1',
     encrypt: function(key, content, toBase64Callback,
                     compressCallback, encryptCallback, doneCallback) {
 
@@ -135,20 +136,21 @@ zerobin = {
     return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
   },
 
-  getDate: function(){
-    var date = new Date();
-    return date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
+  getFormatedDate: function(date){
+    var date = date || new Date();
+    return ((date.getMonth() +1 ) + '-' +
+             date.getDate() + '-' + date.getFullYear());
   },
 
-  getTime: function(){
-    var date = new Date();
-    var h=date.getHours();
-    var m=date.getMinutes();
-    var s=date.getSeconds();
-    if (h<10) {h = "0" + h}
-    if (m<10) {m = "0" + m}
-    if (s<10) {s = "0" + s}
-    return h+":"+m+":"+s;
+  getFormatedTime: function(date){
+    var date = date || new Date();
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+    if (h < 10) {h = "0" + h}
+    if (m < 10) {m = "0" + m}
+    if (s < 10) {s = "0" + s}
+    return h + ":" + m + ":" + s;
   },
 
   numOrdA: function(a, b){
@@ -156,8 +158,8 @@ zerobin = {
   },
 
   getKeys: function(){
-    var keys = new Array();
-    for(i=0; i<=localStorage.length; i++){
+    var keys = [];
+    for(i=0; i <= localStorage.length; i++){
       if(localStorage.key(i) != null)
         keys[i] = parseInt(localStorage.key(i),10);
     }
@@ -196,7 +198,8 @@ zerobin = {
 
   storatePaste: function(url){
     if (zerobin.support.localStorage){
-      var paste = zerobin.getDate()+" "+zerobin.getTime()+";"+url;
+      var paste = (zerobin.getFormatedDate() + " " +
+                   zerobin.getFormatedTime() + ";" + url);
       var keys = zerobin.getKeys();
 
       if(keys.length < 1){keys[0] = 0}
@@ -213,13 +216,13 @@ zerobin = {
   getPreviousPastes: function(){
     var pastes = [],
         keys = zerobin.getKeys(),
-        date = zerobin.getDate(),
-        prefix = 'on ';
+        date = zerobin.getFormatedDate();
     keys.reverse();
 
     for (i=0; i <= keys.length-1; i++)  {
       var paste = localStorage.getItem(keys[i]).split(';');
       var displayDate = paste[0].split(' ')[0];
+      var prefix = 'the ';
       if (displayDate == date){
         displayDate = paste[0].split(' ')[1];
         prefix = 'at ';
@@ -306,7 +309,7 @@ $(function(){
    posting it using ajax. Then redirect to the address of the
    newly created paste, adding the key in the hash.
 */
-$('.btn-primary').live("click", function(e){
+$('.btn-primary').on("click", function(e){
 
   e.preventDefault();
   var paste = $('textarea').val();
@@ -485,7 +488,7 @@ if (content && key) {
 
         /* Remap the message close handler to include the clipboard
            flash reposition */
-        $(".close").die().live('click', function(e){
+        $(".close").off().on('click', function(e){
           e.preventDefault();
           $(this).parent().fadeOut(reposition);
         });
@@ -510,7 +513,7 @@ if (content && key) {
 } /* End of "DECRYPTION" */
 
 /* Synchronize expiration select boxes value */
-$('.paste-option select').live('change', function(){
+$('.paste-option select').on('change', function(){
   var $this = $(this);
   $this.val($this.val());
 });
@@ -601,20 +604,28 @@ if (zerobin.support.fileUpload) {
     reader.readAsText(files[0]);
   }
 
-  var $button = $('#file-upload');
+  var $buttonOverlay = $('#file-upload');
+  var $button = $('.btn-upload');
+
   try {
-    $button.change(function(){upload(this.files)});
+    $button.val('Uploading...');
+    $button.prop('disabled', true);
+    $buttonOverlay.change(function(){upload(this.files)});
   }
   catch (e) {
     zerobin.message('error', 'Could no upload the file', 'Error');
+    $button.val('Upload File');
+    $button.prop('disabled', false);
   }
 
-  $button.mouseover(mkcb($(this).css, 'cursor', 'pointer'));
+  $button.prop('disabled', false);
+  $button.val('Upload File');
+  $buttonOverlay.mouseover(mkcb($(this).css, 'cursor', 'pointer'));
 }
 
 /* Alerts */
 
-$(".close").live('click', function(e){
+$(".close").on('click', function(e){
   e.preventDefault();
   $(this).parent().fadeOut();
 });
