@@ -3,7 +3,7 @@
 
 Have a try here: <a href="http://0bin.net">0bin.net</a>
 
-0bin is client side encrypted pastebin that can run without a database.
+0bin is a client side encrypted pastebin that can run without a database.
 
 It allows anybody to host a pastebin while welcoming any type of content to be pasted in it. The idea is that one can (probably...) not be legally entitled to <a href="http://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336">moderate the pastebin content</a> as he/she has no way to decrypt it.
 
@@ -17,31 +17,32 @@ When creating the paste:
 - the browser generate a random key;
 - the pasted content is encrypted with this key using AES256;
 - the encrypted pasted content is sent to the server;
-- the browser receives the paste URL and add the key in the URL hash.
+- the browser receives the paste URL and add the key in the URL hash (#).
 
 When reading the paste:
 
 - the browser makes the GET request to the paste URL;
 - because the key is in the hash, the key is not part of the request;
-- browser gets the enrypted content et decrypt it using the key;
-- the pasted content is decrypted and code is colored.
+- browser gets the encrypted content et decrypt it using the key;
+- the pasted decrypted content is displayed and code is colored.
 
 Key points:
 
 - because the key is in the hash, the key is never sent to the server;
 - therefor it won't appear in the server logs;
 - all operations, including code coloration, must happens on the client;
-- the server is no more than a fancy recipient.
+- the server is no more than a fancy recipient for the encrypted data.
 
 
 Technologies used
 ==================
 
-- Python
-- The Bottle microframework
-- SJCL
-- jQuery
-- Bootstrap
+- <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>
+- <a href="http://bottlepy.org/">The Bottle Python Web microframework</a>
+- <a href="http://crypto.stanford.edu/sjcl/">SJCL</a> (js crypto tools)
+- <a href="http://jquery.com/">jQuery</a>
+- <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>, the twitter css framework
+- <a href="https://github.com/sametmax/VizHash.js">VizHash.js</a> to create visual hashes from pastes
 - Cherrypy (server only)
 
 Known issues
@@ -56,5 +57,5 @@ What does 0bin not implement?
 =================================
 
 * Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations.
-* Hash collision: the ratio "probability it happens/consequence seriousness" <a href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions">is not worth it</a>
+* Hash collision prevention: the ratio "probability it happens/consequence seriousness" <a href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions">is not worth it</a>
 * Comments: for now. It's on the todo list.

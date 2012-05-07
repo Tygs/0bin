@@ -1,0 +1,88 @@
+============
+Introduction
+============
+
+0bin permet à tout à chacun d'héberge un pastebin tout en acceptant que n'importe
+quel type de contenu y soit posté. L'idée est qu'une personne ne peut (probablement...)
+pas être tenue de `modérer le contenu du pastebin`_ si elle n'a aucun moyen
+de le déchiffrer.
+
+C'est une implémentation en Python du `projet zerobin`, facile à installer même
+si on ne connait pas ce langage.
+
+Comment ça marche
+====================
+
+A la création du paste:
+
+- le navigateur génère une clé aléatoire;
+- le contenu est chiffré avec une clé en utilisat AES256;
+- le contenu chiffré est envoyé au serveur;
+- le navigateur reçoit l'URL du paste et ajoute la clé dans le hash (#) de l'URL
+
+A la lecture du paste:
+
+- le navigateur fait une requête GET avec l'URL du paste;
+- puisque la clé est das le hash, la clé ne fait pas partie de la requête;
+- le navigateur récupère le contenu chiffré et le déchiffre en utilisant la clé;
+- le contenu est affiché en clair et le code coloré.
+
+Points clés:
+
+- la clé n'est jamais envoyé au serveur car elle est stocké dans le hash;
+- et donc la clé n'apparaitra pas dans les logs du serveur;
+- toutes les opérations, y compris la coloration syntaxique, se font côté client;
+- le serveur n'est rien d'autre d'un conteneur pour les données chiffrée.
+
+Autres fonctionalités
+======================
+
+- coloration syntaxique automatique (pas besoin de la spécifier);
+- expiration du pastebin: 1 jour, 1 mois, jamais;
+- autodesctruction: le paste est détruit à la première lecture;
+- clone d'un paste: pas d'édition possible, mais on peut dupliquer un paste;
+- upload du code: si le fichier est gros, on peut l'uploader d'un coup
+  plutôt qu'utiliser le copier/coller;
+- copier dans le presse papier tout le code en un click;
+- raccourcir l'url du paste en un click;
+- historique des ses propres pastes précédents;
+- hash visuel du paste pour l'identifier facilement dans une liste.
+
+
+Technologies utilisées
+=======================
+
+- Python_
+- `The Bottle Python Web microframework`_
+- SJCL_ (js crypto tools)
+- jQuery_
+- Bootstrap_, the twitter HTML5/CSS3 framework
+- VizHash.js_ to create visual hashes from pastes
+- Cherrypy_ (server only)
+
+
+Problèmes connus
+=================
+
+- 0bin use several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.
+- The "copy to clipboard" feature is buggy under linux. It's flash, so we won't fix it. Better wait for the HTML5 clipboard API to be implemented in major browsers.
+- The pasted content size limit check is not accurate. It's just a safety net, so we thinks it's ok.
+- Some url shorteners and other services storing URLs break the encryption key. We will sanitize the URL as much as we can, but there is a limit to what we can do.
+
+What does 0bin not implement?
+=================================
+
+* Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations for it.
+* Hash collision: the ratio "probability it happens/consequence seriousness" <a href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions"is not worth it</a
+* Comments: it was initially planed. But comes with a lot of issues so we chose to focus on lower handing fruits.
+
+
+.. _modérer le contenu du pastebin: http://linuxfr.org/news/zerobin-un-pastebin-securise
+.. _projet zerobin: https://github.com/sebsauvage/ZeroBin/
+.. _Python: https://en.wikipedia.org/wiki/Python_(programming_language)
+.. _The Bottle Python Web microframework: http://bottlepy.org/
+.. _SJCL: http://crypto.stanford.edu/sjcl/
+.. _jQuery: http://jquery.com/
+.. _Bootstrap: http://twitter.github.com/bootstrap/
+.. _VizHash.js: https://github.com/sametmax/VizHash.js
+.. _Cherrypy: http://www.cherrypy.org/ (server only)
