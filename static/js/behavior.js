@@ -633,5 +633,3 @@ $(".close").on('click', function(e){
 
 }); /* End of "document ready" jquery callback */
 
-
-

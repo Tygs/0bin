@@ -191,7 +191,7 @@ li.L5, li.L6, li.L7, li.L8, li.L9
     background: inherit;
 }
 
-.prettyprint.linenums.done {
+.prettyprint.linenums {
   -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
      -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
           box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
@@ -321,3 +321,4 @@ html.no-local-storage .local-storage {
 canvas {
 	border: 1px solid white;
 }
+

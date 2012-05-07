@@ -24,7 +24,7 @@
     <script src="/static/js/behavior.js"></script>
 
     <script type="text/javascript">
-      zerobin.max_size = {{ get('max_size', -1)}};
+      zerobin.max_size = {{ settings.MAX_SIZE }};
     </script>
 
   </head>
@@ -45,6 +45,7 @@
             <ul class="nav">
               <li class="active"><a href="/">Home</a></li>
               <li><a href="https://github.com/sametmax/0bin">Download 0bin</a></li>
+              <li><a href="mailto:{{ settings.EMAIL }}">Contact us</a></li>
               <!-- <li><a href="#faq">Faq</a></li> -->
             </ul>
             <p class="navbar-text pull-right"><i>"A client side encrypted PasteBin..."</i></p>
@@ -103,7 +104,7 @@
         <p class="greetings span12">
             Based on an original idea from
            <a href="http://sebsauvage.net/paste/">sebsauvage.net</a><br>
-           <a href="http://sametmax.com">Sam &amp; Max</a>
+           <a href="http://sametmax.com">Sam &amp; Max</a> | <a href="mailto:{{ settings.EMAIL }}"> Contact us</a>
        </p>
       </footer>
 

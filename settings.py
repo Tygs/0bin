@@ -31,6 +31,9 @@ GROUP = None
 MAX_SIZE = 1024 * 500
 MAX_SIZE_KB = int(math.ceil(MAX_SIZE / 1024.0))
 
+# Email for contact
+EMAIL = "your@email.com"
+
 # this import a file named settings_local.py if it exists
 # you may want to create such a file to have different settings
 # on each machine
