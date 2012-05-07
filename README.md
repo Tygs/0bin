@@ -7,7 +7,7 @@ Have a try here: <a href="http://0bin.net">0bin.net</a>
 
 It allows anybody to host a pastebin while welcoming any type of content to be pasted in it. The idea is that one can (probably...) not be legally entitled to <a href="http://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336">moderate the pastebin content</a> as he/she has no way to decrypt it.
 
-It's an Python implementation of the <a href="https://github.com/sebsauvage/ZeroBin/">zerobin project</a>.
+It's an Python implementation of the <a href="https://github.com/sebsauvage/ZeroBin/">zerobin project</a>. It's easy to install even if you know nothing about Python.
 
 How it works
 =============

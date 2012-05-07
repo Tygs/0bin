@@ -111,14 +111,15 @@ def error404(code):
 
 @clize.clize
 def runserver(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG,
-              serve_static=settings.DEBUG):
+              serve_static=settings.DEBUG, user=settings.USER,
+              group=settings.GROUP):
 
     if serve_static:
         @app.route('/static/<filename:path>')
         def server_static(filename):
             return static_file(filename, root=settings.STATIC_FILES_ROOT)
 
-    thread.start_new_thread(drop_privileges, ())
+    thread.start_new_thread(drop_privileges, (user, group))
 
     if debug:
         bottle.debug(True)
