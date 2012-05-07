@@ -5,11 +5,35 @@ sjcl.random.startCollectors();
 /* Ensure jquery use cache for ajax requests */
 $.ajaxSetup({ cache: true });
 
+/** Create a function that create inline callbacks.
+    We use it to create callbacks for onliners with static arguments
+    E.G:
+      $('stuff').hide(function()(console.log(1, 2, 3)))
+
+      Becomes:
+
+      $('stuff').hide(mkcb(console.log, 1, 2, 3))
+ */
+function mkcb(func){
+  var args = arguments;
+  return function(){
+    return func.apply(func, Array.prototype.slice.call(args, 1))
+  }
+}
+
+
+
+/***************************
+**** 0bin utilities    ***
+****************************/
+
+
 zerobin = {
     /** Base64 + compress + encrypt, with callbacks before each operation,
         and all of them are executed in a timed continuation to give
         a change to the UI to respond.
     */
+    version: '0.1',
     encrypt: function(key, content, toBase64Callback,
                     compressCallback, encryptCallback, doneCallback) {
 
@@ -112,20 +136,21 @@ zerobin = {
     return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
   },
 
-  getDate: function(){
-    var date = new Date();
-    return date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
+  getFormatedDate: function(date){
+    var date = date || new Date();
+    return ((date.getMonth() +1 ) + '-' +
+             date.getDate() + '-' + date.getFullYear());
   },
 
-  getTime: function(){
-    var date = new Date();
-    var h=date.getHours();
-    var m=date.getMinutes();
-    var s=date.getSeconds();
-    if (h<10) {h = "0" + h}
-    if (m<10) {m = "0" + m}
-    if (s<10) {s = "0" + s}
-    return h+":"+m+":"+s;
+  getFormatedTime: function(date){
+    var date = date || new Date();
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+    if (h < 10) {h = "0" + h}
+    if (m < 10) {m = "0" + m}
+    if (s < 10) {s = "0" + s}
+    return h + ":" + m + ":" + s;
   },
 
   numOrdA: function(a, b){
@@ -133,8 +158,8 @@ zerobin = {
   },
 
   getKeys: function(){
-    var keys = new Array();
-    for(i=0; i<=localStorage.length; i++){
+    var keys = [];
+    for(i=0; i <= localStorage.length; i++){
       if(localStorage.key(i) != null)
         keys[i] = parseInt(localStorage.key(i),10);
     }
@@ -148,64 +173,89 @@ zerobin = {
     });
   },
 
+  /** Check for browser support of the named featured. Store the result
+      and add a class to the html tag with the result */
   support: {
-    localstorage: function(){
-      return !!(localStorage);
-    },
-    history: function(){
-      return !!(window.history && history.pushState);
-    }
+    localStorage: (function(){
+      var val = !!(localStorage);
+      $('html').addClass((val ? '' : 'no-') + 'local-storage');
+      return val;
+    })(),
+
+    history: (function(){
+      var val = !!(window.history && history.pushState);
+      $('html').addClass((val ? '' : 'no-') + 'history');
+      return val;
+    })(),
+
+    fileUpload: (function(){
+      var w = window;
+      var val = !!(w.File && w.FileReader && w.FileList && w.Blob);
+      $('html').addClass((val ? '' : 'no-') + 'file-upload');
+      return val;
+    })(),
   },
 
   storatePaste: function(url){
-    if (zerobin.support.localstorage){
-      var date = new Date();
-      var paste = zerobin.getDate()+" "+zerobin.getTime()+";"+url;
+    if (zerobin.support.localStorage){
+      var paste = (zerobin.getFormatedDate() + " " +
+                   zerobin.getFormatedTime() + ";" + url);
       var keys = zerobin.getKeys();
 
-      if(keys.length < 1)
-        keys[0] = 0;
+      if(keys.length < 1){keys[0] = 0}
 
-      if (localStorage.length > 19)
+      if (localStorage.length > 19) {
         void localStorage.removeItem(keys[0]);
+      }
+
       localStorage.setItem(keys.reverse()[0]+1, paste);
     }
   },
 
-  getPastes: function(){
-    if (zerobin.support.localstorage){
-      var pastes = '';
-      var keys = zerobin.getKeys();
-      keys.reverse();
+  /** Return a list of the previous paste url with creation date */
+  getPreviousPastes: function(){
+    var pastes = [],
+        keys = zerobin.getKeys(),
+        date = zerobin.getFormatedDate();
+    keys.reverse();
 
-      for (i=0; i<=keys.length-1; i++)
-      {
-        var paste = localStorage.getItem(keys[i]);
-        if (paste.split(';')[0].split(' ')[0] == zerobin.getDate()){
-          var display_date = paste.split(';')[0].split(' ')[1];
-          var on_at = 'at ';
-        }else{
-          var display_date = zerobin.getDate();
-          var on_at = 'on ';
-        }
-        pastes = pastes + '<li><a class="items" href="' + paste.split(';')[1] + '">' + on_at +  display_date + '</a></li>';
+    for (i=0; i <= keys.length-1; i++)  {
+      var paste = localStorage.getItem(keys[i]).split(';');
+      var displayDate = paste[0].split(' ')[0];
+      var prefix = 'the ';
+      if (displayDate == date){
+        displayDate = paste[0].split(' ')[1];
+        prefix = 'at ';
       }
-      if (!pastes){
-        return '<i class="grey">Your previous pastes will be saved in your browser using <a href="http://www.w3.org/TR/webstorage/">localStorage</a>.</i>';
-      }
-      return pastes;
-    }else{
-      return 'Sorry your browser does not support LocalStorage, We cannot display your previous pastes.';
+      pastes.push({displayDate: displayDate, prefix: prefix, link: paste[1]});
     }
+
+    return pastes
   },
 
-  getPasteContent: function(){
-    var content_clone = '' ;
-    $("#paste-content li").each(function(index) {
-      content_clone = content_clone + $(this).text() + '\n';
-    });
-    return content_clone;
+  /** Return an link object with the URL as href so you can extract host,
+      protocol, hash, etc*/
+  parseUrl: function(url){
+    var a = document.createElement('a');
+    a.href = url
+    return a
   },
+
+  getPasteId: function(url){
+    loc = url ? zerobin.parseUrl(url) : window.location
+    return loc.pathname.replace(/[/]|paste/g, '');
+  },
+
+  /** Return the paste content stripted from any code coloration */
+  getPasteContent: function(){
+    var copy = '' ;
+    $("#paste-content li").each(function(index) {
+      copy = copy + $(this).text() + '\n';
+    });
+    return copy;
+  },
+
+  /** Return an approximate estimate the number of bytes in a text */
   count: function(text, options) {
     // Set option defaults
     var crlf = /(\r?\n|\r)/g;
@@ -219,6 +269,7 @@ zerobin = {
 
       return length + nonAscii + Math.max(0, options.lineBreaks * (lineBreaks - 1));
   },
+  /** Create a message, style it and insert it in the alert box */
   message: function(type, message, title, flush, callback) {
 
     $(window).scrollTop(0);
@@ -233,8 +284,21 @@ zerobin = {
     else {$('.title', $message).remove()}
 
     $message.prependTo($('#main')).show('fadeUp', callback);
+  },
+
+  /** Return a progress bar object */
+  progressBar: function(selector){
+    var $container = $(selector);
+    var bar = {container: $container, elem: $container.find('.bar')};
+    bar.set =  function(text, rate){bar.elem.text(text).css('width', rate)};
+    return bar;
   }
 };
+
+
+/***************************
+**** On document ready    ***
+****************************/
 
 
 $(function(){
@@ -245,31 +309,32 @@ $(function(){
    posting it using ajax. Then redirect to the address of the
    newly created paste, adding the key in the hash.
 */
-$('button[type=submit]').live("click", function(e){
+$('.btn-primary').on("click", function(e){
 
   e.preventDefault();
   var paste = $('textarea').val();
 
-  var sizebytes = zerobin.count($('#content').val(), { });
+  var sizebytes = zerobin.count($('#content').val());
   var oversized = sizebytes > zerobin.max_size;
-  var readable_fsize = Math.round(sizebytes/1024);
-  var readable_maxsize = Math.round(zerobin.max_size/1024)
+  var readableFsize = Math.round(sizebytes / 1024);
+  var readableMaxsize = Math.round(zerobin.max_size / 1024);
+
   if (oversized){
     zerobin.message('error',
-                    ('Your file is <strong class="file-size">' + readable_fsize +
+                    ('Your file is <strong class="file-size">' + readablFfsize +
                     '</strong>KB. You have reached the maximum size limit of ' +
-                    readable_maxsize + 'KB.'),
+                    readableMaxsize + 'KB.'),
                     'Warning!', true)
   }
 
   if (!oversized && paste.trim()) {
 
     $form = $('input, textarea, select, button').prop('disabled', true);
-    $form.prop('disabled', true);
-    $bar = $('form.well .progress').show();
-    var $loading = $('form.well .progress .bar')
-                    .css('width', '25%')
-                    .text('Converting paste to bits...');
+
+    // set up progress bar
+    var bar = zerobin.progressBar('form.well .progress');
+    bar.container.show();
+    bar.set('Converting paste to bits...', '25%');
 
     /* Encode, compress, encrypt and send the paste then redirect the user
        to the new paste. We ensure a loading animation is updated
@@ -282,20 +347,20 @@ $('button[type=submit]').live("click", function(e){
 
       zerobin.encrypt(key, paste,
 
-        function(){$loading.text('Encoding to base64...').css('width', '45%')},
-        function(){$loading.text('Compressing...').css('width', '65%')},
-        function(){$loading.text('Encrypting...').css('width', '85%')},
+        mkcb(bar.set, 'Encoding to base64...', '45%'),
+        mkcb(bar.set, 'Compressing...', '65%'),
+        mkcb(bar.set, 'Encrypting...', '85%'),
 
         /* This block deal with sending the data, redirection or error handling */
         function(content){
 
-          $loading.text('Sending...').css('width', '95%');
+          bar.set('Sending...', '95%');
           var data = {content: content, expiration: expiration};
 
           $.post('/paste/create', data)
            .error(function(error) {
               $form.prop('disabled', false);
-              $loading.hide();
+              bar.container.hide();
               zerobin.message(
                 'error',
                 'Paste could not be saved. Please try again later.',
@@ -304,12 +369,12 @@ $('button[type=submit]').live("click", function(e){
 
            })
            .success(function(data) {
-              $loading.text('Redirecting to new paste...').css('width', '100%');
+              bar.set('Redirecting to new paste...', '100%');
 
               if (data['status'] == 'error') {
                 zerobin.message('error', data['message'], 'Error');
                 $form.prop('disabled', false);
-                $bar.hide();
+                bar.container.hide();
               } else {
                 var paste_url = '/paste/' + data['paste'] + '#' + key;
                 zerobin.storatePaste(paste_url);
@@ -320,7 +385,7 @@ $('button[type=submit]').live("click", function(e){
       );
     } catch (err) {
       $form.prop('disabled', false);
-      $bar.hide();
+      bar.container.hide();
       zerobin.message('error', 'Paste could not be encrypted. Aborting.',
                       'Error');
     }
@@ -332,29 +397,46 @@ $('button[type=submit]').live("click", function(e){
     DECRYPTION:
     On the display paste page, decrypt and decompress the paste content,
     add syntax coloration then setup the copy to clipboard button.
+    Also calculate and set the paste visual hash.
 */
 var content = $('#paste-content').text().trim();
 var key = window.location.hash.substring(1);
 var error = false;
 if (content && key) {
 
-  var $bar = $('.well form .progress').show();
-  var $loading = $('.well form .progress .bar').css('width', '25%')
-                                               .text('Decrypting paste...');
+  /* Load the lib for visual canvas, create one from the paste id and
+     insert it */
+  $.getScript("/static/js/vizhash.min.js").done(function(script, textStatus) {
+    if (vizhash.supportCanvas) {
+      var vhash = vizhash.canvasHash(zerobin.getPasteId(), 24, 24);
+      $('<a class="vhash" href="#"></a>').click(function(e){
+        e.preventDefault();
+        if(confirm("This picture is unique to your paste so you can identify" +
+                   " it quickly. \n\n Do you want to know more about this?")){
+          window.open("http://is.gd/IJaMRG", "_blank");
+        }
+      }).prependTo('.lnk-option').append(vhash.canvas);
+    }
+  });
+
+  $form = $('input, textarea, select, button').prop('disabled', true);
+
+  var bar = zerobin.progressBar('.well form .progress');
+  bar.container.show();
+  bar.set('Decrypting paste...', '25%');
 
   zerobin.decrypt(key, content,
 
     /* On error*/
     function(){
-      $bar.hide();
-      zerobin.message('error', 'Could not decrypt data (Wrong key ?)',
-                      'Error');
+      bar.container.hide();
+      zerobin.message('error', 'Could not decrypt data (Wrong key ?)', 'Error');
     },
 
     /* Update progress bar */
-    function(){$loading.text('Decompressing...').css('width', '45%')},
-    function(){$loading.text('Base64 decoding...').css('width', '65%')},
-    function(){$loading.text('From bits to string...').css('width', '85%')},
+    mkcb(bar.set, 'Decompressing...', '45%'),
+    mkcb(bar.set, 'Base64 decoding...', '65%'),
+    mkcb(bar.set, 'From bits to string...', '85%'),
 
     /* When done */
     function(content){
@@ -363,7 +445,7 @@ if (content && key) {
       $('#paste-content').text(content);
       content = '';
 
-      $loading.text('Code coloration...').css('width', '95%');
+      bar.set('Code coloration...', '95%');
 
       /* Add a continuation to let the UI redraw */
       setTimeout(function(){
@@ -372,16 +454,21 @@ if (content && key) {
         ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf');
 
         var clip = new ZeroClipboard.Client();
+
+        // Callback to reposition the clibpboad flash animation overlay
+        var reposition = function(){clip.reposition()};
+
         clip.addEventListener('mouseup', function(){
           clip.setText(zerobin.getPasteContent());
         });
-        clip.addEventListener('complete', function(){
-          zerobin.message('info', 'The paste is now in your clipboard',
-                          '', false, function(){clip.reposition()});
-        });
+        clip.addEventListener('complete',
+                              mkcb(zerobin.message,  'info',
+                                  'The paste is now in your clipboard',
+                                  '', true, reposition)
+        );
         clip.glue('clip-button');
 
-        window.onresize = clip.reposition;
+        window.onresize = reposition;
 
 
         /* Setup link to get the paste short url*/
@@ -393,7 +480,7 @@ if (content && key) {
             $('#copy-success').hide();
             zerobin.message('success',
                             '<a href="' + tinyurl + '">' + tinyurl + '</a>',
-                            'Short url', true, function(){clip.reposition()}
+                            'Short url', true, reposition
             )
             $('#short-url').text('Get short url');
           });
@@ -401,20 +488,23 @@ if (content && key) {
 
         /* Remap the message close handler to include the clipboard
            flash reposition */
-        $(".close").die().live('click', function(e){
+        $(".close").off().on('click', function(e){
           e.preventDefault();
-          $(this).parent().fadeOut(function(){clip.reposition()});
+          $(this).parent().fadeOut(reposition);
         });
 
         /** Syntaxic coloration */
         prettyPrint();
 
-        /** Add margin color */
-        $("#paste-content").addClass("margin-color");
+        /* Class to switch to paste content style with coloration done */
+        $('#paste-content').addClass('done');
 
         /* Display result */
-        $loading.text('Done').css('width', '100%');
-        $bar.hide();
+        bar.set('Done', '100%');
+        bar.container.hide();
+
+        $form.prop('disabled', false);
+
       }, 250);
 
     }
@@ -423,9 +513,9 @@ if (content && key) {
 } /* End of "DECRYPTION" */
 
 /* Synchronize expiration select boxes value */
-$('.paste-option select').live('change', function(){
-  var value = $(this).val();
-  $('.paste-option select').val(value);
+$('.paste-option select').on('change', function(){
+  var $this = $(this);
+  $this.val($this.val());
 });
 
 
@@ -434,11 +524,12 @@ $('#content').elastic();
 
 
 /* Display bottom paste option buttons when needed */
-$('#content').live('keyup change', function(){
+$('#content').on('keyup change', function(){
    if($('#content').height() < 400 ){
       $('.paste-option.down').remove();
    }
    else {
+
     if ($('.paste-option').length == 1) {
       $('.paste-option').clone().addClass('down').appendTo('form.well');
     }
@@ -446,60 +537,99 @@ $('#content').live('keyup change', function(){
 
 });
 
-/* Display previous pastes */
-$('.previous-pastes .items').html(zerobin.getPastes());
 
-/* clone a paste */
+/* Display previous pastes */
+if (zerobin.support.localStorage){
+
+  var $container = $('.previous-pastes'),
+      pastes = zerobin.getPreviousPastes();
+
+  if (pastes.length){
+
+    $.getScript("/static/js/vizhash.min.js").done(function(script, textStatus) {
+
+      $container.find('.item').remove();
+      $.each(zerobin.getPreviousPastes(), function(i, paste){
+
+        var $li = $('<li class="item"></li>').appendTo($container);
+        var $link = $('<a></a>').attr('href', paste.link)
+                                .text(paste.prefix + paste.displayDate)
+                                .appendTo($li);
+
+        if (vizhash.supportCanvas) {
+          var pasteId = zerobin.getPasteId(paste.link);
+          var vhash = vizhash.canvasHash(pasteId, 24, 24).canvas;
+          $link.prepend($(vhash).addClass('vhash'));
+        }
+
+        // hightlite the current link and make sure clicking the link
+        // does redirect to the page
+        if (paste.link.replace(/#[^#]+/, '') == window.location.pathname){
+          $li.addClass('active');
+          $link.click(function(){window.location.reload()});
+        }
+
+      });
+
+    });
+
+  }
+
+}
+
+
+/* Event handler for "clone paste" button */
 $('.btn-clone').click(function(e){
   e.preventDefault();
-  var content_clone = zerobin.getPasteContent();
   $('.submit-form').show();
-  $('.paste-form').remove();
-  $('#content').val(content_clone);
-  $('#content').trigger('change');
+  $('.paste-form').hide();
+  $('#content').val(zerobin.getPasteContent()).trigger('change');
+});
 
+$('.clone .btn-danger').click(function(e){
+  e.preventDefault();
+  $('.submit-form').hide();
+  $('.paste-form').show();
 });
 
 
 /* Upload file using HTML5 File API */
+if (zerobin.support.fileUpload) {
 
-if (window.File && window.FileReader && window.FileList && window.Blob) {
-  $('.file-upload').show();
+  var upload = function(files) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      $('#content').val(event.target.result).trigger('change');
+    };
+    reader.readAsText(files[0]);
+  }
+
+  var $buttonOverlay = $('#file-upload');
+  var $button = $('.btn-upload');
+
+  try {
+    $button.val('Uploading...');
+    $button.prop('disabled', true);
+    $buttonOverlay.change(function(){upload(this.files)});
+  }
+  catch (e) {
+    zerobin.message('error', 'Could no upload the file', 'Error');
+    $button.val('Upload File');
+    $button.prop('disabled', false);
+  }
+
+  $button.prop('disabled', false);
+  $button.val('Upload File');
+  $buttonOverlay.mouseover(mkcb($(this).css, 'cursor', 'pointer'));
 }
-
-var file_upload = function(file) {
-  var reader = new FileReader();
-  reader.onload = function(event) {
-    var content = event.target.result;
-    $('#content').val(content);
-    $('#content').trigger('change');
-  };
-
-  reader.readAsText(file[0]);
-}
-
-try {
-  $('#file-upload').change(function() {
-    file_upload(this.files);
-  });
-}
-catch (e) {
-  zerobin.message('error', 'Could no upload the file', 'Error');
-}
-
-$('#file-upload').mouseover(function(){
-  $(this).css( 'cursor', 'pointer' );
-});
-
 
 /* Alerts */
 
-$(".close").live('click', function(e){
+$(".close").on('click', function(e){
   e.preventDefault();
   $(this).parent().fadeOut();
 });
 
+
 }); /* End of "document ready" jquery callback */
-
-
 

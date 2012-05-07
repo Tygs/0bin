@@ -1,8 +1,8 @@
 <p class="alert alert-error">
   <a class="close" data-dismiss="alert" href="#">×</a>
-  <strong class="title">Error!</strong>
+  <strong class="title">404 Error!</strong>
   <span class="message">
-    This paste has expired or wrong url, please check again.
+    Either this paste has expired or this page never existed.
   </span>
 </p>
 

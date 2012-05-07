@@ -119,11 +119,20 @@ h4#pixels-total {
     float:left;
 }
 
-.file-upload {
+html.file-upload p.file-upload {
 	float: left;
 	margin: 22px 0px 0px 21px;
 	display: none;
 }
+
+html.file-upload p.file-upload {
+	display:inherit;
+}
+
+html.no-file-upload p.file-upload {
+	display:none;
+}
+
 
 input.btn-upload {
 	position: relative;
@@ -147,14 +156,19 @@ input.hide-upload {
 	height: 49px;
 }
 
-/* Paste Page */
 
-.items {
-	text-align: center;
-}
+/* Paste Page */
 
 #paste-content {
 	background-color: white;
+	padding:1em;
+}
+
+
+#paste-content.done {
+	background-color: white;
+	padding-top:1em;
+	padding-left:0;
 }
 
 .submit-form {
@@ -176,8 +190,8 @@ li.L5, li.L6, li.L7, li.L8, li.L9
     list-style-type: decimal;
     background: inherit;
 }
- 
-.margin-color {
+
+.prettyprint.linenums {
   -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
      -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
           box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
@@ -254,7 +268,7 @@ button.btn, input[type="submit"].btn {
 	margin-left: 5px;
 }
 
-.btn-primary {
+.btn-primary, .btn-danger {
 	position:relative;
 	top:-4px;
 }
@@ -274,4 +288,37 @@ button.btn, input[type="submit"].btn {
 	text-indent: 10px;
 	text-align:left;
 }
- 
+
+.lnk-option canvas {
+vertical-align:middle;
+margin-right:10px;
+}
+
+
+/* Previous paste list */
+
+.previous-pastes .item {
+margin-top:5px;
+vertical-align:middle;
+line-height:24px;
+padding-left:1em;
+}
+
+.previous-pastes canvas {
+display:block;
+float:left;
+margin-right:5px;
+}
+
+html.local-storage .no-local-storage {
+	display:none;
+}
+
+html.no-local-storage .local-storage {
+	display:none;
+}
+
+canvas {
+	border: 1px solid white;
+}
+

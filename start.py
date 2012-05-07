@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# vim: ai ts=4 sts=4 et sw=4
 
 """
     Main script including controller, rooting, dependancy management, and
@@ -13,6 +15,8 @@ import math
 
 from datetime import datetime, timedelta
 
+# add project dir and libs dir to the PYTHON PATH to ensure they are
+# importable
 import settings
 sys.path.insert(0, os.path.dirname(settings.ROOT_DIR))
 sys.path.append(os.path.join(settings.ROOT_DIR, 'libs'))
@@ -23,14 +27,16 @@ from bottle import (Bottle, route, run, abort, error,
 
 import clize
 
-from src import settings, Paste, drop_privileges, dmerge
+
+from src.paste import Paste
+from src.utils import drop_privileges, dmerge
+
 
 app = Bottle()
 
 global_vars = { 
     'settings' : settings
 }
-
 
 @app.route('/')
 @view('home')
@@ -98,9 +104,7 @@ def display_paste(paste_id):
         return error404(ValueError)
 
     context = {'paste': paste, 'keep_alive': keep_alive}
-
     return dmerge(context, global_vars)
-
 
 @app.error(404)
 @view('404')
