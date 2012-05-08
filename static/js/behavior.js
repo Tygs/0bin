@@ -234,12 +234,23 @@ zerobin = {
   },
 
   /** Return an link object with the URL as href so you can extract host,
-      protocol, hash, etc*/
-  parseUrl: function(url){
-    var a = document.createElement('a');
-    a.href = url
-    return a
-  },
+      protocol, hash, etc.
+
+      This function use a closure to store a <div> parent for the <a>
+      because IE requires the link be processed by it's HTML parser
+      for the URL to be parsed. */
+  parseUrl: (function(){
+
+    var div = document.createElement('div');
+    div.innerHTML = "<a></a>";
+
+    return function(url){
+      div.firstChild.href = url;
+      div.innerHTML = div.innerHTML;
+      return div.firstChild;
+    };
+
+  })(),
 
   getPasteId: function(url){
     loc = url ? zerobin.parseUrl(url) : window.location
@@ -629,6 +640,18 @@ $(".close").on('click', function(e){
   e.preventDefault();
   $(this).parent().fadeOut();
 });
+
+
+/* Parse obfuscaded emails and make them usable */
+$('.email-link').each(function(i, elem){
+  var $obfuscatedEmail = $(this);
+  var address = $obfuscatedEmail.attr('title').replace('__AT__', '@');
+  var text = $obfuscatedEmail.text().replace('__AT__', '@');
+  var $plainTextEmail = $('<a href="mailto:' + address + '">'+ text +'</a>');
+  $obfuscatedEmail.replaceWith($plainTextEmail);
+
+});
+
 
 
 }); /* End of "document ready" jquery callback */

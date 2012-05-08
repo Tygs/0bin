@@ -31,8 +31,13 @@ GROUP = None
 MAX_SIZE = 1024 * 500
 MAX_SIZE_KB = int(math.ceil(MAX_SIZE / 1024.0))
 
-# Email for contact
-EMAIL = "your@email.com"
+# Names/links to insert in the menu bar.
+# Any link with "mailto:" will be escaped to prevent spam
+MENU = (
+    ('Home', '/'), # internal link
+    ('Download 0bin', 'https://github.com/sametmax/0bin'), # external link
+    ('Contact', 'mailto:your@email.com') # email
+)
 
 # this import a file named settings_local.py if it exists
 # you may want to create such a file to have different settings

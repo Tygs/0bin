@@ -43,10 +43,25 @@
           <a class="brand" href="/"><span>ø</span>bin<em>.net</em></a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="/">Home</a></li>
-              <li><a href="https://github.com/sametmax/0bin">Download 0bin</a></li>
-              <li><a href="mailto:{{ settings.EMAIL }}">Contact us</a></li>
-              <!-- <li><a href="#faq">Faq</a></li> -->
+
+              %for i, entry in enumerate(settings.MENU):
+                <li
+                %if not i:
+                  class="active"
+                %end
+                >
+                  %if "mailto:" in entry[1]:
+                    <span title="{{ entry[1].replace('mailto:', '').replace('@', '__AT__') }}"
+                          class="email-link" >
+                      {{ entry[0] }}
+                    </span>
+                  %else:
+                    <a href="{{ entry[1] }}">{{ entry[0] }}</a>
+                  %end
+
+                </li>
+              %end
+
             </ul>
             <p class="navbar-text pull-right"><i>"A client side encrypted PasteBin..."</i></p>
           </div><!--/.nav-collapse -->
@@ -104,7 +119,8 @@
         <p class="greetings span12">
             Based on an original idea from
            <a href="http://sebsauvage.net/paste/">sebsauvage.net</a><br>
-           <a href="http://sametmax.com">Sam &amp; Max</a> | <a href="mailto:{{ settings.EMAIL }}"> Contact us</a>
+           <a href="http://sametmax.com">Sam &amp; Max</a> |
+            <span title="lesametlemax__AT__gmail.com" class="email-link">Contact us</span>
        </p>
       </footer>
 
