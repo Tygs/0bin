@@ -1,4 +1,4 @@
-;
+"use strict";
 
 /* Start random number generator seeding ASAP */
 sjcl.random.startCollectors();
@@ -28,7 +28,7 @@ function mkcb(func){
 ****************************/
 
 
-zerobin = {
+var zerobin = {
     /** Base64 + compress + encrypt, with callbacks before each operation,
         and all of them are executed in a timed continuation to give
         a change to the UI to respond.
@@ -159,7 +159,7 @@ zerobin = {
 
   getKeys: function(){
     var keys = [];
-    for(i=0; i <= localStorage.length; i++){
+    for(var i = 0; i <= localStorage.length; i++){
       if(localStorage.key(i) != null)
         keys[i] = parseInt(localStorage.key(i),10);
     }
@@ -219,7 +219,7 @@ zerobin = {
         date = zerobin.getFormatedDate();
     keys.reverse();
 
-    for (i=0; i <= keys.length-1; i++)  {
+    for (var i = 0; i <= keys.length-1; i++)  {
       var paste = localStorage.getItem(keys[i]).split(';');
       var displayDate = paste[0].split(' ')[0];
       var prefix = 'the ';
@@ -253,7 +253,7 @@ zerobin = {
   })(),
 
   getPasteId: function(url){
-    loc = url ? zerobin.parseUrl(url) : window.location
+    var loc = url ? zerobin.parseUrl(url) : window.location
     return loc.pathname.replace(/[/]|paste/g, '');
   },
 
@@ -287,8 +287,8 @@ zerobin = {
 
     if (flush) {$('.alert-'+type).remove()}
 
-    $message = $('#alert-template').clone().attr('id', null)
-                                   .addClass('alert alert-' + type);
+    var $message = $('#alert-template').clone().attr('id', null)
+                                       .addClass('alert alert-' + type);
     $('.message', $message).html(message);
 
     if (title) {$('.title', $message).html(title)}
@@ -320,7 +320,7 @@ $(function(){
    posting it using ajax. Then redirect to the address of the
    newly created paste, adding the key in the hash.
 */
-$('.btn-primary').on("click", function(e){
+$('.btn-primary').live("click", function(e){
 
   e.preventDefault();
   var paste = $('textarea').val();
@@ -340,7 +340,7 @@ $('.btn-primary').on("click", function(e){
 
   if (!oversized && paste.trim()) {
 
-    $form = $('input, textarea, select, button').prop('disabled', true);
+    var $form = $('input, textarea, select, button').prop('disabled', true);
 
     // set up progress bar
     var bar = zerobin.progressBar('form.well .progress');
@@ -430,7 +430,7 @@ if (content && key) {
     }
   });
 
-  $form = $('input, textarea, select, button').prop('disabled', true);
+  var $form = $('input, textarea, select, button').prop('disabled', true);
 
   var bar = zerobin.progressBar('.well form .progress');
   bar.container.show();
@@ -470,13 +470,14 @@ if (content && key) {
         var reposition = function(){clip.reposition()};
 
         clip.addEventListener('mouseup', function(){
+          $('#clip-button').text('Copying paste...');
           clip.setText(zerobin.getPasteContent());
         });
-        clip.addEventListener('complete',
-                              mkcb(zerobin.message,  'info',
-                                  'The paste is now in your clipboard',
-                                  '', true, reposition)
-        );
+        clip.addEventListener('complete', function(){
+          $('#clip-button').text('Copy to clipboard');
+          zerobin.message('info', 'The paste is now in your clipboard', '',
+                          true, reposition);
+        });
         clip.glue('clip-button');
 
         window.onresize = reposition;
@@ -499,7 +500,7 @@ if (content && key) {
 
         /* Remap the message close handler to include the clipboard
            flash reposition */
-        $(".close").off().on('click', function(e){
+        $(".close").off().live('click', function(e){
           e.preventDefault();
           $(this).parent().fadeOut(reposition);
         });
@@ -524,7 +525,7 @@ if (content && key) {
 } /* End of "DECRYPTION" */
 
 /* Synchronize expiration select boxes value */
-$('.paste-option select').on('change', function(){
+$('.paste-option select').live('change', function(){
   var $this = $(this);
   $this.val($this.val());
 });
@@ -535,7 +536,7 @@ $('#content').elastic();
 
 
 /* Display bottom paste option buttons when needed */
-$('#content').on('keyup change', function(){
+$('#content').live('keyup change', function(){
    if($('#content').height() < 400 ){
       $('.paste-option.down').remove();
    }
@@ -636,7 +637,7 @@ if (zerobin.support.fileUpload) {
 
 /* Alerts */
 
-$(".close").on('click', function(e){
+$(".close").live('click', function(e){
   e.preventDefault();
   $(this).parent().fadeOut();
 });
