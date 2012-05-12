@@ -1,3 +1,5 @@
+/*global sjcl:true, jQuery:true, $:true, lzw:true, zerobin:true, ZeroClipboard:true, vizhash:true, prettyPrint:true */
+;(function(){
 "use strict";
 
 /* Start random number generator seeding ASAP */
@@ -17,8 +19,8 @@ $.ajaxSetup({ cache: true });
 function mkcb(func){
   var args = arguments;
   return function(){
-    return func.apply(func, Array.prototype.slice.call(args, 1))
-  }
+    return func.apply(func, Array.prototype.slice.call(args, 1));
+  };
 }
 
 
@@ -28,7 +30,7 @@ function mkcb(func){
 ****************************/
 
 
-var zerobin = {
+window.zerobin = {
     /** Base64 + compress + encrypt, with callbacks before each operation,
         and all of them are executed in a timed continuation to give
         a change to the UI to respond.
@@ -40,21 +42,21 @@ var zerobin = {
       setTimeout (function(){
 
         content = sjcl.codec.utf8String.toBits(content);
-        if (toBase64Callback) {toBase64Callback()}
+        if (toBase64Callback) {toBase64Callback();}
 
         setTimeout(function(){
 
           content = sjcl.codec.base64.fromBits(content);
-          if (compressCallback) {compressCallback()}
+          if (compressCallback) {compressCallback();}
 
           setTimeout(function(){
 
             content = lzw.compress(content);
-            if (encryptCallback) {encryptCallback()}
+            if (encryptCallback) {encryptCallback();}
 
             setTimeout(function(){
               content = sjcl.encrypt(key, content);
-              if (doneCallback) {doneCallback(content)}
+              if (doneCallback) {doneCallback(content);}
             }, 250);
 
           }, 250);
@@ -81,7 +83,7 @@ var zerobin = {
       try {
 
         content = sjcl.decrypt(key, content);
-        if (uncompressCallback) {uncompressCallback()}
+        if (uncompressCallback) {uncompressCallback();}
 
         /* Decompress */
         setTimeout(function(){
@@ -89,7 +91,7 @@ var zerobin = {
           try {
 
             content = lzw.decompress(content);
-            if (fromBase64Callback) {fromBase64Callback()}
+            if (fromBase64Callback) {fromBase64Callback();}
 
             /* From base 64 to bits */
             setTimeout(function(){
@@ -97,14 +99,14 @@ var zerobin = {
               try {
 
                 content = sjcl.codec.base64.toBits(content);
-                if (toStringCallback) {toStringCallback()}
+                if (toStringCallback) {toStringCallback();}
 
                 /* From bits to string */
                 setTimeout(function(){
 
                   try {
                     content = sjcl.codec.utf8String.fromBits(content);
-                    if (doneCallback) {doneCallback(content)}
+                    if (doneCallback) {doneCallback(content);}
                   } catch (err) {
                     errorCallback(err);
                   }
@@ -137,19 +139,19 @@ var zerobin = {
   },
 
   getFormatedDate: function(date){
-    var date = date || new Date();
+    date = date || new Date();
     return ((date.getMonth() +1 ) + '-' +
              date.getDate() + '-' + date.getFullYear());
   },
 
   getFormatedTime: function(date){
-    var date = date || new Date();
+    date = date || new Date();
     var h = date.getHours();
     var m = date.getMinutes();
     var s = date.getSeconds();
-    if (h < 10) {h = "0" + h}
-    if (m < 10) {m = "0" + m}
-    if (s < 10) {s = "0" + s}
+    if (h < 10) {h = "0" + h;}
+    if (m < 10) {m = "0" + m;}
+    if (s < 10) {s = "0" + s;}
     return h + ":" + m + ":" + s;
   },
 
@@ -160,8 +162,9 @@ var zerobin = {
   getKeys: function(){
     var keys = [];
     for(var i = 0; i <= localStorage.length; i++){
-      if(localStorage.key(i) != null)
-        keys[i] = parseInt(localStorage.key(i),10);
+      if(localStorage.key(i) !== null){
+        keys[i] = parseInt(localStorage.key(i), 10);
+      }
     }
     return keys.sort(zerobin.numOrdA);
   },
@@ -193,7 +196,7 @@ var zerobin = {
       var val = !!(w.File && w.FileReader && w.FileList && w.Blob);
       $('html').addClass((val ? '' : 'no-') + 'file-upload');
       return val;
-    })(),
+    })()
   },
 
   storatePaste: function(url){
@@ -202,7 +205,7 @@ var zerobin = {
                    zerobin.getFormatedTime() + ";" + url);
       var keys = zerobin.getKeys();
 
-      if(keys.length < 1){keys[0] = 0}
+      if(keys.length < 1){keys[0] = 0;}
 
       if (localStorage.length > 19) {
         void localStorage.removeItem(keys[0]);
@@ -223,14 +226,14 @@ var zerobin = {
       var paste = localStorage.getItem(keys[i]).split(';');
       var displayDate = paste[0].split(' ')[0];
       var prefix = 'the ';
-      if (displayDate == date){
+      if (displayDate === date){
         displayDate = paste[0].split(' ')[1];
         prefix = 'at ';
       }
       pastes.push({displayDate: displayDate, prefix: prefix, link: paste[1]});
     }
 
-    return pastes
+    return pastes;
   },
 
   /** Return an link object with the URL as href so you can extract host,
@@ -253,8 +256,13 @@ var zerobin = {
   })(),
 
   getPasteId: function(url){
-    var loc = url ? zerobin.parseUrl(url) : window.location
-    return loc.pathname.replace(/[/]|paste/g, '');
+    var loc = url ? zerobin.parseUrl(url) : window.location;
+    return loc.pathname.replace(/\/|paste/g, '').replace(/\?.*$/, '');
+  },
+
+  getPasteKey: function(url){
+    var loc = url ? zerobin.parseUrl(url) : window.location;
+    return loc.hash.replace('#', '').replace(/\?.*$/, '');
   },
 
   /** Return the paste content stripted from any code coloration */
@@ -285,14 +293,14 @@ var zerobin = {
 
     $(window).scrollTop(0);
 
-    if (flush) {$('.alert-'+type).remove()}
+    if (flush) {$('.alert-'+type).remove();}
 
     var $message = $('#alert-template').clone().attr('id', null)
                                        .addClass('alert alert-' + type);
     $('.message', $message).html(message);
 
-    if (title) {$('.title', $message).html(title)}
-    else {$('.title', $message).remove()}
+    if (title) {$('.title', $message).html(title);}
+    else {$('.title', $message).remove();}
 
     $message.prependTo($('#main')).show('fadeUp', callback);
   },
@@ -301,7 +309,7 @@ var zerobin = {
   progressBar: function(selector){
     var $container = $(selector);
     var bar = {container: $container, elem: $container.find('.bar')};
-    bar.set =  function(text, rate){bar.elem.text(text).css('width', rate)};
+    bar.set =  function(text, rate){bar.elem.text(text).css('width', rate);};
     return bar;
   }
 };
@@ -332,10 +340,10 @@ $('.btn-primary').live("click", function(e){
 
   if (oversized){
     zerobin.message('error',
-                    ('Your file is <strong class="file-size">' + readablFfsize +
+                    ('Your file is <strong class="file-size">' + readableFsize +
                     '</strong>KB. You have reached the maximum size limit of ' +
                     readableMaxsize + 'KB.'),
-                    'Warning!', true)
+                    'Warning!', true);
   }
 
   if (!oversized && paste.trim()) {
@@ -382,12 +390,12 @@ $('.btn-primary').live("click", function(e){
            .success(function(data) {
               bar.set('Redirecting to new paste...', '100%');
 
-              if (data['status'] == 'error') {
-                zerobin.message('error', data['message'], 'Error');
+              if (data.status === 'error') {
+                zerobin.message('error', data.message, 'Error');
                 $form.prop('disabled', false);
                 bar.container.hide();
               } else {
-                var paste_url = '/paste/' + data['paste'] + '#' + key;
+                var paste_url = '/paste/' + data.paste + '#' + key;
                 zerobin.storatePaste(paste_url);
                 window.location = (paste_url);
               }
@@ -411,7 +419,7 @@ $('.btn-primary').live("click", function(e){
     Also calculate and set the paste visual hash.
 */
 var content = $('#paste-content').text().trim();
-var key = window.location.hash.substring(1);
+var key = zerobin.getPasteKey();
 var error = false;
 if (content && key) {
 
@@ -467,7 +475,7 @@ if (content && key) {
         var clip = new ZeroClipboard.Client();
 
         // Callback to reposition the clibpboad flash animation overlay
-        var reposition = function(){clip.reposition()};
+        var reposition = function(){clip.reposition();};
 
         clip.addEventListener('mouseup', function(){
           $('#clip-button').text('Copying paste...');
@@ -493,7 +501,7 @@ if (content && key) {
             zerobin.message('success',
                             '<a href="' + tinyurl + '">' + tinyurl + '</a>',
                             'Short url', true, reposition
-            )
+            );
             $('#short-url').text('Get short url');
           });
         });
@@ -542,7 +550,7 @@ $('#content').live('keyup change', function(){
    }
    else {
 
-    if ($('.paste-option').length == 1) {
+    if ($('.paste-option').length === 1) {
       $('.paste-option').clone().addClass('down').appendTo('form.well');
     }
    }
@@ -576,9 +584,9 @@ if (zerobin.support.localStorage){
 
         // hightlite the current link and make sure clicking the link
         // does redirect to the page
-        if (paste.link.replace(/#[^#]+/, '') == window.location.pathname){
+        if (paste.link.replace(/#[^#]+/, '') === window.location.pathname){
           $li.addClass('active');
-          $link.click(function(){window.location.reload()});
+          $link.click(function(){window.location.reload();});
         }
 
       });
@@ -614,7 +622,7 @@ if (zerobin.support.fileUpload) {
       $('#content').val(event.target.result).trigger('change');
     };
     reader.readAsText(files[0]);
-  }
+  };
 
   var $buttonOverlay = $('#file-upload');
   var $button = $('.btn-upload');
@@ -622,7 +630,7 @@ if (zerobin.support.fileUpload) {
   try {
     $button.val('Uploading...');
     $button.prop('disabled', true);
-    $buttonOverlay.change(function(){upload(this.files)});
+    $buttonOverlay.change(function(){upload(this.files);});
   }
   catch (e) {
     zerobin.message('error', 'Could no upload the file', 'Error');
@@ -657,3 +665,4 @@ $('.email-link').each(function(i, elem){
 
 }); /* End of "document ready" jquery callback */
 
+})(); /* End of self executing function */
