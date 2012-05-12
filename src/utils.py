@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import time
-import sys
 import os
-import settings
 import glob
 import tempfile
 
@@ -28,8 +26,8 @@ def drop_privileges(user=None, group=None, wait=5):
             user = coerce_user(user)
             group = coerce_group(group)
 
-            lock_files =  glob.glob(os.path.join(tempfile.gettempdir(),
-                                                 'bottle.*.lock'))
+            lock_files = glob.glob(os.path.join(tempfile.gettempdir(),
+                                               'bottle.*.lock'))
             for lock_file in lock_files:
                 os.chown(lock_file, user, group)
 

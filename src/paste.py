@@ -33,7 +33,7 @@ class Paste(object):
         self.comments = comments
 
         if isinstance(self.content, unicode):
-           self.content = self.content.encode('utf8')
+            self.content = self.content.encode('utf8')
 
         self.expiration = self.get_expiration(expiration)
 
@@ -97,7 +97,7 @@ class Paste(object):
             content = paste.next().strip()
             comments = paste.read()[:-1] # remove the last coma
             if "burn_after_reading" not in str(expiration):
-                expiration = datetime.strptime(expiration,'%Y-%m-%d %H:%M:%S.%f')
+                expiration = datetime.strptime(expiration, '%Y-%m-%d %H:%M:%S.%f')
 
         except StopIteration:
             raise TypeError(u'File %s is malformed' % path)
@@ -153,13 +153,13 @@ class Paste(object):
         if self.expiration == "burn_after_reading":
             self.expiration = self.expiration + '#%s' % datetime.now()
 
-        # write the paste 
+        # write the paste
         with open(self.path, 'w') as f:
             f.write(unicode(self.expiration) + '\n')
             f.write(self.content + '\n')
             if self.comments:
-                f.write(comments)
-                
+                f.write(self.comments)
+
         return self
 
 

@@ -21,7 +21,7 @@ PASTE_FILES_ROOT = os.path.join(STATIC_FILES_ROOT, 'content')
 # You can also specify them using the --host and --port script options
 # which have priority on these settings
 HOST = "127.0.0.1"
-PORT= "8000"
+PORT = "8000"
 
 # User and group the server should run as. Set to None if it should be the
 # current user. Some OS don't support it and if so, it will be ignored.
@@ -40,4 +40,3 @@ MENU = (
 # browser
 MAX_SIZE = 1024 * 500
 MAX_SIZE_KB = int(math.ceil(MAX_SIZE / 1024.0))
-

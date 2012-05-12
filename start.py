@@ -9,9 +9,7 @@
 
 import sys
 import os
-import hashlib
 import thread
-import math
 
 from datetime import datetime, timedelta
 
@@ -22,8 +20,7 @@ sys.path.insert(0, os.path.dirname(settings.ROOT_DIR))
 sys.path.append(os.path.join(settings.ROOT_DIR, 'libs'))
 
 import bottle
-from bottle import (Bottle, route, run, abort, error,
-                    static_file, debug, view, request)
+from bottle import (Bottle, run, static_file, view, request)
 
 import clize
 
@@ -34,13 +31,14 @@ from src.utils import drop_privileges, dmerge
 
 app = Bottle()
 
-global_vars = { 
-    'settings' : settings
+global_vars = {
+    'settings': settings
 }
+
 
 @app.route('/')
 @view('home')
-def index():  
+def index():
     return global_vars
 
 
@@ -75,7 +73,6 @@ def create_paste():
 @view('paste')
 def display_paste(paste_id):
 
-
     now = datetime.now()
     keep_alive = False
     try:
@@ -88,7 +85,7 @@ def display_paste(paste_id):
             # to the paste that happens during the paste creation
             try:
                 keep_alive = paste.expiration.split('#')[1]
-                keep_alive = datetime.strptime(keep_alive,'%Y-%m-%d %H:%M:%S.%f')
+                keep_alive = datetime.strptime(keep_alive, '%Y-%m-%d %H:%M:%S.%f')
                 keep_alive = now < keep_alive + timedelta(seconds=10)
             except IndexError:
                 keep_alive = False
@@ -106,10 +103,12 @@ def display_paste(paste_id):
     context = {'paste': paste, 'keep_alive': keep_alive}
     return dmerge(context, global_vars)
 
+
 @app.error(404)
 @view('404')
 def error404(code):
     return global_vars
+
 
 @clize.clize
 def runserver(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG,
@@ -131,8 +130,5 @@ def runserver(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG,
 
 
 
-
 if __name__ == "__main__":
     clize.run(runserver)
-
-
