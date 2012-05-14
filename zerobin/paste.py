@@ -2,11 +2,10 @@
 
 import os
 import hashlib
-import json
 
 from datetime import datetime, timedelta
 
-import settings
+from utils import settings
 
 
 class Paste(object):
@@ -25,12 +24,10 @@ class Paste(object):
 
 
     def __init__(self, uuid=None, content=None,
-                 expiration=None,
-                 comments=None):
+                 expiration=None):
 
         self.content = content
         self.expiration = expiration
-        self.comments = comments
 
         if isinstance(self.content, unicode):
             self.content = self.content.encode('utf8')
@@ -95,7 +92,6 @@ class Paste(object):
             uuid = os.path.basename(path)
             expiration = paste.next().strip()
             content = paste.next().strip()
-            comments = paste.read()[:-1] # remove the last coma
             if "burn_after_reading" not in str(expiration):
                 expiration = datetime.strptime(expiration, '%Y-%m-%d %H:%M:%S.%f')
 
@@ -104,8 +100,7 @@ class Paste(object):
         except (IOError, OSError):
             raise ValueError(u'Can not open paste from file %s' % path)
 
-        return Paste(uuid=uuid, comments=comments,
-                     expiration=expiration, content=content)
+        return Paste(uuid=uuid, expiration=expiration, content=content)
 
 
     @classmethod
@@ -120,9 +115,6 @@ class Paste(object):
     def save(self):
         """
             Save the content of this paste to a file.
-
-            If comments are passed, they are expected to be serialized
-            already.
         """
         head, tail = self.uuid[:2], self.uuid[2:4]
 
@@ -157,8 +149,6 @@ class Paste(object):
         with open(self.path, 'w') as f:
             f.write(unicode(self.expiration) + '\n')
             f.write(self.content + '\n')
-            if self.comments:
-                f.write(self.comments)
 
         return self
 
@@ -169,26 +159,3 @@ class Paste(object):
         """
         os.remove(self.path)
 
-
-    @classmethod
-    def add_comment_to(cls, uuid, **comment):
-        """
-            Append a comment to the file of the paste with the given uuid.
-            The comment is serialized to json, and a comma is added at the
-            end of it. Then the result is appended to the paste file.
-            This way we can add sequencially all comments to the file by just
-            appending to it, and then extracting the comment by selecting
-            this big blob of text, adding [] around it and use it as a json list
-            with no extra processing.
-        """
-        with open(cls.get_path(uuid), 'a') as f:
-            f.write(json.dumps(comment) + u',\n')
-
-
-    def add_comment(self, **comment):
-        """
-            Append a comment to the file of this paste.
-
-            Use add_comment_to()
-        """
-        self.add_comment_to(self.uuid, **comment)

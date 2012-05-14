@@ -14,9 +14,22 @@
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!-- Le HTML5 shim, for IE7-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Prompt IE 6 users to tell them to install chrome frame -->
+    <!--[if gte IE 0 ]>
+      <script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+      <script defer>window.attachEvent('onload',
+        function() {
+          CFInstall.check({
+            mode: 'overlay',
+            cssText: 'margin-top: 400px;'
+          })
+        })
+      </script>
     <![endif]-->
 
     <script src="/static/js/jquery-1.7.2.min.js"></script>
