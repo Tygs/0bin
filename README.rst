@@ -48,7 +48,7 @@ Technologies used
 Known issues
 ============
 
-- 0bin use several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.
+- 0bin uses several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.
 - The "copy to clipboard" feature is buggy under linux. It's flash, so we won't fix it. Better wait for the HTML5 clipboard API to be implemented in major browsers.
 - The pasted content size limit check is not accurate. It's just a safety net, so we thinks it's ok.
 - Some url shorteners and other services storing URLs break the encryption key. We will sanitize the URL as much as we can, but there is a limit to what we can do.

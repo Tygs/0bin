@@ -23,6 +23,18 @@
 	font-size: 27px;
 }
 
+.about {
+	line-height: 13px;
+	font-style: italic;
+	text-align: right;
+	padding-top: 9px;
+	margin-bottom: 0px !important;
+}
+
+.about span{
+	font-size: 10px;
+}
+
 /* body & other stuff */
 
 body {
@@ -290,24 +302,28 @@ button.btn, input[type="submit"].btn {
 }
 
 .lnk-option canvas {
-vertical-align:middle;
-margin-right:10px;
+	vertical-align:middle;
+	margin-right:10px;
 }
 
 
 /* Previous paste list */
 
 .previous-pastes .item {
-margin-top:5px;
-vertical-align:middle;
-line-height:24px;
-padding-left:1em;
+	margin-top:5px;
+	vertical-align:middle;
+	line-height:24px;
+	padding-left:1em;
+}
+
+li.item {
+	margin-left: -13px;
 }
 
 .previous-pastes canvas {
-display:block;
-float:left;
-margin-right:5px;
+	display:block;
+	float:left;
+	margin-right:5px;
 }
 
 html.local-storage .no-local-storage {

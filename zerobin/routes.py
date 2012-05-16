@@ -123,7 +123,7 @@ def runserver(host='', port='', debug=None, serve_static='', user='',
     for d in reversed(settings.TEMPLATE_DIRS):
         bottle.TEMPLATE_PATH.insert(0, d)
 
-    if serve_static:
+    if settings.STATIC_FILES_ROOT:
         @app.route('/static/<filename:path>')
         def server_static(filename):
             return static_file(filename, root=settings.STATIC_FILES_ROOT)
