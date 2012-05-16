@@ -318,6 +318,7 @@ button.btn, input[type="submit"].btn {
 
 li.item {
 	margin-left: -13px;
+	margin-right: -5px;
 }
 
 .previous-pastes canvas {
