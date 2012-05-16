@@ -163,7 +163,7 @@ window.zerobin = {
       are prefixed with with the passed version (default being this lib
       version) */
   getLocalStorageKeys: function(version){
-    version = version || zerobin.version;
+    version = 'zerobinV'  + (version || zerobin.version);
     var keys = [];
     for (var key in localStorage){
        if (key.indexOf(version) !== -1){
@@ -220,7 +220,7 @@ window.zerobin = {
         void localStorage.removeItem(keys[19]);
       }
 
-      localStorage.setItem(zerobin.version + "#" + date, url);
+      localStorage.setItem('zerobinV' + zerobin.version + "#" + date, url);
   },
 
   /** Return a list of the previous paste url with the creation date
