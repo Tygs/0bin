@@ -234,7 +234,8 @@ window.zerobin = {
 
     $.each(keys, function(i, key){
       var pasteDateTime = key.replace(/^[^#]+#/, '');
-      var displayDate = zerobin.getFormatedDate(new Date(pasteDateTime));
+      var displayDate = pasteDateTime.match(/^(\d+)-(\d+)-(\d+)\s/);
+      displayDate = displayDate[2] + '-' + displayDate[3] + '-' + displayDate[1];
       var prefix = 'the ';
       if (displayDate === today){
         displayDate = pasteDateTime.split(' ')[1];
