@@ -161,10 +161,12 @@ window.zerobin = {
 
   getKeys: function(){
     var keys = [];
-    for(var i = 0; i <= localStorage.length; i++){
-      if(localStorage.key(i) !== null){
-        keys[i] = parseInt(localStorage.key(i), 10);
-      }
+    for(var i = 0; i < localStorage.length; i++){
+      try {
+        if(localStorage.key(i) !== null){
+          keys[i] = parseInt(localStorage.key(i), 10);
+        }
+      } catch(e) {}
     }
     return keys.sort(zerobin.numOrdA);
   },
@@ -222,15 +224,17 @@ window.zerobin = {
         date = zerobin.getFormatedDate();
     keys.reverse();
 
-    for (var i = 0; i <= keys.length-1; i++)  {
-      var paste = localStorage.getItem(keys[i]).split(';');
-      var displayDate = paste[0].split(' ')[0];
-      var prefix = 'the ';
-      if (displayDate === date){
-        displayDate = paste[0].split(' ')[1];
-        prefix = 'at ';
-      }
-      pastes.push({displayDate: displayDate, prefix: prefix, link: paste[1]});
+    for (var i = 0; i < keys.length; i++)  {
+      try {
+        var paste = localStorage.getItem(keys[i]).split(';');
+        var displayDate = paste[0].split(' ')[0];
+        var prefix = 'the ';
+        if (displayDate === date){
+          displayDate = paste[0].split(' ')[1];
+          prefix = 'at ';
+        }
+        pastes.push({displayDate: displayDate, prefix: prefix, link: paste[1]});
+      } catch(e) {}
     }
 
     return pastes;
