@@ -548,8 +548,7 @@ if (content && key) {
 
 /* Synchronize expiration select boxes value */
 $('.paste-option select').live('change', function(){
-  var $this = $(this);
-  $this.val($this.val());
+  $('.paste-option select').val($(this).val());
 });
 
 
