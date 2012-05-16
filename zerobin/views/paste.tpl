@@ -64,6 +64,7 @@
         <option value="never">Never</option>
       </select>
       <button type="submit" class="btn btn-primary">Submit</button>
+      <button class="btn btn-danger">Cancel clone</button>
     </p>
     <p>
         <div class="progress progress-striped active">
