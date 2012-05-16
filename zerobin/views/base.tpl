@@ -19,19 +19,6 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!-- Prompt IE 6 users to tell them to install chrome frame -->
-    <!--[if gte IE 0 ]>
-      <script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
-      <script defer>window.attachEvent('onload',
-        function() {
-          CFInstall.check({
-            mode: 'overlay',
-            cssText: 'margin-top: 400px;'
-          })
-        })
-      </script>
-    <![endif]-->
-
     <script src="/static/js/jquery-1.7.2.min.js"></script>
     <script src="/static/js/sjcl.js"></script>
     <script src="/static/js/behavior.js"></script>
