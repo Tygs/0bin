@@ -159,15 +159,22 @@ window.zerobin = {
     return (a-b);
   },
 
-  getKeys: function(){
+  /** Return a reverse sorted list of all the keys in local storage that
+      are prefixed with with the passed version (default being this lib
+      version) */
+  getLocalStorageKeys: function(version){
+    version = version || zerobin.version;
     var keys = [];
-    for(var i = 0; i <= localStorage.length; i++){
-      if(localStorage.key(i) !== null){
-        keys[i] = parseInt(localStorage.key(i), 10);
-      }
+    for (var key in localStorage){
+       if (key.indexOf(version) !== -1){
+          keys.push(key);
+       }
     }
-    return keys.sort(zerobin.numOrdA);
+    keys.sort();
+    keys.reverse();
+    return keys;
   },
+
   /** Get a tinyurl using JSONP */
   getTinyURL: function(longURL, success) {
     var api = 'http://json-tinyurl.appspot.com/?url=';
@@ -199,39 +206,43 @@ window.zerobin = {
     })()
   },
 
-  storatePaste: function(url){
-    if (zerobin.support.localStorage){
-      var paste = (zerobin.getFormatedDate() + " " +
-                   zerobin.getFormatedTime() + ";" + url);
-      var keys = zerobin.getKeys();
+  /** Store the paste of a URL in local storate, with a storage format
+      version prefix and the paste date as the key */
+  storePaste: function(url, date){
 
-      if(keys.length < 1){keys[0] = 0;}
+      date = date || new Date();
+      date = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' +
+              date.getDate() + ' ' + zerobin.getFormatedTime(date));
+
+      var keys = zerobin.getLocalStorageKeys();
 
       if (localStorage.length > 19) {
-        void localStorage.removeItem(keys[0]);
+        void localStorage.removeItem(keys[19]);
       }
 
-      localStorage.setItem(keys.reverse()[0]+1, paste);
-    }
+      localStorage.setItem(zerobin.version + "#" + date, url);
   },
 
-  /** Return a list of the previous paste url with creation date */
+  /** Return a list of the previous paste url with the creation date
+      If the paste is from today, date format should be "at hh:ss",
+      else it should be "the mm-dd-yyy"
+  */
   getPreviousPastes: function(){
     var pastes = [],
-        keys = zerobin.getKeys(),
-        date = zerobin.getFormatedDate();
-    keys.reverse();
+        keys = zerobin.getLocalStorageKeys(),
+        today = zerobin.getFormatedDate();
 
-    for (var i = 0; i <= keys.length-1; i++)  {
-      var paste = localStorage.getItem(keys[i]).split(';');
-      var displayDate = paste[0].split(' ')[0];
+    $.each(keys, function(i, key){
+      var pasteDateTime = key.replace(/^[^#]+#/, '');
+      var displayDate = zerobin.getFormatedDate(new Date(pasteDateTime));
       var prefix = 'the ';
-      if (displayDate === date){
-        displayDate = paste[0].split(' ')[1];
+      if (displayDate === today){
+        displayDate = pasteDateTime.split(' ')[1];
         prefix = 'at ';
       }
-      pastes.push({displayDate: displayDate, prefix: prefix, link: paste[1]});
-    }
+      pastes.push({displayDate: displayDate, prefix: prefix,
+                   link: localStorage.getItem(key)});
+    });
 
     return pastes;
   },
@@ -396,7 +407,9 @@ $('.btn-primary').live("click", function(e){
                 bar.container.hide();
               } else {
                 var paste_url = '/paste/' + data.paste + '#' + key;
-                zerobin.storatePaste(paste_url);
+                if (zerobin.support.localStorage){
+                  zerobin.storePaste(paste_url);
+                }
                 window.location = (paste_url);
               }
            });
