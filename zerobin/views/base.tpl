@@ -77,7 +77,7 @@
 
             </ul>
             <p class="about pull-right">
-              "A client side encrypted PasteBin..."<br>
+              "A client side encrypted PasteBin"<br>
               <span>All pastes are AES256 encrypted, we cannot know what you paste...</span>
             </p>
           </div><!--/.nav-collapse -->
