@@ -76,7 +76,10 @@
               %end
 
             </ul>
-            <p class="navbar-text pull-right"><i>"A client side encrypted PasteBin..."</i></p>
+            <p class="about pull-right">
+              "A client side encrypted PasteBin..."<br>
+              <span>All pastes are AES256 encrypted, we cannot know what you paste...</span>
+            </p>
           </div><!--/.nav-collapse -->
         </div>
       </div>
