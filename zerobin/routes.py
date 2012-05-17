@@ -104,9 +104,9 @@ def error404(code):
     return GLOBAL_CONTEXT
 
 
-@clize.clize
+@clize.clize(coerce={'debug': bool, 'compressed_static': bool})
 def runserver(host='', port='', debug=None, serve_static='', user='',
-              group='', settings_file=''):
+              group='', settings_file='', compressed_static=None):
 
     # merge the settings
     if settings_file:
@@ -114,10 +114,15 @@ def runserver(host='', port='', debug=None, serve_static='', user='',
 
     settings.HOST = host or settings.HOST
     settings.PORT = port or settings.PORT
-    settings.DEBUG = debug if debug is not None else settings.DEBUG
     settings.STATIC_FILES_ROOT = serve_static or settings.STATIC_FILES_ROOT
     settings.USER = user or settings.USER
     settings.GROUP = group or settings.GROUP
+
+    if compressed_static is not None:
+        settings.COMPRESSED_STATIC_FILES = compressed_static
+
+    if debug is not None:
+        settings.DEBUG = debug
 
     # make sure the templates can be loaded
     for d in reversed(settings.TEMPLATE_DIRS):

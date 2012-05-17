@@ -23,6 +23,10 @@ DEBUG = False
 # to serve it, but it's OK for small traffic to set it to True in prod too.
 STATIC_FILES_ROOT = os.path.join(ROOT_DIR, 'static')
 
+# If True, will link the compressed verion of the js and css files,
+# otherwise, will use the ordinary files
+COMPRESSED_STATIC_FILES = not DEBUG
+
 # absolute path where the paste files should be store
 # default in projectdirectory/static/content/
 # use "/" even under Windows

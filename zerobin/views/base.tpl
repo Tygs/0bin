@@ -10,18 +10,27 @@
                    a clipboard">
 
     <link rel="shortcut icon" href="/favicon.ico">
-    <link href="/static/css/prettify.css" rel="stylesheet" />
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
-    <link href="/static/css/style.css" rel="stylesheet">
+
+    %if settings.COMPRESSED_STATIC_FILES:
+      <link href="/static/css/style.min.css" rel="stylesheet" />
+    %else:
+      <link href="/static/css/prettify.css" rel="stylesheet" />
+      <link href="/static/css/bootstrap.css" rel="stylesheet">
+      <link href="/static/css/style.css" rel="stylesheet">
+    %end
 
     <!-- Le HTML5 shim, for IE7-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script src="/static/js/jquery-1.7.2.min.js"></script>
-    <script src="/static/js/sjcl.js"></script>
-    <script src="/static/js/behavior.js"></script>
+    %if settings.COMPRESSED_STATIC_FILES:
+      <script src="/static/js/main.min.js"></script>
+    %else:
+      <script src="/static/js/jquery-1.7.2.min.js"></script>
+      <script src="/static/js/sjcl.js"></script>
+      <script src="/static/js/behavior.js"></script>
+    %end
 
     <script type="text/javascript">
       zerobin.max_size = {{ settings.MAX_SIZE }};
@@ -127,10 +136,14 @@
        </p>
       </footer>
 
-    <script src="/static/js/jquery.elastic.source.js"></script>
-    <script src="/static/js/lzw.js"></script>
-    <script src="/static/js/prettify.min.js"></script>
-    <script src="/static/js/ZeroClipboard.js"></script>
+      %if settings.COMPRESSED_STATIC_FILES:
+        <script src="/static/js/additional.min.js"></script>
+      %else:
+        <script src="/static/js/jquery.elastic.source.js"></script>
+        <script src="/static/js/lzw.js"></script>
+        <script src="/static/js/prettify.min.js"></script>
+        <script src="/static/js/ZeroClipboard.js"></script>
+      %end
 
     <p id="alert-template">
       <a class="close" data-dismiss="alert" href="#">×</a>
