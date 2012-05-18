@@ -54,7 +54,8 @@
   <div class="section" id="easiest-installation">
 <h1>Easiest installation<a class="headerlink" href="#easiest-installation" title="Permalink to this headline">¶</a></h1>
 <p>These solution are easy all will be able to handle a personnal website traffic.
-For more robust and secure solutions, see Apache et Nginx setups.</p>
+For more robust and secure solutions, see <a class="reference internal" href="apache_install.html"><em>Apache</em></a>
+and <a class="reference internal" href="nginx_install.html"><em>Nginx</em></a> setups.</p>
 <div class="section" id="seconds-setup-if-you-know-python-already">
 <h2>10 seconds setup (if you know Python already)<a class="headerlink" href="#seconds-setup-if-you-know-python-already" title="Permalink to this headline">¶</a></h2>
 <p>pip install zerobin
@@ -73,20 +74,20 @@ with the admin rights.</li>
 <p>On ubuntu, this is a one liner:</p>
 <div class="highlight-python"><pre>wget stuff &amp;&amp; unzip zerobin.zip &amp;&amp; cd zerobin &amp;&amp; sudo python zerobin.py --host 0.0.0.0 --port 80 --compressed-static</pre>
 </div>
-<p>Check out for more configuration options.</p>
+<p>Check out for more <a class="reference internal" href="options.html"><em>configuration options</em></a>.</p>
 </div>
 <div class="section" id="run-0bin-in-background">
 <h2>Run 0bin in background<a class="headerlink" href="#run-0bin-in-background" title="Permalink to this headline">¶</a></h2>
-<p>0bin doesn&#8217;t come with something built in for this. You have several solutions:</p>
-<p>For a small website:</p>
+<p>0bin doesn&#8217;t come with something built in for this. You have several solutions.</p>
+<p><em>For a small website:</em></p>
 <p>Just make it a shell background process. E.G in GNU/Linux:</p>
 <div class="highlight-python"><pre>nohup python zerobin.py --host 0.0.0.0 --port 80 --compressed-static &amp;</pre>
 </div>
 <p>Or run it in a screen.</p>
-<p>For a big Website:</p>
+<p><em>For a big Website:</em></p>
 <ul class="simple">
-<li>setup 0bin with Apache;</li>
-<li>setup 0bin with supervisord (best way to do it);</li>
+<li>setup 0bin with <a class="reference internal" href="apache_install.html"><em>Apache</em></a>;</li>
+<li>setup 0bin with <a class="reference internal" href="using_supervisor.html"><em>supervisor</em></a> (best way to do it).</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>

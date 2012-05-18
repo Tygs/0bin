@@ -2,7 +2,8 @@
 Installation avec Apache
 =========================
 
-Apache est plus lourd que Nginx mais il est aussi beaucoup plus connu:
+Apache est plus lourd que :doc:`Nginx <./nginx_install>` mais il
+est aussi beaucoup plus connu:
 
 - plus de gens pourront vous aider les fora;
 - votre hébergeur propose surement Apache;
@@ -17,7 +18,7 @@ installation facile. Vous bénéficierez:
 - de la solidité d'Apache en front end: il est sécurité, et il y a peu de chance
   qu'il crash sous une forte charge;
 - les processus de votre site ne tournent pas avec les droits admin, même si
-  --user ne fonctionne pas sur votre OS.
+  :ref:`--user <user-and-group-fr>` ne fonctionne pas sur votre OS.
 
 Apache s'installe avec votre gestionnaire de paquet habituel, nous ne couvrierons
 pas cette partie.

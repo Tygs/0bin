@@ -35,6 +35,8 @@ modifié.
 Défaut: False
 Equivalent du fichier de configuration : DEBUG
 
+.. _user-and-group-fr:
+
 --user et --group
 -------------------
 
@@ -110,6 +112,8 @@ modifié.
 Défaut: False
 Equivalent en ligne de commande : --debug
 
+.. _static-root-fr:
+
 STATIC_FILES_ROOT
 ------------------
 
@@ -135,6 +139,8 @@ Chemin absolu du dossier dans lequel 0bin va sauvegarder les pastes.
 
 Défaut: dossier "static/content" dans le dossier "zerobin"
 Equivalent en ligne de commande : Aucun
+
+.. _template-dirs-fr:
 
 TEMPLATE_DIRS
 --------------

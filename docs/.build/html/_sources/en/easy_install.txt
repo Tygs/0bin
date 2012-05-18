@@ -3,7 +3,8 @@ Easiest installation
 ====================
 
 These solution are easy all will be able to handle a personnal website traffic.
-For more robust and secure solutions, see Apache et Nginx setups.
+For more robust and secure solutions, see :doc:`Apache <./apache_install>`
+and :doc:`Nginx <./nginx_install>` setups.
 
 10 seconds setup (if you know Python already)
 ===============================================
@@ -25,14 +26,14 @@ On ubuntu, this is a one liner::
 
     wget stuff && unzip zerobin.zip && cd zerobin && sudo python zerobin.py --host 0.0.0.0 --port 80 --compressed-static
 
-Check out for more configuration options.
+Check out for more :doc:`configuration options <./options>`.
 
 Run 0bin in background
 =======================
 
-0bin doesn't come with something built in for this. You have several solutions:
+0bin doesn't come with something built in for this. You have several solutions.
 
-For a small website:
+*For a small website:*
 
 Just make it a shell background process. E.G in GNU/Linux::
 
@@ -40,10 +41,10 @@ Just make it a shell background process. E.G in GNU/Linux::
 
 Or run it in a screen.
 
-For a big Website:
+*For a big Website:*
 
-- setup 0bin with Apache;
-- setup 0bin with supervisord (best way to do it);
+- setup 0bin with :doc:`Apache <./apache_install>`;
+- setup 0bin with :doc:`supervisor <./using_supervisor>` (best way to do it).
 
 .. Note::
 

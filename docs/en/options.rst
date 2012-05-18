@@ -34,6 +34,8 @@ In debug mode, the server also reload automatically any modified Python file;
 Default: False
 Configuration file equivalent: DEBUG
 
+.. _user-and-group-en:
+
 --user and --group
 -------------------
 
@@ -109,6 +111,8 @@ In debug mode, the server also reload automatically any modified Python file;
 Default: False
 Command line equivalent: --debug
 
+.. _static-root-en:
+
 STATIC_FILES_ROOT
 ------------------
 
@@ -134,6 +138,8 @@ Absolute path to the directory in which 0bin is going to look save pastes.
 
 Default: "static/content" direcotry in the "zerobin" directory
 Command line equivalent: None
+
+.. _template-dirs-en:
 
 TEMPLATE_DIRS
 --------------

@@ -2,7 +2,7 @@
 Apache setup
 =============
 
-Apache is heavier than Nginx. But it's also much more famous:
+Apache is heavier than :doc:`Nginx <./nginx_install>`. But it's also much more famous:
 
 - more people will be able to help you on forums;
 - your hosting will most probably support Apache;
@@ -17,7 +17,8 @@ installation facile. You'll benefit from having:
 - several Apache module at your disposal (like requests throttling);
 - Apache robustness in front end: it's secure, and there is much less chance
   it will crash under heavy load;
-- your web site processes won't run with admin rights, even if --user doesn't
+- your web site processes won't run with admin rights, even if
+  :ref:`--user <user-and-group-en>` doesn't
   work on your OS.
 
 

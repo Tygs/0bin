@@ -65,7 +65,7 @@ Problèmes connus
 =================
 
 - 0bin utilise plusieurs fonctionalités HTML5/CSS3 qui ne sont pas
-  encore largement supporté. Dans ce cas nous gérons la dégradation le plus
+  encore largement supportées. Dans ce cas nous gérons la dégradation le plus
   gracieusement possible.
 - La fonction "copier dans le press/papier" est buggée sous Linux. C'est du
   flash donc nous ne le réparerons pas. Il vaut mieux attendre le support

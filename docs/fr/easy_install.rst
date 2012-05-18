@@ -3,8 +3,8 @@ Installation la plus simple
 ============================
 
 Ces solutions sont simples et supportent le traffic d'un site web personnel.
-Pour des solutions plus solides et sécurisées, essayez les installtion Apache
-et Nginx.
+Pour des solutions plus solides et sécurisées, essayez les installation
+:doc:`Apache <./apache_install>` et :doc:`Nginx <./nginx_install>`.
 
 Installation en 10 secondes (si vous connaissez Python)
 ========================================================
@@ -27,15 +27,15 @@ Sous ubuntu, une line suffit::
 
     wget stuff && unzip zerobin.zip && cd zerobin && sudo python zerobin.py --host 0.0.0.0 --port 80 --compressed-static
 
-Jetez un oeil aux options de configuration.
+Jetez un oeil aux :doc:`options de configuration <./options>`.
 
 Faire tourner 0bin en arrière plan
 ==================================
 
 0bin ne vient pas avec un moyen intégré pour le faire. Il y a plusieurs
-solutions:
+solutions.
 
-Pour un petit site:
+*Pour un petit site:*
 
 Lancer simplement 0bin en processus shell d'arrière plan. Exemple sous GNU/Linux::
 
@@ -43,10 +43,10 @@ Lancer simplement 0bin en processus shell d'arrière plan. Exemple sous GNU/Linu
 
 Ou dans un screen.
 
-Pour les gros sites Web:
+*Pour les gros sites Web:*
 
-- configurer 0bin et Apache;
-- configure 0bin avec supervisord (recommandé).
+- configurer 0bin et :doc:`Apache <./apache_install>`;
+- configure 0bin avec :doc:`supervisor <./using_supervisor>` (recommandé).
 
 .. Note::
 
@@ -56,7 +56,7 @@ Pour les gros sites Web:
 
         python zerobin.py --host 0.0.0.0 --port 8000
 
-    0bin sera maintenant accessible sur http://your.local.ip.address:8000.
+    0bin sera maintenant accessible sur http://votre.addresse.ip.locale:8000.
 
     Ça peut être très un moyen très cool pour partager du code dans une entreprise
     ou a un code sprint.

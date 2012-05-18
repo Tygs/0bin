@@ -8,8 +8,8 @@ Nginx is a very popular choice to serve a Python project:
 - It's lightweight.
 - Configuration files are simple.
 
-If you have your own server, it's the best choice. If not, try the easiest
-setup, or the Apache setup.
+If you have your own server, it's the best choice. If not, try the
+ :doc:`easiest setup <./easy_install>`, or the :doc:`Apache <./apache_install>` setup.
 
 Nginx doesn't run any Python process, it only serve requests from outside to
 the Python server.

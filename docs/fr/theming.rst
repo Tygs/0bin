@@ -6,11 +6,12 @@ Personnaliser l'apparence
 
 Si vous souhaitez créer votre propre theme, il vous faut créer des templates
 similaires à ceux par défault présents dans zerobin/view, et
-ajouter le chemin du dossier contenant ces templates au fichier de settings.
+ajouter le chemin du dossier contenant ces templates au
+:ref:`fichier de configuration <template-dirs-fr>`..
 
 Vous aurez également besoin de copier les fichiers statiques présent
 dans zerobin/static dans un nouveau dossier, puis les modifier. Et signifier
-que vous utilisez ce dossier dans le fichiers de settings.
+que vous utilisez ce dossier dans le :ref:`fichier de configuration <static-root-fr>`.
 
 Vous pouvez bien entendu également éditez tous les fichier directement par
 souci de simplicité.
