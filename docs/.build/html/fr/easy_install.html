@@ -58,18 +58,26 @@ Pour des solutions plus solides et sécurisées, essayez les installation
 <a class="reference internal" href="apache_install.html"><em>Apache</em></a> et <a class="reference internal" href="nginx_install.html"><em>Nginx</em></a>.</p>
 <div class="section" id="installation-en-10-secondes-si-vous-connaissez-python">
 <h2>Installation en 10 secondes (si vous connaissez Python)<a class="headerlink" href="#installation-en-10-secondes-si-vous-connaissez-python" title="Permalink to this headline">¶</a></h2>
-<p>pip install zerobin
-zerobin &#8211;host 0.0.0.0 &#8211;port 80 &#8211;compressed-static # en tant qu&#8217;admin</p>
+<p>Entrez:</p>
+<div class="highlight-python"><pre>pip install zerobin
+zerobin --host 0.0.0.0 --port 80 --compressed-static # en tant qu'admin</pre>
+</div>
 </div>
 <div class="section" id="installation-en-30-secondes-pour-tous">
 <h2>Installation en 30 secondes (pour tous)<a class="headerlink" href="#installation-en-30-secondes-pour-tous" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Assurez-vous d&#8217;avoir Python 2.6 ou 2.7 (<cite>python &#8211;version</cite>)</li>
-<li>Télécharger le dernier zip du code source.</li>
-<li>Décompressez tous les fichiers là où vous souhaitez mettre le site.</li>
-<li>Allez dans les dossiers extraits.</li>
-<li>Lancez <cite>python zerobin.py &#8211;host 0.0.0.0 &#8211;port 80 &#8211;compressed-static</cite>
-avec les droits admin.</li>
+<ul>
+<li><p class="first">Assurez-vous d&#8217;avoir Python 2.6 ou 2.7 (<cite>python &#8211;version</cite>)</p>
+</li>
+<li><p class="first">Télécharger le dernier zip du code source.</p>
+</li>
+<li><p class="first">Décompressez tous les fichiers là où vous souhaitez mettre le site.</p>
+</li>
+<li><p class="first">Allez dans les dossiers extraits.</p>
+</li>
+<li><p class="first">Lancez avec les droits admin:</p>
+<div class="highlight-python"><pre>python zerobin.py --host 0.0.0.0 --port 80 --compressed-static</pre>
+</div>
+</li>
 </ul>
 <p>Sous ubuntu, une line suffit:</p>
 <div class="highlight-python"><pre>wget stuff &amp;&amp; unzip zerobin.zip &amp;&amp; cd zerobin &amp;&amp; sudo python zerobin.py --host 0.0.0.0 --port 80 --compressed-static</pre>

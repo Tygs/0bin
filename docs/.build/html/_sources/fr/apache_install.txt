@@ -2,6 +2,9 @@
 Installation avec Apache
 =========================
 
+.. Note::
+    Vous devez avoir suivi :doc:`l'installation facile <./easy_install>` avant.
+
 Apache est plus lourd que :doc:`Nginx <./nginx_install>` mais il
 est aussi beaucoup plus connu:
 

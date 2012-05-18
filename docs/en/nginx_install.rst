@@ -2,6 +2,9 @@
 Nginx setup
 ============
 
+.. Note::
+    You need to have followed the :doc:`easy install <./easy_install>` first.
+
 Nginx is a very popular choice to serve a Python project:
 
 - It's fast.

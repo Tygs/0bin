@@ -9,8 +9,10 @@ Pour des solutions plus solides et sécurisées, essayez les installation
 Installation en 10 secondes (si vous connaissez Python)
 ========================================================
 
-pip install zerobin
-zerobin --host 0.0.0.0 --port 80 --compressed-static # en tant qu'admin
+Entrez::
+
+    pip install zerobin
+    zerobin --host 0.0.0.0 --port 80 --compressed-static # en tant qu'admin
 
 
 Installation en 30 secondes (pour tous)
@@ -20,8 +22,9 @@ Installation en 30 secondes (pour tous)
 - Télécharger le dernier zip du code source.
 - Décompressez tous les fichiers là où vous souhaitez mettre le site.
 - Allez dans les dossiers extraits.
-- Lancez `python zerobin.py --host 0.0.0.0 --port 80 --compressed-static`
-  avec les droits admin.
+- Lancez avec les droits admin::
+
+    python zerobin.py --host 0.0.0.0 --port 80 --compressed-static
 
 Sous ubuntu, une line suffit::
 

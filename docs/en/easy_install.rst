@@ -9,8 +9,10 @@ and :doc:`Nginx <./nginx_install>` setups.
 10 seconds setup (if you know Python already)
 ===============================================
 
-pip install zerobin
-zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin
+Just type::
+
+    pip install zerobin
+    zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin
 
 30 seconds setup (for anybody)
 ===============================
@@ -19,8 +21,9 @@ zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin
 - Download the last zip of the sources code.
 - Extract all of it where you wish the site to be stored.
 - Go to the extracted files.
-- Run `python zerobin.py --host 0.0.0.0 --port 80 --compressed-static`
-  with the admin rights.
+- Run with the admin rights::
+
+    python zerobin.py --host 0.0.0.0 --port 80 --compressed-static
 
 On ubuntu, this is a one liner::
 

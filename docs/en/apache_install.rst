@@ -2,6 +2,9 @@
 Apache setup
 =============
 
+.. Note::
+    You need to have followed the :doc:`easy install <./easy_install>` first.
+
 Apache is heavier than :doc:`Nginx <./nginx_install>`. But it's also much more famous:
 
 - more people will be able to help you on forums;

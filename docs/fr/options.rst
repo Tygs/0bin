@@ -20,6 +20,7 @@ L'hôte et le port sur lesquels écouter les requêtes entrantes. En général
 écouter les requêtes extérieures.
 
 Défaut: 127.0.0.1 et 8000
+
 Equivalent du fichier de configuration : HOST et PORT
 
 
@@ -33,6 +34,7 @@ En mode debug, le serveur recharge aussi automatiquement tout fichier Python
 modifié.
 
 Défaut: False
+
 Equivalent du fichier de configuration : DEBUG
 
 .. _user-and-group-fr:
@@ -49,6 +51,7 @@ le processus n'est pas accès aux fichiers protégés du système.
 --group prend de --user si il n'est pas précisé.
 
 Défaut: Aucun
+
 Equivalent du fichier de configuration : USER et GROUP
 
 --settings-file
@@ -57,6 +60,7 @@ Equivalent du fichier de configuration : USER et GROUP
 Chemin vers le fichier de configuration, si vous souhaitez en utiliser un.
 
 Défaut: Aucun
+
 Equivalent du fichier de configuration : Aucun
 
 
@@ -67,6 +71,7 @@ Sert les versions minifiées fichiers statiques (css et js). A utiliser en
 production pour un site plus rapide.
 
 Défaut: False
+
 Equivalent du fichier de configuration : COMPRESSED_STATIC_FILES
 
 --version et --help
@@ -75,6 +80,7 @@ Equivalent du fichier de configuration : COMPRESSED_STATIC_FILES
 Affiche l'aide ou la version de 0bin
 
 Défaut: Aucun
+
 Equivalent du fichier de configuration : Aucun
 
 Exemples
@@ -110,6 +116,7 @@ En mode debug, le serveur recharge aussi automatiquement tout fichier Python
 modifié.
 
 Défaut: False
+
 Equivalent en ligne de commande : --debug
 
 .. _static-root-fr:
@@ -121,6 +128,7 @@ Chemin absolu du dossier dans lequel 0bin va chercher les fichiers statiques
 (css, js et images).
 
 Défaut: dossier "static" dans le dossier "zerobin"
+
 Equivalent en ligne de commande : Aucun
 
 COMPRESSED_STATIC_FILES
@@ -130,6 +138,7 @@ Sert les versions minifiées fichiers statiques (css et js). A utiliser en
 production pour un site plus rapide.
 
 Défaut: False
+
 Equivalent en ligne de commande : --compressed-static
 
 PASTE_FILES_ROOT
@@ -138,6 +147,7 @@ PASTE_FILES_ROOT
 Chemin absolu du dossier dans lequel 0bin va sauvegarder les pastes.
 
 Défaut: dossier "static/content" dans le dossier "zerobin"
+
 Equivalent en ligne de commande : Aucun
 
 .. _template-dirs-fr:
@@ -159,6 +169,7 @@ contient au début de la liste::
   ) + TEMPLATE_DIRS
 
 Défaut: dossier "view" dans le dossier "zerobin"
+
 Equivalent en ligne de commande : Aucun
 
 
@@ -170,6 +181,7 @@ L'hôte et le port sur lesquels écouter les requêtes entrantes. En général
 écouter les requêtes extérieures.
 
 Défaut: 127.0.0.1 et 8000
+
 Equivalent du fichier de configuration : --host et --port
 
 USER et GROUP
@@ -184,7 +196,8 @@ le processus n'est pas accès au fichiers système.
 GROUP prend de USER si il n'est pas précisé.
 
 Défaut: Aucun
-Equivalent du fichier de configuration : --user et --group
+
+Equivalent en ligne de commande : --user et --group
 
 MENU
 ------
@@ -212,4 +225,5 @@ MAX_SIZE
 Valeur approximative de limite de taille d'un paste.
 
 Défaut = 500000 octets (500 ko)
+
 Equivalent en ligne de commande : Aucun

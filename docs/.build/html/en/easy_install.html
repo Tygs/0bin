@@ -58,18 +58,26 @@ For more robust and secure solutions, see <a class="reference internal" href="ap
 and <a class="reference internal" href="nginx_install.html"><em>Nginx</em></a> setups.</p>
 <div class="section" id="seconds-setup-if-you-know-python-already">
 <h2>10 seconds setup (if you know Python already)<a class="headerlink" href="#seconds-setup-if-you-know-python-already" title="Permalink to this headline">¶</a></h2>
-<p>pip install zerobin
-zerobin &#8211;host 0.0.0.0 &#8211;port 80 &#8211;compressed-static # as admin</p>
+<p>Just type:</p>
+<div class="highlight-python"><pre>pip install zerobin
+zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin</pre>
+</div>
 </div>
 <div class="section" id="seconds-setup-for-anybody">
 <h2>30 seconds setup (for anybody)<a class="headerlink" href="#seconds-setup-for-anybody" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Make sure you have Python 2.6 or 2.7 (<cite>python &#8211;version</cite>)</li>
-<li>Download the last zip of the sources code.</li>
-<li>Extract all of it where you wish the site to be stored.</li>
-<li>Go to the extracted files.</li>
-<li>Run <cite>python zerobin.py &#8211;host 0.0.0.0 &#8211;port 80 &#8211;compressed-static</cite>
-with the admin rights.</li>
+<ul>
+<li><p class="first">Make sure you have Python 2.6 or 2.7 (<cite>python &#8211;version</cite>)</p>
+</li>
+<li><p class="first">Download the last zip of the sources code.</p>
+</li>
+<li><p class="first">Extract all of it where you wish the site to be stored.</p>
+</li>
+<li><p class="first">Go to the extracted files.</p>
+</li>
+<li><p class="first">Run with the admin rights:</p>
+<div class="highlight-python"><pre>python zerobin.py --host 0.0.0.0 --port 80 --compressed-static</pre>
+</div>
+</li>
 </ul>
 <p>On ubuntu, this is a one liner:</p>
 <div class="highlight-python"><pre>wget stuff &amp;&amp; unzip zerobin.zip &amp;&amp; cd zerobin &amp;&amp; sudo python zerobin.py --host 0.0.0.0 --port 80 --compressed-static</pre>

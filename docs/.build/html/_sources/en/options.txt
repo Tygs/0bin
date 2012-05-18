@@ -20,6 +20,7 @@ The host and port on which to listen for incomming request. Usually 127.0.0.1
 and 8000 to listen locally or 0.0.0.0 and 80 to listen from the outside.
 
 Default: 127.0.0.1 and 8000
+
 Setting file : HOST and PORT
 
 
@@ -32,6 +33,7 @@ instead of showing the 500 error page.
 In debug mode, the server also reload automatically any modified Python file;
 
 Default: False
+
 Configuration file equivalent: DEBUG
 
 .. _user-and-group-en:
@@ -47,6 +49,7 @@ port 80, but you wish that the process do not have access to protected files.
 --group is set to --user if not passed.
 
 Default: None
+
 Configuration file equivalent: USER and GROUP
 
 --settings-file
@@ -55,6 +58,7 @@ Configuration file equivalent: USER and GROUP
 Path to the configuration file, if you use any.
 
 Default: None
+
 Configuration file equivalent: None
 
 
@@ -65,6 +69,7 @@ Serve minified static files (css and js). Use it in production to get a faster
 web site.
 
 Default: False
+
 Configuration file equivalent: COMPRESSED_STATIC_FILES
 
 --version and --help
@@ -73,6 +78,7 @@ Configuration file equivalent: COMPRESSED_STATIC_FILES
 Display the help or the version of 0bin.
 
 Default: None
+
 Configuration file equivalent: None
 
 Examples
@@ -85,6 +91,7 @@ Production::
 Developpement::
 
   zerobin --debug --serve-static
+
 
 Configuration file
 ====================
@@ -109,6 +116,7 @@ In debug mode, the server also reload automatically any modified Python file;
 
 
 Default: False
+
 Command line equivalent: --debug
 
 .. _static-root-en:
@@ -120,6 +128,7 @@ Asbolute path to the directory where 0bin is going to look for static files
 (css, js and images).
 
 Default:  "static" directory in the "zerobin" directory
+
 Command line equivalent: None
 
 COMPRESSED_STATIC_FILES
@@ -129,6 +138,7 @@ Serve minified static files (css and js). Use it in production to get a faster
 web site.
 
 Default: False
+
 Command line equivalent: --compressed-static
 
 PASTE_FILES_ROOT
@@ -137,6 +147,7 @@ PASTE_FILES_ROOT
 Absolute path to the directory in which 0bin is going to look save pastes.
 
 Default: "static/content" direcotry in the "zerobin" directory
+
 Command line equivalent: None
 
 .. _template-dirs-en:
@@ -157,6 +168,7 @@ at the begining of the list::
   ) + TEMPLATE_DIRS
 
 Default:  "view" directory in the "zerobin" directory
+
 Command line equivalent: None
 
 HOST and PORT
@@ -167,6 +179,7 @@ The host and port on which to listen for incomming request. Usually 127.0.0.1
 and 8000 to listen locally or 0.0.0.0 and 80 to listen from the outside.
 
 Default: 127.0.0.1 and 8000
+
 Configuration file equivalent: --host and --port
 
 USER and GROUP
@@ -180,6 +193,7 @@ port 80, but you wish that the process do not have access to protected files.
 GROUP is set to USER if not passed.
 
 Default: None
+
 Configuration file equivalent: --user and --group
 
 MENU
@@ -199,6 +213,7 @@ Default::
       ('Contact', 'mailto:your@email.com') # email
   )
 
+
 Command line equivalent: None
 
 MAX_SIZE
@@ -209,4 +224,5 @@ Approximative value for a paste size limite.
 Valeur approximative de limite de taille d'un paste.
 
 Default = 500000 octets (500 ko)
+
 Command line equivalent: None
