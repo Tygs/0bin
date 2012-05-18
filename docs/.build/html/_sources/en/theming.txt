@@ -2,9 +2,9 @@
 Theming
 =======
 
-0bin comes a complete theming support, but for now it's not well ingrated.
+0bin comes with a complete theming support, but for now it's not well integrated.
 
-If you wish to create your own theme, you'll need to create template similar
+If you wish to create your own theme, you'll need to create templates similar
 to the ones in zerobin/view, and add the path to the director containing them
 to the settings file.
 

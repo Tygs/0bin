@@ -53,8 +53,7 @@
             
   <div class="section" id="apache-setup">
 <h1>Apache setup<a class="headerlink" href="#apache-setup" title="Permalink to this headline">¶</a></h1>
-<p>Apache is slower, heavier and more complicated to setup than Nginx. But it&#8217;s also
-much more famous:</p>
+<p>Apache is heavier than Nginx. But it&#8217;s also much more famous:</p>
 <ul class="simple">
 <li>more people will be able to help you on forums;</li>
 <li>your hosting will most probably support Apache;</li>
@@ -79,9 +78,63 @@ interfacing: WSGI.</p>
 the setup of the Apache module mod_wsgi. If you don&#8217;t know how to do this, or
 if you can&#8217;t do it (E.G: your hosting won&#8217;t let you), you need to go for
 the CGI setup.</p>
-<hr class="docutils" />
-<p>This setup is considered as slow, but you will still benefit from Apache
-robustness.</p>
+<p>First, make sure you have mod_wsgi installed and enable by running (as admin):</p>
+<div class="highlight-python"><pre>a2enmod wsgi</pre>
+</div>
+<p>This enable mod_wsgi. It it doesn&#8217;t, install it first (on ubuntu, the package
+is libapache2-mod-wsgi).</p>
+<p>Then create an Apache configuration file, usually in /etc/apache/sites-available/.
+Name it zerobin:</p>
+<div class="highlight-python"><pre>&lt;VirtualHost *:80&gt;
+    ServerName www.yourwebsite.com
+
+    WSGIDaemonProcess zerobin user=www-data group=www-data processes=1 threads=5
+    WSGIScriptAlias / /path/to/zerobin/app.wsgi
+
+    &lt;Directory /path/to/zerobin/zerobin/&gt;
+        WSGIProcessGroup zerobin
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Allow from all
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</pre>
+</div>
+<p>Activate the website (as admin):</p>
+<div class="highlight-python"><pre>a2ensite zerobin</pre>
+</div>
+<p>And reload the apache configuration (as admin):</p>
+<div class="highlight-python"><pre>service apache2 reload</pre>
+</div>
+<p>You&#8217;ll note that we refer to a file named app.wsgi. It&#8217;s a Python file
+creating the application Apache is going to use to start the Python process:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="c"># make sure the zerobin module is in the PYTHON PATH and importable</span>
+<span class="n">ZEROBIN_PARENT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ZEROBIN_PARENT_DIR</span><span class="p">)</span>
+
+<span class="c"># create the wsgi callable</span>
+<span class="kn">from</span> <span class="nn">zerobin.routes</span> <span class="kn">import</span> <span class="n">get_app</span>
+<span class="n">settings</span><span class="p">,</span> <span class="n">application</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">compressed_static</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can of course create your own, as the <cite>get_app</cite> function is the only
+way to pass settings to 0bin with this setup. You would do this by creating
+a configuration file and passing it to the function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="n">ZEROBIN_PARENT_DIR</span> <span class="o">=</span> <span class="s">&#39;/path/to/zerobin/parent/dir&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ZEROBIN_PARENT_DIR</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">zerobin.routes</span> <span class="kn">import</span> <span class="n">get_app</span>
+<span class="n">settings</span><span class="p">,</span> <span class="n">application</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">settings_file</span><span class="o">=</span><span class="s">&#39;/path/to/settings.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cgi">
+<h2>CGI<a class="headerlink" href="#cgi" title="Permalink to this headline">¶</a></h2>
+<p>You can also run 0bin using CGI, but infortunaly we didn&#8217;t have time to cover
+it yet. Please contact us if you ever get the need to use it.</p>
 </div>
 </div>
 
@@ -95,6 +148,7 @@ robustness.</p>
   <ul>
 <li><a class="reference internal" href="#">Apache setup</a><ul>
 <li><a class="reference internal" href="#mod-wsgi">Mod_wsgi</a></li>
+<li><a class="reference internal" href="#cgi">CGI</a></li>
 </ul>
 </li>
 </ul>

@@ -1,15 +1,3 @@
-
-
---host=STR
-
-The host on which to listen for incomming request. Usually 127.0.0.1 to
-listen locally or 0.0.0.0 to listen from the outside.
-
-Default: 127.0.0.1
-Setting file : HOST
-
-
-
 ============
 Options
 ============

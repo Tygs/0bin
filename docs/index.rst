@@ -27,12 +27,5 @@
 +-------------------------+--------------------------------+
 
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 .. _Signaler un bug: https://github.com/sametmax/0bin/issues
 .. _Report a bug: <https://github.com/sametmax/0bin/issues>

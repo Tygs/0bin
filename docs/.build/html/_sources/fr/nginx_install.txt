@@ -55,10 +55,53 @@ nous ne couvrirons pas cette partie.
 Vous devez créer une fichier de configuration Nginx pour 0bin. Sous GNU/Linux,
 on les mets en général dans /etc/nginx/conf.d/. Nommez le zerobin.conf.
 
-Le fichier minimal pour faire tourner le site est:
+Le fichier de configuration minimal pour faire tourner le site est::
 
-Mais on peut apporter plusieurs améliorations de performance:
+    server {
+        listen       80;
+        server_name www.votresiteweb.com;
 
+        location / {
+            proxy_pass http://127.0.0.1:8000;
+        }
+    }
+
+`proxy_pass` transmet les requêtes aux processus Python. Bien entendu le
+port doit correspondre à celui utilisé par 0bin.
+
+On peut apporter plusieurs améliorations à l'expérience utilisateur::
+
+    server {
+        listen       80;
+        server_name www.votresiteweb.com;
+
+        location /favicon.ico {
+            root  /chemin/vers/zerobin/static/img;
+        }
+
+        location /static/ {
+            root  /chemin/vers/zerobin;
+            gzip  on;
+            gzip_http_version 1.0;
+            gzip_vary on;
+            gzip_comp_level 6;
+            gzip_proxied any;
+            gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+            gzip_buffers 16 8k;
+            # Disable gzip for certain browsers.
+            gzip_disable ~@~\MSIE [1-6].(?!.*SV1)~@~];
+            expires modified +90d;
+        }
+
+        location / {
+            proxy_pass http://zerobin_cherrypy;
+        }
+    }
+
+Nginx sert maintenant le favicon ainsi que les fichiers statiques,
+on a ajouté une date d'expiration dans les en-têtes HTTP
+et on s'assure que la compression gzip est utilisée pour les navigateurs
+qui la supporte.
 
 
 

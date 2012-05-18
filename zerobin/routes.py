@@ -111,22 +111,13 @@ def server_static(filename):
     return static_file(filename, root=settings.STATIC_FILES_ROOT)
 
 
-@clize.clize(coerce={'debug': bool, 'compressed_static': bool})
-def runserver(host='', port='', debug=None, user='',
-              group='', settings_file='', compressed_static=None, version=False):
-
-    if version:
-        print '0bin V%s' % settings.VERSION
-        sys.exit(0)
-
-    # merge the settings
+def get_app(debug=None, settings_file='', compressed_static=None):
+    """
+        Return a tuple (settings, app) configured using passed options and
+        a setting file.
+    """
     if settings_file:
         settings.update_with_file(os.path.abspath(settings_file))
-
-    settings.HOST = host or settings.HOST
-    settings.PORT = port or settings.PORT
-    settings.USER = user or settings.USER
-    settings.GROUP = group or settings.GROUP
 
     if compressed_static is not None:
         settings.COMPRESSED_STATIC_FILES = compressed_static
@@ -138,12 +129,32 @@ def runserver(host='', port='', debug=None, user='',
     for d in reversed(settings.TEMPLATE_DIRS):
         bottle.TEMPLATE_PATH.insert(0, d)
 
+    if settings.DEBUG:
+        bottle.debug(True)
+
+    return settings, app
+
+
+@clize.clize(coerce={'debug': bool, 'compressed_static': bool})
+def runserver(host='', port='', debug=None, user='',
+              group='', settings_file='', compressed_static=None, version=False):
+
+    settings, app = get_app(debug, settings_file, compressed_static)
+
+    if version:
+        print '0bin V%s' % settings.VERSION
+        sys.exit(0)
+
+    settings.HOST = host or settings.HOST
+    settings.PORT = port or settings.PORT
+    settings.USER = user or settings.USER
+    settings.GROUP = group or settings.GROUP
 
     thread.start_new_thread(drop_privileges, (settings.USER, settings.GROUP))
 
     if settings.DEBUG:
-        bottle.debug(True)
-        run(app, host=settings.HOST, port=settings.PORT, reloader=True, server="cherrypy")
+        run(app, host=settings.HOST, port=settings.PORT, reloader=True,
+            server="cherrypy")
     else:
         run(app, host=settings.HOST,  port=settings.PORT, server="cherrypy")
 

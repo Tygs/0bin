@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
-    <link rel="next" title="&lt;no title&gt;" href="theming.html" />
+    <link rel="next" title="Personnaliser l’apparence" href="theming.html" />
     <link rel="prev" title="Installation avec Nginx" href="nginx_install.html" /> 
   </head>
   <body>
@@ -37,7 +37,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="theming.html" title="&lt;no title&gt;"
+          <a href="theming.html" title="Personnaliser l’apparence"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="nginx_install.html" title="Installation avec Nginx"
@@ -53,6 +53,68 @@
             
   <div class="section" id="utiliser-supervisor">
 <h1>Utiliser supervisor<a class="headerlink" href="#utiliser-supervisor" title="Permalink to this headline">¶</a></h1>
+<p>Supervisor est un très bon moyen de gérer des processus Python. Nous n&#8217;allons
+pas couvrir son installation (qui la plupart du temps se résume à
+apt-get install supervisor ou pip install supervisor), mais voici un rapide
+résumé de comment l&#8217;utiliser:</p>
+<p>Créez un fichier de configuration nommé supervisor.ini:</p>
+<div class="highlight-python"><pre>[unix_http_server]
+file=/tmp/supervisor.sock;
+
+[supervisorctl]
+serverurl=unix:///tmp/supervisor.sock;
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory=supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisord]
+logfile=/tmp/zerobin.log
+logfile_maxbytes=50MB
+logfile_backups=2
+loglevel=trace
+pidfile=/tmp/supervisord.pid
+nodaemon=false
+minfds=1024
+minprocs=200
+user=zerobin
+
+[program:zerobin]
+command=/chemin/vers/zerobin/zerobin.py --port 80 --compressed-static
+directory=/chemin/vers/zerobin/
+environment=PYTHONPATH='/chemin/vers/zerobin/'
+user=zerobin
+autostart=true
+autorestart=true</pre>
+</div>
+<p>Les 4 premières entrées sont juste de la configuration standard et vous pouvez
+les copier telles qu&#8217;elles.</p>
+<p>La dernière entrée définie un processus (il peut y en avoir plusieurs)
+que supervisor doit gérer.</p>
+<p>Cela veut dire qu&#8217;il va lancer la commande:</p>
+<div class="highlight-python"><pre>/chemin/vers/zerobin/zerobin.py --port 80 --compressed-static</pre>
+</div>
+<p>Et ceci dans le dossier, avec l&#8217;environnement et l&#8217;utilisateur défini, le tout
+en arrière plan en tant que daemon.</p>
+<p><cite>autostart</cite> et <cite>autorestart</cite> permettent simplement de le lancer et de l&#8217;oublier:
+supervisor redémarera le processus automatiquement en cas d&#8217;arrêt impromptu.</p>
+<p>La première fois que vous lancez supervisor, passez lui le fichier de configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">supervisord</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">chemin</span><span class="o">/</span><span class="n">vers</span><span class="o">/</span><span class="n">supervisor</span><span class="o">.</span><span class="n">ini</span>
+</pre></div>
+</div>
+<p>Ensuite vous pouvez gérer les processus avec:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">supervisorctl</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">chemin</span><span class="o">/</span><span class="n">vers</span><span class="o">/</span><span class="n">supervisor</span><span class="o">.</span><span class="n">ini</span>
+</pre></div>
+</div>
+<p>Cela va démarrer un shell depuis lequel vous pouvez faire un start/stop/restart
+sur le service.</p>
+<p>Toutes les erreurs seront logguées dans /tmp/zerobin.log.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Si vous avez installé zerobin dans un virtualenv, vous devriez définir la
+commande pour qu&#8217;elle s&#8217;éxécute depuis le virtualenv:</p>
+<div class="last highlight-python"><pre>command=/chemin/vers/le/virtualenv/bin/zerobin --port 80 --compressed-static</pre>
+</div>
+</div>
 </div>
 
 
@@ -66,7 +128,7 @@
                         title="previous chapter">Installation avec Nginx</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="theming.html"
-                        title="next chapter">&lt;no title&gt;</a></p>
+                        title="next chapter">Personnaliser l&#8217;apparence</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/fr/using_supervisor.txt"
@@ -96,7 +158,7 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="theming.html" title="&lt;no title&gt;"
+          <a href="theming.html" title="Personnaliser l’apparence"
              >next</a> |</li>
         <li class="right" >
           <a href="nginx_install.html" title="Installation avec Nginx"

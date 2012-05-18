@@ -95,8 +95,48 @@ separate process let you do this without having to restart the server.</p>
 installing it.</p>
 <p>Vous must create a Nginx configuration file for 0bin. On GNU/Linux, they usually
 go into /etc/nginx/conf.d/. Name it zerobin.conf.</p>
-<p>The minimal file to run the site is:</p>
-<p>But you can make some adjustement to get better perfomances:</p>
+<p>The minimal configuration file to run the site is:</p>
+<div class="highlight-python"><pre>server {
+    listen       80;
+    server_name www.yourwebsite.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+    }
+}</pre>
+</div>
+<p><cite>proxy_pass</cite> just passes the external request to the Python process.
+The port much match the one used by the 0bin process of course.</p>
+<p>You can make some adjustements to get a better user experience:</p>
+<div class="highlight-python"><pre>server {
+    listen       80;
+    server_name www.yourwebsite.com;
+
+    location /favicon.ico {
+        root  /path/to/zerobin/static/img;
+    }
+
+    location /static/ {
+        root  /path/to/zerobin;
+        gzip  on;
+        gzip_http_version 1.0;
+        gzip_vary on;
+        gzip_comp_level 6;
+        gzip_proxied any;
+        gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+        gzip_buffers 16 8k;
+        # Disable gzip for certain browsers.
+        gzip_disable ~@~\MSIE [1-6].(?!.*SV1)~@~];
+        expires modified +90d;
+    }
+
+    location / {
+        proxy_pass http://zerobin_cherrypy;
+    }
+}</pre>
+</div>
+<p>This make Nginx serve the favicon and static files, set the expire HTTP headers
+and make sure gzip compression is used with browsers that support it.</p>
 </div>
 </div>
 

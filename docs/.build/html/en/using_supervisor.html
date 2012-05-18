@@ -26,8 +26,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
-    <link rel="next" title="&lt;no title&gt;" href="theming.html" />
-    <link rel="prev" title="Installing with Nginx" href="nginx_install.html" /> 
+    <link rel="next" title="Theming" href="theming.html" />
+    <link rel="prev" title="Nginx setup" href="nginx_install.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +37,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="theming.html" title="&lt;no title&gt;"
+          <a href="theming.html" title="Theming"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="nginx_install.html" title="Installing with Nginx"
+          <a href="nginx_install.html" title="Nginx setup"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -53,6 +53,65 @@
             
   <div class="section" id="using-supervisor">
 <h1>Using supervisor<a class="headerlink" href="#using-supervisor" title="Permalink to this headline">¶</a></h1>
+<p>Supervisor is a very nice way to manage you Python processes. We won&#8217;t cover
+the setup (which is just apt-get install supervisor or pip install supervisor
+most of the time), but here is a quick overview on how to use it.</p>
+<p>Create a configuration file named supervisor.ini:</p>
+<div class="highlight-python"><pre>[unix_http_server]
+file=/tmp/supervisor.sock;
+
+[supervisorctl]
+serverurl=unix:///tmp/supervisor.sock;
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory=supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisord]
+logfile=/tmp/zerobin.log
+logfile_maxbytes=50MB
+logfile_backups=2
+loglevel=trace
+pidfile=/tmp/supervisord.pid
+nodaemon=false
+minfds=1024
+minprocs=200
+user=zerobin
+
+[program:zerobin]
+command=/path/to/zerobin/zerobin.py --port 80 --compressed-static
+directory=/path/to/zerobin/
+environment=PYTHONPATH='/path/to/zerobin/'
+user=zerobin
+autostart=true
+autorestart=true</pre>
+</div>
+<p>The 4 first entries are just boiler plate to get you started, you can copy
+them verbatim.</p>
+<p>The last one define one (you can have many) process supervisor should manage.</p>
+<p>It means it will run the command:</p>
+<div class="highlight-python"><pre>/path/to/zerobin/zerobin.py --port 80 --compressed-static</pre>
+</div>
+<p>In the directory, with the environnement and the user you defined.</p>
+<p>This command will be ran as a daemon, in the background.</p>
+<p><cite>autostart</cite> and <cite>autorestart</cite> just make it fire and forget: the site will always be
+running, even it crashes temporarly or if you retart the machine.</p>
+<p>The first time you run supervisor, pass it the configuration file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">supervisord</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">supervisor</span><span class="o">.</span><span class="n">ini</span>
+</pre></div>
+</div>
+<p>Then you can manage the process by running:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">supervisorctl</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">supervisor</span><span class="o">.</span><span class="n">ini</span>
+</pre></div>
+</div>
+<p>It will start a shell from were you can start/stop/restart the service</p>
+<p>You can read all errors that might occurs from /tmp/zerobin.log.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you installed zerobin in a virtualenv, you may set the command
+to run directly from it:</p>
+<div class="last highlight-python"><pre>command=/path/to/virtualenv/bin/zerobin --port 80 --compressed-static</pre>
+</div>
+</div>
 </div>
 
 
@@ -63,10 +122,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="nginx_install.html"
-                        title="previous chapter">Installing with Nginx</a></p>
+                        title="previous chapter">Nginx setup</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="theming.html"
-                        title="next chapter">&lt;no title&gt;</a></p>
+                        title="next chapter">Theming</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/en/using_supervisor.txt"
@@ -96,10 +155,10 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="theming.html" title="&lt;no title&gt;"
+          <a href="theming.html" title="Theming"
              >next</a> |</li>
         <li class="right" >
-          <a href="nginx_install.html" title="Installing with Nginx"
+          <a href="nginx_install.html" title="Nginx setup"
              >previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>

@@ -51,9 +51,51 @@ installing it.
 Vous must create a Nginx configuration file for 0bin. On GNU/Linux, they usually
 go into /etc/nginx/conf.d/. Name it zerobin.conf.
 
-The minimal file to run the site is:
+The minimal configuration file to run the site is::
 
-But you can make some adjustement to get better perfomances:
+    server {
+        listen       80;
+        server_name www.yourwebsite.com;
+
+        location / {
+            proxy_pass http://127.0.0.1:8000;
+        }
+    }
+
+`proxy_pass` just passes the external request to the Python process.
+The port much match the one used by the 0bin process of course.
+
+You can make some adjustements to get a better user experience::
+
+    server {
+        listen       80;
+        server_name www.yourwebsite.com;
+
+        location /favicon.ico {
+            root  /path/to/zerobin/static/img;
+        }
+
+        location /static/ {
+            root  /path/to/zerobin;
+            gzip  on;
+            gzip_http_version 1.0;
+            gzip_vary on;
+            gzip_comp_level 6;
+            gzip_proxied any;
+            gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+            gzip_buffers 16 8k;
+            # Disable gzip for certain browsers.
+            gzip_disable ~@~\MSIE [1-6].(?!.*SV1)~@~];
+            expires modified +90d;
+        }
+
+        location / {
+            proxy_pass http://zerobin_cherrypy;
+        }
+    }
+
+This make Nginx serve the favicon and static files, set the expire HTTP headers
+and make sure gzip compression is used with browsers that support it.
 
 
 
