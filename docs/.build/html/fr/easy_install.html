@@ -53,6 +53,54 @@
             
   <div class="section" id="installation-la-plus-simple">
 <h1>Installation la plus simple<a class="headerlink" href="#installation-la-plus-simple" title="Permalink to this headline">¶</a></h1>
+<p>Ces solutions sont simples et supportent le traffic d&#8217;un site web personnel.
+Pour des solutions plus solides et sécurisées, essayez les installtion Apache
+et Nginx.</p>
+<div class="section" id="installation-en-10-secondes-si-vous-connaissez-python">
+<h2>Installation en 10 secondes (si vous connaissez Python)<a class="headerlink" href="#installation-en-10-secondes-si-vous-connaissez-python" title="Permalink to this headline">¶</a></h2>
+<p>pip install zerobin
+zerobin &#8211;host 0.0.0.0 &#8211;port 80 &#8211;compressed-static # en tant qu&#8217;admin</p>
+</div>
+<div class="section" id="installation-en-30-secondes-pour-tous">
+<h2>Installation en 30 secondes (pour tous)<a class="headerlink" href="#installation-en-30-secondes-pour-tous" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Assurez-vous d&#8217;avoir Python 2.6 ou 2.7 (<cite>python &#8211;version</cite>)</li>
+<li>Télécharger le dernier zip du code source.</li>
+<li>Décompressez tous les fichiers là où vous souhaitez mettre le site.</li>
+<li>Allez dans les dossiers extraits.</li>
+<li>Lancez <cite>python zerobin.py &#8211;host 0.0.0.0 &#8211;port 80 &#8211;compressed-static</cite>
+avec les droits admin.</li>
+</ul>
+<p>Sous ubuntu, une line suffit:</p>
+<div class="highlight-python"><pre>wget stuff &amp;&amp; unzip zerobin.zip &amp;&amp; cd zerobin &amp;&amp; sudo python zerobin.py --host 0.0.0.0 --port 80 --compressed-static</pre>
+</div>
+<p>Jetez un oeil aux options de configuration.</p>
+</div>
+<div class="section" id="faire-tourner-0bin-en-arriere-plan">
+<h2>Faire tourner 0bin en arrière plan<a class="headerlink" href="#faire-tourner-0bin-en-arriere-plan" title="Permalink to this headline">¶</a></h2>
+<p>0bin ne vient pas avec un moyen intégré pour le faire. Il y a plusieurs
+solutions:</p>
+<p>Pour un petit site:</p>
+<p>Lancer simplement 0bin en processus shell d&#8217;arrière plan. Exemple sous GNU/Linux:</p>
+<div class="highlight-python"><pre>nohup python zerobin.py --host 0.0.0.0 --port 80 --compressed-static &amp;</pre>
+</div>
+<p>Ou dans un screen.</p>
+<p>Pour les gros sites Web:</p>
+<ul class="simple">
+<li>configurer 0bin et Apache;</li>
+<li>configure 0bin avec supervisord (recommandé).</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Vous pouvez même utiliser zerobin sur votre réseau local depuis votre portable.</p>
+<p>Assurez vous que votre parefeu ne bloque pas le port, et lancez:</p>
+<div class="highlight-python"><pre>python zerobin.py --host 0.0.0.0 --port 8000</pre>
+</div>
+<p>0bin sera maintenant accessible sur <a class="reference external" href="http://your.local.ip.address:8000">http://your.local.ip.address:8000</a>.</p>
+<p class="last">Ça peut être très un moyen très cool pour partager du code dans une entreprise
+ou a un code sprint.</p>
+</div>
+</div>
 </div>
 
 
@@ -61,6 +109,16 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation la plus simple</a><ul>
+<li><a class="reference internal" href="#installation-en-10-secondes-si-vous-connaissez-python">Installation en 10 secondes (si vous connaissez Python)</a></li>
+<li><a class="reference internal" href="#installation-en-30-secondes-pour-tous">Installation en 30 secondes (pour tous)</a></li>
+<li><a class="reference internal" href="#faire-tourner-0bin-en-arriere-plan">Faire tourner 0bin en arrière plan</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="intro.html"
                         title="previous chapter">Introduction</a></p>

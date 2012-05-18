@@ -104,7 +104,7 @@ install even if you know nothing about Python.</p>
 <li><a class="reference external" href="http://bottlepy.org/">The Bottle Python Web microframework</a></li>
 <li><a class="reference external" href="http://crypto.stanford.edu/sjcl/">SJCL</a> (js crypto tools)</li>
 <li><a class="reference external" href="http://jquery.com/">jQuery</a></li>
-<li><a class="reference external" href="http://twitter.github.com/bootstrap/">Bootstrap</a>, the twitter HTML5/CSS3 framework</li>
+<li><a class="reference external" href="http://twitter.github.com/bootstrap/">Bootstrap</a>, the Twitter HTML5/CSS3 framework</li>
 <li><a class="reference external" href="https://github.com/sametmax/VizHash.js">VizHash.js</a> to create visual hashes from pastes</li>
 <li><a class="reference external" href="http://www.cherrypy.org/(serveronly)">Cherrypy</a> (server only)</li>
 </ul>
@@ -112,7 +112,7 @@ install even if you know nothing about Python.</p>
 <div class="section" id="known-issues">
 <h2>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>0bin use several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.</li>
+<li>0bin uses several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.</li>
 <li>The &#8220;copy to clipboard&#8221; feature is buggy under linux. It&#8217;s flash, so we won&#8217;t fix it. Better wait for the HTML5 clipboard API to be implemented in major browsers.</li>
 <li>The pasted content size limit check is not accurate. It&#8217;s just a safety net, so we thinks it&#8217;s ok.</li>
 <li>Some url shorteners and other services storing URLs break the encryption key. We will sanitize the URL as much as we can, but there is a limit to what we can do.</li>
@@ -122,7 +122,7 @@ install even if you know nothing about Python.</p>
 <h2>What does 0bin not implement?<a class="headerlink" href="#what-does-0bin-not-implement" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations for it.</li>
-<li>Hash collision: the ratio &#8220;probability it happens/consequence seriousness&#8221; &lt;a href=&#8221;<a class="reference external" href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions">http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions</a>&#8220;is not worth it&lt;/a</li>
+<li>Hash collision prevention: the ratio &#8220;probability it happens/consequence seriousness&#8221; <a class="reference external" href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions">is not worth it</a></li>
 <li>Comments: it was initially planed. But comes with a lot of issues so we chose to focus on lower handing fruits.</li>
 </ul>
 </div>

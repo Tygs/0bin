@@ -7,6 +7,7 @@
 import os
 import math
 
+VERSION = '0.1'
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 LIBS_DIR = os.path.join(os.path.dirname(ROOT_DIR), 'libs')
 
@@ -25,7 +26,7 @@ STATIC_FILES_ROOT = os.path.join(ROOT_DIR, 'static')
 
 # If True, will link the compressed verion of the js and css files,
 # otherwise, will use the ordinary files
-COMPRESSED_STATIC_FILES = not DEBUG
+COMPRESSED_STATIC_FILES = False
 
 # absolute path where the paste files should be store
 # default in projectdirectory/static/content/
@@ -60,7 +61,6 @@ MENU = (
     ('Contact', 'mailto:your@email.com') # email
 )
 
-# limit size of pasted text in bytes. Be carefull allowing too much size can slow down user's
-# browser
+# limit size of pasted text in bytes. Be carefull allowing too much size can
+# slow down user's browser
 MAX_SIZE = 1024 * 500
-MAX_SIZE_KB = int(math.ceil(MAX_SIZE / 1024.0))

@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
     <link rel="next" title="Installation la plus simple" href="easy_install.html" />
-    <link rel="prev" title="Theming" href="../en/theming.html" /> 
+    <link rel="prev" title="Options" href="../en/options.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,7 +40,7 @@
           <a href="easy_install.html" title="Installation la plus simple"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../en/theming.html" title="Theming"
+          <a href="../en/options.html" title="Options"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -57,7 +57,7 @@
 quel type de contenu y soit posté. L&#8217;idée est qu&#8217;une personne ne peut (probablement...)
 pas être tenue de <a class="reference external" href="http://linuxfr.org/news/zerobin-un-pastebin-securise">modérer le contenu du pastebin</a> si elle n&#8217;a aucun moyen
 de le déchiffrer.</p>
-<p>C&#8217;est une implémentation en Python du <cite>projet zerobin</cite>, facile à installer même
+<p>C&#8217;est une implémentation en Python du <a class="reference external" href="https://github.com/sebsauvage/ZeroBin/">projet zerobin</a>, facile à installer même
 si on ne connait pas ce langage.</p>
 <div class="section" id="comment-ca-marche">
 <h2>Comment ça marche<a class="headerlink" href="#comment-ca-marche" title="Permalink to this headline">¶</a></h2>
@@ -105,26 +105,38 @@ plutôt qu&#8217;utiliser le copier/coller;</li>
 <li><a class="reference external" href="http://bottlepy.org/">The Bottle Python Web microframework</a></li>
 <li><a class="reference external" href="http://crypto.stanford.edu/sjcl/">SJCL</a> (js crypto tools)</li>
 <li><a class="reference external" href="http://jquery.com/">jQuery</a></li>
-<li><a class="reference external" href="http://twitter.github.com/bootstrap/">Bootstrap</a>, the twitter HTML5/CSS3 framework</li>
-<li><a class="reference external" href="https://github.com/sametmax/VizHash.js">VizHash.js</a> to create visual hashes from pastes</li>
-<li><a class="reference external" href="http://www.cherrypy.org/(serveronly)">Cherrypy</a> (server only)</li>
+<li><a class="reference external" href="http://twitter.github.com/bootstrap/">Bootstrap</a>, le framework HTML5/CSS3 de Twitter</li>
+<li><a class="reference external" href="https://github.com/sametmax/VizHash.js">VizHash.js</a> pour créer les hash visuels des pastes</li>
+<li><a class="reference external" href="http://www.cherrypy.org/(serveronly)">Cherrypy</a> (serveur uniquement)</li>
 </ul>
 </div>
 <div class="section" id="problemes-connus">
 <h2>Problèmes connus<a class="headerlink" href="#problemes-connus" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>0bin use several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.</li>
-<li>The &#8220;copy to clipboard&#8221; feature is buggy under linux. It&#8217;s flash, so we won&#8217;t fix it. Better wait for the HTML5 clipboard API to be implemented in major browsers.</li>
-<li>The pasted content size limit check is not accurate. It&#8217;s just a safety net, so we thinks it&#8217;s ok.</li>
-<li>Some url shorteners and other services storing URLs break the encryption key. We will sanitize the URL as much as we can, but there is a limit to what we can do.</li>
+<li>0bin utilise plusieurs fonctionalités HTML5/CSS3 qui ne sont pas
+encore largement supporté. Dans ce cas nous gérons la dégradation le plus
+gracieusement possible.</li>
+<li>La fonction &#8220;copier dans le press/papier&#8221; est buggée sous Linux. C&#8217;est du
+flash donc nous ne le réparerons pas. Il vaut mieux attendre le support
+du presse papier via l&#8217;API HTML5.</li>
+<li>La vérification de la limite de ta taille du paste n&#8217;est pas précise. c&#8217;est
+juste un filet de sécurité, donc nous pensons que ça suffira.</li>
+<li>Quelques raccourcisseurs d&#8217;URL et d&#8217;autres services cassent la clé de
+chiffrement. Nous essayerons de nettoyer autant que possible mais il y
+a une limite à ce que nous pouvons faire.</li>
 </ul>
 </div>
-<div class="section" id="what-does-0bin-not-implement">
-<h2>What does 0bin not implement?<a class="headerlink" href="#what-does-0bin-not-implement" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="qu-est-ce-que-0bin-ne-fait-pas">
+<h2>Qu&#8217;est-ce que 0bin ne fait pas ?<a class="headerlink" href="#qu-est-ce-que-0bin-ne-fait-pas" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations for it.</li>
-<li>Hash collision: the ratio &#8220;probability it happens/consequence seriousness&#8221; &lt;a href=&#8221;<a class="reference external" href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions">http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions</a>&#8220;is not worth it&lt;/a</li>
-<li>Comments: it was initially planed. But comes with a lot of issues so we chose to focus on lower handing fruits.</li>
+<li>Limitation du nombre de requêtes: ce serait peu productif de le faire au
+niveau de l&#8217;application alors que les serveurs Web le font tous de manière très
+efficace.</li>
+<li>La prévention de collision de hash: le ratio &#8220;occurence/conséquence&#8221;
+n&#8217;est pas <a class="reference external" href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions">suffisant</a>.</li>
+<li>Commentaires: c&#8217;était prévu. Mais il y a beaucoup de contraintes associées,
+nous avons donc choisi de nous concentrer sur les fonctions avec un meilleur
+rapport qualité/prix.</li>
 </ul>
 </div>
 </div>
@@ -142,14 +154,14 @@ plutôt qu&#8217;utiliser le copier/coller;</li>
 <li><a class="reference internal" href="#autres-fonctionalites">Autres fonctionalités</a></li>
 <li><a class="reference internal" href="#technologies-utilisees">Technologies utilisées</a></li>
 <li><a class="reference internal" href="#problemes-connus">Problèmes connus</a></li>
-<li><a class="reference internal" href="#what-does-0bin-not-implement">What does 0bin not implement?</a></li>
+<li><a class="reference internal" href="#qu-est-ce-que-0bin-ne-fait-pas">Qu&#8217;est-ce que 0bin ne fait pas ?</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../en/theming.html"
-                        title="previous chapter">Theming</a></p>
+  <p class="topless"><a href="../en/options.html"
+                        title="previous chapter">Options</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="easy_install.html"
                         title="next chapter">Installation la plus simple</a></p>
@@ -185,7 +197,7 @@ plutôt qu&#8217;utiliser le copier/coller;</li>
           <a href="easy_install.html" title="Installation la plus simple"
              >next</a> |</li>
         <li class="right" >
-          <a href="../en/theming.html" title="Theming"
+          <a href="../en/options.html" title="Options"
              >previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>

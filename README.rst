@@ -1,13 +1,21 @@
 0bin
 ====
 
-Have a try here: <a href="http://0bin.net">0bin.net</a>
-
 0bin is a client side encrypted pastebin that can run without a database.
 
-It allows anybody to host a pastebin while welcoming any type of content to be pasted in it. The idea is that one can (probably...) not be legally entitled to <a href="http://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336">moderate the pastebin content</a> as he/she has no way to decrypt it.
+* Try it: `0bin.net <http://0bin.net>`_
+* Get the `source on github <https://github.com/sametmax/0bin>`_
+* `Report a bug <https://github.com/sametmax/0bin/issues>`_
 
-It's an Python implementation of the <a href="https://github.com/sebsauvage/ZeroBin/">zerobin project</a>. It's easy to install even if you know nothing about Python.
+0bin allows anybody to host a pastebin while welcoming any type of content to
+be pasted in it. The idea is that one can (probably...) not be legally entitled
+to `moderate the pastebin content`_ as he/she has no way to decrypt it.
+
+It's an Python implementation of the
+`zerobin project`_. It's easy to
+install even if you know nothing about Python.
+
+For now tested with IE9, and the last opera, safari, chrome and FF.
 
 How it works
 =============
@@ -33,17 +41,30 @@ Key points:
 - all operations, including code coloration, must happens on the client;
 - the server is no more than a fancy recipient for the encrypted data.
 
+Other features
+======================
+
+- automatic code coloration (no need to specify);
+- pastebin expiration: 1 day, 1 month or never;
+- burn after reading: the paste is destroyed after the first reading;
+- clone paste: you can't edit a paste, but you can duplicate any of them;
+- code upload: if a file is too big, you can upload it instead of using copy/paste;
+- copy paste to clipboard in a click;
+- get paste short URL in a click;
+- own previous pastes history;
+- visual hash of a paste to easily tell it appart from others in a list.
 
 Technologies used
 ==================
 
-- <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>
-- <a href="http://bottlepy.org/">The Bottle Python Web microframework</a>
-- <a href="http://crypto.stanford.edu/sjcl/">SJCL</a> (js crypto tools)
-- <a href="http://jquery.com/">jQuery</a>
-- <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>, the twitter css framework
-- <a href="https://github.com/sametmax/VizHash.js">VizHash.js</a> to create visual hashes from pastes
-- Cherrypy (server only)
+- Python_
+- `The Bottle Python Web microframework`_
+- SJCL_ (js crypto tools)
+- jQuery_
+- Bootstrap_, the Twitter HTML5/CSS3 framework
+- VizHash.js_ to create visual hashes from pastes
+- Cherrypy_ (server only)
+
 
 Known issues
 ============
@@ -56,6 +77,18 @@ Known issues
 What does 0bin not implement?
 =================================
 
-* Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations.
-* Hash collision prevention: the ratio "probability it happens/consequence seriousness" <a href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions">is not worth it</a>
-* Comments: for now. It's on the todo list.
+* Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations for it.
+* Hash collision prevention: the ratio "probability it happens/consequence seriousness" `is not worth it`_
+* Comments: it was initially planed. But comes with a lot of issues so we chose to focus on lower handing fruits.
+
+
+.. _moderate the pastebin content: http://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336
+.. _zerobin project: https://github.com/sebsauvage/ZeroBin/
+.. _Python: https://en.wikipedia.org/wiki/Python_(programming_language)
+.. _The Bottle Python Web microframework: http://bottlepy.org/
+.. _SJCL: http://crypto.stanford.edu/sjcl/
+.. _jQuery: http://jquery.com/
+.. _Bootstrap: http://twitter.github.com/bootstrap/
+.. _VizHash.js: https://github.com/sametmax/VizHash.js
+.. _Cherrypy: http://www.cherrypy.org/ (server only)
+.. _is not worth it: http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions

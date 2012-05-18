@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Options &mdash; 0bin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Introduction" href="../fr/intro.html" />
+    <link rel="prev" title="Theming" href="theming.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../fr/intro.html" title="Introduction"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="theming.html" title="Theming"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <p>&#8211;host=STR</p>
+<p>The host on which to listen for incomming request. Usually 127.0.0.1 to
+listen locally or 0.0.0.0 to listen from the outside.</p>
+<p>Default: 127.0.0.1
+Setting file : HOST</p>
+<div class="section" id="options">
+<h1>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h1>
+<p>0bin&#8217;s behavior can be adjusted with options passed using a configuration
+file or directly using the command line. Some parameters are only available
+in the configuration file.</p>
+<p>If an option is not passed, 0bin will use the default value from the file
+zerobin/default_settings.py.</p>
+<div class="section" id="command-line">
+<h2>Command line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="host-and-port">
+<h3>&#8211;host and &#8211;port<a class="headerlink" href="#host-and-port" title="Permalink to this headline">¶</a></h3>
+<p>The host and port on which to listen for incomming request. Usually 127.0.0.1
+and 8000 to listen locally or 0.0.0.0 and 80 to listen from the outside.</p>
+<p>Default: 127.0.0.1 and 8000
+Setting file : HOST and PORT</p>
+</div>
+<div class="section" id="debug">
+<h3>&#8211;debug<a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h3>
+<p>Display a listing of useful debugging information when something goes wrong
+instead of showing the 500 error page.</p>
+<p>In debug mode, the server also reload automatically any modified Python file;</p>
+<p>Default: False
+Configuration file equivalent: DEBUG</p>
+</div>
+<div class="section" id="user-and-group">
+<h3>&#8211;user and &#8211;group<a class="headerlink" href="#user-and-group" title="Permalink to this headline">¶</a></h3>
+<p>The user and group the server will adopt after start up.</p>
+<p>Useful when you run the command with admin rights to be able to listen to the
+port 80, but you wish that the process do not have access to protected files.</p>
+<p>&#8211;group is set to &#8211;user if not passed.</p>
+<p>Default: None
+Configuration file equivalent: USER and GROUP</p>
+</div>
+<div class="section" id="settings-file">
+<h3>&#8211;settings-file<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h3>
+<p>Path to the configuration file, if you use any.</p>
+<p>Default: None
+Configuration file equivalent: None</p>
+</div>
+<div class="section" id="compressed-static">
+<h3>&#8211;compressed-static<a class="headerlink" href="#compressed-static" title="Permalink to this headline">¶</a></h3>
+<p>Serve minified static files (css and js). Use it in production to get a faster
+web site.</p>
+<p>Default: False
+Configuration file equivalent: COMPRESSED_STATIC_FILES</p>
+</div>
+<div class="section" id="version-and-help">
+<h3>&#8211;version and &#8211;help<a class="headerlink" href="#version-and-help" title="Permalink to this headline">¶</a></h3>
+<p>Display the help or the version of 0bin.</p>
+<p>Default: None
+Configuration file equivalent: None</p>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>Production:</p>
+<div class="highlight-python"><pre>sudo zerobin --host 0.0.0.0 --port 80 --user foo --compressed-static</pre>
+</div>
+<p>Developpement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">zerobin</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="n">serve</span><span class="o">-</span><span class="n">static</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="configuration-file">
+<h2>Configuration file<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>The configuration file should be an ordinary Python file, usually named
+settings.py. It&#8217;s used this way:</p>
+<div class="highlight-python"><pre>zerobin --settings-file '/path/to/settings.py'</pre>
+</div>
+<p>Any options passed to the command line will have priority on the ones in
+the configuration file. The zerobin/default_settings.py can be used as an
+example to create your own file. It&#8217;s heavily commented.</p>
+<div class="section" id="id1">
+<h3>DEBUG<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Display a listing of useful debugging information when something goes wrong
+instead of showing the 500 error page.</p>
+<p>In debug mode, the server also reload automatically any modified Python file;</p>
+<p>Default: False
+Command line equivalent: &#8211;debug</p>
+</div>
+<div class="section" id="static-files-root">
+<h3>STATIC_FILES_ROOT<a class="headerlink" href="#static-files-root" title="Permalink to this headline">¶</a></h3>
+<p>Asbolute path to the directory where 0bin is going to look for static files
+(css, js and images).</p>
+<p>Default:  &#8220;static&#8221; directory in the &#8220;zerobin&#8221; directory
+Command line equivalent: None</p>
+</div>
+<div class="section" id="compressed-static-files">
+<h3>COMPRESSED_STATIC_FILES<a class="headerlink" href="#compressed-static-files" title="Permalink to this headline">¶</a></h3>
+<p>Serve minified static files (css and js). Use it in production to get a faster
+web site.</p>
+<p>Default: False
+Command line equivalent: &#8211;compressed-static</p>
+</div>
+<div class="section" id="paste-files-root">
+<h3>PASTE_FILES_ROOT<a class="headerlink" href="#paste-files-root" title="Permalink to this headline">¶</a></h3>
+<p>Absolute path to the directory in which 0bin is going to look save pastes.</p>
+<p>Default: &#8220;static/content&#8221; direcotry in the &#8220;zerobin&#8221; directory
+Command line equivalent: None</p>
+</div>
+<div class="section" id="template-dirs">
+<h3>TEMPLATE_DIRS<a class="headerlink" href="#template-dirs" title="Permalink to this headline">¶</a></h3>
+<p>List of absolute path to directories containing templates that 0bin uses to
+generate the web site pages. The first list items have priotity on the later.</p>
+<p>If you wish to use your own templates, add the directory containing them
+at the begining of the list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zerobin.defauls_settings</span> <span class="kn">import</span> <span class="n">TEMPLATE_DIRS</span>
+
+<span class="n">TEMPLATE_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;/directy/path/to/your/templates&#39;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">+</span> <span class="n">TEMPLATE_DIRS</span>
+</pre></div>
+</div>
+<p>Default:  &#8220;view&#8221; directory in the &#8220;zerobin&#8221; directory
+Command line equivalent: None</p>
+</div>
+<div class="section" id="id2">
+<h3>HOST and PORT<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The host and port on which to listen for incomming request. Usually 127.0.0.1
+and 8000 to listen locally or 0.0.0.0 and 80 to listen from the outside.</p>
+<p>Default: 127.0.0.1 and 8000
+Configuration file equivalent: &#8211;host and &#8211;port</p>
+</div>
+<div class="section" id="id3">
+<h3>USER and GROUP<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>The user and group the server will adopt after start up.</p>
+<p>Useful when you run the command with admin rights to be able to listen to the
+port 80, but you wish that the process do not have access to protected files.</p>
+<p>GROUP is set to USER if not passed.</p>
+<p>Default: None
+Configuration file equivalent: &#8211;user and &#8211;group</p>
+</div>
+<div class="section" id="menu">
+<h3>MENU<a class="headerlink" href="#menu" title="Permalink to this headline">¶</a></h3>
+<p>A list of &#8216;name&#8217; + &#8216;link&#8217; pairs used to buld the menu at the top of each page.</p>
+<p>You can use a relative or absolute link, and even an email address.</p>
+<p>Any email address will be automatically protected against spam.</p>
+<p>Default:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MENU</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&#39;Home&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;Download 0bin&#39;</span><span class="p">,</span> <span class="s">&#39;https://github.com/sametmax/0bin&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;Contact&#39;</span><span class="p">,</span> <span class="s">&#39;mailto:your@email.com&#39;</span><span class="p">)</span> <span class="c"># email</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Command line equivalent: None</p>
+</div>
+<div class="section" id="max-size">
+<h3>MAX_SIZE<a class="headerlink" href="#max-size" title="Permalink to this headline">¶</a></h3>
+<p>Approximative value for a paste size limite.</p>
+<p>Valeur approximative de limite de taille d&#8217;un paste.</p>
+<p>Default = 500000 octets (500 ko)
+Command line equivalent: None</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Options</a><ul>
+<li><a class="reference internal" href="#command-line">Command line</a><ul>
+<li><a class="reference internal" href="#host-and-port">&#8211;host and &#8211;port</a></li>
+<li><a class="reference internal" href="#debug">&#8211;debug</a></li>
+<li><a class="reference internal" href="#user-and-group">&#8211;user and &#8211;group</a></li>
+<li><a class="reference internal" href="#settings-file">&#8211;settings-file</a></li>
+<li><a class="reference internal" href="#compressed-static">&#8211;compressed-static</a></li>
+<li><a class="reference internal" href="#version-and-help">&#8211;version and &#8211;help</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-file">Configuration file</a><ul>
+<li><a class="reference internal" href="#id1">DEBUG</a></li>
+<li><a class="reference internal" href="#static-files-root">STATIC_FILES_ROOT</a></li>
+<li><a class="reference internal" href="#compressed-static-files">COMPRESSED_STATIC_FILES</a></li>
+<li><a class="reference internal" href="#paste-files-root">PASTE_FILES_ROOT</a></li>
+<li><a class="reference internal" href="#template-dirs">TEMPLATE_DIRS</a></li>
+<li><a class="reference internal" href="#id2">HOST and PORT</a></li>
+<li><a class="reference internal" href="#id3">USER and GROUP</a></li>
+<li><a class="reference internal" href="#menu">MENU</a></li>
+<li><a class="reference internal" href="#max-size">MAX_SIZE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="theming.html"
+                        title="previous chapter">Theming</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../fr/intro.html"
+                        title="next chapter">Introduction</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/en/options.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../fr/intro.html" title="Introduction"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="theming.html" title="Theming"
+             >previous</a> |</li>
+        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Sam et Max.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installing with Nginx &mdash; 0bin 0.1 documentation</title>
+    <title>Nginx setup &mdash; 0bin 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
     <link rel="next" title="Using supervisor" href="using_supervisor.html" />
-    <link rel="prev" title="Installation with Apache" href="apache_install.html" /> 
+    <link rel="prev" title="Apache setup" href="apache_install.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,7 +40,7 @@
           <a href="using_supervisor.html" title="Using supervisor"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="apache_install.html" title="Installation with Apache"
+          <a href="apache_install.html" title="Apache setup"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -51,8 +51,53 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="installing-with-nginx">
-<h1>Installing with Nginx<a class="headerlink" href="#installing-with-nginx" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="nginx-setup">
+<h1>Nginx setup<a class="headerlink" href="#nginx-setup" title="Permalink to this headline">¶</a></h1>
+<p>Nginx is a very popular choice to serve a Python project:</p>
+<ul class="simple">
+<li>It&#8217;s fast.</li>
+<li>It&#8217;s lightweight.</li>
+<li>Configuration files are simple.</li>
+</ul>
+<p>If you have your own server, it&#8217;s the best choice. If not, try the easiest
+setup, or the Apache setup.</p>
+<p>Nginx doesn&#8217;t run any Python process, it only serve requests from outside to
+the Python server.</p>
+<p>Therefor there are two steps:</p>
+<ul class="simple">
+<li>Run the Python process.</li>
+<li>Run Nginx.</li>
+</ul>
+<p>You will benefit from having:</p>
+<ul class="simple">
+<li>the possiblity to have several projects listening to the port 80;</li>
+<li>several Apache module at your disposal (like requests throttling);</li>
+<li>Apache robustness in front end: it&#8217;s secure, and there is much less chance
+it will crash under heavy load;</li>
+<li>your web site processes won&#8217;t run with admin rights, even if &#8211;user doesn&#8217;t
+work on your OS;</li>
+<li>the ability to manage a Python process without touching Nginx or the other
+processes. It&#8217;s very handy for updates.</li>
+</ul>
+<div class="section" id="the-python-process">
+<h2>The Python process<a class="headerlink" href="#the-python-process" title="Permalink to this headline">¶</a></h2>
+<p>Run 0bin as usual, but this time make it listen to a local port and host. E.G:</p>
+<div class="highlight-python"><pre>zerobin --host 127.0.0.1 --port 8000</pre>
+</div>
+<p>In PHP, when you edit a file, the changes are immediatly visible. In Python,
+the whole code is often loaded in memory for performance reasons. This means
+you have to restart the Python process to see the changes effect. Having a
+separate process let you do this without having to restart the server.</p>
+</div>
+<div class="section" id="nginx">
+<h2>Nginx<a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h2>
+<p>Nginx can be installed with you usual package manager, so we won&#8217;t cover
+installing it.</p>
+<p>Vous must create a Nginx configuration file for 0bin. On GNU/Linux, they usually
+go into /etc/nginx/conf.d/. Name it zerobin.conf.</p>
+<p>The minimal file to run the site is:</p>
+<p>But you can make some adjustement to get better perfomances:</p>
+</div>
 </div>
 
 
@@ -61,9 +106,18 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Nginx setup</a><ul>
+<li><a class="reference internal" href="#the-python-process">The Python process</a></li>
+<li><a class="reference internal" href="#nginx">Nginx</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="apache_install.html"
-                        title="previous chapter">Installation with Apache</a></p>
+                        title="previous chapter">Apache setup</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="using_supervisor.html"
                         title="next chapter">Using supervisor</a></p>
@@ -99,7 +153,7 @@
           <a href="using_supervisor.html" title="Using supervisor"
              >next</a> |</li>
         <li class="right" >
-          <a href="apache_install.html" title="Installation with Apache"
+          <a href="apache_install.html" title="Apache setup"
              >previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>

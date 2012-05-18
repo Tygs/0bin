@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Apache setup &mdash; 0bin 0.1 documentation</title>
+    <title>Installation in a virtualenv &mdash; 0bin 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
-    <link rel="next" title="Nginx setup" href="nginx_install.html" />
-    <link rel="prev" title="Easiest installation" href="easy_install.html" /> 
+    <link rel="next" title="Installing with Nginx" href="nginx_install.html" />
+    <link rel="prev" title="Installation with Apache" href="apache_install.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +37,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="nginx_install.html" title="Nginx setup"
+          <a href="nginx_install.html" title="Installing with Nginx"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="easy_install.html" title="Easiest installation"
+          <a href="apache_install.html" title="Installation with Apache"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -51,38 +51,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="apache-setup">
-<h1>Apache setup<a class="headerlink" href="#apache-setup" title="Permalink to this headline">¶</a></h1>
-<p>Apache is slower, heavier and more complicated to setup than Nginx. But it&#8217;s also
-much more famous:</p>
-<ul class="simple">
-<li>more people will be able to help you on forums;</li>
-<li>your hosting will most probably support Apache;</li>
-<li>the configuration file syntax is familiar to a lot of people.</li>
-</ul>
-<p>An Apache setup is still much more robust and secure than an easy installation.</p>
-<p>Une installation apache est aussi beaucoup plus solide et sécurisé qu&#8217;une
-installation facile. You&#8217;ll benefit from having:</p>
-<ul class="simple">
-<li>the possiblity to have several projects listening to the port 80;</li>
-<li>several Apache module at your disposal (like requests throttling);</li>
-<li>Apache robustness in front end: it&#8217;s secure, and there is much less chance
-it will crash under heavy load;</li>
-<li>your web site processes won&#8217;t run with admin rights, even if &#8211;user doesn&#8217;t
-work on your OS.</li>
-</ul>
-<div class="section" id="mod-wsgi">
-<h2>Mod_wsgi<a class="headerlink" href="#mod-wsgi" title="Permalink to this headline">¶</a></h2>
-<p>The modern Web Python servers all work the same way, following an norm for
-interfacing: WSGI.</p>
-<p>This is the most performante solution, and the best to use. But it will require
-the setup of the Apache module mod_wsgi. If you don&#8217;t know how to do this, or
-if you can&#8217;t do it (E.G: your hosting won&#8217;t let you), you need to go for
-the CGI setup.</p>
-<hr class="docutils" />
-<p>This setup is considered as slow, but you will still benefit from Apache
-robustness.</p>
-</div>
+  <div class="section" id="installation-in-a-virtualenv">
+<h1>Installation in a virtualenv<a class="headerlink" href="#installation-in-a-virtualenv" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -91,23 +61,15 @@ robustness.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Apache setup</a><ul>
-<li><a class="reference internal" href="#mod-wsgi">Mod_wsgi</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
-  <p class="topless"><a href="easy_install.html"
-                        title="previous chapter">Easiest installation</a></p>
+  <p class="topless"><a href="apache_install.html"
+                        title="previous chapter">Installation with Apache</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="nginx_install.html"
-                        title="next chapter">Nginx setup</a></p>
+                        title="next chapter">Installing with Nginx</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/en/apache_install.txt"
+    <li><a href="../_sources/en/pip_install.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -134,10 +96,10 @@ robustness.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="nginx_install.html" title="Nginx setup"
+          <a href="nginx_install.html" title="Installing with Nginx"
              >next</a> |</li>
         <li class="right" >
-          <a href="easy_install.html" title="Easiest installation"
+          <a href="apache_install.html" title="Installation with Apache"
              >previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>

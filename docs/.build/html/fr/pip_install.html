@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation avec Apache &mdash; 0bin 0.1 documentation</title>
+    <title>Installation dans un virtualenv &mdash; 0bin 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
     <link rel="next" title="Installation avec Nginx" href="nginx_install.html" />
-    <link rel="prev" title="Installation la plus simple" href="easy_install.html" /> 
+    <link rel="prev" title="Installation avec Apache" href="apache_install.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,7 +40,7 @@
           <a href="nginx_install.html" title="Installation avec Nginx"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="easy_install.html" title="Installation la plus simple"
+          <a href="apache_install.html" title="Installation avec Apache"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -51,42 +51,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="installation-avec-apache">
-<h1>Installation avec Apache<a class="headerlink" href="#installation-avec-apache" title="Permalink to this headline">¶</a></h1>
-<p>Apache est plus lent, plus lourd, et plus complexe à mettre en oeuvre que Nginx.
-Mais il est aussi beaucoup plus connu:</p>
-<ul class="simple">
-<li>plus de gens pourront vous aider les fora;</li>
-<li>votre hébergeur propose surement Apache;</li>
-<li>la syntaxe des fichiers de configuration est familière pour beaucoup.</li>
-</ul>
-<p>Une installation apache est aussi beaucoup plus solide et sécurisé qu&#8217;une
-installation facile. Vous bénéficierez:</p>
-<ul class="simple">
-<li>de la possibilité d&#8217;avoir plusieurs projets écoutant sur le prot 80;</li>
-<li>de plusieurs modules Apache à votre disposition (comme la limitation
-du nombre de requêtes);</li>
-<li>de la solidité d&#8217;Apache en front end: il est sécurité, et il y a peu de chance
-qu&#8217;il crash sous une forte charge;</li>
-<li>les processus de votre site ne tournent pas avec les droits admin, même si
-&#8211;user ne fonctionne pas sur votre OS.</li>
-</ul>
-<p>Apache s&#8217;installe avec votre gestionnaire de paquet habituel, nous ne couvrierons
-pas cette partie.</p>
-<div class="section" id="mod-wsgi">
-<h2>Mod_wsgi<a class="headerlink" href="#mod-wsgi" title="Permalink to this headline">¶</a></h2>
-<p>Les serveurs Web Python modernes fonctionnent tous de la même manière, en suivant
-une norme d&#8217;interfaçage: WSGI.</p>
-<p>C&#8217;est la solution la plus performante, et celle recommandée. Mais elle demande
-l&#8217;installation du modle Apache mod_wsgi. Si vous ne savez pas comment faire,
-ou si vous ne pouvez pas le faire (par exemple sur un hébergement mutualisé
-qui ne le propose pas), il vous faudra choisir l&#8217;installation CGI.</p>
-</div>
-<div class="section" id="mod-cgi">
-<h2>Mod_CGI<a class="headerlink" href="#mod-cgi" title="Permalink to this headline">¶</a></h2>
-<p>Cette installation est considérée comme relativement lente. Mais vous bénéficierez
-tout de même de la robustesse d&#8217;Apache</p>
-</div>
+  <div class="section" id="installation-dans-un-virtualenv">
+<h1>Installation dans un virtualenv<a class="headerlink" href="#installation-dans-un-virtualenv" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -95,24 +61,15 @@ tout de même de la robustesse d&#8217;Apache</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Installation avec Apache</a><ul>
-<li><a class="reference internal" href="#mod-wsgi">Mod_wsgi</a></li>
-<li><a class="reference internal" href="#mod-cgi">Mod_CGI</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
-  <p class="topless"><a href="easy_install.html"
-                        title="previous chapter">Installation la plus simple</a></p>
+  <p class="topless"><a href="apache_install.html"
+                        title="previous chapter">Installation avec Apache</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="nginx_install.html"
                         title="next chapter">Installation avec Nginx</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/fr/apache_install.txt"
+    <li><a href="../_sources/fr/pip_install.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -142,7 +99,7 @@ tout de même de la robustesse d&#8217;Apache</p>
           <a href="nginx_install.html" title="Installation avec Nginx"
              >next</a> |</li>
         <li class="right" >
-          <a href="easy_install.html" title="Installation la plus simple"
+          <a href="apache_install.html" title="Installation avec Apache"
              >previous</a> |</li>
         <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>

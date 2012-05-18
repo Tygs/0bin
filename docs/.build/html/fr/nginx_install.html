@@ -53,6 +53,54 @@
             
   <div class="section" id="installation-avec-nginx">
 <h1>Installation avec Nginx<a class="headerlink" href="#installation-avec-nginx" title="Permalink to this headline">¶</a></h1>
+<p>Nginx est un choix très populaire pour servir un projet Python:</p>
+<ul class="simple">
+<li>Il est rapide.</li>
+<li>Il est léger.</li>
+<li>Les fichiers de configuration sont très simple.</li>
+</ul>
+<p>Si vous avez votre propre serveur, c&#8217;est le meilleur choix. Dans le cas contraire,
+essayez l&#8217;installation la plus simple, ou avec Apache.</p>
+<p>Nginx ne lance aucun processus Python, il sert uniquement les requêtes
+depuis l&#8217;extérieur vers le server Python.</p>
+<p>Il y a donc deux étapes:</p>
+<ul class="simple">
+<li>Faire tourner le processus Python.</li>
+<li>Faire tourner Nginx.</li>
+</ul>
+<p>Ainsi, vous bénéficierez:</p>
+<ul class="simple">
+<li>de la possibilité d&#8217;avoir plusieurs projets écoutant sur le prot 80;</li>
+<li>de plusieurs modules Nginx à votre disposition (comme la limitation
+du nombre de requêtes);</li>
+<li>de la solidité de Nginx en front end: il est sécurité, et il y a peu de chance
+qu&#8217;il crash sous une forte charge;</li>
+<li>les processus de votre site ne tournent pas avec les droits admin, même si
+&#8211;user ne fonctionne pas sur votre OS;</li>
+<li>de la capacité de gérer un processus Python sans toucher Nginx ou les autres
+processus. C&#8217;est très pratique pour les mises à jour.</li>
+</ul>
+<div class="section" id="processus-python">
+<h2>Processus Python<a class="headerlink" href="#processus-python" title="Permalink to this headline">¶</a></h2>
+<p>Lancez 0bin comme d&#8217;habitude, mais cette fois pour écouter sur un host et un port
+local. Ex</p>
+<div class="highlight-python"><pre>zerobin --host 127.0.0.1 --port 8000</pre>
+</div>
+<p>En PHP, quand on édite un fichier, la modificiation est visible immédiatement.
+En Python, l&#8217;intégralité du code est chargé en mémoire pour des raisons de
+performance. Pour cette raison, il faut redémarrer le processus Python pour voir
+les changement prendre effet. Avoir un processus séparé permet de le faire
+sans avoir à redémarer le serveur.</p>
+</div>
+<div class="section" id="nginx">
+<h2>Nginx<a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h2>
+<p>Nginx peut être installé avec votre gestionnaire de paquets habituels, donc
+nous ne couvrirons pas cette partie.</p>
+<p>Vous devez créer une fichier de configuration Nginx pour 0bin. Sous GNU/Linux,
+on les mets en général dans /etc/nginx/conf.d/. Nommez le zerobin.conf.</p>
+<p>Le fichier minimal pour faire tourner le site est:</p>
+<p>Mais on peut apporter plusieurs améliorations de performance:</p>
+</div>
 </div>
 
 
@@ -61,6 +109,15 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation avec Nginx</a><ul>
+<li><a class="reference internal" href="#processus-python">Processus Python</a></li>
+<li><a class="reference internal" href="#nginx">Nginx</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="apache_install.html"
                         title="previous chapter">Installation avec Apache</a></p>

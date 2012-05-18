@@ -54,7 +54,7 @@ Technologies used
 - `The Bottle Python Web microframework`_
 - SJCL_ (js crypto tools)
 - jQuery_
-- Bootstrap_, the twitter HTML5/CSS3 framework
+- Bootstrap_, the Twitter HTML5/CSS3 framework
 - VizHash.js_ to create visual hashes from pastes
 - Cherrypy_ (server only)
 
@@ -62,7 +62,7 @@ Technologies used
 Known issues
 ============
 
-- 0bin use several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.
+- 0bin uses several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.
 - The "copy to clipboard" feature is buggy under linux. It's flash, so we won't fix it. Better wait for the HTML5 clipboard API to be implemented in major browsers.
 - The pasted content size limit check is not accurate. It's just a safety net, so we thinks it's ok.
 - Some url shorteners and other services storing URLs break the encryption key. We will sanitize the URL as much as we can, but there is a limit to what we can do.
@@ -71,7 +71,7 @@ What does 0bin not implement?
 =================================
 
 * Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations for it.
-* Hash collision: the ratio "probability it happens/consequence seriousness" <a href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions"is not worth it</a
+* Hash collision prevention: the ratio "probability it happens/consequence seriousness" `is not worth it`_
 * Comments: it was initially planed. But comes with a lot of issues so we chose to focus on lower handing fruits.
 
 
@@ -84,3 +84,4 @@ What does 0bin not implement?
 .. _Bootstrap: http://twitter.github.com/bootstrap/
 .. _VizHash.js: https://github.com/sametmax/VizHash.js
 .. _Cherrypy: http://www.cherrypy.org/ (server only)
+.. _is not worth it: http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions

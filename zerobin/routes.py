@@ -7,6 +7,8 @@
     server run.
 """
 
+import os
+import sys
 import thread
 
 from datetime import datetime, timedelta
@@ -104,17 +106,25 @@ def error404(code):
     return GLOBAL_CONTEXT
 
 
+@app.route('/static/<filename:path>')
+def server_static(filename):
+    return static_file(filename, root=settings.STATIC_FILES_ROOT)
+
+
 @clize.clize(coerce={'debug': bool, 'compressed_static': bool})
-def runserver(host='', port='', debug=None, serve_static='', user='',
-              group='', settings_file='', compressed_static=None):
+def runserver(host='', port='', debug=None, user='',
+              group='', settings_file='', compressed_static=None, version=False):
+
+    if version:
+        print '0bin V%s' % settings.VERSION
+        sys.exit(0)
 
     # merge the settings
     if settings_file:
-        settings.update_with_file(settings_file)
+        settings.update_with_file(os.path.abspath(settings_file))
 
     settings.HOST = host or settings.HOST
     settings.PORT = port or settings.PORT
-    settings.STATIC_FILES_ROOT = serve_static or settings.STATIC_FILES_ROOT
     settings.USER = user or settings.USER
     settings.GROUP = group or settings.GROUP
 
@@ -128,10 +138,6 @@ def runserver(host='', port='', debug=None, serve_static='', user='',
     for d in reversed(settings.TEMPLATE_DIRS):
         bottle.TEMPLATE_PATH.insert(0, d)
 
-    if settings.STATIC_FILES_ROOT:
-        @app.route('/static/<filename:path>')
-        def server_static(filename):
-            return static_file(filename, root=settings.STATIC_FILES_ROOT)
 
     thread.start_new_thread(drop_privileges, (settings.USER, settings.GROUP))
 

@@ -7,7 +7,7 @@ quel type de contenu y soit posté. L'idée est qu'une personne ne peut (probabl
 pas être tenue de `modérer le contenu du pastebin`_ si elle n'a aucun moyen
 de le déchiffrer.
 
-C'est une implémentation en Python du `projet zerobin`, facile à installer même
+C'est une implémentation en Python du `projet zerobin`_, facile à installer même
 si on ne connait pas ce langage.
 
 Comment ça marche
@@ -56,25 +56,37 @@ Technologies utilisées
 - `The Bottle Python Web microframework`_
 - SJCL_ (js crypto tools)
 - jQuery_
-- Bootstrap_, the twitter HTML5/CSS3 framework
-- VizHash.js_ to create visual hashes from pastes
-- Cherrypy_ (server only)
+- Bootstrap_, le framework HTML5/CSS3 de Twitter
+- VizHash.js_ pour créer les hash visuels des pastes
+- Cherrypy_ (serveur uniquement)
 
 
 Problèmes connus
 =================
 
-- 0bin use several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.
-- The "copy to clipboard" feature is buggy under linux. It's flash, so we won't fix it. Better wait for the HTML5 clipboard API to be implemented in major browsers.
-- The pasted content size limit check is not accurate. It's just a safety net, so we thinks it's ok.
-- Some url shorteners and other services storing URLs break the encryption key. We will sanitize the URL as much as we can, but there is a limit to what we can do.
+- 0bin utilise plusieurs fonctionalités HTML5/CSS3 qui ne sont pas
+  encore largement supporté. Dans ce cas nous gérons la dégradation le plus
+  gracieusement possible.
+- La fonction "copier dans le press/papier" est buggée sous Linux. C'est du
+  flash donc nous ne le réparerons pas. Il vaut mieux attendre le support
+  du presse papier via l'API HTML5.
+- La vérification de la limite de ta taille du paste n'est pas précise. c'est
+  juste un filet de sécurité, donc nous pensons que ça suffira.
+- Quelques raccourcisseurs d'URL et d'autres services cassent la clé de
+  chiffrement. Nous essayerons de nettoyer autant que possible mais il y
+  a une limite à ce que nous pouvons faire.
 
-What does 0bin not implement?
+Qu'est-ce que 0bin ne fait pas ?
 =================================
 
-* Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations for it.
-* Hash collision: the ratio "probability it happens/consequence seriousness" <a href="http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions"is not worth it</a
-* Comments: it was initially planed. But comes with a lot of issues so we chose to focus on lower handing fruits.
+- Limitation du nombre de requêtes: ce serait peu productif de le faire au
+  niveau de l'application alors que les serveurs Web le font tous de manière très
+  efficace.
+- La prévention de collision de hash: le ratio "occurence/conséquence"
+  n'est pas suffisant_.
+- Commentaires: c'était prévu. Mais il y a beaucoup de contraintes associées,
+  nous avons donc choisi de nous concentrer sur les fonctions avec un meilleur
+  rapport qualité/prix.
 
 
 .. _modérer le contenu du pastebin: http://linuxfr.org/news/zerobin-un-pastebin-securise
@@ -86,3 +98,4 @@ What does 0bin not implement?
 .. _Bootstrap: http://twitter.github.com/bootstrap/
 .. _VizHash.js: https://github.com/sametmax/VizHash.js
 .. _Cherrypy: http://www.cherrypy.org/ (server only)
+.. _suffisant: http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions

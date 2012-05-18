@@ -7,7 +7,7 @@ quel type de contenu y soit posté. L'idée est qu'une personne ne peut (probabl
 pas être tenue de `modérer le contenu du pastebin`_ si elle n'a aucun moyen
 de le déchiffrer.
 
-C'est une implémentation en Python du `projet zerobin`, facile à installer même
+C'est une implémentation en Python du `projet zerobin`_, facile à installer même
 si on ne connait pas ce langage.
 
 Comment ça marche
@@ -65,28 +65,28 @@ Problèmes connus
 =================
 
 - 0bin utilise plusieurs fonctionalités HTML5/CSS3 qui ne sont pas
-encore largement supporté. Dans ce cas nous gérons la dégradation le plus
-gracieusement possible.
+  encore largement supporté. Dans ce cas nous gérons la dégradation le plus
+  gracieusement possible.
 - La fonction "copier dans le press/papier" est buggée sous Linux. C'est du
-flash donc nous ne le réparerons pas. Il vaut mieux attendre le support
-du presse papier via l'API HTML5.
+  flash donc nous ne le réparerons pas. Il vaut mieux attendre le support
+  du presse papier via l'API HTML5.
 - La vérification de la limite de ta taille du paste n'est pas précise. c'est
-juste un filet de sécurité, donc nous pensons que ça suffira.
+  juste un filet de sécurité, donc nous pensons que ça suffira.
 - Quelques raccourcisseurs d'URL et d'autres services cassent la clé de
-chiffrement. Nous essayerons de nettoyer autant que possible mais il y
-a une limite à ce que nous pouvons faire.
+  chiffrement. Nous essayerons de nettoyer autant que possible mais il y
+  a une limite à ce que nous pouvons faire.
 
 Qu'est-ce que 0bin ne fait pas ?
 =================================
 
-* Limitation du nombre de requête: ce serait peu productif de le faire au
-niveau de l'application alors que les serveurs Web le font tous de manière plus
-efficace.
-* La prévention d'une collision de hash: le ratio "occurence/conséquence"
-n'est pas suffisant_.
-* Commentaires: c'était prévu. Mais il y a beaucoup de contraintes associées,
-nous avons donc choisi de nous concentrer sur les fonctions avec un meilleur
-rapport qualité/prix.
+- Limitation du nombre de requêtes: ce serait peu productif de le faire au
+  niveau de l'application alors que les serveurs Web le font tous de manière très
+  efficace.
+- La prévention de collision de hash: le ratio "occurence/conséquence"
+  n'est pas suffisant_.
+- Commentaires: c'était prévu. Mais il y a beaucoup de contraintes associées,
+  nous avons donc choisi de nous concentrer sur les fonctions avec un meilleur
+  rapport qualité/prix.
 
 
 .. _modérer le contenu du pastebin: http://linuxfr.org/news/zerobin-un-pastebin-securise
