@@ -4,7 +4,6 @@
 0bin is a client side encrypted pastebin that can run without a database.
 
 * Try it: `0bin.net <http://0bin.net>`_
-* Get the `source on github <https://github.com/sametmax/0bin>`_
 * `Report a bug <https://github.com/sametmax/0bin/issues>`_
 
 0bin allows anybody to host a pastebin while welcoming any type of content to
@@ -16,6 +15,12 @@ It's an Python implementation of the
 install even if you know nothing about Python.
 
 For now tested with IE9, and the last opera, safari, chrome and FF.
+
+There is a `good doc <http://readthedocs.org/docs/0bin/en/latest/>`_,
+but in short::
+
+    pip install zerobin
+    zerobin
 
 How it works
 =============
