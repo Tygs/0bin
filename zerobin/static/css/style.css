@@ -339,3 +339,12 @@ canvas {
 	border: 1px solid white;
 }
 
+#wrap-content {
+	display: none;
+}
+
+.noscript {
+	text-align: center;
+	color: red;
+	font-weight: bold;
+}
