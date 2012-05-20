@@ -116,7 +116,7 @@
 
       <footer>
        <blockquote>
-        <p>«Few persons can be made to believe that it is not quite an easy thing to invent a method of secret writing which shall baffle investigation. Yet it may be roundly asserted that human ingenuity cannot concoct a cipher which human ingenuity cannot resolve...»</p>
+        <p>“Few persons can be made to believe that it is not quite an easy thing to invent a method of secret writing which shall baffle investigation. Yet it may be roundly asserted that human ingenuity cannot concoct a cipher which human ingenuity cannot resolve...”</p>
         <small>Edgar Allan Poe</small>
       </blockquote>
 
