@@ -81,7 +81,13 @@
       </div>
     </div>
 
-    <div class="container">
+    <noscript class="container noscript">
+          <p>This pastebin uses client-side encryption. Therefore, it needs JavaScript enabled.</p>
+          <p>It seems like your browser doesn't have JavaScript enable.</p>
+          <p>Please enable JavaScript for this website or use a JavaScript-capable web browser.</p>
+    </noscript>
+
+    <div class="container" id="wrap-content">
       <div class="row">
         <div class="span2">
           <div class="well sidebar-nav">
