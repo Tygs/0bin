@@ -27,23 +27,23 @@ How it works
 
 When creating the paste:
 
-- the browser generate a random key;
+- the browser generates a random key;
 - the pasted content is encrypted with this key using AES256;
 - the encrypted pasted content is sent to the server;
-- the browser receives the paste URL and add the key in the URL hash (#).
+- the browser receives the paste URL and adds the key in the URL hash (#).
 
 When reading the paste:
 
 - the browser makes the GET request to the paste URL;
 - because the key is in the hash, the key is not part of the request;
-- browser gets the encrypted content et decrypt it using the key;
-- the pasted decrypted content is displayed and code is colored.
+- browser gets the encrypted content end decrypts it using the key;
+- the pasted decrypted content is displayed and sourcecode is highlighted.
 
 Key points:
 
 - because the key is in the hash, the key is never sent to the server;
-- therefor it won't appear in the server logs;
-- all operations, including code coloration, must happens on the client;
+- therefore it won't appear in the server logs;
+- all operations, including code coloration, happen on the client-side;
 - the server is no more than a fancy recipient for the encrypted data.
 
 Other features
@@ -76,7 +76,7 @@ Known issues
 
 - 0bin uses several HTML5/CSS3 features that are not widely supported. In that case we handle the degradation as gracefully as we can.
 - The "copy to clipboard" feature is buggy under linux. It's flash, so we won't fix it. Better wait for the HTML5 clipboard API to be implemented in major browsers.
-- The pasted content size limit check is not accurate. It's just a safety net, so we thinks it's ok.
+- The pasted content size limit check is not accurate. It's just a safety net, so we think it's ok.
 - Some url shorteners and other services storing URLs break the encryption key. We will sanitize the URL as much as we can, but there is a limit to what we can do.
 
 What does 0bin not implement?
@@ -84,7 +84,7 @@ What does 0bin not implement?
 
 * Request throttling. It would be inefficient to do it at the app level, and web servers have robust implementations for it.
 * Hash collision prevention: the ratio "probability it happens/consequence seriousness" `is not worth it`_
-* Comments: it was initially planed. But comes with a lot of issues so we chose to focus on lower handing fruits.
+* Comments: it was initially planed. But comes with a lot of issues so we chose to focus on lower hanging fruits.
 
 
 .. _moderate the pastebin content: http://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336
