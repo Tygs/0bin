@@ -132,7 +132,7 @@
             Based on an original idea from
            <a href="http://sebsauvage.net/paste/">sebsauvage.net</a><br>
            <a href="http://sametmax.com">Sam &amp; Max</a> |
-            <span title="lesametlemax__AT__gmail.com" class="email-link">Contact us</span>
+           <span title="{{ entry[1].replace('mailto:', '').replace('@', '__AT__') }}" class="email-link">Contact us</span>
        </p>
       </footer>
 
