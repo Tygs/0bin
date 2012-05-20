@@ -12,8 +12,8 @@
       <a class="close" data-dismiss="alert" href="#">×</a>
       <strong class="title">Warning!</strong>
       <span class="message">
-        This paste has self-destructed. If you close this windows,
-        there is not way to recover it.
+        This paste has self-destructed. If you close this window,
+        there is no way to recover it.
       </span>
     </p>
   %end
