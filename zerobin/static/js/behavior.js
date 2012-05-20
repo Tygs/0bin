@@ -674,6 +674,9 @@ $('.email-link').each(function(i, elem){
 
 });
 
+$('#wrap-content').each(function(i, elem){
+    $(elem).show();
+});
 
 
 }); /* End of "document ready" jquery callback */
