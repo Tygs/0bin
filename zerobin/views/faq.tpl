@@ -31,14 +31,14 @@
            content users pasted in his service. The idea is that you can not
            require somebody to moderate something he can't read</p>
     </dd>
-    <dt>What if the server change the Javascript? Or in the case of a man
+    <dt>What if the server changes the Javascript code? Or in the case of a man
         in the middle attack?</dt>
     <dd>
       <p>Read above.</p>
       <p>0bin the is not built to protect the users content. It is built to
         protect the host. If the user content is compromised, 0bin still
         provides the host with the main feature: ignorance of the hosted content.</p>
-      <p>The case where the host himself compromise the encryption process
+      <p>The case where the host himself compromises the encryption process
          to read the content makes no sense: in that case he wouldn't have
          installed 0bin in the first place. 0bin is here to protect him.</p>
       <p><strong>If you want to be sure nobody can read your content, you should
