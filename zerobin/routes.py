@@ -40,7 +40,7 @@ def index():
 
 @app.route('/faq/')
 @view('faq')
-def index():
+def faq():
     return GLOBAL_CONTEXT
 
 
