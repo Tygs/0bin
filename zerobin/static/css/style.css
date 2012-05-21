@@ -31,6 +31,10 @@
 	margin-bottom: 0px !important;
 }
 
+.center {
+	text-align: center;
+}
+
 .about span{
 	font-size: 10px;
 }

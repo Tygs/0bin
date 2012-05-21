@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
+import fcntl
+import sys
 import hashlib
+
 
 from datetime import datetime, timedelta
 
@@ -110,6 +113,36 @@ class Paste(object):
             file matching this uuid. Use load_from_file() and get_path()
         """
         return cls.load_from_file(cls.get_path(uuid))
+
+
+    
+    def increment_counter(self):
+        """
+            Increment pastes counter 
+        """
+
+        # simple counter incrementation
+        # using lock file to prevent multi access to the file
+        # could be improved.
+
+
+        path = settings.PASTE_FILES_ROOT
+        counter_file = os.path.join(path, 'counter') 
+
+        fd = os.open(counter_file, os.O_RDWR | os.O_CREAT)
+        fcntl.lockf(fd, fcntl.LOCK_EX)
+        s = os.read(fd, 4096)
+        try:
+            n = long(float(s))
+        except ValueError:
+            raise ValueError(u"Couldn't read value from counter file " + counter_file + ", assuming 0")
+            n = 0
+        fnn = counter_file + ".new"
+        f = open(fnn, "w")
+        f.write(str(n + 1))
+        f.close()
+        os.rename(fnn, counter_file)
+        os.close(fd)
 
 
     def save(self):

@@ -25,4 +25,4 @@
 </form>
 
 
-%rebase base settings=settings
+%rebase base settings=settings, pastes_count=pastes_count
