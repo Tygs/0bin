@@ -9,14 +9,15 @@
     <dt>How does it work?</dt>
     <dd>
         <p>We generate a random key, and encrypt the paste with it using
-           the sjcl javascript library.</p>
+           the <a href="http://crypto.stanford.edu/sjcl/">sjcl</a>
+           javascript library.</p>
         <p>The content is sent encrypted to the server, which returns the
-           address of the paste.</p>
-        <p>The javascript code take the address, and add the encryption
-           key in the URL hash (#).</p>
-        <p>When somebody reads the paste, he goes to the URL. If
-           the hash with the key is in it, the javascript will use it
-           to decrypt the content sent by the server.</p>
+           address of the newly created paste.</p>
+        <p>The javascript code then redirects to this address, but it adds the
+           encryption key in the URL hash (#).</p>
+        <p>When somebody want to read the paste, he usually just click on a link
+          with this URL. If the hash containing the key is part of it, Obin's
+          javascript will use it to decrypt the content sent by the server.</p>
         <p>The browser never sends the hash to the server, so it does not
            receives the key.</p>
     </dd>
