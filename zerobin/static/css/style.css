@@ -348,3 +348,11 @@ canvas {
 	color: red;
 	font-weight: bold;
 }
+
+#faq dt {
+    margin:2em 0 1em 0;
+}
+
+#faq p {
+    margin:1em;
+}
