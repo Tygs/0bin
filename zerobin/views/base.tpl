@@ -133,7 +133,7 @@
       </h4>
       -->
 
-      </br>
+      <br/>
         <p class="greetings span12">
             Based on an original idea from
            <a href="http://sebsauvage.net/paste/">sebsauvage.net</a><br>
