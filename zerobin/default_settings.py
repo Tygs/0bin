@@ -58,6 +58,7 @@ GROUP = None
 MENU = (
     ('Home', '/'), # internal link. First link will be highlited
     ('Download 0bin', 'https://github.com/sametmax/0bin'), # external link
+    ('Faq', '/faq/'), # faq
     ('Contact', 'mailto:your@email.com') # email
 )
 

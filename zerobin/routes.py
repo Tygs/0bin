@@ -38,6 +38,12 @@ def index():
     return GLOBAL_CONTEXT
 
 
+@app.route('/faq/')
+@view('faq')
+def index():
+    return GLOBAL_CONTEXT
+
+
 @app.route('/paste/create', method='POST')
 def create_paste():
 
