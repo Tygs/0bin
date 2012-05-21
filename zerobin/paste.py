@@ -133,11 +133,11 @@ class Paste(object):
                 os.makedirs(self.build_path(head, tail))
                 self.DIR_CACHE.add((head, tail))
 
-            elif (head, tail) not in self.DIR_CACHE:
-                path = self.build_path(head, tail)
-                self.DIR_CACHE.add((head, tail))
-                if not os.path.isdir(path):
-                    os.mkdir(path)
+        if (head, tail) not in self.DIR_CACHE:
+            path = self.build_path(head, tail)
+            self.DIR_CACHE.add((head, tail))
+            if not os.path.isdir(path):
+                os.mkdir(path)
 
         # add a timestamp to burn after reading to allow
         # a quick period of time where you can redirect to the page without
