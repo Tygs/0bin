@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import fcntl
-import sys
 import hashlib
-
 
 from datetime import datetime, timedelta
 
@@ -127,22 +124,44 @@ class Paste(object):
 
 
         path = settings.PASTE_FILES_ROOT
-        counter_file = os.path.join(path, 'counter') 
+        counter_file = os.path.join(path, 'counter')
+        lock_file = os.path.join(path, 'counter.lock')
 
-        fd = os.open(counter_file, os.O_RDWR | os.O_CREAT)
-        fcntl.lockf(fd, fcntl.LOCK_EX)
-        s = os.read(fd, 4096)
-        try:
-            n = long(float(s))
-        except ValueError:
-            raise ValueError(u"Couldn't read value from counter file " + counter_file + ", assuming 0")
-            n = 0
-        fnn = counter_file + ".new"
-        f = open(fnn, "w")
-        f.write(str(n + 1))
-        f.close()
-        os.rename(fnn, counter_file)
-        os.close(fd)
+        if not os.path.isfile(lock_file):
+            try:
+                #make lock file
+                flock = open(lock_file, "w")
+                flock.write('lock')    
+                flock.close()
+
+                # init counter (first time)
+                if not os.path.isfile(counter_file):
+                    fcounter = open(counter_file, "w")
+                    fcounter.write('1')
+                    fcounter.close()
+
+                # get counter value
+                fcounter = open(counter_file, "r")
+                counter_value = fcounter.read(50)
+                fcounter.close()
+
+                try:
+                    counter_value = long(counter_value) + 1
+                except ValueError:
+                    counter_value = 1
+
+                # write new value to counter
+                fcounter = open(counter_file, "w")
+                fcounter.write(str(counter_value))
+                fcounter.close()
+
+                #remove lock file
+                os.remove(lock_file)
+            except (IOError, OSError):
+                if os.path.isfile(lock_file):
+                    #remove lock file
+                    os.remove(lock_file)
+
 
 
     def save(self):

@@ -59,7 +59,7 @@ def get_pastes_count():
         Return the number of pastes created (must have option DISPLAY_COUNTER enabled)
     """
     locale.setlocale(locale.LC_ALL, 'en_US')
-    counter_path = default_settings.PASTE_FILES_ROOT
+    counter_path = settings.PASTE_FILES_ROOT
     counter_file = os.path.join(counter_path, 'counter')
     try:
         with open(counter_file, "r") as f:
