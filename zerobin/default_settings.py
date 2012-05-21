@@ -53,9 +53,11 @@ PORT = "8000"
 USER = None
 GROUP = None
 
-# Display a tiny counter for pastes created
+# Display a tiny counter for pastes created.
 # Be carreful if your site have to many pastes this can hurt your hard drive performances.
+# Refresh counter interval. Default to every minute after a paste.
 DISPLAY_COUNTER = True
+REFRESH_COUNTER = 60 * 1
 
 # Names/links to insert in the menu bar.
 # Any link with "mailto:" will be escaped to prevent spam
