@@ -51,6 +51,14 @@
     <dd>
       <p>We didn't, we based 0bin on
         <a href="http://sebsauvage.net/paste/">sebsauvage's work</a>.</p>
+
+    <p>It was a reaction to
+       <a href="https://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336">Pastebin been forced to moderate its content</a>
+        because of so many illegal stuffed posted to it. 0bin should be used the
+         same way <a href="pastebin.com">Pastebin</a> is for users. The only
+         difference is that if you host it, we hope the encryption
+         feature can be used as a defense. This is not proven though :-)</p>
+
     </dd>
 
   </dl>
