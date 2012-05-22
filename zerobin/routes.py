@@ -23,14 +23,16 @@ from bottle import (Bottle, run, static_file, view, request)
 import clize
 
 from paste import Paste
-from utils import drop_privileges, dmerge
+from utils import drop_privileges, dmerge, get_pastes_count
 
 
 app = Bottle()
 GLOBAL_CONTEXT = {
-    'settings': settings
+    'settings': settings,
+    'pastes_count': get_pastes_count(),
+    'refresh_counter': datetime.now()
 }
-
+ 
 
 @app.route('/')
 @view('home')
@@ -64,6 +66,19 @@ def create_paste():
             expiration = request.forms.get('expiration', u'burn_after_reading')
             paste = Paste(expiration=expiration, content=content)
             paste.save()
+ 
+            # display counter
+            if settings.DISPLAY_COUNTER:
+
+                #increment paste counter
+                paste.increment_counter()
+                
+                # if refresh time elapsed pick up new counter value
+                if GLOBAL_CONTEXT['refresh_counter'] + timedelta(seconds=settings.REFRESH_COUNTER) < datetime.now():
+                    GLOBAL_CONTEXT['pastes_count'] = get_pastes_count()
+                    GLOBAL_CONTEXT['refresh_counter'] = datetime.now()
+
+
             return {'status': 'ok',
                     'paste': paste.uuid}
 

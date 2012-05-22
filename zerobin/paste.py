@@ -112,6 +112,58 @@ class Paste(object):
         return cls.load_from_file(cls.get_path(uuid))
 
 
+    
+    def increment_counter(self):
+        """
+            Increment pastes counter 
+        """
+
+        # simple counter incrementation
+        # using lock file to prevent multi access to the file
+        # could be improved.
+
+
+        path = settings.PASTE_FILES_ROOT
+        counter_file = os.path.join(path, 'counter')
+        lock_file = os.path.join(path, 'counter.lock')
+
+        if not os.path.isfile(lock_file):
+            try:
+                #make lock file
+                flock = open(lock_file, "w")
+                flock.write('lock')    
+                flock.close()
+
+                # init counter (first time)
+                if not os.path.isfile(counter_file):
+                    fcounter = open(counter_file, "w")
+                    fcounter.write('1')
+                    fcounter.close()
+
+                # get counter value
+                fcounter = open(counter_file, "r")
+                counter_value = fcounter.read(50)
+                fcounter.close()
+
+                try:
+                    counter_value = long(counter_value) + 1
+                except ValueError:
+                    counter_value = 1
+
+                # write new value to counter
+                fcounter = open(counter_file, "w")
+                fcounter.write(str(counter_value))
+                fcounter.close()
+
+                #remove lock file
+                os.remove(lock_file)
+            except (IOError, OSError):
+                if os.path.isfile(lock_file):
+                    #remove lock file
+                    os.remove(lock_file)
+
+
+
     def save(self):
         """
             Save the content of this paste to a file.
