@@ -155,6 +155,7 @@
       <strong class="title"></strong>
       <span class="message"></span>
     </p>
+  </div><!--/wrap-content-->
 
   </body>
 
