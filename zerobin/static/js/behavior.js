@@ -162,8 +162,8 @@ window.zerobin = {
   /** Return a reverse sorted list of all the keys in local storage that
       are prefixed with with the passed version (default being this lib
       version) */
-  getLocalStorageKeys: function(version){
-    version = 'zerobinV'  + (version || zerobin.version);
+  getLocalStorageKeys: function(){
+    version = 'zerobinV0.1';
     var keys = [];
     for (var key in localStorage){
        if (key.indexOf(version) !== -1){
