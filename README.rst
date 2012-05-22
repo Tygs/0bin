@@ -11,7 +11,7 @@ be pasted in it. The idea is that one can (probably...) not be legally entitled
 to `moderate the pastebin content`_ as he/she has no way to decrypt it.
 
 It's an Python implementation of the
-`zerobin project`_. It's easy to
+`zerobin project`_ under the `WTF licence`_. It's easy to
 install even if you know nothing about Python.
 
 For now tested with IE9, and the last opera, safari, chrome and FF.
@@ -97,3 +97,4 @@ What does 0bin not implement?
 .. _VizHash.js: https://github.com/sametmax/VizHash.js
 .. _Cherrypy: http://www.cherrypy.org/ (server only)
 .. _is not worth it: http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions
+.. _WTF licence: http://en.wikipedia.org/wiki/WTFPL

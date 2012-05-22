@@ -177,9 +177,9 @@ window.zerobin = {
 
   /** Get a tinyurl using JSONP */
   getTinyURL: function(longURL, success) {
-    var api = 'http://json-tinyurl.appspot.com/?url=';
+    var api = 'http://is.gd/create.php?format=json&url=';
     $.getJSON(api + encodeURIComponent(longURL) + '&callback=?', function(data){
-      success(data.tinyurl);
+      success(data.shorturl);
     });
   },
 
@@ -269,12 +269,12 @@ window.zerobin = {
 
   getPasteId: function(url){
     var loc = url ? zerobin.parseUrl(url) : window.location;
-    return loc.pathname.replace(/\/|paste/g, '').replace(/\?.*$/, '');
+    return loc.pathname.replace(/\/|paste/g, '');
   },
 
   getPasteKey: function(url){
     var loc = url ? zerobin.parseUrl(url) : window.location;
-    return loc.hash.replace('#', '').replace(/\?.*$/, '');
+    return loc.hash.replace('#', '').replace(/(\?|&).*$/, '');
   },
 
   /** Return the paste content stripted from any code coloration */
