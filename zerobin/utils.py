@@ -5,7 +5,6 @@ import os
 import glob
 import tempfile
 import sys
-import locale
 
 import default_settings
 sys.path.append(default_settings.LIBS_DIR)
@@ -52,23 +51,6 @@ def dmerge(*args):
         dictionary.update(arg)
 
     return dictionary
-
-
-def get_pastes_count():
-    """
-        Return the number of pastes created (must have option DISPLAY_COUNTER enabled)
-    """
-    locale.setlocale(locale.LC_ALL, 'en_US')
-    counter_path = settings.PASTE_FILES_ROOT
-    counter_file = os.path.join(counter_path, 'counter')
-    try:
-        with open(counter_file, "r") as f:
-            count = f.read(50)
-            f.close
-    except IOError:
-        count = 0
-
-    return locale.format("%d", long(float(count)), grouping=True)
 
 
 class SettingsContainer(object):

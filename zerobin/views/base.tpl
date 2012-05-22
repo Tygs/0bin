@@ -12,11 +12,13 @@
     <link rel="shortcut icon" href="/favicon.ico">
 
     %if settings.COMPRESSED_STATIC_FILES:
-      <link href="/static/css/style.min.css" rel="stylesheet" />
+      <link href="/static/css/style.min.css?{{ settings.VERSION }}"
+            rel="stylesheet" />
     %else:
       <link href="/static/css/prettify.css" rel="stylesheet" />
       <link href="/static/css/bootstrap.css" rel="stylesheet">
-      <link href="/static/css/style.css" rel="stylesheet">
+      <link href="/static/css/style.css?{{ settings.VERSION }}"
+            rel="stylesheet">
     %end
 
     <!-- Le HTML5 shim, for IE7-8 support of HTML5 elements -->
@@ -25,11 +27,11 @@
     <![endif]-->
 
     %if settings.COMPRESSED_STATIC_FILES:
-      <script src="/static/js/main.min.js"></script>
+      <script src="/static/js/main.min.js?{{ settings.VERSION }}"></script>
     %else:
       <script src="/static/js/jquery-1.7.2.min.js"></script>
       <script src="/static/js/sjcl.js"></script>
-      <script src="/static/js/behavior.js"></script>
+      <script src="/static/js/behavior.js?{{ settings.VERSION }}"></script>
     %end
 
     <script type="text/javascript">
@@ -126,14 +128,14 @@
         <small>Edgar Allan Poe</small>
       </blockquote>
 
-      
+
       %if settings.DISPLAY_COUNTER:
         <h4 id="pixels-total" >
           <p>ø</p>
           <strong>{{ pastes_count }}</strong> </br>pastes øbinned
         </h4>
       %end
-      
+
 
       </br>
         <p class="greetings span12">
@@ -144,7 +146,7 @@
       </footer>
 
       %if settings.COMPRESSED_STATIC_FILES:
-        <script src="/static/js/additional.min.js"></script>
+        <script src="/static/js/additional.min.js?{{ settings.VERSION }}"></script>
       %else:
         <script src="/static/js/jquery.elastic.source.js"></script>
         <script src="/static/js/lzw.js"></script>

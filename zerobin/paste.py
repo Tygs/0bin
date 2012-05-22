@@ -2,6 +2,7 @@
 
 import os
 import hashlib
+import locale
 
 from datetime import datetime, timedelta
 
@@ -112,10 +113,10 @@ class Paste(object):
         return cls.load_from_file(cls.get_path(uuid))
 
 
-    
+
     def increment_counter(self):
         """
-            Increment pastes counter 
+            Increment pastes counter
         """
 
         # simple counter incrementation
@@ -131,7 +132,7 @@ class Paste(object):
             try:
                 #make lock file
                 flock = open(lock_file, "w")
-                flock.write('lock')    
+                flock.write('lock')
                 flock.close()
 
                 # init counter (first time)
@@ -203,6 +204,27 @@ class Paste(object):
             f.write(self.content + '\n')
 
         return self
+
+
+    @classmethod
+    def get_pastes_count(cls):
+        """
+            Return the number of created pastes.
+            (must have option DISPLAY_COUNTER enabled for the pastes to be
+             be counted)
+        """
+        try:
+            locale.setlocale(locale.LC_ALL, 'en_US')
+        except:
+            pass
+        counter_file = os.path.join(settings.PASTE_FILES_ROOT, 'counter')
+        try:
+            count = long(open(counter_file).read(50))
+        except (IOError, OSError):
+            count = 0
+
+        return locale.format("%d", long(count), grouping=True)
+
 
 
     def delete(self):
