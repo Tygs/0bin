@@ -177,9 +177,9 @@ window.zerobin = {
 
   /** Get a tinyurl using JSONP */
   getTinyURL: function(longURL, success) {
-    var api = 'http://json-tinyurl.appspot.com/?url=';
+    var api = 'http://is.gd/create.php?format=json&url=';
     $.getJSON(api + encodeURIComponent(longURL) + '&callback=?', function(data){
-      success(data.tinyurl);
+      success(data.shorturl);
     });
   },
 
