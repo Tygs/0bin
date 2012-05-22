@@ -158,7 +158,7 @@ class Paste(object):
 
                 #remove lock file
                 os.remove(lock_file)
-            except (IOError, OSError):
+            finally:
                 if os.path.isfile(lock_file):
                     #remove lock file
                     os.remove(lock_file)

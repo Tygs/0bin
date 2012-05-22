@@ -117,7 +117,6 @@ def display_paste(paste_id):
             raise ValueError()
 
     except (TypeError, ValueError):
-        #abort(404, u"This paste doesn't exist or has expired")
         return error404(ValueError)
 
     context = {'paste': paste, 'keep_alive': keep_alive}
@@ -137,7 +136,7 @@ def server_static(filename):
 
 def get_app(debug=None, settings_file='', compressed_static=None):
     """
-        Return a tuple (settings, app) configured using passed options and
+        Return a tuple (settings, app) configured using passed parameters and/or
         a setting file.
     """
     if settings_file:

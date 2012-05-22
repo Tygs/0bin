@@ -1,3 +1,7 @@
+<script type="text/javascript">
+  zerobin.paste_not_found = true;
+</script>
+
 <p class="alert alert-error">
   <a class="close" data-dismiss="alert" href="#">×</a>
   <strong class="title">404 Error!</strong>

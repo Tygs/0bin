@@ -163,7 +163,7 @@ window.zerobin = {
       are prefixed with with the passed version (default being this lib
       version) */
   getLocalStorageKeys: function(){
-    version = 'zerobinV0.1';
+    var version = 'zerobinV0.1';
     var keys = [];
     for (var key in localStorage){
        if (key.indexOf(version) !== -1){
@@ -674,9 +674,23 @@ $('.email-link').each(function(i, elem){
 
 });
 
+/* Show the page using javascript. Non js enabled browser will see an
+   error message */
 $('#wrap-content').each(function(i, elem){
     $(elem).show();
 });
+
+/* Remove expired pasted from history */
+if (zerobin.support.history && zerobin.paste_not_found){
+  var paste_id = zerobin.getPasteId();
+  var keys = zerobin.getLocalStorageKeys();
+  $.each(keys, function(i, key){
+     if (localStorage[key].indexOf(paste_id) !== -1){
+        localStorage.removeItem(key);
+        return false;
+     }
+  });
+}
 
 
 }); /* End of "document ready" jquery callback */
