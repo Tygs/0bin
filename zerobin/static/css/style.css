@@ -181,9 +181,7 @@ input.hide-upload {
 }
 
 
-#paste-content.done {
-	background-color: white;
-	padding-top:1em;
+#paste-content.linenums {
 	padding-left:0;
 }
 
@@ -359,4 +357,8 @@ canvas {
 
 #faq p {
     margin:1em;
+}
+
+#force-coloration {
+	text-decoration:underline;
 }

@@ -302,7 +302,6 @@ window.zerobin = {
   },
   /** Create a message, style it and insert it in the alert box */
   message: function(type, message, title, flush, callback) {
-
     $(window).scrollTop(0);
 
     if (flush) {$('.alert-'+type).remove();}
@@ -323,6 +322,28 @@ window.zerobin = {
     var bar = {container: $container, elem: $container.find('.bar')};
     bar.set =  function(text, rate){bar.elem.text(text).css('width', rate);};
     return bar;
+  },
+
+  /** Return an integer ranking the probability this text is any kind of
+      source code. */
+  isCode: function(text){
+
+    var code_chars = /[A-Z]{3}[A-Z]+|\.[a-z]|[=:<>{}\[\]$_'"&]| {2}|\t/g;
+    var comment = /(\/\*|\/\/|#|;).*$/g;
+
+    var total = 0;
+    var size = 0;
+    text = text.split('\n');
+    for (var i = 0; i < text.length; i++) {
+        var line = text[i];
+        size += line.length;
+        var match = line.replace(comment, '').match(code_chars);
+        if (match) {
+            total += match.length;
+        }
+    }
+
+    return total * 1000 / size;
   }
 };
 
@@ -435,6 +456,7 @@ $('.btn-primary').live("click", function(e){
 var content = $('#paste-content').text().trim();
 var key = zerobin.getPasteKey();
 var error = false;
+
 if (content && key) {
 
   /* Load the lib for visual canvas, create one from the paste id and
@@ -476,7 +498,6 @@ if (content && key) {
 
       /* Decrypted content goes back to initial container*/
       $('#paste-content').text(content);
-      content = '';
 
       bar.set('Code coloration...', '95%');
 
@@ -522,13 +543,23 @@ if (content && key) {
 
         /* Remap the message close handler to include the clipboard
            flash reposition */
-        $(".close").off().live('click', function(e){
+        $(".close").die().live('click', function(e){
           e.preventDefault();
           $(this).parent().fadeOut(reposition);
         });
 
         /** Syntaxic coloration */
-        prettyPrint();
+
+        if (zerobin.isCode(content) > 100){
+           $('#paste-content').addClass('linenums');
+          prettyPrint();
+        } else {
+          zerobin.message('info',
+                          "The paste didn't not seem to be code, so it " +
+                          "was not colorized. " +
+                          "<a id='force-coloration' href='#'>Force coloration</a>",
+                          '', true, reposition);
+        }
 
         /* Class to switch to paste content style with coloration done */
         $('#paste-content').addClass('done');
@@ -538,6 +569,7 @@ if (content && key) {
         bar.container.hide();
 
         $form.prop('disabled', false);
+        content = '';
 
       }, 250);
 
@@ -599,7 +631,10 @@ if (zerobin.support.localStorage){
         // does redirect to the page
         if (paste.link.replace(/#[^#]+/, '') === window.location.pathname){
           $li.addClass('active');
-          $link.click(function(){window.location.reload();});
+          $link.click(function(){
+            window.location = $link.attr('href');
+            window.location.reload();
+          });
         }
 
       });
@@ -691,6 +726,16 @@ if (zerobin.support.history && zerobin.paste_not_found){
      }
   });
 }
+
+
+/* Force text coloration when clickin on link */
+$("#force-coloration").live("click", function(e) {
+  e.preventDefault();
+  $('#paste-content').addClass('linenums');
+  $(this).die(e).text('Applying coloration');
+  prettyPrint();
+  $(this).remove();
+});
 
 
 }); /* End of "document ready" jquery callback */

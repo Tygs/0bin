@@ -37,7 +37,7 @@
 </div>
 
 <p>
-  <pre id="paste-content" class="prettyprint linenums">
+  <pre id="paste-content" class="prettyprint">
     <code>
       {{ paste.content }}
     </code>
