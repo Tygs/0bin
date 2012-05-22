@@ -36,6 +36,11 @@
   <div class="bar"></div>
 </div>
 
+%expiration = paste.humanized_expiration
+%if expiration:
+  <p id="expiration-tag">Expire {{ expiration }}</p>
+%end
+
 <p>
   <pre id="paste-content" class="prettyprint">
     <code>
@@ -66,6 +71,7 @@
       <button type="submit" class="btn btn-primary">Submit</button>
       <button class="btn btn-danger">Cancel clone</button>
     </p>
+
     <p>
         <div class="progress progress-striped active">
           <div class="bar"></div>

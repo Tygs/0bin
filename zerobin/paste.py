@@ -113,7 +113,6 @@ class Paste(object):
         return cls.load_from_file(cls.get_path(uuid))
 
 
-
     def increment_counter(self):
         """
             Increment pastes counter
@@ -225,6 +224,32 @@ class Paste(object):
 
         return locale.format("%d", long(count), grouping=True)
 
+
+    @property
+    def humanized_expiration(self):
+        """
+            Return the expiration date in a human friendly format.
+
+            In 3 minutes, or in 3 days or the 23/01/2102
+        """
+        try:
+            expiration = (self.expiration - datetime.now()).total_seconds()
+        except TypeError:
+            return None
+
+        if expiration < 60:
+            return 'in %s s' % expiration
+
+        if expiration < 60 * 60:
+            return 'in %s m' % int(expiration / 60)
+
+        if expiration < 60 * 60 * 24:
+            return 'in %s h' % int(expiration / (60 * 60))
+
+        if expiration < 60 * 60 * 24 * 10:
+            return 'in %s days(s)' % int(expiration / (60 * 60 * 24))
+
+        return 'the %s' % self.expiration.strftime('%m/%d/%Y')
 
 
     def delete(self):

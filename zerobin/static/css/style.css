@@ -3,11 +3,13 @@
 
 .brand {
 	font-size: 38px !important;
-	padding: 0px 55px 3px !important;
+	padding: 0 55px 3px !important;
 
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
 	-webkit-transition: all .2s linear;
 	-moz-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-ms-transition: all .2s linear;
 	transition: all .2s linear;
 }
 
@@ -19,7 +21,6 @@
 .brand em {
 	display: inline;
 	color: #D40202;
-	margin: 0px !important;
 	font-size: 27px;
 }
 
@@ -28,7 +29,7 @@
 	font-style: italic;
 	text-align: right;
 	padding-top: 9px;
-	margin-bottom: 0px !important;
+	margin-bottom: 0 !important;
 }
 
 .center {
@@ -94,6 +95,8 @@ h4 p {
 	font-size: 80px;
 	text-shadow: 1px 3px 1px #DDD, 0 0 4px #333;
 	-webkit-transition: all 0.2s linear;
+	-o-transition: all .2s linear;
+	-ms-transition: all .2s linear;
 	-moz-transition: all .2s linear;
 	transition: all .2s linear;
 	margin-right: 7px;
@@ -162,7 +165,7 @@ input.hide-upload {
 	position: relative;
 	left: -110px;
 	-moz-opacity: 0;
-	filter: alpha(opacity: 0);
+	filter: alpha(opacity=0);
 	opacity: 0 ;
 	z-index: 2;
 	width: 100px;
@@ -361,4 +364,22 @@ canvas {
 
 #force-coloration {
 	text-decoration:underline;
+}
+
+#expiration-tag {
+    float:right;
+    margin:1em;
+    background:grey;
+    color:white;
+    font-size:0.8em;
+    padding:0 1ex;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    font-weight:bold;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
 }

@@ -35,7 +35,7 @@ window.zerobin = {
         and all of them are executed in a timed continuation to give
         a change to the UI to respond.
     */
-    version: '0.1',
+    version: '0.1.1',
     encrypt: function(key, content, toBase64Callback,
                     compressCallback, encryptCallback, doneCallback) {
 
@@ -558,7 +558,7 @@ if (content && key) {
                           "The paste didn't not seem to be code, so it " +
                           "was not colorized. " +
                           "<a id='force-coloration' href='#'>Force coloration</a>",
-                          '', true, reposition);
+                          '', false, reposition);
         }
 
         /* Class to switch to paste content style with coloration done */

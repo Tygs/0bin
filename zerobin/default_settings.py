@@ -5,9 +5,8 @@
 
 ######## NOT SETTINGS, JUST BOILER PLATE ##############
 import os
-import math
 
-VERSION = '0.1'
+VERSION = '0.1.1'
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 LIBS_DIR = os.path.join(os.path.dirname(ROOT_DIR), 'libs')
 
