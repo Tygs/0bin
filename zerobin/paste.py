@@ -233,7 +233,10 @@ class Paste(object):
             In 3 minutes, or in 3 days or the 23/01/2102
         """
         try:
-            expiration = (self.expiration - datetime.now()).total_seconds()
+            expiration = self.expiration - datetime.now()
+            # in_seconds doesn't exist in python 2.6
+            expiration = expiration.days * 24 * 60 * 60 + expiration.seconds
+
         except TypeError:
             return None
 
