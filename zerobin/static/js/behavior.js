@@ -269,12 +269,12 @@ window.zerobin = {
 
   getPasteId: function(url){
     var loc = url ? zerobin.parseUrl(url) : window.location;
-    return loc.pathname.replace(/\/|paste/g, '').replace(/\?.*$/, '');
+    return loc.pathname.replace(/\/|paste/g, '');
   },
 
   getPasteKey: function(url){
     var loc = url ? zerobin.parseUrl(url) : window.location;
-    return loc.hash.replace('#', '').replace(/\?.*$/, '');
+    return loc.hash.replace('#', '').replace(/(\?|&).*$/, '');
   },
 
   /** Return the paste content stripted from any code coloration */
