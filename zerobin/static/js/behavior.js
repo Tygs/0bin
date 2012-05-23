@@ -458,29 +458,6 @@ if (content && key) {
   bar.container.show();
   bar.set('Decrypting paste...', '25%');
 
-  /* Pop up a form to enter an email address to quickly
-     send the encrypted link. */
-  $('#email-link').click(function(e){
-    e.preventDefault();
-    var submitLink = $('<a />', {'href':'#', 'class':'btn btn-small'})
-      .attr('title', 'Starts a new email in your default client')
-      .html("<i class='icon-share-alt'></i>");
-    var emailInput = $('<input />', {
-      'type': 'text',
-      'class': 'input-small',
-      'placeholder': 'Email'
-    }).change(function(){
-      var emailTxt = $(this).val();
-      if(emailTxt) {
-        submitLink.attr('href', 'mailto:' + emailTxt + '?subject=0bin%20Message&body='+window.location.toString());
-      }
-    });
-    $('<span />', {'class': 'form-inline'})
-	  .append(emailInput)
-	  .append(submitLink)
-	  .insertAfter($(this).hide());
-  });
-
   zerobin.decrypt(key, content,
 
     /* On error*/

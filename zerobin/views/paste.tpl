@@ -24,7 +24,7 @@
 <p class="lnk-option">
   <a id="clip-button" href="#">Copy To Clipboard</a> |
   <a id="short-url" href="#">Get short url</a> |
-  <a id="email-link" href="#"><i class="icon-share-alt"></i>&nbsp;Email</a>
+  <a id="email-link" href="#" onclick="this.href='mailto:friend@example.com?body='+window.location">Email</a>
 
   <span class="paste-option btn-group top">
       <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
