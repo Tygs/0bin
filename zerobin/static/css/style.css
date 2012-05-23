@@ -263,6 +263,7 @@ form {
 
 form textarea {
     overflow-y:auto;
+    min-height:250px;
 }
 
 button.btn, input[type="submit"].btn {

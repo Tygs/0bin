@@ -737,6 +737,19 @@ $("#force-coloration").live("click", function(e) {
   $(this).remove();
 });
 
+/* Send the paste by email */
+var emailLink = 'mailto:friend@example.com?body=' + window.location;
+$('#email-link').attr('href', emailLink).bind('click', function(e){
+  $.get(emailLink).error(function(){
+    zerobin.message('error',
+                    ("You probably don't have one configured. Try " +
+                      "<a href='https://www.mozilla.org/en-US/thunderbird/'>Thunderbird</a> or " +
+                      "<a href='http://toolbar.google.com/gmail-helper/'>Gmail Notifier</a>" ),
+                    'Cannot start your email client', true);
+  });
+});
+
+
 
 }); /* End of "document ready" jquery callback */
 
