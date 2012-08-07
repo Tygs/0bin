@@ -281,7 +281,7 @@ window.zerobin = {
   getPasteContent: function(){
     var copy = '' ;
     $("#paste-content li").each(function(index) {
-      copy = copy + $(this).text() + '\n';
+      copy = copy + $(this).text().replace(/[\u00a0]+/g, ' ') + '\n';
     });
     return copy;
   },
