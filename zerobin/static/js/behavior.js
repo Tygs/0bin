@@ -329,15 +329,22 @@ window.zerobin = {
   isCode: function(text){
 
     var code_chars = /[A-Z]{3}[A-Z]+|\.[a-z]|[=:<>{}\[\]$_'"&]| {2}|\t/g;
-    var comment = /(\/\*|\/\/|#|;).*$/g;
+    var comments = /(:?\/\*|<!--)(:?.|\n)*?(:?\*\/|-->)|(\/\/|#)(.*?)\n/g;
+    var formating = /[-*=_+]{4,}/;
 
     var total = 0;
     var size = 0;
+    var m = text.match(comments);
+    if (m){
+      total += text.match(comments).length;
+    }
+    text = text.replace(comments, '');
+    text.replace(formating, '');
     text = text.split('\n');
     for (var i = 0; i < text.length; i++) {
         var line = text[i];
         size += line.length;
-        var match = line.replace(comment, '').match(code_chars);
+        var match = line.replace(formating, '').match(code_chars);
         if (match) {
             total += match.length;
         }
