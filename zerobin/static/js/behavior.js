@@ -562,7 +562,7 @@ if (content && key) {
           prettyPrint();
         } else {
           zerobin.message('info',
-                          "The paste didn't not seem to be code, so it " +
+                          "The paste did not seem to be code, so it " +
                           "was not colorized. " +
                           "<a id='force-coloration' href='#'>Force coloration</a>",
                           '', false, reposition);
