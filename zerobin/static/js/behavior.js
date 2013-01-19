@@ -178,9 +178,19 @@ window.zerobin = {
   /** Get a tinyurl using JSONP */
   getTinyURL: function(longURL, success) {
     var api = 'http://is.gd/create.php?format=json&url=';
-    $.getJSON(api + encodeURIComponent(longURL) + '&callback=?', function(data){
-      success(data.shorturl);
-    });
+      $.ajax({
+		  url: 'https://www.googleapis.com/urlshortener/v1/url',
+		  type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+              "longUrl": longURL
+		  }),
+		  processData: false,
+		  dataType: 'json'
+	  }).done(function(data){
+		  console.log(data);
+		  success(data.id);
+      });
   },
 
   /** Check for browser support of the named featured. Store the result
