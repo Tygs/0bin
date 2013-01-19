@@ -10,7 +10,7 @@
 import os
 import sys
 import thread
-
+import urlparse
 from datetime import datetime, timedelta
 
 # add project dir and libs dir to the PYTHON PATH to ensure they are
@@ -48,22 +48,28 @@ def faq():
 
 @app.route('/paste/create', method='POST')
 def create_paste():
+    try:
+        body = urlparse.parse_qs(request.body.read(int(settings.MAX_SIZE * 1.1)))
+    except ValueError:
+        return {'status': 'error',
+                'message': u"Wrong data payload."}
 
     try:
-        content = unicode(request.forms.get('content', ''), 'utf8')
-    except UnicodeDecodeError:
+        content = unicode(''.join(body['content']), 'utf8')
+    except (UnicodeDecodeError, KeyError):
         return {'status': 'error',
                 'message': u"Encoding error: the paste couldn't be saved."}
 
     if '{"iv":' not in content:  # reject silently non encrypted content
-        return ''
+        return {'status': 'error',
+                'message': u"Wrong data payload."}
 
     if content:
         # check size of the paste. if more than settings return error
-        # without saving paste. prevent from unusual use of the
+        # without saving paste.  prevent from unusual use of the
         # system.  need to be improved
         if len(content) < settings.MAX_SIZE:
-            expiration = request.forms.get('expiration', u'burn_after_reading')
+            expiration = body.get('expiration', [u'burn_after_reading'])[0]
             paste = Paste(expiration=expiration, content=content)
             paste.save()
 

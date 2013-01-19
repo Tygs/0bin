@@ -452,7 +452,7 @@ $('.btn-primary').live("click", function(e){
           bar.set('Sending...', '95%');
           var data = {content: content, expiration: expiration};
           var sizebytes = zerobin.count(JSON.stringify(data));
-          var oversized = sizebytes > 95000;  // 100kb - the others header information
+          var oversized = sizebytes > zerobin.max_size;  // 100kb - the others header information
           var readableFsize = Math.round(sizebytes / 1024);
           var readableMaxsize = Math.round(zerobin.max_size / 1024);
 
@@ -461,7 +461,7 @@ $('.btn-primary').live("click", function(e){
             $form.prop('disabled', false);
             zerobin.message('error',
                     ('The encrypted file was <strong class="file-size">' + readableFsize +
-                     '</strong>KB. You have reached the maximum size limit of 93 KB.'),
+                     '</strong>KB. You have reached the maximum size limit of '+readableMaxsize+'KB.'),
                     'Warning!', true);
             return;
           }
