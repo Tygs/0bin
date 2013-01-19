@@ -745,8 +745,12 @@ $("#force-coloration").live("click", function(e) {
 });
 
 /* Send the paste by email */
-var emailLink = 'mailto:friend@example.com?body=' + window.location;
-$('#email-link').attr('href', emailLink);
+$('#email-link').click(function() {
+	zerobin.getTinyURL(window.location.toString(), function(tinyurl) {
+		window.open('mailto:friend@example.com?body=' + tinyurl);
+	});
+	return false;
+});
 
 
 
