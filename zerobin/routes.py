@@ -55,13 +55,13 @@ def create_paste():
         return {'status': 'error',
                 'message': u"Encoding error: the paste couldn't be saved."}
 
-    if '{"iv":' not in content: # reject silently non encrypted content
+    if '{"iv":' not in content:  # reject silently non encrypted content
         return ''
 
     if content:
-        # check size of the paste. if more than settings return error without saving paste.
-        # prevent from unusual use of the system.
-        # need to be improved
+        # check size of the paste. if more than settings return error
+        # without saving paste. prevent from unusual use of the
+        # system.  need to be improved
         if len(content) < settings.MAX_SIZE:
             expiration = request.forms.get('expiration', u'burn_after_reading')
             paste = Paste(expiration=expiration, content=content)
@@ -81,12 +81,12 @@ def create_paste():
                     GLOBAL_CONTEXT['pastes_count'] = Paste.get_pastes_count()
                     GLOBAL_CONTEXT['refresh_counter'] = now
 
-
             return {'status': 'ok',
                     'paste': paste.uuid}
 
     return {'status': 'error',
-            'message': u"Serveur error: the paste couldn't be saved. Please try later."}
+            'message': u"Serveur error: the paste couldn't be saved. "
+                       u"Please try later."}
 
 
 @app.route('/paste/:paste_id')
@@ -105,7 +105,8 @@ def display_paste(paste_id):
             # to the paste that happens during the paste creation
             try:
                 keep_alive = paste.expiration.split('#')[1]
-                keep_alive = datetime.strptime(keep_alive, '%Y-%m-%d %H:%M:%S.%f')
+                keep_alive = datetime.strptime(keep_alive,
+                                               '%Y-%m-%d %H:%M:%S.%f')
                 keep_alive = now < keep_alive + timedelta(seconds=10)
             except IndexError:
                 keep_alive = False
@@ -136,8 +137,8 @@ def server_static(filename):
 
 def get_app(debug=None, settings_file='', compressed_static=None):
     """
-        Return a tuple (settings, app) configured using passed parameters and/or
-        a setting file.
+        Return a tuple (settings, app) configured using passed
+        parameters and/or a setting file.
     """
     if settings_file:
         settings.update_with_file(os.path.abspath(settings_file))
@@ -159,8 +160,8 @@ def get_app(debug=None, settings_file='', compressed_static=None):
 
 
 @clize.clize(coerce={'debug': bool, 'compressed_static': bool})
-def runserver(host='', port='', debug=None, user='',
-              group='', settings_file='', compressed_static=None, version=False):
+def runserver(host='', port='', debug=None, user='', group='',
+              settings_file='', compressed_static=None, version=False):
 
     settings, app = get_app(debug, settings_file, compressed_static)
 
@@ -179,7 +180,7 @@ def runserver(host='', port='', debug=None, user='',
         run(app, host=settings.HOST, port=settings.PORT, reloader=True,
             server="cherrypy")
     else:
-        run(app, host=settings.HOST,  port=settings.PORT, server="cherrypy")
+        run(app, host=settings.HOST, port=settings.PORT, server="cherrypy")
 
 
 def main():

@@ -41,8 +41,8 @@ window.zerobin = {
 
       setTimeout (function(){
 
-        content = sjcl.codec.utf8String.toBits(content);
-        if (toBase64Callback) {toBase64Callback();}
+    content = sjcl.codec.utf8String.toBits(content);
+    if (toBase64Callback) {toBase64Callback();}
 
         setTimeout(function(){
 
@@ -55,7 +55,12 @@ window.zerobin = {
             if (encryptCallback) {encryptCallback();}
 
             setTimeout(function(){
-              content = sjcl.encrypt(key, content);
+        try {
+          content = sjcl.encrypt(key, content);
+        } catch (e) {
+          zerobin.message('error', 'Paste could not be encrypted. Aborting.',
+                  'Error');
+        }
               if (doneCallback) {doneCallback(content);}
             }, 250);
 
@@ -363,19 +368,17 @@ window.zerobin = {
   handleDrop: function(e) {
     zerobin.ignoreDrag(e);
     zerobin.upload(e.originalEvent.dataTransfer.files);
-	$("#content").removeClass('hover');
+  $("#content").removeClass('hover');
   },
 
   handleDragOver: function(e) {
     zerobin.ignoreDrag(e);
     $(this).addClass('hover');
-	  console.log('dragover');
   },
 
   handleDragLeave: function(e) {
     zerobin.ignoreDrag(e);
     $(this).removeClass('hover');
-	  console.log('dragout');
   },
 
   upload: function(files) {
@@ -386,7 +389,7 @@ window.zerobin = {
          $('#content').val(event.target.result).trigger('change');
          $('#content').hide();
            var img = $('<img/>');
-		   $(img).attr('src', event.target.result);
+       $(img).attr('src', event.target.result);
            $(img).css('max-width', '742px');
            $('#content').after(img);
        };
@@ -395,7 +398,7 @@ window.zerobin = {
        reader.onload = function(event) {
          $('#content').val(event.target.result).trigger('change');
        };
-	  reader.readAsText(current_file);
+    reader.readAsText(current_file);
     }
   }
 };
@@ -419,20 +422,7 @@ $('.btn-primary').live("click", function(e){
   e.preventDefault();
   var paste = $('textarea').val();
 
-  var sizebytes = zerobin.count($('#content').val());
-  var oversized = sizebytes > zerobin.max_size;
-  var readableFsize = Math.round(sizebytes / 1024);
-  var readableMaxsize = Math.round(zerobin.max_size / 1024);
-
-  if (oversized){
-    zerobin.message('error',
-                    ('Your file is <strong class="file-size">' + readableFsize +
-                    '</strong>KB. You have reached the maximum size limit of ' +
-                    readableMaxsize + 'KB.'),
-                    'Warning!', true);
-  }
-
-  if (!oversized && paste.trim()) {
+  if (paste.trim()) {
 
     var $form = $('input, textarea, select, button').prop('disabled', true);
 
@@ -461,6 +451,20 @@ $('.btn-primary').live("click", function(e){
 
           bar.set('Sending...', '95%');
           var data = {content: content, expiration: expiration};
+          var sizebytes = zerobin.count(JSON.stringify(data));
+          var oversized = sizebytes > 95000;  // 100kb - the others header information
+          var readableFsize = Math.round(sizebytes / 1024);
+          var readableMaxsize = Math.round(zerobin.max_size / 1024);
+
+          if(oversized) {
+            bar.container.hide();
+            $form.prop('disabled', false);
+            zerobin.message('error',
+                    ('The encrypted file was <strong class="file-size">' + readableFsize +
+                     '</strong>KB. You have reached the maximum size limit of 93 KB.'),
+                    'Warning!', true);
+            return;
+          }
 
           $.post('/paste/create', data)
            .error(function(error) {
@@ -562,7 +566,7 @@ if (content && key) {
       bar.set('Code coloration...', '95%');
 
       /* Add a continuation to let the UI redraw */
-      setTimeout(function(){
+      setTimeout(function() {
 
         /* Setup flash clipboard button */
         ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf');
@@ -614,11 +618,13 @@ if (content && key) {
            $('#paste-content').addClass('linenums');
           prettyPrint();
         } else {
-          zerobin.message('info',
-                          "The paste did not seem to be code, so it " +
-                          "was not colorized. " +
-                          "<a id='force-coloration' href='#'>Force coloration</a>",
-                          '', false, reposition);
+          if(content.indexOf('data:image') != 0){
+            zerobin.message('info',
+                            "The paste did not seem to be code, so it " +
+                            "was not colorized. " +
+                            "<a id='force-coloration' href='#'>Force coloration</a>",
+                            '', false, reposition);
+          }
         }
 
         /* Class to switch to paste content style with coloration done */
