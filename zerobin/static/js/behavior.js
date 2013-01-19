@@ -501,7 +501,6 @@ $('.btn-primary').live("click", function(e){
                       'Error');
     }
   }
-
 });
 
 /**
@@ -557,11 +556,22 @@ if (content && key) {
       $('#paste-content').text(content);
 
       if(content.indexOf('data:image') == 0) {
+         // Display Image
          $('#paste-content').hide();
          var img = $('<img/>');
          $(img).attr('src', content);
          $(img).css('max-width', '742px');
          $('#paste-content').after(img);
+
+         // Display Download button
+    	 $('.btn-clone').hide();
+
+         var button = $('<a/>').attr('href', content);
+		 $(button).attr('download', '0bin_'+document.location.pathname.split('/').pop());
+		 $(button).addClass('btn');
+		 $(button).html('<i class="icon-download"></i> Download');
+		 $('.btn-clone').after(button);
+		  
       }
       bar.set('Code coloration...', '95%');
 
