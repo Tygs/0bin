@@ -351,6 +351,39 @@ window.zerobin = {
     }
 
     return total * 1000 / size;
+  },
+
+  // prevent defaults
+  ignoreDrag: function(e) {
+    e.originalEvent.stopPropagation();
+    e.originalEvent.preventDefault();
+  },
+
+  // Handle Drop
+  handleDrop: function(e) {
+    zerobin.ignoreDrag(e);
+    zerobin.upload(e.originalEvent.dataTransfer.files);
+	$("#content").removeClass('hover');
+  },
+
+  handleDragOver: function(e) {
+    zerobin.ignoreDrag(e);
+    $(this).addClass('hover');
+	  console.log('dragover');
+  },
+
+  handleDragLeave: function(e) {
+    zerobin.ignoreDrag(e);
+    $(this).removeClass('hover');
+	  console.log('dragout');
+  },
+
+  upload: function(files) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      $('#content').val(event.target.result).trigger('change');
+    };
+    reader.readAsText(files[0]);
   }
 };
 
@@ -668,16 +701,9 @@ $('.clone .btn-danger').click(function(e){
 });
 
 
+
 /* Upload file using HTML5 File API */
 if (zerobin.support.fileUpload) {
-
-  var upload = function(files) {
-    var reader = new FileReader();
-    reader.onload = function(event) {
-      $('#content').val(event.target.result).trigger('change');
-    };
-    reader.readAsText(files[0]);
-  };
 
   var $buttonOverlay = $('#file-upload');
   var $button = $('.btn-upload');
@@ -685,7 +711,7 @@ if (zerobin.support.fileUpload) {
   try {
     $button.val('Uploading...');
     $button.prop('disabled', true);
-    $buttonOverlay.change(function(){upload(this.files);});
+    $buttonOverlay.change(function(){zerobin.upload(this.files);});
   }
   catch (e) {
     zerobin.message('error', 'Could no upload the file', 'Error');
@@ -696,6 +722,14 @@ if (zerobin.support.fileUpload) {
   $button.prop('disabled', false);
   $button.val('Upload File');
   $buttonOverlay.mouseover(mkcb($(this).css, 'cursor', 'pointer'));
+
+  // Implements drag & drop upload
+	$('#content').bind('dragenter', zerobin.ignoreDrag);
+	$('#content').bind('drop', zerobin.handleDrop);
+	$('#content').bind('dragover', zerobin.handleDragOver);
+	$('#content').bind('dragleave', zerobin.handleDragLeave);
+  
+
 }
 
 /* Alerts */
