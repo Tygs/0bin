@@ -379,11 +379,24 @@ window.zerobin = {
   },
 
   upload: function(files) {
+    var current_file = files[0];
     var reader = new FileReader();
-    reader.onload = function(event) {
-      $('#content').val(event.target.result).trigger('change');
-    };
-    reader.readAsText(files[0]);
+    if(current_file.type.indexOf('image') == 0) {  
+       reader.onload = function(event) {
+         $('#content').val(event.target.result).trigger('change');
+         $('#content').hide();
+           var img = $('<img/>');
+		   $(img).attr('src', event.target.result);
+           $(img).css('max-width', '742px');
+           $('#content').after(img);
+       };
+       reader.readAsDataURL(current_file);
+    } else {
+       reader.onload = function(event) {
+         $('#content').val(event.target.result).trigger('change');
+       };
+	  reader.readAsText(current_file);
+    }
   }
 };
 
@@ -539,6 +552,13 @@ if (content && key) {
       /* Decrypted content goes back to initial container*/
       $('#paste-content').text(content);
 
+      if(content.indexOf('data:image') == 0) {
+         $('#paste-content').hide();
+         var img = $('<img/>');
+         $(img).attr('src', content);
+         $(img).css('max-width', '742px');
+         $('#paste-content').after(img);
+      }
       bar.set('Code coloration...', '95%');
 
       /* Add a continuation to let the UI redraw */
@@ -724,10 +744,10 @@ if (zerobin.support.fileUpload) {
   $buttonOverlay.mouseover(mkcb($(this).css, 'cursor', 'pointer'));
 
   // Implements drag & drop upload
-	$('#content').bind('dragenter', zerobin.ignoreDrag);
-	$('#content').bind('drop', zerobin.handleDrop);
-	$('#content').bind('dragover', zerobin.handleDragOver);
-	$('#content').bind('dragleave', zerobin.handleDragLeave);
+  $('#content').bind('dragenter', zerobin.ignoreDrag);
+  $('#content').bind('drop', zerobin.handleDrop);
+  $('#content').bind('dragover', zerobin.handleDragOver);
+  $('#content').bind('dragleave', zerobin.handleDragLeave);
   
 
 }
