@@ -407,7 +407,7 @@
 
     // Handle Drop
     handleDrop: function (e) {
-      zerobin.ignoreDrag(e);
+      e.originalEvent.preventDefault();
       zerobin.upload(e.originalEvent.dataTransfer.files);
       $("#content").removeClass('hover');
     },
@@ -418,7 +418,6 @@
     },
 
     handleDragLeave: function (e) {
-      zerobin.ignoreDrag(e);
       $(this).removeClass('hover');
     },
 
@@ -832,7 +831,6 @@
       $buttonOverlay.mouseover(mkcb($(this).css, 'cursor', 'pointer'));
 
       // Implements drag & drop upload
-      $('#content').bind('dragenter', zerobin.ignoreDrag);
       $('#content').bind('drop', zerobin.handleDrop);
       $('#content').bind('dragover', zerobin.handleDragOver);
       $('#content').bind('dragleave', zerobin.handleDragLeave);
