@@ -132,7 +132,7 @@
       %if settings.DISPLAY_COUNTER:
         <h4 id="pixels-total" >
           <p>ø</p>
-          <strong>{{ pastes_count }}</strong> </br>pastes øbinned
+          <strong>{{ pastes_count }}</strong> <br/>pastes øbinned
         </h4>
       %end
 

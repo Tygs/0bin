@@ -72,14 +72,14 @@
       <button class="btn btn-danger">Cancel clone</button>
     </p>
 
-    <p>
+    <div>
         <div class="progress progress-striped active">
           <div class="bar"></div>
         </div>
         <textarea rows="10"  style="width:100%;"
                   class="input-xlarge"
                   id="content" name="content"></textarea>
-    </p>
+    </div>
   </form>
 </div>
 
