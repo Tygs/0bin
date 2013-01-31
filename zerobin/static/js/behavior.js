@@ -318,6 +318,9 @@
       $("#paste-content li").each(function (index) {
         copy = copy + $(this).text().replace(/[\u00a0]+/g, ' ') + '\n';
       });
+      if (copy == '') {
+          copy = $("#paste-content").text();
+      }
       return copy;
     },
 
