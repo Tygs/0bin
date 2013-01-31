@@ -212,7 +212,6 @@
   		  processData: false,
   		  dataType: 'json'
   	  }).done(function(data){
-  		  console.log(data);
   		  success(data.id);
         });
     },
@@ -887,7 +886,7 @@
     /* Send the paste by email */
     $('#email-link').click(function() {
     	zerobin.getTinyURL(window.location.toString(), function(tinyurl) {
-    		window.open('mailto:friend@example.com?body=' + tinyurl);
+    		document.location.href= 'mailto:friend@example.com?body=' + tinyurl;
     	});
     	return false;
     });
