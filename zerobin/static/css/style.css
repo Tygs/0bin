@@ -384,3 +384,7 @@ canvas {
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
 }
+
+#content.hover {
+	background-color: #eee;
+}
