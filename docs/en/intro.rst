@@ -45,7 +45,7 @@ Other features
 - copy paste to clipboard in a click;
 - get paste short URL in a click;
 - own previous pastes history;
-- visual hash of a paste to easily tell it appart from others in a list.
+- visual hash of a paste to easily tell it apart from others in a list.
 
 Technologies used
 ==================

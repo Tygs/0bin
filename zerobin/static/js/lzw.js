@@ -1,6 +1,6 @@
 // Author: Anthony McKale
 //
-// Note: modifed to javascript from orginal as2 found below
+// Note: modifed to javascript from original as2 found below
 // basically identical actual to as2
 //
 // http://www.razorberry.com/blog/archives/2004/08/22/lzw-compression-methods-in-as2/

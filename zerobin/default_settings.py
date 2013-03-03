@@ -67,6 +67,6 @@ MENU = (
     ('Contact', 'mailto:your@email.com') # email
 )
 
-# limit size of pasted text in bytes. Be carefull allowing too much size can
+# limit size of pasted text in bytes. Be careful allowing too much size can
 # slow down user's browser
 MAX_SIZE = 1024 * 500

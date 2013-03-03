@@ -24,7 +24,7 @@ Therefor there are two steps:
 
 You will benefit from having:
 
-- the possiblity to have several projects listening to the port 80;
+- the possibility to have several projects listening to the port 80;
 - several Apache module at your disposal (like requests throttling);
 - Apache robustness in front end: it's secure, and there is much less chance
   it will crash under heavy load;
@@ -40,7 +40,7 @@ Run 0bin as usual, but this time make it listen to a local port and host. E.G::
 
     zerobin --host 127.0.0.1 --port 8000
 
-In PHP, when you edit a file, the changes are immediatly visible. In Python,
+In PHP, when you edit a file, the changes are immediately visible. In Python,
 the whole code is often loaded in memory for performance reasons. This means
 you have to restart the Python process to see the changes effect. Having a
 separate process let you do this without having to restart the server.

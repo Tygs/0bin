@@ -96,7 +96,7 @@ try:
     from base64 import decodebytes as _base64_decodebytes
 except ImportError:
     # Python 3.0-
-    # since CherryPy claims compability with Python 2.3, we must use
+    # since CherryPy claims compatibility with Python 2.3, we must use
     # the legacy API of base64
     from base64 import decodestring as _base64_decodebytes
 

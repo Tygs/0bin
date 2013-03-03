@@ -141,7 +141,7 @@ def get_sups():
 def set_sups(target_sups):
     """
     This is designed to give us a layer of abstraction from the system calls.
-    It also accomodates FreeBSD's idiosyncracy (which is POSIX-compliant) of
+    It also accommodates FreeBSD's idiosyncrasy (which is POSIX-compliant) of
     keeping the egid in the supplementary groups list.
     It also makes an effort to not call the setgroups routine if the target
     group list is identical to the current one in force.
