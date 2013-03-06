@@ -40,7 +40,7 @@ solutions.
 
 *Pour un petit site:*
 
-Lancer simplement 0bin en processus shell d'arrière plan. Exemple sous GNU/Linux::
+Lancer simplement 0bin en processus shell d'arrière plan. Example sous GNU/Linux::
 
   nohup python zerobin.py --host 0.0.0.0 --port 80 --compressed-static &
 

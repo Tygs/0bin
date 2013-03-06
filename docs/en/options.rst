@@ -159,7 +159,7 @@ List of absolute path to directories containing templates that 0bin uses to
 generate the web site pages. The first list items have priotity on the later.
 
 If you wish to use your own templates, add the directory containing them
-at the begining of the list::
+at the beginning of the list::
 
   from zerobin.defauls_settings import TEMPLATE_DIRS
 

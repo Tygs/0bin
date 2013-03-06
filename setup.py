@@ -107,7 +107,7 @@ setup(
 
 
     ##########################################################################
-    # Parameters you definitly should fill even if they are optional         #
+    # Parameters you definitely should fill even if they are optional         #
     # You need to either fill or comment them, or setup.py install will fail #
     ##########################################################################
 
@@ -183,7 +183,7 @@ setup(
 
     ## Iterable of strings being names of modules you wish to include as well
     ## It's more accurate than a package
-    ## espcially usefull if you have lonelly modules at the root level
+    ## espcially useful if you have lonelly modules at the root level
     # E.G: ['mod1', 'pkg.mod2'] if you have mod1.py and pkg/mod2.py
     # py_modules= ,
 
@@ -226,7 +226,7 @@ setup(
 
     # Iterable of string being metadata. You can't add yours and pypi is picky
     # about the syntax, so just uncomment the one you want to set.
-    # It is adviced to at least provide "Operating System" and "Licence"
+    # It is advised to at least provide "Operating System" and "Licence"
     # Incompatibel with 2.2.3- or 2.3-
     classifiers=[
         'Programming Language :: Python',
@@ -981,7 +981,7 @@ setup(
 
 
     ## A mapping of strings / iterable, the key being the name of a extra
-    ## feature, and the iterable containing dependancy names.
+    ## feature, and the iterable containing dependency names.
     ## Sometimes a project has "recommended" dependencies, that are not required
     ## for all uses of the project. For example, a project might offer optional PDF
     ## output if ReportLab is installed, and reStructuredText support if docutils
