@@ -1,0 +1,90 @@
+
+program
+    .version('0.0.1')
+    .usage('[options] [ file ... ]\n\n' + '  Paste contents of file(s) or stdin to 0bin site.')
+    .option('-u, --url [url]', 'URL of a 0bin site')
+    .option('-c, --config [path]', 'Path to zerobin configuration file (default: ~/.zerobinpasterc).\n'\
+        + '   Should be json-file with the same keys as can be specified on the command line.\n'\
+        + '   Example contents: {"url": "http://some-0bin.com"}', '~/.zerobinpasterc')
+    .parse(process.argv);
+
+
+[http, url, qs, fs, path] = ['http', 'url', 'querystring', 'fs', 'path'].map(require)
+
+
+# Parse config file, if any
+config = program.config.replace(/^~\/+/, '')
+config = path.resolve(process.env.HOME, config)
+
+try
+    if fs.statSync(config).isFile()
+        config = JSON.parse(fs.readFileSync(config))
+        (program[k] = v) for own k, v of config
+
+
+# Sanity checks
+if not program.url
+    console.error('ERROR: URL option must be specified.')
+    process.exit(1)
+
+
+# Paste one dump and print URL, optionally prefixed with name
+paste_file = (content, name) ->
+
+    content = sjcl.codec.utf8String.toBits(content)
+    content = sjcl.codec.base64.fromBits(content)
+    # content = lzw.compress(content)
+
+    key = sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0)
+    content = sjcl.encrypt(key, content)
+    content = qs.stringify
+        content: content
+        expiration: '1_day' # burn_after_reading 1_day 1_month never
+
+    # host.com -> http://host.com
+    if not program.url.match(/^https?:\/\//)
+        program.url = 'http://' + program.url.replace(/^\/+/, '')
+
+    req_opts = url.parse(program.url)
+    req_opts.method = 'POST'
+    req_opts.headers =
+        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Length': content.length
+
+    req_url_base = req_opts.path
+        .replace(/\/paste\/create\/?$/, '').replace(/\/+$/, '')
+    req_opts.path = req_url_base + '/paste/create'
+
+    req = http.request req_opts, (res) ->
+        req_reply = ''
+        res.setEncoding('utf8')
+        res.on 'data', (chunk) -> req_reply += chunk
+        res.on 'end', ->
+            req_reply = JSON.parse(req_reply)
+            if req_reply.status != 'ok'
+                console.error("ERROR: failure posting #{name} - " + req_reply.message)
+                return
+
+            req_opts.pathname = req_url_base + '/paste/' + req_reply.paste
+            req_opts.hash = key
+            paste = url.format(req_opts)
+
+            console.log(if name then "#{name} #{paste}" else paste)
+
+    req.write(content)
+    req.end()
+
+
+# Loop over file args or read stdin
+if not program.args or not program.args.length
+    process.stdin.resume()
+    process.stdin.setEncoding('utf8')
+
+    stdin_data = ''
+    process.stdin.on 'data', (chunk) -> stdin_data += chunk
+    process.stdin.on 'end', -> paste_file(stdin_data)
+
+else
+    for file in program.args
+        paste_file( fs.readFileSync(file, 'utf8'),
+            if program.args.length > 1 then path.basename(file) else null )
