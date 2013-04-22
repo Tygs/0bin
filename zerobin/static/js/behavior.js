@@ -458,7 +458,7 @@
               image.height = imageHeight;
               var ctx = canvas.getContext("2d");
               ctx.drawImage(this, 0, 0, imageWidth, imageHeight);
-              
+
               var paste = canvas.toDataURL(current_file.type);
               $('#content').val(paste).trigger('change');
               $('#content').hide();
