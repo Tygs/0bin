@@ -22,6 +22,7 @@
 |   en/using_supervisor   |   fr/using_supervisor          |
 |   en/theming            |   fr/theming                   |
 |   en/options            |   fr/options                   |
+|   en/zerobinpaste_tool  |                                |
 |                         |                                |
 |`Report a bug`_          |`Signaler un bug`_              |
 +-------------------------+--------------------------------+

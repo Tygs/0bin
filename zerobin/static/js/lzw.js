@@ -107,5 +107,4 @@ var lzw = {
         }
         return result;
     }
-}
-
+};
