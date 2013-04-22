@@ -16,7 +16,7 @@ An Apache setup is still much more robust and secure than an easy installation.
 Une installation apache est aussi beaucoup plus solide et sécurisé qu'une
 installation facile. You'll benefit from having:
 
-- the possiblity to have several projects listening to the port 80;
+- the possibility to have several projects listening to the port 80;
 - several Apache module at your disposal (like requests throttling);
 - Apache robustness in front end: it's secure, and there is much less chance
   it will crash under heavy load;

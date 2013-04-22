@@ -18,7 +18,7 @@ Just type::
 ===============================
 
 - Make sure you have Python 2.6 or 2.7 (`python --version`)
-- Download the last zip of the sources code.
+- Download the last `zip of the source code <https://github.com/sametmax/0bin/zipball/master>`_
 - Extract all of it where you wish the site to be stored.
 - Go to the extracted files.
 - Run with the admin rights::

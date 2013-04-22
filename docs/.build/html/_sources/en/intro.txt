@@ -45,7 +45,8 @@ Other features
 - copy paste to clipboard in a click;
 - get paste short URL in a click;
 - own previous pastes history;
-- visual hash of a paste to easily tell it appart from others in a list.
+- visual hash of a paste to easily tell it apart from others in a list;
+- `optional command-line tool`_ to encrypt and paste data from shell or scripts.
 
 Technologies used
 ==================
@@ -57,6 +58,7 @@ Technologies used
 - Bootstrap_, the Twitter HTML5/CSS3 framework
 - VizHash.js_ to create visual hashes from pastes
 - Cherrypy_ (server only)
+- `node.js`_ (for optional command-line tool only)
 
 
 Known issues
@@ -84,4 +86,6 @@ What does 0bin not implement?
 .. _Bootstrap: http://twitter.github.com/bootstrap/
 .. _VizHash.js: https://github.com/sametmax/VizHash.js
 .. _Cherrypy: http://www.cherrypy.org/ (server only)
+.. _node.js: http://nodejs.org/
+.. _optional command-line tool: ./zerobinpaste_tool
 .. _is not worth it: http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions

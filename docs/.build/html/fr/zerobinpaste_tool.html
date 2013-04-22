@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Outil en ligne de commande zerobinpaste &mdash; 0bin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
+    <link rel="prev" title="Options" href="options.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="options.html" title="Options"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="outil-en-ligne-de-commande-zerobinpaste">
+<h1>Outil en ligne de commande zerobinpaste<a class="headerlink" href="#outil-en-ligne-de-commande-zerobinpaste" title="Permalink to this headline">¶</a></h1>
+<p>zerobinpaste est un simple outil CLI (similaire à pastebinit ou wgetpaste) à utiliser
+avec des fichiers ou des redirection shell dans le terminal ou des scripts simples.</p>
+<p>Exemple de cas d&#8217;utilisation:</p>
+<div class="highlight-python"><pre>% zerobinpaste README.rst
+http://some.0bin.site/paste/0cc3d8a8...
+
+% grep error /var/log/syslog | zerobinpaste
+http://some.0bin.site/paste/81fd1324...
+
+% zerobinpaste docs/en/*.rst
+easy_install.rst http://some.0bin.site/paste/9adc576a...
+apache_install.rst http://some.0bin.site/paste/01408cbd...
+options.rst http://some.0bin.site/paste/921b2768...
+...
+
+% ps axlf | zerobinpaste | mail -s "Process tree on $(date)" root</pre>
+</div>
+<p>Les liens produits peuvent être ensuite copier-coller sur un channel IRC
+ou autre.</p>
+<p>L&#8217;outil produit le chiffrement lui-même sur la machine et la clé (après le hash)
+n&#8217;est jamais envoyée au serveur ou nul par ailleurs excepté la sortie standard
+de l&#8217;outil (ex: le terminal).</p>
+<p>L&#8217;outil doit être buildé avec <a class="reference external" href="http://nodejs.org/">node.js</a> séparément (voir plus bas).</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Au minimum il faut préciser le site pastebin (l&#8217;url principal d&#8217;où on posterait
+dans le navigateur) doit être spécifié à l&#8217;outil via l&#8217;option -u (&#8211;url) (on peut
+le simplifier avec un alias shell - ex: <tt class="docutils literal"><span class="pre">alias</span> <span class="pre">zp='zerobinpaste</span> <span class="pre">-u</span> <span class="pre">http://some.0bin.site</span></tt>)
+ou dans le fichier de configuration &#8220;~/.zerobinpasterc&#8221; (format json).</p>
+<div class="line-block">
+<div class="line">Les arguments positionels sont interprétés comme des fichiers à uploader et chiffrer.</div>
+<div class="line">Si aucun argument n&#8217;est passé, le script tentera de lire stdin.</div>
+</div>
+<p>Le fichier de configuration le plus simple pourrait ressembler à celà:</p>
+<blockquote>
+<div>{&#8220;url&#8221;: &#8220;<a class="reference external" href="http://some.0bin.site">http://some.0bin.site</a>&#8220;}</div></blockquote>
+<p>Toute option (dans sa forme longue, ex: &#8220;url pour &#8211;url) utilisable en ligne de commande
+peut être spécifié ici.</p>
+<p>Lancez l&#8217;outil avec -h ou &#8211;help pour voir la liste des paramètres supportés.</p>
+</div>
+<div class="section" id="build-installation">
+<h2>Build / Installation<a class="headerlink" href="#build-installation" title="Permalink to this headline">¶</a></h2>
+<p>En bref:</p>
+<blockquote>
+<div>0bin% cd tools
+0bin/tools% make
+...
+0bin/tools% cp zerobinpaste ~/bin   # install to PATH</div></blockquote>
+<p>La commande &#8220;npm&#8221; (packagé and installé avec node.js) est requise pour télécharger
+les dépendances indispensables à la production de l&#8217;éxécutable.</p>
+<p>Utilisez &#8220;make&#8221; dans le dossier &#8220;tools&#8221; pour produire une version non-minifié&#8221; de &#8220;zerobinpaste&#8221;.</p>
+<p>La commande <tt class="docutils literal"><span class="pre">make</span> <span class="pre">ugly</span></tt> peut être utilisé à la place de <tt class="docutils literal"><span class="pre">make</span></tt> pour créer une version &#8220;minified&#8221;
+(requière l&#8217;installation de <a class="reference external" href="https://github.com/mishoo/UglifyJS">uglifyjs</a>, script produit environ 25% plus petit en taille).</p>
+<p>Le script &#8220;zerobinpaste&#8221; ainsi produit seulement besoin de node.js (et la commande &#8220;node&#8221;) pour
+s&#8217;éxcuter et peut être placé n&#8217;importe où dans le PATH système (ex : &#8220;~/bin&#8221;, &#8220;/usr/local/bin&#8221;)
+afin d&#8217;être exécuté en tapant simplement &#8220;zerobinpaste&#8221;.</p>
+</div>
+<div class="section" id="pourquoi-node-js-et-pas-python">
+<h2>Pourquoi node.js et pas python<a class="headerlink" href="#pourquoi-node-js-et-pas-python" title="Permalink to this headline">¶</a></h2>
+<p>Malheureusement, il est assez difficile et peu fiable de répliquer un protocole
+chiffrement non trivial et non documenté tel que celui de certaines méthodes
+de <a class="reference external" href="http://crypto.stanford.edu/sjcl/">SJCL</a>, et la moindre erreur garantie de produire une paste illisible.</p>
+<p>L&#8217;implémentation actuelle utilise le même code Javascript (via le moteur V8 de node.js)
+que le navigateur, du coup il est simple et robuste.</p>
+<p>Il est prévu de supporter plus tard un schéma de chiffrement plus configurable, moins
+complexe et plus courant, permettant à des clients non-javascript de fonctioner également.</p>
+<p>Voir le <a class="reference external" href="https://github.com/sametmax/0bin/pull/39">pull request concerné</a> pour plus de détails.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Outil en ligne de commande zerobinpaste</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#build-installation">Build / Installation</a></li>
+<li><a class="reference internal" href="#pourquoi-node-js-et-pas-python">Pourquoi node.js et pas python</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="options.html"
+                        title="previous chapter">Options</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/fr/zerobinpaste_tool.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="options.html" title="Options"
+             >previous</a> |</li>
+        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Sam et Max.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -33,8 +33,8 @@ Les serveurs Web Python modernes fonctionnent tous de la même manière, en suiv
 une norme d'interfaçage: WSGI.
 
 C'est la solution la plus performante, et celle recommandée. Mais elle demande
-l'installation du modle Apache mod_wsgi. Si vous ne savez pas comment faire,
-ou si vous ne pouvez pas le faire (par exemple sur un hébergement mutualisé
+l'installation du model Apache mod_wsgi. Si vous ne savez pas comment faire,
+ou si vous ne pouvez pas le faire (par example sur un hébergement mutualisé
 qui ne le propose pas), il vous faudra choisir l'installation CGI.
 
 Premièrement, assurez-vous d'avoir mod_wsgi installé et chargé (en tant qu'admin)::
