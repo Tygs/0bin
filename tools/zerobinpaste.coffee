@@ -2,7 +2,9 @@
 program
     .version('0.0.1')
     .usage('[options] [ file ... ]\n\n' + '  Paste contents of file(s) or stdin to 0bin site.')
-    .option('-u, --url [url]', 'URL of a 0bin site')
+    .option('-u, --url [url]', 'URL of a 0bin site.')
+    .option('-e, --expire [period]',
+        'Expiration period - one of: 1_view, 1_day (default), 1_month, never.', '1_day')
     .option('-c, --config [path]', 'Path to zerobin configuration file (default: ~/.zerobinpasterc).\n'\
         + '   Should be json-file with the same keys as can be specified on the command line.\n'\
         + '   Example contents: {"url": "http://some-0bin.com"}', '~/.zerobinpasterc')
@@ -22,9 +24,20 @@ try
         (program[k] = v) for own k, v of config
 
 
-# Sanity checks
+# Sanity checks and option processing
 if not program.url
     console.error('ERROR: URL option must be specified.')
+    process.exit(1)
+
+if program.expire == '1_view'
+    # "burn_after_reading" is too damn long for cli
+    program.expire = 'burn_after_reading'
+
+expire_opts = ['burn_after_reading', '1_day', '1_month', 'never']
+if program.expire not in expire_opts
+    console.error(
+        "ERROR: --expire value (provided: '#{program.expire}')"\
+        + ' must be one of: ' + expire_opts.join(', ') + "." )
     process.exit(1)
 
 
@@ -39,7 +52,7 @@ paste_file = (content, name) ->
     content = sjcl.encrypt(key, content)
     content = qs.stringify
         content: content
-        expiration: '1_day' # burn_after_reading 1_day 1_month never
+        expiration: program.expire
 
     # host.com -> http://host.com
     if not program.url.match(/^https?:\/\//)
