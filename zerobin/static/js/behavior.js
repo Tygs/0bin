@@ -152,10 +152,13 @@
       }, 250); /* End of "decrypt" */
     },
 
-    /** Create a random base64 string long enought to be suitable as
-  an encryption key */
-    makeKey: function () {
-      return sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
+    /** Create a random base64-like string long enought to be suitable as
+        an encryption key */
+    makeKey: function (entropy) {
+        entropy = Math.ceil(entropy / 6) * 6; /* non-6-multiple produces same-length base64 */
+        var key = sjcl.bitArray.clamp(
+          sjcl.random.randomWords(Math.ceil(entropy / 32), 0), entropy );
+        return sjcl.codec.base64.fromBits(key, 0).replace(/\=+$/, '').replace(/\//, '-');
     },
 
     getFormatedDate: function (date) {
@@ -511,7 +514,7 @@
         try {
 
           var expiration = $('#expiration').val();
-          var key = zerobin.makeKey();
+          var key = zerobin.makeKey(48);
 
           zerobin.encrypt(key, paste,
 
