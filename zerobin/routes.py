@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 
 # add project dir and libs dir to the PYTHON PATH to ensure they are
 # importable
-from utils import settings
+from utils import settings, SettingsValidationError
 
 import bottle
 from bottle import (Bottle, run, static_file, view, request)
@@ -70,7 +70,8 @@ def create_paste():
         # system.  need to be improved
         if len(content) < settings.MAX_SIZE:
             expiration = body.get('expiration', [u'burn_after_reading'])[0]
-            paste = Paste(expiration=expiration, content=content)
+            paste = Paste(expiration=expiration, content=content,
+                          uuid_length=settings.PASTE_ID_LENGTH)
             paste.save()
 
             # display counter
@@ -141,13 +142,17 @@ def server_static(filename):
     return static_file(filename, root=settings.STATIC_FILES_ROOT)
 
 
-def get_app(debug=None, settings_file='', compressed_static=None):
+def get_app(debug=None, settings_file='',
+            compressed_static=None, settings=settings):
     """
         Return a tuple (settings, app) configured using passed
         parameters and/or a setting file.
     """
     if settings_file:
         settings.update_with_file(os.path.abspath(settings_file))
+
+    if settings.PASTE_ID_LENGTH < 4:
+        raise SettingsValidationError('PASTE_ID_LENGTH cannot be lower than 4')
 
     if compressed_static is not None:
         settings.COMPRESSED_STATIC_FILES = compressed_static
@@ -167,9 +172,8 @@ def get_app(debug=None, settings_file='', compressed_static=None):
 
 @clize.clize(coerce={'debug': bool, 'compressed_static': bool})
 def runserver(host='', port='', debug=None, user='', group='',
-              settings_file='', compressed_static=None, version=False):
-
-    settings, app = get_app(debug, settings_file, compressed_static)
+              settings_file='', compressed_static=None,
+              version=False, paste_id_length=None):
 
     if version:
         print '0bin V%s' % settings.VERSION
@@ -179,6 +183,13 @@ def runserver(host='', port='', debug=None, user='', group='',
     settings.PORT = port or settings.PORT
     settings.USER = user or settings.USER
     settings.GROUP = group or settings.GROUP
+    settings.PASTE_ID_LENGTH = paste_id_length or settings.PASTE_ID_LENGTH
+
+    try:
+        _, app = get_app(debug, settings_file, compressed_static, settings=settings)
+    except SettingsValidationError as err:
+        print >>sys.stderr, 'Configuration error: %s' % err.message
+        sys.exit(1)
 
     thread.start_new_thread(drop_privileges, (settings.USER, settings.GROUP))
 

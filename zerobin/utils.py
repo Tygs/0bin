@@ -53,6 +53,9 @@ def dmerge(*args):
     return dictionary
 
 
+class SettingsValidationError(Exception): pass
+
+
 class SettingsContainer(object):
     """
         Singleton containing the settings for the whole app
