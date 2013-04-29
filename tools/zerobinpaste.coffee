@@ -88,6 +88,22 @@ paste_file = (content, name) ->
     req.end()
 
 
+# Seed sjcl prng from /dev/(u)random
+do (bytes=64) ->
+    for src in ['/dev/urandom', '/dev/random', null]
+        break if not src or fs.existsSync(src)
+    if not src
+        console.error( 'ERROR: Failed to seed PRNG -'\
+            + ' /dev/(u)random is unavailable, relying only on sjcl entropy sources' )
+        return
+    fd = fs.openSync(src, 'r')
+    buff = new Buffer(bytes)
+    fs.readSync(fd, buff, 0, bytes)
+    fs.closeSync(fd)
+    sjcl.random.addEntropy(
+        (buff.readUInt32BE(n) for n in [0..bytes/4]), bytes * 8, src )
+
+
 # Loop over file args or read stdin
 if not program.args or not program.args.length
     process.stdin.resume()
