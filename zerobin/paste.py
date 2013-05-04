@@ -24,8 +24,8 @@ class Paste(object):
     }
 
 
-    def __init__(self, uuid=None, content=None,
-                 expiration=None):
+    def __init__(self, uuid=None, uuid_length=None,
+                 content=None, expiration=None):
 
         self.content = content
         self.expiration = expiration
@@ -35,7 +35,11 @@ class Paste(object):
 
         self.expiration = self.get_expiration(expiration)
 
-        self.uuid = uuid or hashlib.sha1(self.content).hexdigest()
+        if not uuid:
+            uuid = hashlib.sha1(self.content)\
+                .digest().encode('base64').rstrip('=\n').replace('/', '-')
+            if uuid_length: uuid = uuid[:uuid_length]
+        self.uuid = uuid
 
 
     def get_expiration(self, expiration):
@@ -260,4 +264,3 @@ class Paste(object):
             Delete the paste file.
         """
         os.remove(self.path)
-
