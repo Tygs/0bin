@@ -6,7 +6,7 @@
 ######## NOT SETTINGS, JUST BOILER PLATE ##############
 import os
 
-VERSION = '0.2'
+VERSION = '0.3'
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 LIBS_DIR = os.path.join(os.path.dirname(ROOT_DIR), 'libs')
 

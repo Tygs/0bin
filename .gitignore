@@ -33,3 +33,4 @@ content
 *.sublime-project
 *.sublime-workspace
 settings_local.py
+build
