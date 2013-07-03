@@ -148,8 +148,11 @@ def get_app(debug=None, settings_file='',
         Return a tuple (settings, app) configured using passed
         parameters and/or a setting file.
     """
+
+    settings_file = settings_file or os.environ.get('ZEROBIN_SETTINGS_FILE')
+
     if settings_file:
-        settings.update_with_file(os.path.abspath(settings_file))
+        settings.update_with_file(os.path.realpath(settings_file))
 
     if settings.PASTE_ID_LENGTH < 4:
         raise SettingsValidationError('PASTE_ID_LENGTH cannot be lower than 4')
@@ -173,7 +176,7 @@ def get_app(debug=None, settings_file='',
 @clize.clize(coerce={'debug': bool, 'compressed_static': bool})
 def runserver(host='', port='', debug=None, user='', group='',
               settings_file='', compressed_static=None,
-              version=False, paste_id_length=None):
+              version=False, paste_id_length=None, server="cherrypy"):
 
     if version:
         print '0bin V%s' % settings.VERSION
