@@ -97,7 +97,7 @@ What does 0bin not implement?
 .. _jQuery: http://jquery.com/
 .. _Bootstrap: http://twitter.github.com/bootstrap/
 .. _VizHash.js: https://github.com/sametmax/VizHash.js
-.. _Cherrypy: http://www.cherrypy.org/ (server only)
+.. _Cherrypy: http://www.cherrypy.org/
 .. _node.js: http://nodejs.org/
 .. _is not worth it: http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions
 .. _WTF licence: http://en.wikipedia.org/wiki/WTFPL
