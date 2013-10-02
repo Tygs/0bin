@@ -18,7 +18,7 @@ Entrez::
 Installation en 30 secondes (pour tous)
 =======================================
 
-- Assurez-vous d'avoir Python 2.6 ou 2.7 (`python --version`)
+- Assurez-vous d'avoir Python 2.7 (`python --version`)
 - Télécharger le dernier `zip du code source <https://github.com/sametmax/0bin/zipball/master>`_.
 - Décompressez tous les fichiers là où vous souhaitez mettre le site.
 - Allez dans les dossiers extraits.
