@@ -18,8 +18,22 @@ class Paste(object):
     DIR_CACHE = set()
 
     DURATIONS = {
+        u'10_mins': 10 * 60,
+        u'30_mins': 30 * 60,
+        u'1_hour': 1 * 3600,
+        u'3_hours': 3 * 3600,
+        u'6_hours': 6 * 3600,
+        u'12_hours': 12 * 3600,
         u'1_day': 24 * 3600,
+        u'2_days': 2 * 24 * 3600,
+        u'5_days': 5 * 24 * 3600,
+        u'10_days': 10 * 24 * 3600,
+        u'15_days': 15 * 24 * 3600,
+        u'20_days': 20 * 24 * 3600,
         u'1_month': 30 * 24 * 3600,
+        u'2_months': 2 * 30 * 24 * 3600,
+        u'6_months': 6 * 30 * 24 * 3600,
+        u'1_year': 365 * 24 * 3600,
         u'never': 365 * 24 * 3600 * 100,
     }
 
