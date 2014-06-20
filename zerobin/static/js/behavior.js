@@ -514,7 +514,7 @@
         try {
 
           var expiration = $('#expiration').val();
-          var key = zerobin.makeKey(48);
+          var key = zerobin.makeKey(256);
 
           zerobin.encrypt(key, paste,
 
