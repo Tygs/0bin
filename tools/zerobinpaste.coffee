@@ -5,10 +5,10 @@ program
     .option('-u, --url [url]', 'URL of a 0bin site.')
     .option('-e, --expire [period]',
         'Expiration period - one of: 1_view, 1_day (default), 1_month, never.', '1_day')
-    .option('-k, --entropy [bits]',
+    .option('-k, --entropy [bytes]',
         'Encryption key entropy (and hence length) to use,'\
-        + ' in bits, rounded up to multiple of 6 (default: 48).\n'\
-        + '   That key will be processed by 1000 pbkdf2-sha256 iterations, not used as-is.', 48)
+        + ' in bytes (default: 32).\n'\
+        + '   That key will be processed by 1000 pbkdf2-sha256 iterations, not used as-is.', 32)
     .option('-c, --config [path]',
         'Path to zerobin configuration file (default: ~/.zerobinpasterc).\n'\
         + '   Should be json-file with the same keys as can be specified on the command line.\n'\
@@ -51,7 +51,7 @@ program.entropy = parseInt(program.entropy)
 # Generated key will use base64 (6b per char) charset
 # Key is not decoded for pbkdf2, so it's generated via base64 here just for convenience
 generate_key = (entropy) ->
-    entropy = Math.ceil(entropy / 6) * 6 # non-6-multiple produces same-length base64
+    entropy = Math.ceil(entropy / 8.0) * 8
     key = sjcl.bitArray.clamp(
         sjcl.random.randomWords(Math.ceil(entropy / 32), 0), entropy )
     return sjcl.codec.base64.fromBits(key, 0).replace(/\=+$/, '').replace(/\//, '-')
