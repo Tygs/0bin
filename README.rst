@@ -113,6 +113,9 @@ For small fixes (typo and such), you can work on master.
 
 For features, you should create a dedicated branch.
 
+In any case, if you modify Javascript or CSS files, you shall run compress.sh afterward to provide the minified files. It requires your to have yui-compressor installed (apt-get install yui-compressor on the debian family).
+
 We don't require you to rebase/merge, ordinary merging is alright.
 
 Once it's ready, just request a PR.
+

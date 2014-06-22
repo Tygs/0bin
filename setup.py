@@ -31,7 +31,6 @@ setup(
         'cherrypy',
         'bottle',
         'clize',
-        'privilege'
     ],
     include_package_data=True,
     dependency_links=[
