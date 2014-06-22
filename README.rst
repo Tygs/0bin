@@ -21,7 +21,7 @@ but in short::
 
     pip install zerobin
     zerobin
-    
+
 For now, 0bin targets Python 2.7 only. Python 3 supports is planned.
 
 How it works
@@ -103,3 +103,16 @@ What does 0bin not implement?
 .. _node.js: http://nodejs.org/
 .. _is not worth it: http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions
 .. _WTF licence: http://en.wikipedia.org/wiki/WTFPL
+
+Contributing
+=============
+
+Please fork the project, clone your repository and add the original repo as an upstream remote to keep yours in sync.
+
+For small fixes (typo and such), you can work on master.
+
+For features, you should create a dedicated branch.
+
+We don't require you to rebase/merge, ordinary merging is alright.
+
+Once it's ready, just request a PR.
