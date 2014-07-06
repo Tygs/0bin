@@ -178,7 +178,6 @@ def runserver(host='', port='', debug=None, user='', group='',
     settings.GROUP = group or settings.GROUP
     settings.PASTE_ID_LENGTH = paste_id_length or settings.PASTE_ID_LENGTH
 
-
     try:
         _, app = get_app(debug, settings_file, compressed_static, settings=settings)
     except SettingsValidationError as err:
