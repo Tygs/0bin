@@ -104,23 +104,7 @@ def display_paste(paste_id):
     keep_alive = False
     try:
         paste = Paste.load(paste_id)
-        # Delete the paste if it expired:
-        if 'burn_after_reading' in str(paste.expiration):
-            # burn_after_reading contains the paste creation date
-            # if this read appends 10 seconds after the creation date
-            # we don't delete the paste because it means it's the redirection
-            # to the paste that happens during the paste creation
-            try:
-                keep_alive = paste.expiration.split('#')[1]
-                keep_alive = datetime.strptime(keep_alive,
-                                               '%Y-%m-%d %H:%M:%S.%f')
-                keep_alive = now < keep_alive + timedelta(seconds=10)
-            except IndexError:
-                keep_alive = False
-            if not keep_alive:
-                paste.delete()
-
-        elif paste.expiration < now:
+        if not paste.is_alive():
             paste.delete()
             raise ValueError()
 
@@ -176,10 +160,16 @@ def get_app(debug=None, settings_file='',
 @clize.clize(coerce={'debug': bool, 'compressed_static': bool})
 def runserver(host='', port='', debug=None, user='', group='',
               settings_file='', compressed_static=None,
-              version=False, paste_id_length=None, server="cherrypy"):
+              version=False, paste_id_length=None, server="cherrypy", purge=False):
 
     if version:
         print '0bin V%s' % settings.VERSION
+        sys.exit(0)
+
+    if purge:
+        print 'Purging expired pastes excluding burn notices'
+        purged_pastes = Paste.purge()
+        print 'Done (%s pastes removed)' % (purged_pastes)
         sys.exit(0)
 
     settings.HOST = host or settings.HOST
@@ -187,6 +177,7 @@ def runserver(host='', port='', debug=None, user='', group='',
     settings.USER = user or settings.USER
     settings.GROUP = group or settings.GROUP
     settings.PASTE_ID_LENGTH = paste_id_length or settings.PASTE_ID_LENGTH
+
 
     try:
         _, app = get_app(debug, settings_file, compressed_static, settings=settings)
