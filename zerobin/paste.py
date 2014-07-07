@@ -52,7 +52,7 @@ class Paste(object):
         """
 
         if (isinstance(expiration, datetime) or
-            'burn_after_reading' in str(expiration)):
+                self.is_burn_notice):
             return expiration
 
         try:
@@ -265,6 +265,7 @@ class Paste(object):
         """
         os.remove(self.path)
 
+    @property
     def is_alive(self):
         """
         Return True if the paste is alive.
@@ -274,7 +275,7 @@ class Paste(object):
         # keep alive false by default
         keep_alive = False
         # Delete the paste if it expired:
-        if 'burn_after_reading' in str(self.expiration):
+        if self.is_burn_notice:
             # burn_after_reading contains the paste creation date
             # if this read appends 10 seconds after the creation date
             # we don't delete the paste because it means it's the redirection
@@ -311,16 +312,19 @@ class Paste(object):
                         deleted_paste += 1
         return deleted_paste
 
+    @property
+    def is_burn_notice(self):
+        return  'burn_after_reading' in str(self.expiration)
+
     @classmethod
     def _purge_file(self, fname):
         """
             Purges the given file if expired.
         """
         paste = Paste.load_from_file(fname)
-        # Burn after reading will always returns paste.is_alive() == False
+        # Burn after reading will always returns paste.is_alive == False
         # We don't want to kill them now
-        is_burn_after_reading = 'burn_after_reading' in str(paste.expiration)
-        if not is_burn_after_reading and not paste.is_alive():
+        if not self.is_burn_notice and not paste.is_alive:
             paste.delete()
             return True
         return False
