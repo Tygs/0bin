@@ -104,7 +104,12 @@ def display_paste(paste_id):
     keep_alive = False
     try:
         paste = Paste.load(paste_id)
-        if not paste.is_alive():
+        # check for burn notice and is alive for the redirection
+        if paste.is_burn_notice:
+            keep_alive = paste.is_alive
+            if not keep_alive:
+                paste.delete()
+        elif not paste.is_alive:
             paste.delete()
             raise ValueError()
 
