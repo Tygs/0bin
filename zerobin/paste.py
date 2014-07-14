@@ -303,6 +303,7 @@ class Paste(object):
         ignore_files = ['counter', ]
         # keep a count on purged pastes
         deleted_paste = 0
+
         if os.path.exists(path):
             for folder, _ , files in os.walk(path):
                 for fname in files:
@@ -324,7 +325,7 @@ class Paste(object):
         paste = Paste.load_from_file(fname)
         # Burn after reading will always returns paste.is_alive == False
         # We don't want to kill them now
-        if not self.is_burn_notice and not paste.is_alive:
+        if not paste.is_burn_notice and not paste.is_alive:
             paste.delete()
             return True
         return False
