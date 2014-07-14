@@ -294,7 +294,7 @@ class Paste(object):
 
 
     @classmethod
-    def purge(self, path=settings.PASTE_FILES_ROOT):
+    def purge(cls, path=settings.PASTE_FILES_ROOT):
         """
             Purge the content folder
             Return the number of paste deleted.
@@ -318,7 +318,7 @@ class Paste(object):
         return  'burn_after_reading' in str(self.expiration)
 
     @classmethod
-    def _purge_file(self, fname):
+    def _purge_file(cls, fname):
         """
             Purges the given file if expired.
         """
