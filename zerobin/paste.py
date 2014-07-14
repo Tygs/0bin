@@ -305,7 +305,9 @@ class Paste(object):
         deleted_paste = 0
 
         if os.path.exists(path):
-            for folder, _ , files in os.walk(path):
+            for folder, subfolders , files in os.walk(path):
+                if len(files) == 0 and len(subfolders) == 0:
+                    os.rmdir(folder)
                 for fname in files:
                     if fname in ignore_files:
                         continue
