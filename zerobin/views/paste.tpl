@@ -1,4 +1,4 @@
-%if "burn_after_reading" in str(paste.expiration):
+%if paste.is_burn_notice:
   %if keep_alive:
     <p class="alert alert-info">
       <a class="close" data-dismiss="alert" href="#">×</a>

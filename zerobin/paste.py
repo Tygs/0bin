@@ -52,7 +52,7 @@ class Paste(object):
         """
 
         if (isinstance(expiration, datetime) or
-            'burn_after_reading' in str(expiration)):
+                self.is_burn_notice):
             return expiration
 
         try:
@@ -264,3 +264,71 @@ class Paste(object):
             Delete the paste file.
         """
         os.remove(self.path)
+
+    @property
+    def is_alive(self):
+        """
+        Return True if the paste is alive.
+        False if it may be deleted
+        """
+        now = datetime.now()
+        # keep alive false by default
+        keep_alive = False
+        # Delete the paste if it expired:
+        if self.is_burn_notice:
+            # burn_after_reading contains the paste creation date
+            # if this read appends 10 seconds after the creation date
+            # we don't delete the paste because it means it's the redirection
+            # to the paste that happens during the paste creation
+            try:
+                keep_alive = self.expiration.split('#')[1]
+                keep_alive = datetime.strptime(keep_alive,
+                                               '%Y-%m-%d %H:%M:%S.%f')
+                keep_alive = now < keep_alive + timedelta(seconds=10)
+            except IndexError:
+                keep_alive = False
+        else:
+            keep_alive = now < self.expiration
+
+        return keep_alive
+
+
+    @classmethod
+    def purge(cls, path=settings.PASTE_FILES_ROOT):
+        """
+            Purge the content folder
+            Return the number of paste deleted.
+        """
+        # we don't want to read 'counter' files
+        ignore_files = ['counter', ]
+        # keep a count on purged pastes
+        deleted_paste = 0
+
+        if os.path.exists(path):
+            for folder, subfolders , files in os.walk(path):
+                if len(files) == 0 and len(subfolders) == 0:
+                    os.rmdir(folder)
+                for fname in files:
+                    if fname in ignore_files:
+                        continue
+                    if Paste._purge_file(os.path.join(folder, fname)):
+                        deleted_paste += 1
+        return deleted_paste
+
+    @property
+    def is_burn_notice(self):
+        return  'burn_after_reading' in str(self.expiration)
+
+    @classmethod
+    def _purge_file(cls, fname):
+        """
+            Purges the given file if expired.
+        """
+        paste = Paste.load_from_file(fname)
+        # Burn after reading will always returns paste.is_alive == False
+        # We don't want to kill them now
+        if not paste.is_burn_notice and not paste.is_alive:
+            paste.delete()
+            return True
+        return False
+
