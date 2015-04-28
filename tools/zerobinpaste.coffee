@@ -13,10 +13,11 @@ program
         'Path to zerobin configuration file (default: ~/.zerobinpasterc).\n'\
         + '   Should be json-file with the same keys as can be specified on the command line.\n'\
         + '   Example contents: {"url": "http://some-0bin.com"}', '~/.zerobinpasterc')
+    .option('-n, --nocheck', 'do not check SSL certs.')
     .parse(process.argv);
 
 
-[http, url, qs, fs, path] = ['http', 'url', 'querystring', 'fs', 'path'].map(require)
+[http, https, url, qs, fs, path] = ['http', 'https', 'url', 'querystring', 'fs', 'path'].map(require)
 
 
 # Parse config file, if any
@@ -74,8 +75,14 @@ paste_file = (content, name) ->
     if not program.url.match(/^https?:\/\//)
         program.url = 'http://' + program.url.replace(/^\/+/, '')
 
+    proto = http
+
+    if program.url.match(/^https:\/\//)
+        proto = https
+
     req_opts = url.parse(program.url)
     req_opts.method = 'POST'
+
     req_opts.headers =
         'Content-Type': 'application/x-www-form-urlencoded'
         'Content-Length': content.length
@@ -84,7 +91,10 @@ paste_file = (content, name) ->
         .replace(/\/paste\/create\/?$/, '').replace(/\/+$/, '')
     req_opts.path = req_url_base + '/paste/create'
 
-    req = http.request req_opts, (res) ->
+    if program.nocheck
+        req_opts.rejectUnauthorized = false
+
+    req = proto.request req_opts, (res) ->
         req_reply = ''
         res.setEncoding('utf8')
         res.on 'data', (chunk) -> req_reply += chunk
@@ -102,7 +112,7 @@ paste_file = (content, name) ->
 
     req.write(content)
     req.end()
-
+    req.on 'error', (e) -> console.error(e)
 
 # Seed sjcl prng from /dev/(u)random
 do (bytes=64) ->
