@@ -42,6 +42,7 @@ setup(
         "License :: OSI Approved :: zlib/libpng License",
         "Natural Language :: English",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.4",
     ],
     entry_points = {
         'console_scripts': [

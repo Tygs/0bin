@@ -7,7 +7,7 @@ from __future__ import unicode_literals, absolute_import
 ######## NOT SETTINGS, JUST BOILER PLATE ##############
 import os
 
-VERSION = '0.4.1'
+VERSION = '0.5'
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 LIBS_DIR = os.path.join(os.path.dirname(ROOT_DIR), 'libs')
 
