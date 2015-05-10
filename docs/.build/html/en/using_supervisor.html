@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -10,7 +8,7 @@
     
     <title>Using supervisor &mdash; 0bin 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -29,8 +27,8 @@
     <link rel="next" title="Theming" href="theming.html" />
     <link rel="prev" title="Nginx setup" href="nginx_install.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,14 +40,14 @@
         <li class="right" >
           <a href="nginx_install.html" title="Nginx setup"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="using-supervisor">
 <h1>Using supervisor<a class="headerlink" href="#using-supervisor" title="Permalink to this headline">¶</a></h1>
@@ -57,7 +55,7 @@
 the setup (which is just apt-get install supervisor or pip install supervisor
 most of the time), but here is a quick overview on how to use it.</p>
 <p>Create a configuration file named supervisor.ini:</p>
-<div class="highlight-python"><pre>[unix_http_server]
+<div class="highlight-python"><div class="highlight"><pre>[unix_http_server]
 file=/tmp/supervisor.sock;
 
 [supervisorctl]
@@ -80,16 +78,18 @@ user=zerobin
 [program:zerobin]
 command=/path/to/zerobin/zerobin.py --port 80 --compressed-static
 directory=/path/to/zerobin/
-environment=PYTHONPATH='/path/to/zerobin/'
+environment=PYTHONPATH=&#39;/path/to/zerobin/&#39;
 user=zerobin
 autostart=true
-autorestart=true</pre>
+autorestart=true
+</pre></div>
 </div>
 <p>The 4 first entries are just boiler plate to get you started, you can copy
 them verbatim.</p>
 <p>The last one define one (you can have many) process supervisor should manage.</p>
 <p>It means it will run the command:</p>
-<div class="highlight-python"><pre>/path/to/zerobin/zerobin.py --port 80 --compressed-static</pre>
+<div class="highlight-python"><div class="highlight"><pre>/path/to/zerobin/zerobin.py --port 80 --compressed-static
+</pre></div>
 </div>
 <p>In the directory, with the environnement and the user you defined.</p>
 <p>This command will be ran as a daemon, in the background.</p>
@@ -109,7 +109,8 @@ running, even it crashes temporarly or if you retart the machine.</p>
 <p class="first admonition-title">Note</p>
 <p>If you installed zerobin in a virtualenv, you may set the command
 to run directly from it:</p>
-<div class="last highlight-python"><pre>command=/path/to/virtualenv/bin/zerobin --port 80 --compressed-static</pre>
+<div class="last highlight-python"><div class="highlight"><pre>command=/path/to/virtualenv/bin/zerobin --port 80 --compressed-static
+</pre></div>
 </div>
 </div>
 </div>
@@ -118,7 +119,7 @@ to run directly from it:</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="nginx_install.html"
@@ -126,12 +127,14 @@ to run directly from it:</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="theming.html"
                         title="next chapter">Theming</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/en/using_supervisor.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/en/using_supervisor.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -148,7 +151,7 @@ to run directly from it:</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -160,12 +163,12 @@ to run directly from it:</p>
         <li class="right" >
           <a href="nginx_install.html" title="Nginx setup"
              >previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

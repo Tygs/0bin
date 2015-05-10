@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -10,7 +8,7 @@
     
     <title>Apache setup &mdash; 0bin 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -29,8 +27,8 @@
     <link rel="next" title="Nginx setup" href="nginx_install.html" />
     <link rel="prev" title="Easiest installation" href="easy_install.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,14 +40,14 @@
         <li class="right" >
           <a href="easy_install.html" title="Easiest installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="apache-setup">
 <h1>Apache setup<a class="headerlink" href="#apache-setup" title="Permalink to this headline">¶</a></h1>
@@ -72,7 +70,7 @@ installation facile. You&#8217;ll benefit from having:</p>
 <li>Apache robustness in front end: it&#8217;s secure, and there is much less chance
 it will crash under heavy load;</li>
 <li>your web site processes won&#8217;t run with admin rights, even if
-<a class="reference internal" href="options.html#user-and-group-en"><em>&#8211;user</em></a> doesn&#8217;t
+<a class="reference internal" href="options.html#user-and-group-en"><span>&#8211;user</span></a> doesn&#8217;t
 work on your OS.</li>
 </ul>
 <div class="section" id="mod-wsgi">
@@ -84,13 +82,14 @@ the setup of the Apache module mod_wsgi. If you don&#8217;t know how to do this,
 if you can&#8217;t do it (E.G: your hosting won&#8217;t let you), you need to go for
 the CGI setup.</p>
 <p>First, make sure you have mod_wsgi installed and enable by running (as admin):</p>
-<div class="highlight-python"><pre>a2enmod wsgi</pre>
+<div class="highlight-python"><div class="highlight"><pre>a2enmod wsgi
+</pre></div>
 </div>
 <p>This enable mod_wsgi. It it doesn&#8217;t, install it first (on ubuntu, the package
 is libapache2-mod-wsgi).</p>
 <p>Then create an Apache configuration file, usually in /etc/apache/sites-available/.
 Name it zerobin:</p>
-<div class="highlight-python"><pre>&lt;VirtualHost *:80&gt;
+<div class="highlight-python"><div class="highlight"><pre>&lt;VirtualHost *:80&gt;
     ServerName www.yourwebsite.com
 
     WSGIDaemonProcess zerobin user=www-data group=www-data processes=1 threads=5
@@ -102,13 +101,16 @@ Name it zerobin:</p>
         Order deny,allow
         Allow from all
     &lt;/Directory&gt;
-&lt;/VirtualHost&gt;</pre>
+&lt;/VirtualHost&gt;
+</pre></div>
 </div>
 <p>Activate the website (as admin):</p>
-<div class="highlight-python"><pre>a2ensite zerobin</pre>
+<div class="highlight-python"><div class="highlight"><pre>a2ensite zerobin
+</pre></div>
 </div>
 <p>And reload the apache configuration (as admin):</p>
-<div class="highlight-python"><pre>service apache2 reload</pre>
+<div class="highlight-python"><div class="highlight"><pre>service apache2 reload
+</pre></div>
 </div>
 <p>You&#8217;ll note that we refer to a file named app.wsgi. It&#8217;s a Python file
 creating the application Apache is going to use to start the Python process:</p>
@@ -147,7 +149,7 @@ it yet. Please contact us if you ever get the need to use it.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -164,12 +166,14 @@ it yet. Please contact us if you ever get the need to use it.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="nginx_install.html"
                         title="next chapter">Nginx setup</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/en/apache_install.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/en/apache_install.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -186,7 +190,7 @@ it yet. Please contact us if you ever get the need to use it.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -198,12 +202,12 @@ it yet. Please contact us if you ever get the need to use it.</p>
         <li class="right" >
           <a href="easy_install.html" title="Easiest installation"
              >previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

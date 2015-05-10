@@ -22,7 +22,7 @@ but in short::
     pip install zerobin
     zerobin
 
-For now, 0bin targets Python 2.7 only. Python 3 supports is planned.
+0bin runs on Python 2.7 and Python 3.4.
 
 How it works
 =============

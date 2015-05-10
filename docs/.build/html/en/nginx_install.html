@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -10,7 +8,7 @@
     
     <title>Nginx setup &mdash; 0bin 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -29,8 +27,8 @@
     <link rel="next" title="Using supervisor" href="using_supervisor.html" />
     <link rel="prev" title="Apache setup" href="apache_install.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,14 +40,14 @@
         <li class="right" >
           <a href="apache_install.html" title="Apache setup"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="nginx-setup">
 <h1>Nginx setup<a class="headerlink" href="#nginx-setup" title="Permalink to this headline">¶</a></h1>
@@ -88,7 +86,8 @@ processes. It&#8217;s very handy for updates.</li>
 <div class="section" id="the-python-process">
 <h2>The Python process<a class="headerlink" href="#the-python-process" title="Permalink to this headline">¶</a></h2>
 <p>Run 0bin as usual, but this time make it listen to a local port and host. E.G:</p>
-<div class="highlight-python"><pre>zerobin --host 127.0.0.1 --port 8000</pre>
+<div class="highlight-python"><div class="highlight"><pre>zerobin --host 127.0.0.1 --port 8000
+</pre></div>
 </div>
 <p>In PHP, when you edit a file, the changes are immediately visible. In Python,
 the whole code is often loaded in memory for performance reasons. This means
@@ -102,19 +101,20 @@ installing it.</p>
 <p>Vous must create a Nginx configuration file for 0bin. On GNU/Linux, they usually
 go into /etc/nginx/conf.d/. Name it zerobin.conf.</p>
 <p>The minimal configuration file to run the site is:</p>
-<div class="highlight-python"><pre>server {
+<div class="highlight-python"><div class="highlight"><pre>server {
     listen       80;
     server_name www.yourwebsite.com;
 
     location / {
         proxy_pass http://127.0.0.1:8000;
     }
-}</pre>
+}
+</pre></div>
 </div>
 <p><cite>proxy_pass</cite> just passes the external request to the Python process.
 The port much match the one used by the 0bin process of course.</p>
 <p>You can make some adjustements to get a better user experience:</p>
-<div class="highlight-python"><pre>server {
+<div class="highlight-python"><div class="highlight"><pre>server {
     listen       80;
     server_name www.yourwebsite.com;
 
@@ -139,7 +139,8 @@ The port much match the one used by the 0bin process of course.</p>
     location / {
         proxy_pass http://zerobin_cherrypy;
     }
-}</pre>
+}
+</pre></div>
 </div>
 <p>This make Nginx serve the favicon and static files, set the expire HTTP headers
 and make sure gzip compression is used with browsers that support it.</p>
@@ -150,7 +151,7 @@ and make sure gzip compression is used with browsers that support it.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -167,12 +168,14 @@ and make sure gzip compression is used with browsers that support it.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="using_supervisor.html"
                         title="next chapter">Using supervisor</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/en/nginx_install.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/en/nginx_install.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -189,7 +192,7 @@ and make sure gzip compression is used with browsers that support it.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -201,12 +204,12 @@ and make sure gzip compression is used with browsers that support it.</p>
         <li class="right" >
           <a href="apache_install.html" title="Apache setup"
              >previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

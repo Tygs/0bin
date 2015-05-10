@@ -17,7 +17,7 @@ Just type::
 30 seconds setup (for anybody)
 ===============================
 
-- Make sure you have Python 2.6 or 2.7 (`python --version`)
+- Make sure you have Python 2.7 or 3.4+ (`python --version`)
 - Download the last `zip of the source code <https://github.com/sametmax/0bin/zipball/master>`_
 - Extract all of it where you wish the site to be stored.
 - Go to the extracted files.

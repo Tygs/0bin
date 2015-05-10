@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -10,7 +8,7 @@
     
     <title>zerobinpaste command-line tool &mdash; 0bin 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -29,8 +27,8 @@
     <link rel="next" title="Introduction" href="../fr/intro.html" />
     <link rel="prev" title="Options" href="options.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,21 +40,21 @@
         <li class="right" >
           <a href="options.html" title="Options"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="zerobinpaste-command-line-tool">
 <h1>zerobinpaste command-line tool<a class="headerlink" href="#zerobinpaste-command-line-tool" title="Permalink to this headline">¶</a></h1>
 <p>zerobinpaste is a simple CLI tool (analogous to pastebinit or wgetpaste) to use
 with files or shell redirection in terminal or simple scripts.</p>
 <p>Example use-cases might look like:</p>
-<div class="highlight-python"><pre>% zerobinpaste README.rst
+<div class="highlight-python"><div class="highlight"><pre>% zerobinpaste README.rst
 http://some.0bin.site/paste/0cc3d8a8...
 
 % grep error /var/log/syslog | zerobinpaste
@@ -69,7 +67,8 @@ options.rst http://some.0bin.site/paste/921b2768...
 ...
 
 
-% ps axlf | zerobinpaste | mail -s "Process tree on $(date)" root</pre>
+% ps axlf | zerobinpaste | mail -s &quot;Process tree on $(date)&quot; root
+</pre></div>
 </div>
 <p>Produced links can then be copy-pasted to some IRC channel or used in whatever
 other conceivable way.</p>
@@ -80,7 +79,7 @@ never sent to server or anywhere but the tool&#8217;s stdout stream (e.g. termin
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>At least the pastebin site (main URL where you&#8217;d paste stuff with the browser)
 has to be specified for the tool to use either via -u (&#8211;url) option (can be
-simplified with shell alias - e.g. <tt class="docutils literal"><span class="pre">alias</span> <span class="pre">zp='zerobinpaste</span> <span class="pre">-u</span> <span class="pre">http://some.0bin.site</span></tt>)
+simplified with shell alias - e.g. <code class="docutils literal"><span class="pre">alias</span> <span class="pre">zp='zerobinpaste</span> <span class="pre">-u</span> <span class="pre">http://some.0bin.site</span></code>)
 or in the &#8220;~/.zerobinpasterc&#8221; configuration file (json format).</p>
 <div class="line-block">
 <div class="line">Non-option arguments are interpreted as files to upload/paste contents of.</div>
@@ -106,7 +105,7 @@ dependencies, if necessary, and &#8220;node&#8221; binary is required for produc
 run.</p>
 <p>Use &#8220;make&#8221; in &#8220;tools&#8221; path to produce non-minified runnable &#8220;zerobinpaste&#8221;
 script there.</p>
-<p><tt class="docutils literal"><span class="pre">make</span> <span class="pre">ugly</span></tt> command can be used instead of <tt class="docutils literal"><span class="pre">make</span></tt> to create &#8220;minified&#8221;
+<p><code class="docutils literal"><span class="pre">make</span> <span class="pre">ugly</span></code> command can be used instead of <code class="docutils literal"><span class="pre">make</span></code> to create &#8220;minified&#8221;
 version (using/installing <a class="reference external" href="https://github.com/mishoo/UglifyJS">uglifyjs</a>, about 25% smaller in size).</p>
 <p>Resulting &#8220;zerobinpaste&#8221; script requires only node.js (&#8220;node&#8221; binary) installed
 to run and can be placed in any of the PATH dirs (e.g. &#8220;~/bin&#8221;,
@@ -130,7 +129,7 @@ well.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -148,12 +147,14 @@ well.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../fr/intro.html"
                         title="next chapter">Introduction</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/en/zerobinpaste_tool.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/en/zerobinpaste_tool.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -170,7 +171,7 @@ well.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -182,12 +183,12 @@ well.</p>
         <li class="right" >
           <a href="options.html" title="Options"
              >previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

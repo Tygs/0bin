@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -10,7 +8,7 @@
     
     <title>Easiest installation &mdash; 0bin 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -29,8 +27,8 @@
     <link rel="next" title="Apache setup" href="apache_install.html" />
     <link rel="prev" title="Introduction" href="intro.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,14 +40,14 @@
         <li class="right" >
           <a href="intro.html" title="Introduction"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="easiest-installation">
 <h1>Easiest installation<a class="headerlink" href="#easiest-installation" title="Permalink to this headline">¶</a></h1>
@@ -59,14 +57,15 @@ and <a class="reference internal" href="nginx_install.html"><em>Nginx</em></a> s
 <div class="section" id="seconds-setup-if-you-know-python-already">
 <h2>10 seconds setup (if you know Python already)<a class="headerlink" href="#seconds-setup-if-you-know-python-already" title="Permalink to this headline">¶</a></h2>
 <p>Just type:</p>
-<div class="highlight-python"><pre>pip install zerobin
-zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin</pre>
+<div class="highlight-python"><div class="highlight"><pre>pip install zerobin
+zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin
+</pre></div>
 </div>
 </div>
 <div class="section" id="seconds-setup-for-anybody">
 <h2>30 seconds setup (for anybody)<a class="headerlink" href="#seconds-setup-for-anybody" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p class="first">Make sure you have Python 2.6 or 2.7 (<cite>python &#8211;version</cite>)</p>
+<li><p class="first">Make sure you have Python 2.7 or 3.4+ (<cite>python &#8211;version</cite>)</p>
 </li>
 <li><p class="first">Download the last <a class="reference external" href="https://github.com/sametmax/0bin/zipball/master">zip of the source code</a></p>
 </li>
@@ -75,12 +74,14 @@ zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin</pre>
 <li><p class="first">Go to the extracted files.</p>
 </li>
 <li><p class="first">Run with the admin rights:</p>
-<div class="highlight-python"><pre>python zerobin.py --host 0.0.0.0 --port 80 --compressed-static</pre>
+<div class="highlight-python"><div class="highlight"><pre>python zerobin.py --host 0.0.0.0 --port 80 --compressed-static
+</pre></div>
 </div>
 </li>
 </ul>
 <p>On ubuntu, this is a one liner:</p>
-<div class="highlight-python"><pre>wget stuff &amp;&amp; unzip zerobin.zip &amp;&amp; cd zerobin &amp;&amp; sudo python zerobin.py --host 0.0.0.0 --port 80 --compressed-static</pre>
+<div class="highlight-python"><div class="highlight"><pre>wget stuff &amp;&amp; unzip zerobin.zip &amp;&amp; cd zerobin &amp;&amp; sudo python zerobin.py --host 0.0.0.0 --port 80 --compressed-static
+</pre></div>
 </div>
 <p>Check out for more <a class="reference internal" href="options.html"><em>configuration options</em></a>.</p>
 </div>
@@ -89,7 +90,8 @@ zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin</pre>
 <p>0bin doesn&#8217;t come with something built in for this. You have several solutions.</p>
 <p><em>For a small website:</em></p>
 <p>Just make it a shell background process. E.G in GNU/Linux:</p>
-<div class="highlight-python"><pre>nohup python zerobin.py --host 0.0.0.0 --port 80 --compressed-static &amp;</pre>
+<div class="highlight-python"><div class="highlight"><pre>nohup python zerobin.py --host 0.0.0.0 --port 80 --compressed-static &amp;
+</pre></div>
 </div>
 <p>Or run it in a screen.</p>
 <p><em>For a big Website:</em></p>
@@ -101,7 +103,8 @@ zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin</pre>
 <p class="first admonition-title">Note</p>
 <p>You can even use zerobin on your private local network from your laptop.</p>
 <p>Make sure you firewall won&#8217;t block the port, and run:</p>
-<div class="highlight-python"><pre>python zerobin.py --host 0.0.0.0 --port 8000</pre>
+<div class="highlight-python"><div class="highlight"><pre>python zerobin.py --host 0.0.0.0 --port 8000
+</pre></div>
 </div>
 <p>0bin will now be accessible from <a class="reference external" href="http://your.local.ip.address:8000">http://your.local.ip.address:8000</a>.</p>
 <p class="last">This can be very cool way to share code in a companie or during a code sprint.</p>
@@ -113,7 +116,7 @@ zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin</pre>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -131,12 +134,14 @@ zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin</pre>
   <h4>Next topic</h4>
   <p class="topless"><a href="apache_install.html"
                         title="next chapter">Apache setup</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/en/easy_install.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/en/easy_install.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -153,7 +158,7 @@ zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin</pre>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -165,12 +170,12 @@ zerobin --host 0.0.0.0 --port 80 --compressed-static # as admin</pre>
         <li class="right" >
           <a href="intro.html" title="Introduction"
              >previous</a> |</li>
-        <li><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>
