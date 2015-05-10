@@ -629,6 +629,7 @@
       function (content) {
 
         /* Make URL clickable automatically */
+        content = content.replace(/</g, '&lt;');
         content = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>');
 
         /* Decrypted content goes back to initial container*/
