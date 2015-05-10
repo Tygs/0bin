@@ -628,8 +628,11 @@
       /* When done */
       function (content) {
 
+        /* Make URL clickable automatically */
+        content = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>');
+
         /* Decrypted content goes back to initial container*/
-        $('#paste-content').text(content);
+        $('#paste-content').html(content);
 
         if (content.indexOf('data:image') == 0) {
           // Display Image
