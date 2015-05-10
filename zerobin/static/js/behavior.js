@@ -600,7 +600,7 @@
             e.preventDefault();
             if (confirm("This picture is unique to your paste so you can identify" +
               " it quickly. \n\n Do you want to know more about this?")) {
-              window.open("http://is.gd/IJaMRG", "_blank");
+              window.open("https://github.com/sametmax/VizHash.js", "_blank");
             }
           }).prependTo('.lnk-option').append(vhash.canvas);
         }
@@ -890,11 +890,8 @@
     });
 
     /* Send the paste by email */
-    $('#email-link').click(function() {
-    	zerobin.getTinyURL(window.location.toString(), function(tinyurl) {
-    		document.location.href= 'mailto:friend@example.com?body=' + tinyurl;
-    	});
-    	return false;
+    $('#email-link').click(function(e) {
+        e.target.href = 'mailto:friend@example.com?body=' + window.location.toString();
     });
 
 
