@@ -84,4 +84,4 @@
 </div>
 
 
-%rebase base settings=settings, pastes_count=pastes_count
+% rebase("base", settings=settings, pastes_count=pastes_count)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# vim: ai ts=4 sts=4 et sw=4
+# coding: utf-8
+
+from __future__ import unicode_literals, absolute_import
 
 
 ######## NOT SETTINGS, JUST BOILER PLATE ##############

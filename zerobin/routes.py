@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# vim: ai ts=4 sts=4 et sw=4
+# coding: utf-8
+
+from __future__ import unicode_literals, absolute_import, print_function
 
 """
     Main script including controller, rooting, dependency management, and
@@ -9,21 +10,30 @@
 
 import os
 import sys
-import thread
-import urlparse
+
+try:
+    import thread
+except ImportError:
+    import _thread as thread
+
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
 from datetime import datetime, timedelta
 
 # add project dir and libs dir to the PYTHON PATH to ensure they are
 # importable
-from utils import settings, SettingsValidationError
+from zerobin.utils import (settings, SettingsValidationError,
+                           drop_privileges, dmerge)
 
 import bottle
 from bottle import (Bottle, run, static_file, view, request)
 
 import clize
 
-from paste import Paste
-from utils import drop_privileges, dmerge
+from zerobin.paste import Paste
 
 
 app = Bottle()
@@ -51,49 +61,46 @@ def create_paste():
     try:
         body = urlparse.parse_qs(request.body.read(int(settings.MAX_SIZE * 1.1)))
     except ValueError:
-        return {'status': 'error',
-                'message': u"Wrong data payload."}
+        return {'status': 'error', 'message': "Wrong data payload."}
 
     try:
-        content = unicode(''.join(body['content']), 'utf8')
+
+        content = "".join(x.decode('utf8') for x in body[b'content'])
     except (UnicodeDecodeError, KeyError):
         return {'status': 'error',
-                'message': u"Encoding error: the paste couldn't be saved."}
+                'message': "Encoding error: the paste couldn't be saved."}
 
     if '{"iv":' not in content:  # reject silently non encrypted content
-        return {'status': 'error',
-                'message': u"Wrong data payload."}
+        return {'status': 'error', 'message': "Wrong data payload."}
 
-    if content:
-        # check size of the paste. if more than settings return error
-        # without saving paste.  prevent from unusual use of the
-        # system.  need to be improved
-        if len(content) < settings.MAX_SIZE:
-            expiration = body.get('expiration', [u'burn_after_reading'])[0]
-            paste = Paste(expiration=expiration, content=content,
-                          uuid_length=settings.PASTE_ID_LENGTH)
-            paste.save()
+    # check size of the paste. if more than settings return error
+    # without saving paste.  prevent from unusual use of the
+    # system.  need to be improved
+    if 0 < len(content) < settings.MAX_SIZE:
+        expiration = body.get(b'expiration', ['burn_after_reading'])[0]
+        paste = Paste(expiration=expiration.decode('utf8'), content=content,
+                      uuid_length=settings.PASTE_ID_LENGTH)
+        paste.save()
 
-            # display counter
-            if settings.DISPLAY_COUNTER:
+        # display counter
+        if settings.DISPLAY_COUNTER:
 
-                #increment paste counter
-                paste.increment_counter()
+            #increment paste counter
+            paste.increment_counter()
 
-                # if refresh time elapsed pick up new counter value
-                now = datetime.now()
-                timeout = (GLOBAL_CONTEXT['refresh_counter']
-                           + timedelta(seconds=settings.REFRESH_COUNTER))
-                if timeout < now:
-                    GLOBAL_CONTEXT['pastes_count'] = Paste.get_pastes_count()
-                    GLOBAL_CONTEXT['refresh_counter'] = now
+            # if refresh time elapsed pick up new counter value
+            now = datetime.now()
+            timeout = (GLOBAL_CONTEXT['refresh_counter']
+                       + timedelta(seconds=settings.REFRESH_COUNTER))
+            if timeout < now:
+                GLOBAL_CONTEXT['pastes_count'] = Paste.get_pastes_count()
+                GLOBAL_CONTEXT['refresh_counter'] = now
 
-            return {'status': 'ok',
-                    'paste': paste.uuid}
+        return {'status': 'ok', 'paste': paste.uuid}
 
     return {'status': 'error',
-            'message': u"Serveur error: the paste couldn't be saved. "
-                       u"Please try later."}
+            'message': "Serveur error: the paste couldn't be saved. "
+                       "Please try later."}
 
 
 @app.route('/paste/:paste_id')
@@ -105,7 +112,7 @@ def display_paste(paste_id):
     try:
         paste = Paste.load(paste_id)
         # Delete the paste if it expired:
-        if 'burn_after_reading' in str(paste.expiration):
+        if not isinstance(paste.expiration, datetime):
             # burn_after_reading contains the paste creation date
             # if this read appends 10 seconds after the creation date
             # we don't delete the paste because it means it's the redirection
@@ -179,7 +186,7 @@ def runserver(host='', port='', debug=None, user='', group='',
               version=False, paste_id_length=None, server="cherrypy"):
 
     if version:
-        print '0bin V%s' % settings.VERSION
+        print('0bin V%s' % settings.VERSION)
         sys.exit(0)
 
     settings.HOST = host or settings.HOST
@@ -191,7 +198,7 @@ def runserver(host='', port='', debug=None, user='', group='',
     try:
         _, app = get_app(debug, settings_file, compressed_static, settings=settings)
     except SettingsValidationError as err:
-        print >>sys.stderr, 'Configuration error: %s' % err.message
+        print('Configuration error: %s' % err.message, file=sys.stderr)
         sys.exit(1)
 
     thread.start_new_thread(drop_privileges, (settings.USER, settings.GROUP))

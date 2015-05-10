@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# vim: ai ts=4 sts=4 et sw=4
+# coding: utf-8
 
-from default_settings import VERSION
+from __future__ import absolute_import
+
+from zerobin.default_settings import VERSION
 
 __version__ = VERSION

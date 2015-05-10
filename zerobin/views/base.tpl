@@ -113,8 +113,7 @@
         </div><!--/span-->
 
         <div id='main' class="span10">
-
-           %include
+           {{!base}}
 
         </div><!--/span-->
 

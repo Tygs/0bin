@@ -4,7 +4,7 @@
 
   <hr width="90%">
 
-  <dl>  
+  <dl>
     <dt>How does 0bin work?</dt>
     <dd>
         <p>A random key is generated and used to encrypt the paste, thanks to
@@ -41,7 +41,7 @@
     <dd>
       <p>Read above.</p>
       <p>0bin is not built, and does not aim, to protect user data - but rather the host.
-	 If any user data is compromised, 0bin still provides the host with 
+	 If any user data is compromised, 0bin still provides the host with
 	 plausible deniability (as they ignore the content of the pastes).</p>
       <p>It would make no sense if the host was to compromise the encryption process
          to read the data; in that case, they wouldn't have
@@ -69,5 +69,4 @@
 </div>
 
 
-
-%rebase base settings=settings, pastes_count=pastes_count
+% rebase("base", settings=settings, pastes_count=pastes_count)

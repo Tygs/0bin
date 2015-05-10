@@ -1,12 +1,15 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
+from __future__ import unicode_literals, absolute_import
 
 import os
 import hashlib
-import locale
+import base64
 
 from datetime import datetime, timedelta
 
-from utils import settings
+from zerobin.utils import settings, to_ascii, as_unicode, safe_open as open
+
 
 
 class Paste(object):
@@ -18,9 +21,9 @@ class Paste(object):
     DIR_CACHE = set()
 
     DURATIONS = {
-        u'1_day': 24 * 3600,
-        u'1_month': 30 * 24 * 3600,
-        u'never': 365 * 24 * 3600 * 100,
+        '1_day': 24 * 3600,
+        '1_month': 30 * 24 * 3600,
+        'never': 365 * 24 * 3600 * 100,
     }
 
 
@@ -28,37 +31,33 @@ class Paste(object):
                  content=None, expiration=None):
 
         self.content = content
-        self.expiration = expiration
-
-        if isinstance(self.content, unicode):
-            self.content = self.content.encode('utf8')
-
         self.expiration = self.get_expiration(expiration)
 
         if not uuid:
-            uuid = hashlib.sha1(self.content)\
-                .digest().encode('base64').rstrip('=\n').replace('/', '-')
-            if uuid_length: uuid = uuid[:uuid_length]
+            # generate the uuid from the decoded content by hashing it
+            # and turning it into base64, with some caracters strippped
+            uuid = hashlib.sha1(self.content.encode('utf8'))
+            uuid = base64.b64encode(uuid.digest()).decode()
+            uuid = uuid.rstrip('=\n').replace('/', '-')
+
+            if uuid_length:
+                uuid = uuid[:uuid_length]
         self.uuid = uuid
 
 
     def get_expiration(self, expiration):
         """
-            Return a tuple with the date at which the Paste will expire
+            Return a date at which the Paste will expire
             or if it should be destroyed after first reading.
 
             Do not modify the value if it's already a date object or
             if it's burn_after_reading
         """
 
-        if (isinstance(expiration, datetime) or
-            'burn_after_reading' in str(expiration)):
-            return expiration
-
         try:
             return datetime.now() + timedelta(seconds=self.DURATIONS[expiration])
         except KeyError:
-            return u'burn_after_reading'
+            return expiration
 
 
     @classmethod
@@ -93,17 +92,17 @@ class Paste(object):
             given file.
         """
         try:
-            paste = open(path)
-            uuid = os.path.basename(path)
-            expiration = paste.next().strip()
-            content = paste.next().strip()
-            if "burn_after_reading" not in str(expiration):
-                expiration = datetime.strptime(expiration, '%Y-%m-%d %H:%M:%S.%f')
+            with open(path) as paste:
+                uuid = os.path.basename(path)
+                expiration = next(paste).strip()
+                content = next(paste).strip()
+                if "burn_after_reading" not in expiration:
+                    expiration = datetime.strptime(expiration, '%Y-%m-%d %H:%M:%S.%f')
 
         except StopIteration:
-            raise TypeError(u'File %s is malformed' % path)
+            raise TypeError(to_ascii('File %s is malformed' % path))
         except (IOError, OSError):
-            raise ValueError(u'Can not open paste from file %s' % path)
+            raise ValueError(to_ascii('Can not open paste from file %s' % path))
 
         return Paste(uuid=uuid, expiration=expiration, content=content)
 
@@ -119,54 +118,38 @@ class Paste(object):
 
     def increment_counter(self):
         """
-            Increment pastes counter
+            Increment pastes counter.
+
+            It uses a lock file to prevent multi access to the file.
         """
-
-        # simple counter incrementation
-        # using lock file to prevent multi access to the file
-        # could be improved.
-
-
         path = settings.PASTE_FILES_ROOT
         counter_file = os.path.join(path, 'counter')
         lock_file = os.path.join(path, 'counter.lock')
 
+        # TODO : change lock implementation to use the lockfile lib
+        # https://pypi.python.org/pypi/lockfile
+        # The current lock implementation sucks. It skips some increment, and
+        # still allows race conditions.
         if not os.path.isfile(lock_file):
             try:
-                #make lock file
-                flock = open(lock_file, "w")
-                flock.write('lock')
-                flock.close()
+                # Aquire lock file
+                with open(lock_file, "w") as flock:
+                    flock.write('lock')
 
-                # init counter (first time)
-                if not os.path.isfile(counter_file):
-                    fcounter = open(counter_file, "w")
-                    fcounter.write('1')
-                    fcounter.close()
-
-                # get counter value
-                fcounter = open(counter_file, "r")
-                counter_value = fcounter.read(50)
-                fcounter.close()
-
+                # Read the value from the counter
                 try:
-                    counter_value = long(counter_value) + 1
-                except ValueError:
+                    with open(counter_file, "r") as fcounter:
+                        counter_value = int(fcounter.read(50)) + 1
+                except (ValueError, IOError, OSError):
                     counter_value = 1
 
                 # write new value to counter
-                fcounter = open(counter_file, "w")
-                fcounter.write(str(counter_value))
-                fcounter.close()
+                with open(counter_file, "w") as fcounter:
+                    fcounter.write(str(counter_value))
 
-                #remove lock file
-                os.remove(lock_file)
             finally:
-                if os.path.isfile(lock_file):
-                    #remove lock file
-                    os.remove(lock_file)
-
-
+                # remove lock file
+                os.remove(lock_file)
 
     def save(self):
         """
@@ -198,12 +181,15 @@ class Paste(object):
         # add a timestamp to burn after reading to allow
         # a quick period of time where you can redirect to the page without
         # deleting the paste
-        if self.expiration == "burn_after_reading":
-            self.expiration = self.expiration + '#%s' % datetime.now()
+        if "burn_after_reading" == self.expiration:
+            expiration = self.expiration + '#%s' % datetime.now()  # TODO: use UTC dates
+            expiration = self.expiration
+        else:
+            expiration = as_unicode(self.expiration)
 
         # write the paste
         with open(self.path, 'w') as f:
-            f.write(unicode(self.expiration) + '\n')
+            f.write(expiration + '\n')
             f.write(self.content + '\n')
 
         return self
@@ -216,17 +202,13 @@ class Paste(object):
             (must have option DISPLAY_COUNTER enabled for the pastes to be
              be counted)
         """
-        try:
-            locale.setlocale(locale.LC_ALL, 'en_US')
-        except:
-            pass
         counter_file = os.path.join(settings.PASTE_FILES_ROOT, 'counter')
         try:
-            count = long(open(counter_file).read(50))
+            count = int(open(counter_file).read(50))
         except (IOError, OSError):
             count = 0
 
-        return locale.format("%d", long(count), grouping=True)
+        return '{0:,}'.format(count)
 
 
     @property
