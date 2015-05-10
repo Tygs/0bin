@@ -8,7 +8,7 @@
 
 0bin allows anybody to host a pastebin while welcoming any type of content to
 be pasted in it. The idea is that one can (probably...) not be legally entitled
-to `moderate the pastebin content`_ as he/she has no way to decrypt it.
+to `moderate the pastebin content`_ as they have no way to decrypt it.
 
 It's an Python implementation of the
 `zerobin project`_ under the `WTF licence`_. It's easy to
