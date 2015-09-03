@@ -31,6 +31,7 @@ setup(
         'cherrypy',
         'bottle',
         'clize',
+        'lockfile',
     ],
     include_package_data=True,
     dependency_links=[
