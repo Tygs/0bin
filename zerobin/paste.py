@@ -5,6 +5,7 @@ from __future__ import unicode_literals, absolute_import
 import os
 import hashlib
 import base64
+import lockfile
 
 from datetime import datetime, timedelta
 
@@ -124,18 +125,9 @@ class Paste(object):
         """
         path = settings.PASTE_FILES_ROOT
         counter_file = os.path.join(path, 'counter')
-        lock_file = os.path.join(path, 'counter.lock')
+        lock = lockfile.LockFile(counter_file)
 
-        # TODO : change lock implementation to use the lockfile lib
-        # https://pypi.python.org/pypi/lockfile
-        # The current lock implementation sucks. It skips some increment, and
-        # still allows race conditions.
-        if not os.path.isfile(lock_file):
-            try:
-                # Aquire lock file
-                with open(lock_file, "w") as flock:
-                    flock.write('lock')
-
+        with lock:
                 # Read the value from the counter
                 try:
                     with open(counter_file, "r") as fcounter:
@@ -147,9 +139,6 @@ class Paste(object):
                 with open(counter_file, "w") as fcounter:
                     fcounter.write(str(counter_value))
 
-            finally:
-                # remove lock file
-                os.remove(lock_file)
 
     def save(self):
         """
