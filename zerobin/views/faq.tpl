@@ -49,7 +49,7 @@
       <p><strong>However, if you want to ensure your data is not read in anyway, you should
 		 not use 0bin</strong>. Use <a href="http://www.cypherpunks.ca/otr/">OTR</a> for chatting,
 		 <a href="https://gnupg.org/">GnuPG</a> for encrypted & verified data sharing, with <a href="https://www.enigmail.net/">EnigMail</a>
-		 for emails and <a href="http://www.truecrypt.org/">TrueCrypt</a> for storage.</p>
+		 for emails.</p>
       <p>It would be unlikely for those softwares to fail you. Errors will nearly always come from your side -  you ought to have a perfect <a href="https://en.wikipedia.org/wiki/Operations_security">operations security</a>
 	 if you do not want your data to be leaked. Remember to use your common sense.</p>
     </dd>
