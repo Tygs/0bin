@@ -1,4 +1,8 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 from zerobin.paste import Paste
+from sigtools.modifiers import annotate, autokwoargs
 from clize import run
 import re
 
@@ -16,17 +20,18 @@ def unpack_paste(paste):
         return try_url.group('paste_id')
     return paste
 
-
-def remove_paste(*pastes, quiet:'q'=False):
+@annotate(quiet='q')
+@autokwoargs
+def remove_paste(quiet=False, *pastes):
     """
     Remove pastes, given its ID or its URL
 
-    pastes: List of pastes, given by ID or URL
-
     quiet: Don't print anything
+
+    pastes: List of pastes, given by ID or URL
     """
 
-    for paste_uuid in map(unpack_paste, paste_list):
+    for paste_uuid in map(unpack_paste, pastes):
         try:
             Paste.load(paste_uuid).delete()
 
