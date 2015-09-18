@@ -47,8 +47,7 @@ setup(
     ],
     entry_points = {
         'console_scripts': [
-            'zerobin = zerobin.routes:main',
-            'remove_paste = zerobin.remove_paste:main',
+            'zerobin = zerobin.cmd:main',
        ]
     }
 
