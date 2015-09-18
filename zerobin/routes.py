@@ -4,8 +4,7 @@
 from __future__ import unicode_literals, absolute_import, print_function
 
 """
-    Main script including controller, rooting, dependency management, and
-    server run.
+    Script including controller, rooting, and dependency management.
 """
 
 import os
@@ -30,8 +29,6 @@ from zerobin.utils import (settings, SettingsValidationError,
 
 import bottle
 from bottle import (Bottle, run, static_file, view, request)
-
-import clize
 
 from zerobin.paste import Paste
 
@@ -178,37 +175,3 @@ def get_app(debug=None, settings_file='',
         bottle.debug(True)
 
     return settings, app
-
-
-@clize.clize(coerce={'debug': bool, 'compressed_static': bool})
-def runserver(host='', port='', debug=None, user='', group='',
-              settings_file='', compressed_static=None,
-              version=False, paste_id_length=None, server="cherrypy"):
-
-    if version:
-        print('0bin V%s' % settings.VERSION)
-        sys.exit(0)
-
-    settings.HOST = host or settings.HOST
-    settings.PORT = port or settings.PORT
-    settings.USER = user or settings.USER
-    settings.GROUP = group or settings.GROUP
-    settings.PASTE_ID_LENGTH = paste_id_length or settings.PASTE_ID_LENGTH
-
-    try:
-        _, app = get_app(debug, settings_file, compressed_static, settings=settings)
-    except SettingsValidationError as err:
-        print('Configuration error: %s' % err.message, file=sys.stderr)
-        sys.exit(1)
-
-    thread.start_new_thread(drop_privileges, (settings.USER, settings.GROUP))
-
-    if settings.DEBUG:
-        run(app, host=settings.HOST, port=settings.PORT, reloader=True,
-            server="cherrypy")
-    else:
-        run(app, host=settings.HOST, port=settings.PORT, server="cherrypy")
-
-
-def main():
-    clize.run(runserver)
