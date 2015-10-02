@@ -22,7 +22,7 @@
 <div class="well paste-form">
 <form action="/" method="get" accept-charset="utf-8">
 <p class="lnk-option">
-  <a id="clip-button" href="#">Copy To Clipboard</a> |
+  <a id="clip-button" data-clipboard-target="#paste-content" href="#">Copy To Clipboard</a> |
   <a id="short-url" href="#">Get short url</a> |
   <a id="email-link" href="#">Email this</a>
 
