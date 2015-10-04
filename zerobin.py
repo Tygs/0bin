@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from zerobin.routes import main
+from zerobin.cmd import main
 
 main()
