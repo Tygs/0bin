@@ -541,6 +541,8 @@ class FileSession(Session):
         while not checker.expired():
             try:
                 self.lock = lockfile.LockFile(path)
+            except AttributeError:
+                self.lock = lockfile.FileLock(path)
             except lockfile.LockError:
                 time.sleep(0.1)
             else:
