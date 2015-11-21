@@ -429,6 +429,11 @@
     upload: function (files) {
       var current_file = files[0];
       var reader = new FileReader();
+      var updateContentData = function(readerEvent) {
+        $('[data-generated-content]').remove();
+        $('#content').val(readerEvent.target.result).trigger('change');
+      }
+
       if (current_file.type.indexOf('image') == 0) {
         reader.onload = function (event) {
             var image = new Image();
@@ -462,47 +467,53 @@
               var ctx = canvas.getContext("2d");
               ctx.drawImage(this, 0, 0, imageWidth, imageHeight);
 
-              var paste = canvas.toDataURL(current_file.type);
-              $('#content').val(paste).trigger('change');
-              $('#content').hide();
-              $(image).css('max-width', '742px');
-  			  $('#content').after(image);
+              $(image).css('max-width', '742px').attr('data-generated-content', true);
+              updateContentData(event);
+              $('#content').hide().after(image);
             }
           }
         reader.readAsDataURL(current_file);
       } else if (current_file.type.indexOf('video/') == 0) {
         reader.onload = function (event) {
-              var video = $('<video controls/>').attr('src', event.target.result).css('max-width', '742px');
-              $('#content').val(event.target.result).trigger('change');
+              var video = $('<video controls/>');
+              video.attr('src', event.target.result);
+              video.css('max-width', '742px');
+              video.attr('data-generated-content', true);
+
+              updateContentData(event);
               $('#content').hide().after(video);
         }
         reader.readAsDataURL(current_file);
       } else if (current_file.type.indexOf('audio/') == 0) {
         reader.onload = function (event) {
-              var audio = $('<audio controls/>').attr('src', event.target.result);
-              $('#content').val(event.target.result).trigger('change');
+              var audio = $('<audio controls/>');
+              audio.attr('src', event.target.result);
+              audio.attr('data-generated-content', true);
+
+              updateContentData(event);
               $('#content').hide().after(audio);
         }
         reader.readAsDataURL(current_file);
       } else {
         reader.onload = function (event) {
-          $('#content').val(event.target.result).trigger('change');
-
           if (/[\x00\x08\x0B\x0C\x0E-\x1F]/.test(event.target.result)) {
             reader.onload = function (binaryEvent) {
-              $('#content').val(binaryEvent.target.result).trigger('change');
-
               var binaryIndicator = $('<a />').attr('class', 'btn');
               binaryIndicator.text(' This type of file cannot be previewed - click here to download it instead');
               binaryIndicator.attr('href', binaryEvent.target.result)
               binaryIndicator.attr('target', '_blank');
+              binaryIndicator.attr('download', current_file.name);
+              binaryIndicator.attr('data-generated-content', true);
               $('<span />').attr('class', 'icon-info-sign').prependTo(binaryIndicator);
+
+              updateContentData(binaryEvent);
               $('#content').hide().after(binaryIndicator);
             }
 
             reader.readAsDataURL(current_file);
           } else {
-            $('#content').val(event.target.result).trigger('change');
+            updateContentData(event);
+            $('#content').show();
           }
         };
         reader.readAsText(current_file);
