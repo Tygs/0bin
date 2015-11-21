@@ -657,9 +657,10 @@
       zerobin.decrypt(key, content,
 
       /* On error*/
-      function () {
+      function (err) {
         bar.container.hide();
         zerobin.message('error', 'Could not decrypt data (Wrong key ?)', 'Error');
+        console.error(err.stack || err);
       },
 
       /* Update progress bar */
