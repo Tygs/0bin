@@ -172,7 +172,6 @@ class Paste(object):
         # deleting the paste
         if "burn_after_reading" == self.expiration:
             expiration = self.expiration + '#%s' % datetime.now()  # TODO: use UTC dates
-            expiration = self.expiration
         else:
             expiration = as_unicode(self.expiration)
 
