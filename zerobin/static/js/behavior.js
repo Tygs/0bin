@@ -1,4 +1,4 @@
-/*global sjcl:true, jQuery:true, $:true, lzw:true, zerobin:true, ZeroClipboard:true, vizhash:true, prettyPrint:true, confirm:true */
+/*global sjcl:true, jQuery:true, $:true, lzw:true, zerobin:true, vizhash:true, prettyPrint:true, confirm:true */
 ;
 (function () {
   "use strict";
@@ -582,7 +582,7 @@
     /**
     DECRYPTION:
     On the display paste page, decrypt and decompress the paste content,
-    add syntax coloration then setup the copy to clipboard button.
+    add syntax coloration.
     Also calculate and set the paste visual hash.
 */
     var content = $('#paste-content').text().trim();
@@ -654,49 +654,16 @@
         /* Add a continuation to let the UI redraw */
         setTimeout(function () {
 
-          /* Setup flash clipboard button */
-          ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf');
-
-          var clip = new ZeroClipboard.Client();
-
-          // Callback to reposition the clibpboad flash animation overlay
-          var reposition = function () {
-            clip.reposition();
-          };
-
-          clip.addEventListener('mouseup', function () {
-            $('#clip-button').text('Copying paste...');
-            clip.setText(zerobin.getPasteContent());
-          });
-          clip.addEventListener('complete', function () {
-            $('#clip-button').text('Copy to clipboard');
-            zerobin.message('info', 'The paste is now in your clipboard', '',
-            true, reposition);
-          });
-          clip.glue('clip-button');
-
-          window.onresize = reposition;
-
-
           /* Setup link to get the paste short url*/
           $('#short-url').click(function (e) {
-            e.preventDefault();
             $('#short-url').text('Loading short url...');
             zerobin.getTinyURL(window.location.toString(), function (tinyurl) {
-              clip.setText(tinyurl);
               $('#copy-success').hide();
               zerobin.message('success',
                 '<a href="' + tinyurl + '">' + tinyurl + '</a>',
                 'Short url', true, reposition);
               $('#short-url').text('Get short url');
             });
-          });
-
-          /* Remap the message close handler to include the clipboard
-           flash reposition */
-          $(".close").die().live('click', function (e) {
-            e.preventDefault();
-            $(this).parent().fadeOut(reposition);
           });
 
           /** Syntaxic coloration */
@@ -710,7 +677,7 @@
                 "The paste did not seem to be code, so it " +
                 "was not colorized. " +
                 "<a id='force-coloration' href='#'>Force coloration</a>",
-                '', false, reposition);
+                '', false, null);
             }
           }
 
@@ -894,6 +861,7 @@
         e.target.href = 'mailto:friend@example.com?body=' + window.location.toString();
     });
 
+    new Clipboard("#clip-button");
 
   }); /* End of "document ready" jquery callback */
 
