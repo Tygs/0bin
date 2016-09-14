@@ -2,7 +2,7 @@
 Introduction
 ============
 
-0bin permet à tout à chacun d'héberge un pastebin tout en acceptant que n'importe
+0bin permet à tout à chacun d'héberger un pastebin tout en acceptant que n'importe
 quel type de contenu y soit posté. L'idée est qu'une personne ne peut (probablement...)
 pas être tenue de `modérer le contenu du pastebin`_ si elle n'a aucun moyen
 de le déchiffrer.
@@ -13,39 +13,39 @@ si on ne connait pas ce langage.
 Comment ça marche
 ====================
 
-A la création du paste:
+À la création du paste:
 
-- le navigateur génère une clé aléatoire;
-- le contenu est chiffré avec une clé en utilisat AES256;
-- le contenu chiffré est envoyé au serveur;
-- le navigateur reçoit l'URL du paste et ajoute la clé dans le hash (#) de l'URL
+- le navigateur génère une clé aléatoire ;
+- le contenu est chiffré avec une clé en utilisant AES256 ;
+- le contenu chiffré est envoyé au serveur ;
+- le navigateur reçoit l'URL du paste et ajoute la clé dans le hash (#) de l'URL.
 
-A la lecture du paste:
+À la lecture du paste:
 
-- le navigateur fait une requête GET avec l'URL du paste;
-- puisque la clé est das le hash, la clé ne fait pas partie de la requête;
-- le navigateur récupère le contenu chiffré et le déchiffre en utilisant la clé;
+- le navigateur fait une requête GET avec l'URL du paste ;
+- puisque la clé est dans le hash, la clé ne fait pas partie de la requête ;
+- le navigateur récupère le contenu chiffré et le déchiffre en utilisant la clé ;
 - le contenu est affiché en clair et le code coloré.
 
 Points clés:
 
-- la clé n'est jamais envoyé au serveur car elle est stocké dans le hash;
-- et donc la clé n'apparaitra pas dans les logs du serveur;
-- toutes les opérations, y compris la coloration syntaxique, se font côté client;
-- le serveur n'est rien d'autre d'un conteneur pour les données chiffrée.
+- la clé n'est jamais envoyée au serveur car elle est stockée dans le hash ;
+- et donc la clé n'apparaîtra pas dans les logs du serveur ;
+- toutes les opérations, y compris la coloration syntaxique, se font côté client ;
+- le serveur n'est rien d'autre qu'un conteneur pour les données chiffrées.
 
 Autres fonctionalités
 ======================
 
-- coloration syntaxique automatique (pas besoin de la spécifier);
-- expiration du pastebin: 1 jour, 1 mois, jamais;
-- autodesctruction: le paste est détruit à la première lecture;
-- clone d'un paste: pas d'édition possible, mais on peut dupliquer un paste;
-- upload du code: si le fichier est gros, on peut l'uploader d'un coup
-  plutôt qu'utiliser le copier/coller;
-- copier dans le presse papier tout le code en un click;
-- raccourcir l'url du paste en un click;
-- historique des ses propres pastes précédents;
+- coloration syntaxique automatique (pas besoin de la spécifier) ;
+- expiration du pastebin : 1 jour, 1 mois, jamais ;
+- autodesctruction : le paste est détruit à la première lecture ;
+- clone d'un paste : pas d'édition possible, mais on peut dupliquer un paste ;
+- upload du code : si le fichier est gros, on peut l'uploader d'un coup
+  plutôt qu'utiliser le copier/coller ;
+- copier dans le presse-papier tout le code en un clic ;
+- raccourcir l'url du paste en un clic ;
+- historique des ses propres pastes précédents ;
 - hash visuel du paste pour l'identifier facilement dans une liste.
 
 
@@ -67,9 +67,9 @@ Problèmes connus
 - 0bin utilise plusieurs fonctionalités HTML5/CSS3 qui ne sont pas
   encore largement supportées. Dans ce cas nous gérons la dégradation le plus
   gracieusement possible.
-- La fonction "copier dans le press/papier" est buggée sous Linux. C'est du
+- La fonction "copier dans le presse-papier" est buggée sous GNU/Linux. C'est du
   flash donc nous ne le réparerons pas. Il vaut mieux attendre le support
-  du presse papier via l'API HTML5.
+  du presse-papier via l'API HTML5.
 - La vérification de la limite de ta taille du paste n'est pas précise. c'est
   juste un filet de sécurité, donc nous pensons que ça suffira.
 - Quelques raccourcisseurs d'URL et d'autres services cassent la clé de
@@ -79,12 +79,12 @@ Problèmes connus
 Qu'est-ce que 0bin ne fait pas ?
 =================================
 
-- Limitation du nombre de requêtes: ce serait peu productif de le faire au
-  niveau de l'application alors que les serveurs Web le font tous de manière très
+- Limitation du nombre de requêtes : ça serait peu productif de le faire au
+  niveau de l'application alors que les serveurs web le font tous de manière très
   efficace.
-- La prévention de collision de hash: le ratio "occurence/conséquence"
+- La prévention de collision de hash : le ratio "occurence/conséquence"
   n'est pas suffisant_.
-- Commentaires: c'était prévu. Mais il y a beaucoup de contraintes associées,
+- Commentaires : c'était prévu. Mais il y a beaucoup de contraintes associées,
   nous avons donc choisi de nous concentrer sur les fonctions avec un meilleur
   rapport qualité/prix.
 

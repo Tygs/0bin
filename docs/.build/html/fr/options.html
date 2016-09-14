@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Options &mdash; 0bin 0.1 documentation</title>
+    <title>Options &#8212; 0bin 0.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
+    <link rel="top" title="0bin 0.5 documentation" href="../index.html" />
     <link rel="next" title="Outil en ligne de commande zerobinpaste" href="zerobinpaste_tool.html" />
     <link rel="prev" title="Personnaliser l’apparence" href="theming.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="theming.html" title="Personnaliser l’apparence"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -63,8 +63,8 @@ défaut présente dans le fichier zerobin/default_settings.py.</p>
 <p>L&#8217;hôte et le port sur lesquels écouter les requêtes entrantes. En général
 127.0.0.1 et 8000 pour écouter localement, ou 0.0.0.0 et 80 pour
 écouter les requêtes extérieures.</p>
-<p>Défaut: 127.0.0.1 et 8000</p>
-<p>Equivalent du fichier de configuration : HOST et PORT</p>
+<p>Défaut : 127.0.0.1 et 8000</p>
+<p>Équivalent du fichier de configuration : HOST et PORT</p>
 </div>
 <div class="section" id="debug">
 <h3>&#8211;debug<a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h3>
@@ -72,58 +72,58 @@ défaut présente dans le fichier zerobin/default_settings.py.</p>
 se passe mal à la place d&#8217;une page d&#8217;erreur 500.</p>
 <p>En mode debug, le serveur recharge aussi automatiquement tout fichier Python
 modifié.</p>
-<p>Défaut: False</p>
-<p>Equivalent du fichier de configuration : DEBUG</p>
+<p>Défaut : False</p>
+<p>Équivalent du fichier de configuration : DEBUG</p>
 </div>
 <div class="section" id="user-et-group">
 <span id="user-and-group-fr"></span><h3>&#8211;user et &#8211;group<a class="headerlink" href="#user-et-group" title="Permalink to this headline">¶</a></h3>
-<p>L&#8217;utilisateur et le group que le serveur essayera d&#8217;adopter après le démarrage.</p>
+<p>L&#8217;utilisateur et le groupe que le serveur essayera d&#8217;adopter après le démarrage.</p>
 <p>Utile quand on lance la commande avec les droits admin afin de pouvoir
 écouter sur le port 80, mais qu&#8217;on souhaite, pour des raisons de sécurité, que
-le processus n&#8217;est pas accès aux fichiers protégés du système.</p>
-<p>&#8211;group prend de &#8211;user si il n&#8217;est pas précisé.</p>
-<p>Défaut: Aucun</p>
-<p>Equivalent du fichier de configuration : USER et GROUP</p>
+le processus n&#8217;aie pas accès aux fichiers protégés du système.</p>
+<p>&#8211;group prend de &#8211;user s&#8217;il n&#8217;est pas précisé.</p>
+<p>Défaut : Aucun</p>
+<p>Équivalent du fichier de configuration : USER et GROUP</p>
 </div>
 <div class="section" id="settings-file">
 <h3>&#8211;settings-file<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h3>
 <p>Chemin vers le fichier de configuration, si vous souhaitez en utiliser un.</p>
-<p>Défaut: Aucun</p>
-<p>Equivalent du fichier de configuration : Aucun</p>
+<p>Défaut : Aucun</p>
+<p>Équivalent du fichier de configuration : Aucun</p>
 </div>
 <div class="section" id="compressed-static">
 <h3>&#8211;compressed-static<a class="headerlink" href="#compressed-static" title="Permalink to this headline">¶</a></h3>
-<p>Sert les versions minifiées fichiers statiques (css et js). A utiliser en
+<p>Sert les versions minifiées des fichiers statiques (css et js). À utiliser en
 production pour un site plus rapide.</p>
-<p>Défaut: False</p>
-<p>Equivalent du fichier de configuration : COMPRESSED_STATIC_FILES</p>
+<p>Défaut : False</p>
+<p>Équivalent du fichier de configuration : COMPRESSED_STATIC_FILES</p>
 </div>
 <div class="section" id="version-et-help">
 <h3>&#8211;version et &#8211;help<a class="headerlink" href="#version-et-help" title="Permalink to this headline">¶</a></h3>
-<p>Affiche l&#8217;aide ou la version de 0bin</p>
-<p>Défaut: Aucun</p>
-<p>Equivalent du fichier de configuration : Aucun</p>
+<p>Affiche l&#8217;aide ou la version de 0bin.</p>
+<p>Défaut : Aucun</p>
+<p>Équivalent du fichier de configuration : Aucun</p>
 </div>
 <div class="section" id="exemples">
 <h3>Exemples<a class="headerlink" href="#exemples" title="Permalink to this headline">¶</a></h3>
-<p>Production:</p>
-<div class="highlight-python"><div class="highlight"><pre>sudo zerobin --host 0.0.0.0 --port 80 --user foo --compressed-static
+<p>Production :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">zerobin</span> <span class="o">--</span><span class="n">host</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">--</span><span class="n">port</span> <span class="mi">80</span> <span class="o">--</span><span class="n">user</span> <span class="n">foo</span> <span class="o">--</span><span class="n">compressed</span><span class="o">-</span><span class="n">static</span>
 </pre></div>
 </div>
-<p>Développement:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">zerobin</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="n">serve</span><span class="o">-</span><span class="n">static</span>
+<p>Développement :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">zerobin</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="n">serve</span><span class="o">-</span><span class="n">static</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="fichier-de-configuration">
 <h2>Fichier de configuration<a class="headerlink" href="#fichier-de-configuration" title="Permalink to this headline">¶</a></h2>
-<p>Le fichier configuration doit être un fichier Python ordinnaire, généralement
-appelé settings.py. On l&#8217;utilise ainsi:</p>
-<div class="highlight-python"><div class="highlight"><pre>zerobin --settings-file &#39;/chemin/vers/settings.py&#39;
+<p>Le fichier configuration doit être un fichier Python ordinaire, généralement
+appelé settings.py. On l&#8217;utilise ainsi :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">zerobin</span> <span class="o">--</span><span class="n">settings</span><span class="o">-</span><span class="n">file</span> <span class="s1">&#39;/chemin/vers/settings.py&#39;</span>
 </pre></div>
 </div>
-<p>Toutes les autres options passées à la commandes auront priorité sur les options
+<p>Toutes les autres options passées via la ligne de commande auront priorité sur les options
 du fichier de configuration. Le fichier zerobin/default_settings.py peut servir
 d&#8217;exemple pour créer son propre fichier de configuration, il est largement commenté.</p>
 <div class="section" id="id1">
@@ -132,63 +132,63 @@ d&#8217;exemple pour créer son propre fichier de configuration, il est largemen
 se passe mal à la place d&#8217;une page d&#8217;erreur 500.</p>
 <p>En mode debug, le serveur recharge aussi automatiquement tout fichier Python
 modifié.</p>
-<p>Défaut: False</p>
-<p>Equivalent en ligne de commande : &#8211;debug</p>
+<p>Défaut : False</p>
+<p>Équivalent en ligne de commande : &#8211;debug</p>
 </div>
 <div class="section" id="static-files-root">
 <span id="static-root-fr"></span><h3>STATIC_FILES_ROOT<a class="headerlink" href="#static-files-root" title="Permalink to this headline">¶</a></h3>
 <p>Chemin absolu du dossier dans lequel 0bin va chercher les fichiers statiques
 (css, js et images).</p>
-<p>Défaut: dossier &#8220;static&#8221; dans le dossier &#8220;zerobin&#8221;</p>
-<p>Equivalent en ligne de commande : Aucun</p>
+<p>Défaut : dossier &#8220;static&#8221; dans le dossier &#8220;zerobin&#8221;</p>
+<p>Équivalent en ligne de commande : Aucun</p>
 </div>
 <div class="section" id="compressed-static-files">
 <h3>COMPRESSED_STATIC_FILES<a class="headerlink" href="#compressed-static-files" title="Permalink to this headline">¶</a></h3>
-<p>Sert les versions minifiées fichiers statiques (css et js). A utiliser en
+<p>Sert les versions minifiées des fichiers statiques (css et js). À utiliser en
 production pour un site plus rapide.</p>
-<p>Défaut: False</p>
-<p>Equivalent en ligne de commande : &#8211;compressed-static</p>
+<p>Défaut : False</p>
+<p>Équivalent en ligne de commande : &#8211;compressed-static</p>
 </div>
 <div class="section" id="paste-files-root">
 <h3>PASTE_FILES_ROOT<a class="headerlink" href="#paste-files-root" title="Permalink to this headline">¶</a></h3>
 <p>Chemin absolu du dossier dans lequel 0bin va sauvegarder les pastes.</p>
-<p>Défaut: dossier &#8220;static/content&#8221; dans le dossier &#8220;zerobin&#8221;</p>
-<p>Equivalent en ligne de commande : Aucun</p>
+<p>Défaut : dossier &#8220;static/content&#8221; dans le dossier &#8220;zerobin&#8221;</p>
+<p>Équivalent en ligne de commande : Aucun</p>
 </div>
 <div class="section" id="template-dirs">
 <span id="template-dirs-fr"></span><h3>TEMPLATE_DIRS<a class="headerlink" href="#template-dirs" title="Permalink to this headline">¶</a></h3>
 <p>Liste des chemins absolus des dossiers qui contiennent les templates que 0bin
 utilise pour générer les pages du site. Les premiers éléments de la liste
-ont priorités sur les suivant.</p>
+ont priorité sur les suivants.</p>
 <p>Si vous voulez utiliser vos propres templates, ajoutez le dossier qui les
-contient au début de la liste:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zerobin.defauls_settings</span> <span class="kn">import</span> <span class="n">TEMPLATE_DIRS</span>
+contient au début de la liste :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zerobin.defauls_settings</span> <span class="k">import</span> <span class="n">TEMPLATE_DIRS</span>
 
 <span class="n">TEMPLATE_DIRS</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s">&#39;/chemin/version/votre/dossier/de/templates&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;/chemin/version/votre/dossier/de/templates&#39;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">+</span> <span class="n">TEMPLATE_DIRS</span>
 </pre></div>
 </div>
-<p>Défaut: dossier &#8220;view&#8221; dans le dossier &#8220;zerobin&#8221;</p>
-<p>Equivalent en ligne de commande : Aucun</p>
+<p>Défaut : dossier &#8220;view&#8221; dans le dossier &#8220;zerobin&#8221;</p>
+<p>Équivalent en ligne de commande : Aucun</p>
 </div>
 <div class="section" id="id2">
 <h3>HOST et PORT<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>L&#8217;hôte et le port sur lesquels écouter les requêtes entrantes. En général
 127.0.0.1 et 8000 pour écouter localement, ou 0.0.0.0 et 80 pour
 écouter les requêtes extérieures.</p>
-<p>Défaut: 127.0.0.1 et 8000</p>
-<p>Equivalent du fichier de configuration : &#8211;host et &#8211;port</p>
+<p>Défaut : 127.0.0.1 et 8000</p>
+<p>Équivalent du fichier de configuration : &#8211;host et &#8211;port</p>
 </div>
 <div class="section" id="id3">
 <h3>USER et GROUP<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>L&#8217;utilisateur et le group que le serveur essayera d&#8217;adopter après le démarrage.</p>
+<p>L&#8217;utilisateur et le groupe que le serveur essayera d&#8217;adopter après le démarrage.</p>
 <p>Utile quand on lance la commande avec les droits admin afin de pouvoir
 écouter sur le port 80, mais qu&#8217;on souhaite, pour des raisons de sécurité, que
-le processus n&#8217;est pas accès au fichiers système.</p>
-<p>GROUP prend de USER si il n&#8217;est pas précisé.</p>
-<p>Défaut: Aucun</p>
-<p>Equivalent en ligne de commande : &#8211;user et &#8211;group</p>
+le processus n&#8217;aie pas accès au fichiers système.</p>
+<p>GROUP prend de USER s&#8217;il n&#8217;est pas précisé.</p>
+<p>Défaut : Aucun</p>
+<p>Équivalent en ligne de commande : &#8211;user et &#8211;group</p>
 </div>
 <div class="section" id="menu">
 <h3>MENU<a class="headerlink" href="#menu" title="Permalink to this headline">¶</a></h3>
@@ -196,21 +196,21 @@ le processus n&#8217;est pas accès au fichiers système.</p>
 est en haut de chaque page.</p>
 <p>Le lien peut être un lien relatif, absolu, ou une adresse email.</p>
 <p>Toute addresse email sera automatiquement protégée contre le spam.</p>
-<p>Défaut:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">MENU</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="p">(</span><span class="s">&#39;Home&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s">&#39;Download 0bin&#39;</span><span class="p">,</span> <span class="s">&#39;https://github.com/sametmax/0bin&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s">&#39;Contact&#39;</span><span class="p">,</span> <span class="s">&#39;mailto:your@email.com&#39;</span><span class="p">)</span> <span class="c"># email</span>
+<p>Défaut :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MENU</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s1">&#39;Home&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Download 0bin&#39;</span><span class="p">,</span> <span class="s1">&#39;https://github.com/sametmax/0bin&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Contact&#39;</span><span class="p">,</span> <span class="s1">&#39;mailto:your@email.com&#39;</span><span class="p">)</span> <span class="c1"># email</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>Equivalent en ligne de commande : Aucun</p>
+<p>Équivalent en ligne de commande : Aucun</p>
 </div>
 <div class="section" id="max-size">
 <h3>MAX_SIZE<a class="headerlink" href="#max-size" title="Permalink to this headline">¶</a></h3>
 <p>Valeur approximative de limite de taille d&#8217;un paste.</p>
-<p>Défaut = 500000 octets (500 ko)</p>
-<p>Equivalent en ligne de commande : Aucun</p>
+<p>Défaut : 500 000 octets (500 ko)</p>
+<p>Équivalent en ligne de commande : Aucun</p>
 </div>
 </div>
 </div>
@@ -266,14 +266,11 @@ est en haut de chaque page.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -292,12 +289,12 @@ est en haut de chaque page.</p>
         <li class="right" >
           <a href="theming.html" title="Personnaliser l’apparence"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+        &#169; Copyright 2012 - 2016, Sam et Max.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

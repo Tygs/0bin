@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Outil en ligne de commande zerobinpaste &mdash; 0bin 0.1 documentation</title>
+    <title>Outil en ligne de commande zerobinpaste &#8212; 0bin 0.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
+    <link rel="top" title="0bin 0.5 documentation" href="../index.html" />
     <link rel="prev" title="Options" href="options.html" /> 
   </head>
   <body role="document">
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="options.html" title="Options"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -48,72 +48,74 @@
   <div class="section" id="outil-en-ligne-de-commande-zerobinpaste">
 <h1>Outil en ligne de commande zerobinpaste<a class="headerlink" href="#outil-en-ligne-de-commande-zerobinpaste" title="Permalink to this headline">¶</a></h1>
 <p>zerobinpaste est un simple outil CLI (similaire à pastebinit ou wgetpaste) à utiliser
-avec des fichiers ou des redirection shell dans le terminal ou des scripts simples.</p>
-<p>Exemple de cas d&#8217;utilisation:</p>
-<div class="highlight-python"><div class="highlight"><pre>% zerobinpaste README.rst
-http://some.0bin.site/paste/0cc3d8a8...
+avec des fichiers ou des redirections shell dans le terminal ou des scripts simples.</p>
+<p>Exemple de cas d&#8217;utilisation :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">zerobinpaste</span> <span class="n">README</span><span class="o">.</span><span class="n">rst</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">some</span><span class="o">.</span><span class="mi">0</span><span class="nb">bin</span><span class="o">.</span><span class="n">site</span><span class="o">/</span><span class="n">paste</span><span class="o">/</span><span class="mi">0</span><span class="n">cc3d8a8</span><span class="o">...</span>
 
-% grep error /var/log/syslog | zerobinpaste
-http://some.0bin.site/paste/81fd1324...
+<span class="o">%</span> <span class="n">grep</span> <span class="n">error</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">syslog</span> <span class="o">|</span> <span class="n">zerobinpaste</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">some</span><span class="o">.</span><span class="mi">0</span><span class="nb">bin</span><span class="o">.</span><span class="n">site</span><span class="o">/</span><span class="n">paste</span><span class="o">/</span><span class="mi">81</span><span class="n">fd1324</span><span class="o">...</span>
 
-% zerobinpaste docs/en/*.rst
-easy_install.rst http://some.0bin.site/paste/9adc576a...
-apache_install.rst http://some.0bin.site/paste/01408cbd...
-options.rst http://some.0bin.site/paste/921b2768...
-...
+<span class="o">%</span> <span class="n">zerobinpaste</span> <span class="n">docs</span><span class="o">/</span><span class="n">en</span><span class="o">/*.</span><span class="n">rst</span>
+<span class="n">easy_install</span><span class="o">.</span><span class="n">rst</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">some</span><span class="o">.</span><span class="mi">0</span><span class="nb">bin</span><span class="o">.</span><span class="n">site</span><span class="o">/</span><span class="n">paste</span><span class="o">/</span><span class="mi">9</span><span class="n">adc576a</span><span class="o">...</span>
+<span class="n">apache_install</span><span class="o">.</span><span class="n">rst</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">some</span><span class="o">.</span><span class="mi">0</span><span class="nb">bin</span><span class="o">.</span><span class="n">site</span><span class="o">/</span><span class="n">paste</span><span class="o">/</span><span class="mi">01408</span><span class="n">cbd</span><span class="o">...</span>
+<span class="n">options</span><span class="o">.</span><span class="n">rst</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">some</span><span class="o">.</span><span class="mi">0</span><span class="nb">bin</span><span class="o">.</span><span class="n">site</span><span class="o">/</span><span class="n">paste</span><span class="o">/</span><span class="mi">921</span><span class="n">b2768</span><span class="o">...</span>
+<span class="o">...</span>
 
-% ps axlf | zerobinpaste | mail -s &quot;Process tree on $(date)&quot; root
+<span class="o">%</span> <span class="n">ps</span> <span class="n">axlf</span> <span class="o">|</span> <span class="n">zerobinpaste</span> <span class="o">|</span> <span class="n">mail</span> <span class="o">-</span><span class="n">s</span> <span class="s2">&quot;Process tree on $(date)&quot;</span> <span class="n">root</span>
 </pre></div>
 </div>
 <p>Les liens produits peuvent être ensuite copier-coller sur un channel IRC
 ou autre.</p>
 <p>L&#8217;outil produit le chiffrement lui-même sur la machine et la clé (après le hash)
-n&#8217;est jamais envoyée au serveur ou nul par ailleurs excepté la sortie standard
-de l&#8217;outil (ex: le terminal).</p>
+n&#8217;est jamais envoyée au serveur ou nulle part ailleurs excepté la sortie standard
+de l&#8217;outil (ex : le terminal).</p>
 <p>L&#8217;outil doit être buildé avec <a class="reference external" href="http://nodejs.org/">node.js</a> séparément (voir plus bas).</p>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>Au minimum il faut préciser le site pastebin (l&#8217;url principal d&#8217;où on posterait
+<p>Au minimum, il faut préciser le site pastebin (l&#8217;url principale d&#8217;où on posterait
 dans le navigateur) doit être spécifié à l&#8217;outil via l&#8217;option -u (&#8211;url) (on peut
-le simplifier avec un alias shell - ex: <code class="docutils literal"><span class="pre">alias</span> <span class="pre">zp='zerobinpaste</span> <span class="pre">-u</span> <span class="pre">http://some.0bin.site</span></code>)
+le simplifier avec un alias shell - ex : <code class="docutils literal"><span class="pre">alias</span> <span class="pre">zp='zerobinpaste</span> <span class="pre">-u</span> <span class="pre">http://some.0bin.site</span></code>)
 ou dans le fichier de configuration &#8220;~/.zerobinpasterc&#8221; (format json).</p>
 <div class="line-block">
 <div class="line">Les arguments positionels sont interprétés comme des fichiers à uploader et chiffrer.</div>
 <div class="line">Si aucun argument n&#8217;est passé, le script tentera de lire stdin.</div>
 </div>
-<p>Le fichier de configuration le plus simple pourrait ressembler à celà:</p>
-<blockquote>
-<div>{&#8220;url&#8221;: &#8220;<a class="reference external" href="http://some.0bin.site">http://some.0bin.site</a>&#8220;}</div></blockquote>
-<p>Toute option (dans sa forme longue, ex: &#8220;url pour &#8211;url) utilisable en ligne de commande
-peut être spécifié ici.</p>
+<p>Le fichier de configuration le plus simple pourrait ressembler à ça :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://some.0bin.site&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Toute option (dans sa forme longue, ex : &#8220;url pour &#8211;url) utilisable en ligne de commande
+peut être spécifiée ici.</p>
 <p>Lancez l&#8217;outil avec -h ou &#8211;help pour voir la liste des paramètres supportés.</p>
 </div>
 <div class="section" id="build-installation">
 <h2>Build / Installation<a class="headerlink" href="#build-installation" title="Permalink to this headline">¶</a></h2>
-<p>En bref:</p>
-<blockquote>
-<div>0bin% cd tools
-0bin/tools% make
-...
-0bin/tools% cp zerobinpaste ~/bin   # install to PATH</div></blockquote>
-<p>La commande &#8220;npm&#8221; (packagé and installé avec node.js) est requise pour télécharger
+<p>En bref :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span><span class="nb">bin</span><span class="o">%</span> <span class="n">cd</span> <span class="n">tools</span>
+<span class="mi">0</span><span class="nb">bin</span><span class="o">/</span><span class="n">tools</span><span class="o">%</span> <span class="n">make</span>
+<span class="o">...</span>
+<span class="mi">0</span><span class="nb">bin</span><span class="o">/</span><span class="n">tools</span><span class="o">%</span> <span class="n">cp</span> <span class="n">zerobinpaste</span> <span class="o">~/</span><span class="nb">bin</span>   <span class="c1"># install to PATH</span>
+</pre></div>
+</div>
+<p>La commande &#8220;npm&#8221; (packagée and installée avec node.js) est requise pour télécharger
 les dépendances indispensables à la production de l&#8217;éxécutable.</p>
-<p>Utilisez &#8220;make&#8221; dans le dossier &#8220;tools&#8221; pour produire une version non-minifié&#8221; de &#8220;zerobinpaste&#8221;.</p>
-<p>La commande <code class="docutils literal"><span class="pre">make</span> <span class="pre">ugly</span></code> peut être utilisé à la place de <code class="docutils literal"><span class="pre">make</span></code> pour créer une version &#8220;minified&#8221;
-(requière l&#8217;installation de <a class="reference external" href="https://github.com/mishoo/UglifyJS">uglifyjs</a>, script produit environ 25% plus petit en taille).</p>
-<p>Le script &#8220;zerobinpaste&#8221; ainsi produit seulement besoin de node.js (et la commande &#8220;node&#8221;) pour
-s&#8217;éxcuter et peut être placé n&#8217;importe où dans le PATH système (ex : &#8220;~/bin&#8221;, &#8220;/usr/local/bin&#8221;)
+<p>Utilisez &#8220;make&#8221; dans le dossier &#8220;tools&#8221; pour produire une version non-minifiée de &#8220;zerobinpaste&#8221;.</p>
+<p>La commande <code class="docutils literal"><span class="pre">make</span> <span class="pre">ugly</span></code> peut être utilisée à la place de <code class="docutils literal"><span class="pre">make</span></code> pour créer une version minifiée
+(requiert l&#8217;installation de <a class="reference external" href="https://github.com/mishoo/UglifyJS">uglifyjs</a>, script produit environ 25% plus petit en taille).</p>
+<p>Le script &#8220;zerobinpaste&#8221; ainsi produit a seulement besoin de node.js (et la commande &#8220;node&#8221;) pour
+s&#8217;exécuter et peut être placé n&#8217;importe où dans le PATH système (ex : &#8220;~/bin&#8221;, &#8220;/usr/local/bin&#8221;)
 afin d&#8217;être exécuté en tapant simplement &#8220;zerobinpaste&#8221;.</p>
 </div>
 <div class="section" id="pourquoi-node-js-et-pas-python">
-<h2>Pourquoi node.js et pas python<a class="headerlink" href="#pourquoi-node-js-et-pas-python" title="Permalink to this headline">¶</a></h2>
+<h2>Pourquoi node.js et pas Python<a class="headerlink" href="#pourquoi-node-js-et-pas-python" title="Permalink to this headline">¶</a></h2>
 <p>Malheureusement, il est assez difficile et peu fiable de répliquer un protocole
 chiffrement non trivial et non documenté tel que celui de certaines méthodes
-de <a class="reference external" href="http://crypto.stanford.edu/sjcl/">SJCL</a>, et la moindre erreur garantie de produire une paste illisible.</p>
-<p>L&#8217;implémentation actuelle utilise le même code Javascript (via le moteur V8 de node.js)
+de <a class="reference external" href="http://crypto.stanford.edu/sjcl/">SJCL</a>, et la moindre erreur garantie de produire un paste illisible.</p>
+<p>L&#8217;implémentation actuelle utilise le même code JavaScript (via le moteur V8 de node.js)
 que le navigateur, du coup il est simple et robuste.</p>
 <p>Il est prévu de supporter plus tard un schéma de chiffrement plus configurable, moins
-complexe et plus courant, permettant à des clients non-javascript de fonctioner également.</p>
+complexe et plus courant, permettant à des clients non-JavaScript de fonctioner également.</p>
 <p>Voir le <a class="reference external" href="https://github.com/sametmax/0bin/pull/39">pull request concerné</a> pour plus de détails.</p>
 </div>
 </div>
@@ -129,7 +131,7 @@ complexe et plus courant, permettant à des clients non-javascript de fonctioner
 <li><a class="reference internal" href="#">Outil en ligne de commande zerobinpaste</a><ul>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#build-installation">Build / Installation</a></li>
-<li><a class="reference internal" href="#pourquoi-node-js-et-pas-python">Pourquoi node.js et pas python</a></li>
+<li><a class="reference internal" href="#pourquoi-node-js-et-pas-python">Pourquoi node.js et pas Python</a></li>
 </ul>
 </li>
 </ul>
@@ -147,14 +149,11 @@ complexe et plus courant, permettant à des clients non-javascript de fonctioner
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -170,12 +169,12 @@ complexe et plus courant, permettant à des clients non-javascript de fonctioner
         <li class="right" >
           <a href="options.html" title="Options"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+        &#169; Copyright 2012 - 2016, Sam et Max.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

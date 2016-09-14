@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation avec Nginx &mdash; 0bin 0.1 documentation</title>
+    <title>Installation avec Nginx &#8212; 0bin 0.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
+    <link rel="top" title="0bin 0.5 documentation" href="../index.html" />
     <link rel="next" title="Utiliser supervisor" href="using_supervisor.html" />
     <link rel="prev" title="Installation avec Apache" href="apache_install.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="apache_install.html" title="Installation avec Apache"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -53,41 +53,41 @@
 <h1>Installation avec Nginx<a class="headerlink" href="#installation-avec-nginx" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Vous devez avoir suivi <a class="reference internal" href="easy_install.html"><em>l&#8217;installation facile</em></a> avant.</p>
+<p class="last">Vous devez avoir suivi <a class="reference internal" href="easy_install.html"><span class="doc">l&#8217;installation facile</span></a> avant.</p>
 </div>
-<p>Nginx est un choix très populaire pour servir un projet Python:</p>
+<p>Nginx est un choix très populaire pour servir un projet Python :</p>
 <ul class="simple">
 <li>Il est rapide.</li>
 <li>Il est léger.</li>
-<li>Les fichiers de configuration sont très simple.</li>
+<li>Les fichiers de configuration sont très simples.</li>
 </ul>
 <p>Si vous avez votre propre serveur, c&#8217;est le meilleur choix. Dans le cas contraire,
-essayez  <a class="reference internal" href="easy_install.html"><em>l&#8217;installation la plus simple</em></a>,
-ou avec <a class="reference internal" href="apache_install.html"><em>Apache</em></a>.</p>
+essayez  <a class="reference internal" href="easy_install.html"><span class="doc">l&#8217;installation la plus simple</span></a>,
+ou avec <a class="reference internal" href="apache_install.html"><span class="doc">Apache</span></a>.</p>
 <p>Nginx ne lance aucun processus Python, il sert uniquement les requêtes
-depuis l&#8217;extérieur vers le server Python.</p>
-<p>Il y a donc deux étapes:</p>
+depuis l&#8217;extérieur vers le serveur Python.</p>
+<p>Il y a donc deux étapes :</p>
 <ul class="simple">
 <li>Faire tourner le processus Python.</li>
 <li>Faire tourner Nginx.</li>
 </ul>
-<p>Ainsi, vous bénéficierez:</p>
+<p>Ainsi, vous bénéficierez :</p>
 <ul class="simple">
-<li>de la possibilité d&#8217;avoir plusieurs projets écoutant sur le prot 80;</li>
+<li>de la possibilité d&#8217;avoir plusieurs projets écoutant sur le port 80 ;</li>
 <li>de plusieurs modules Nginx à votre disposition (comme la limitation
-du nombre de requêtes);</li>
+du nombre de requêtes) ;</li>
 <li>de la solidité de Nginx en front end: il est sécurité, et il y a peu de chance
-qu&#8217;il crash sous une forte charge;</li>
+qu&#8217;il crash sous une forte charge ;</li>
 <li>les processus de votre site ne tournent pas avec les droits admin, même si
-&#8211;user ne fonctionne pas sur votre OS;</li>
+&#8211;user ne fonctionne pas sur votre OS ;</li>
 <li>de la capacité de gérer un processus Python sans toucher Nginx ou les autres
 processus. C&#8217;est très pratique pour les mises à jour.</li>
 </ul>
 <div class="section" id="processus-python">
 <h2>Processus Python<a class="headerlink" href="#processus-python" title="Permalink to this headline">¶</a></h2>
-<p>Lancez 0bin comme d&#8217;habitude, mais cette fois pour écouter sur un host et un port
-local. Ex</p>
-<div class="highlight-python"><div class="highlight"><pre>zerobin --host 127.0.0.1 --port 8000
+<p>Lancez 0bin, comme d&#8217;habitude, mais cette fois pour écouter sur un host et un port
+local. Ex :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">zerobin</span> <span class="o">--</span><span class="n">host</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="o">--</span><span class="n">port</span> <span class="mi">8000</span>
 </pre></div>
 </div>
 <p>En PHP, quand on édite un fichier, la modificiation est visible immédiatement.
@@ -100,23 +100,23 @@ sans avoir à redémarer le serveur.</p>
 <h2>Nginx<a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h2>
 <p>Nginx peut être installé avec votre gestionnaire de paquets habituels, donc
 nous ne couvrirons pas cette partie.</p>
-<p>Vous devez créer une fichier de configuration Nginx pour 0bin. Sous GNU/Linux,
-on les mets en général dans /etc/nginx/conf.d/. Nommez le zerobin.conf.</p>
-<p>Le fichier de configuration minimal pour faire tourner le site est:</p>
-<div class="highlight-python"><div class="highlight"><pre>server {
-    listen       80;
-    server_name www.votresiteweb.com;
+<p>Vous devez créer un fichier de configuration Nginx pour 0bin. Sous GNU/Linux,
+on les met en général dans /etc/nginx/conf.d/. Nommez-le zerobin.conf.</p>
+<p>Le fichier de configuration minimal pour faire tourner le site est :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="p">{</span>
+    <span class="n">listen</span>       <span class="mi">80</span><span class="p">;</span>
+    <span class="n">server_name</span> <span class="n">www</span><span class="o">.</span><span class="n">votresiteweb</span><span class="o">.</span><span class="n">com</span><span class="p">;</span>
 
-    location / {
-        proxy_pass http://127.0.0.1:8000;
-    }
-}
+    <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+        <span class="n">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8000</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p><cite>proxy_pass</cite> transmet les requêtes aux processus Python. Bien entendu le
 port doit correspondre à celui utilisé par 0bin.</p>
-<p>On peut apporter plusieurs améliorations à l&#8217;expérience utilisateur:</p>
-<div class="highlight-python"><div class="highlight"><pre>server {
+<p>On peut apporter plusieurs améliorations à l&#8217;expérience utilisateur :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>server {
     listen       80;
     server_name www.votresiteweb.com;
 
@@ -182,14 +182,11 @@ qui la supporte.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -208,12 +205,12 @@ qui la supporte.</p>
         <li class="right" >
           <a href="apache_install.html" title="Installation avec Apache"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+        &#169; Copyright 2012 - 2016, Sam et Max.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

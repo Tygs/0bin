@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation la plus simple &mdash; 0bin 0.1 documentation</title>
+    <title>Installation la plus simple &#8212; 0bin 0.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
+    <link rel="top" title="0bin 0.5 documentation" href="../index.html" />
     <link rel="next" title="Installation avec Apache" href="apache_install.html" />
     <link rel="prev" title="Introduction" href="intro.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="intro.html" title="Introduction"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -53,12 +53,12 @@
 <h1>Installation la plus simple<a class="headerlink" href="#installation-la-plus-simple" title="Permalink to this headline">¶</a></h1>
 <p>Ces solutions sont simples et supportent le traffic d&#8217;un site web personnel.
 Pour des solutions plus solides et sécurisées, essayez les installation
-<a class="reference internal" href="apache_install.html"><em>Apache</em></a> et <a class="reference internal" href="nginx_install.html"><em>Nginx</em></a>.</p>
+<a class="reference internal" href="apache_install.html"><span class="doc">Apache</span></a> et <a class="reference internal" href="nginx_install.html"><span class="doc">Nginx</span></a>.</p>
 <div class="section" id="installation-en-10-secondes-si-vous-connaissez-python">
 <h2>Installation en 10 secondes (si vous connaissez Python)<a class="headerlink" href="#installation-en-10-secondes-si-vous-connaissez-python" title="Permalink to this headline">¶</a></h2>
-<p>Entrez:</p>
-<div class="highlight-python"><div class="highlight"><pre>pip install zerobin
-zerobin --host 0.0.0.0 --port 80 --compressed-static # en tant qu&#39;admin
+<p>Entrez :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">zerobin</span>
+<span class="n">zerobin</span> <span class="o">--</span><span class="n">host</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">--</span><span class="n">port</span> <span class="mi">80</span> <span class="o">--</span><span class="n">compressed</span><span class="o">-</span><span class="n">static</span> <span class="c1"># en tant qu&#39;admin</span>
 </pre></div>
 </div>
 </div>
@@ -67,48 +67,48 @@ zerobin --host 0.0.0.0 --port 80 --compressed-static # en tant qu&#39;admin
 <ul>
 <li><p class="first">Assurez-vous d&#8217;avoir Python 2.7 ou 3.4+ (<cite>python &#8211;version</cite>)</p>
 </li>
-<li><p class="first">Télécharger le dernier <a class="reference external" href="https://github.com/sametmax/0bin/zipball/master">zip du code source</a>.</p>
+<li><p class="first">Téléchargez le dernier <a class="reference external" href="https://github.com/sametmax/0bin/zipball/master">zip du code source</a>.</p>
 </li>
 <li><p class="first">Décompressez tous les fichiers là où vous souhaitez mettre le site.</p>
 </li>
 <li><p class="first">Allez dans les dossiers extraits.</p>
 </li>
-<li><p class="first">Lancez avec les droits admin:</p>
-<div class="highlight-python"><div class="highlight"><pre>python zerobin.py --host 0.0.0.0 --port 80 --compressed-static
+<li><p class="first">Lancez avec les droits admin :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">zerobin</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">host</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">--</span><span class="n">port</span> <span class="mi">80</span> <span class="o">--</span><span class="n">compressed</span><span class="o">-</span><span class="n">static</span>
 </pre></div>
 </div>
 </li>
 </ul>
-<p>Sous ubuntu, une line suffit:</p>
-<div class="highlight-python"><div class="highlight"><pre>wget stuff &amp;&amp; unzip zerobin.zip &amp;&amp; cd zerobin &amp;&amp; sudo python zerobin.py --host 0.0.0.0 --port 80 --compressed-static
+<p>Sous ubuntu, une ligne suffit :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">stuff</span> <span class="o">&amp;&amp;</span> <span class="n">unzip</span> <span class="n">zerobin</span><span class="o">.</span><span class="n">zip</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">zerobin</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">python</span> <span class="n">zerobin</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">host</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">--</span><span class="n">port</span> <span class="mi">80</span> <span class="o">--</span><span class="n">compressed</span><span class="o">-</span><span class="n">static</span>
 </pre></div>
 </div>
-<p>Jetez un oeil aux <a class="reference internal" href="options.html"><em>options de configuration</em></a>.</p>
+<p>Jetez un oeil aux <a class="reference internal" href="options.html"><span class="doc">options de configuration</span></a>.</p>
 </div>
 <div class="section" id="faire-tourner-0bin-en-arriere-plan">
 <h2>Faire tourner 0bin en arrière plan<a class="headerlink" href="#faire-tourner-0bin-en-arriere-plan" title="Permalink to this headline">¶</a></h2>
 <p>0bin ne vient pas avec un moyen intégré pour le faire. Il y a plusieurs
 solutions.</p>
-<p><em>Pour un petit site:</em></p>
-<p>Lancer simplement 0bin en processus shell d&#8217;arrière plan. Example sous GNU/Linux:</p>
-<div class="highlight-python"><div class="highlight"><pre>nohup python zerobin.py --host 0.0.0.0 --port 80 --compressed-static &amp;
+<p><em>Pour un petit site :</em></p>
+<p>Lancez simplement 0bin en processus shell d&#8217;arrière plan. Exemple sous GNU/Linux :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nohup</span> <span class="n">python</span> <span class="n">zerobin</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">host</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">--</span><span class="n">port</span> <span class="mi">80</span> <span class="o">--</span><span class="n">compressed</span><span class="o">-</span><span class="n">static</span> <span class="o">&amp;</span>
 </pre></div>
 </div>
 <p>Ou dans un screen.</p>
-<p><em>Pour les gros sites Web:</em></p>
+<p><em>Pour les gros sites Web :</em></p>
 <ul class="simple">
-<li>configurer 0bin et <a class="reference internal" href="apache_install.html"><em>Apache</em></a>;</li>
-<li>configure 0bin avec <a class="reference internal" href="using_supervisor.html"><em>supervisor</em></a> (recommandé).</li>
+<li>configurez 0bin et <a class="reference internal" href="apache_install.html"><span class="doc">Apache</span></a> ;</li>
+<li>configurez 0bin avec <a class="reference internal" href="using_supervisor.html"><span class="doc">supervisor</span></a> (recommandé).</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Vous pouvez même utiliser zerobin sur votre réseau local depuis votre portable.</p>
-<p>Assurez vous que votre parefeu ne bloque pas le port, et lancez:</p>
-<div class="highlight-python"><div class="highlight"><pre>python zerobin.py --host 0.0.0.0 --port 8000
+<p>Assurez-vous que votre parefeu ne bloque pas le port, et lancez :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">zerobin</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">host</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">--</span><span class="n">port</span> <span class="mi">8000</span>
 </pre></div>
 </div>
-<p>0bin sera maintenant accessible sur <a class="reference external" href="http://votre.addresse.ip.locale:8000">http://votre.addresse.ip.locale:8000</a>.</p>
-<p class="last">Ça peut être très un moyen très cool pour partager du code dans une entreprise
+<p>0bin sera maintenant accessible depuis <a class="reference external" href="http://votre.addresse.ip.locale:8000">http://votre.addresse.ip.locale:8000</a>.</p>
+<p class="last">Ça peut être un moyen très cool pour partager du code dans une entreprise
 ou a un code sprint.</p>
 </div>
 </div>
@@ -146,14 +146,11 @@ ou a un code sprint.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -172,12 +169,12 @@ ou a un code sprint.</p>
         <li class="right" >
           <a href="intro.html" title="Introduction"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+        &#169; Copyright 2012 - 2016, Sam et Max.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

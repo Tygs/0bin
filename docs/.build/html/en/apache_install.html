@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Apache setup &mdash; 0bin 0.1 documentation</title>
+    <title>Apache setup &#8212; 0bin 0.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="0bin 0.1 documentation" href="../index.html" />
+    <link rel="top" title="0bin 0.5 documentation" href="../index.html" />
     <link rel="next" title="Nginx setup" href="nginx_install.html" />
     <link rel="prev" title="Easiest installation" href="easy_install.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="easy_install.html" title="Easiest installation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -53,9 +53,9 @@
 <h1>Apache setup<a class="headerlink" href="#apache-setup" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You need to have followed the <a class="reference internal" href="easy_install.html"><em>easy install</em></a> first.</p>
+<p class="last">You need to have followed the <a class="reference internal" href="easy_install.html"><span class="doc">easy install</span></a> first.</p>
 </div>
-<p>Apache is heavier than <a class="reference internal" href="nginx_install.html"><em>Nginx</em></a>. But it&#8217;s also much more famous:</p>
+<p>Apache is heavier than <a class="reference internal" href="nginx_install.html"><span class="doc">Nginx</span></a>. But it&#8217;s also much more famous:</p>
 <ul class="simple">
 <li>more people will be able to help you on forums;</li>
 <li>your hosting will most probably support Apache;</li>
@@ -70,7 +70,7 @@ installation facile. You&#8217;ll benefit from having:</p>
 <li>Apache robustness in front end: it&#8217;s secure, and there is much less chance
 it will crash under heavy load;</li>
 <li>your web site processes won&#8217;t run with admin rights, even if
-<a class="reference internal" href="options.html#user-and-group-en"><span>&#8211;user</span></a> doesn&#8217;t
+<a class="reference internal" href="options.html#user-and-group-en"><span class="std std-ref">&#8211;user</span></a> doesn&#8217;t
 work on your OS.</li>
 </ul>
 <div class="section" id="mod-wsgi">
@@ -82,59 +82,59 @@ the setup of the Apache module mod_wsgi. If you don&#8217;t know how to do this,
 if you can&#8217;t do it (E.G: your hosting won&#8217;t let you), you need to go for
 the CGI setup.</p>
 <p>First, make sure you have mod_wsgi installed and enable by running (as admin):</p>
-<div class="highlight-python"><div class="highlight"><pre>a2enmod wsgi
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">a2enmod</span> <span class="n">wsgi</span>
 </pre></div>
 </div>
 <p>This enable mod_wsgi. It it doesn&#8217;t, install it first (on ubuntu, the package
 is libapache2-mod-wsgi).</p>
 <p>Then create an Apache configuration file, usually in /etc/apache/sites-available/.
 Name it zerobin:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;VirtualHost *:80&gt;
-    ServerName www.yourwebsite.com
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+    <span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">yourwebsite</span><span class="o">.</span><span class="n">com</span>
 
-    WSGIDaemonProcess zerobin user=www-data group=www-data processes=1 threads=5
-    WSGIScriptAlias / /path/to/zerobin/app.wsgi
+    <span class="n">WSGIDaemonProcess</span> <span class="n">zerobin</span> <span class="n">user</span><span class="o">=</span><span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">group</span><span class="o">=</span><span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">processes</span><span class="o">=</span><span class="mi">1</span> <span class="n">threads</span><span class="o">=</span><span class="mi">5</span>
+    <span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">zerobin</span><span class="o">/</span><span class="n">app</span><span class="o">.</span><span class="n">wsgi</span>
 
-    &lt;Directory /path/to/zerobin/zerobin/&gt;
-        WSGIProcessGroup zerobin
-        WSGIApplicationGroup %{GLOBAL}
-        Order deny,allow
-        Allow from all
-    &lt;/Directory&gt;
-&lt;/VirtualHost&gt;
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">zerobin</span><span class="o">/</span><span class="n">zerobin</span><span class="o">/&gt;</span>
+        <span class="n">WSGIProcessGroup</span> <span class="n">zerobin</span>
+        <span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+        <span class="n">Order</span> <span class="n">deny</span><span class="p">,</span><span class="n">allow</span>
+        <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Activate the website (as admin):</p>
-<div class="highlight-python"><div class="highlight"><pre>a2ensite zerobin
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">a2ensite</span> <span class="n">zerobin</span>
 </pre></div>
 </div>
 <p>And reload the apache configuration (as admin):</p>
-<div class="highlight-python"><div class="highlight"><pre>service apache2 reload
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="n">apache2</span> <span class="n">reload</span>
 </pre></div>
 </div>
 <p>You&#8217;ll note that we refer to a file named app.wsgi. It&#8217;s a Python file
 creating the application Apache is going to use to start the Python process:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
 
-<span class="c"># make sure the zerobin module is in the PYTHON PATH and importable</span>
+<span class="c1"># make sure the zerobin module is in the PYTHON PATH and importable</span>
 <span class="n">ZEROBIN_PARENT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ZEROBIN_PARENT_DIR</span><span class="p">)</span>
 
-<span class="c"># create the wsgi callable</span>
-<span class="kn">from</span> <span class="nn">zerobin.routes</span> <span class="kn">import</span> <span class="n">get_app</span>
-<span class="n">settings</span><span class="p">,</span> <span class="n">application</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">compressed_static</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c1"># create the wsgi callable</span>
+<span class="kn">from</span> <span class="nn">zerobin.routes</span> <span class="k">import</span> <span class="n">get_app</span>
+<span class="n">settings</span><span class="p">,</span> <span class="n">application</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">compressed_static</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>You can of course create your own, as the <cite>get_app</cite> function is the only
 way to pass settings to 0bin with this setup. You would do this by creating
 a configuration file and passing it to the function:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
 
-<span class="n">ZEROBIN_PARENT_DIR</span> <span class="o">=</span> <span class="s">&#39;/path/to/zerobin/parent/dir&#39;</span>
+<span class="n">ZEROBIN_PARENT_DIR</span> <span class="o">=</span> <span class="s1">&#39;/path/to/zerobin/parent/dir&#39;</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ZEROBIN_PARENT_DIR</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">zerobin.routes</span> <span class="kn">import</span> <span class="n">get_app</span>
-<span class="n">settings</span><span class="p">,</span> <span class="n">application</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">settings_file</span><span class="o">=</span><span class="s">&#39;/path/to/settings.py&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">zerobin.routes</span> <span class="k">import</span> <span class="n">get_app</span>
+<span class="n">settings</span><span class="p">,</span> <span class="n">application</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">settings_file</span><span class="o">=</span><span class="s1">&#39;/path/to/settings.py&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -176,14 +176,11 @@ it yet. Please contact us if you ever get the need to use it.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -202,12 +199,12 @@ it yet. Please contact us if you ever get the need to use it.</p>
         <li class="right" >
           <a href="easy_install.html" title="Easiest installation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">0bin 0.5 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2012, Sam et Max.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+        &#169; Copyright 2012 - 2016, Sam et Max.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>
