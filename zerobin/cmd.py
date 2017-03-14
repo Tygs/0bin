@@ -27,8 +27,9 @@ from bottle import run
 import clize
 
 @annotate(debug=bool, compressed_static=bool)
+@autokwoargs
 def runserver(host='', port='', debug=None, user='', group='',
-              settings_file='', compressed_static=None,
+              settings_file='', compressed_static=None, root=None,
               version=False, paste_id_length=None, server="cherrypy"):
 
     if version:
@@ -39,6 +40,7 @@ def runserver(host='', port='', debug=None, user='', group='',
     settings.PORT = port or settings.PORT
     settings.USER = user or settings.USER
     settings.GROUP = group or settings.GROUP
+    settings.PASTE_FILES_ROOT = root or settings.PASTE_FILES_ROOT
     settings.PASTE_ID_LENGTH = paste_id_length or settings.PASTE_ID_LENGTH
 
     try:

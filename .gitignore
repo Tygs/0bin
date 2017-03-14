@@ -1,5 +1,7 @@
 # temporary, hidden and backup files
 
+/data
+
 *~
 *.bak
 *.log
