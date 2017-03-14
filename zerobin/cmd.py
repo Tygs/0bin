@@ -51,9 +51,9 @@ def runserver(host='', port='', debug=None, user='', group='',
 
     if settings.DEBUG:
         run(app, host=settings.HOST, port=settings.PORT, reloader=True,
-            server="cherrypy")
+            server=server)
     else:
-        run(app, host=settings.HOST, port=settings.PORT, server="cherrypy")
+        run(app, host=settings.HOST, port=settings.PORT, server=server)
 
 
 # The regex parse the url and separate the paste's id from the decription key
