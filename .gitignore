@@ -27,6 +27,17 @@ dist
 *.egg
 *.in
 
+# virtualenv
+
+/bin/
+/include/
+/lib/
+
+# node
+
+/node_modules/
+/yui-compressor
+
 # others
 
 content
