@@ -978,7 +978,7 @@ class Bottle(object):
             new_iter = itertools.chain([first], iout)
         elif isinstance(first, str):
             encoder = lambda x: x.encode(response.charset)
-            new_iter = map(encoder, itertools.chain([first], iout))
+            new_iter = list(map(encoder, itertools.chain([first], iout)))
         else:
             msg = 'Unsupported response type: %s' % type(first)
             return self._cast(HTTPError(500, msg))
@@ -1944,19 +1944,19 @@ class MultiDict(DictMixin):
             return [(k, v[-1]) for k, v in list(self.dict.items())]
 
         def iterkeys(self):
-            return iter(self.dict.keys())
+            return iter(list(self.dict.keys()))
 
         def itervalues(self):
-            return (v[-1] for v in self.dict.values())
+            return (v[-1] for v in list(self.dict.values()))
 
         def iteritems(self):
-            return ((k, v[-1]) for k, v in self.dict.items())
+            return ((k, v[-1]) for k, v in list(self.dict.items()))
 
         def iterallitems(self):
-            return ((k, v) for k, vl in self.dict.items() for v in vl)
+            return ((k, v) for k, vl in list(self.dict.items()) for v in vl)
 
         def allitems(self):
-            return [(k, v) for k, vl in self.dict.items() for v in vl]
+            return [(k, v) for k, vl in list(self.dict.items()) for v in vl]
 
     def get(self, key, default=None, index=-1, type=None):
         """ Return the most recent value for a key.

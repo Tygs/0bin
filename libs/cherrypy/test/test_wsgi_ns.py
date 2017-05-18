@@ -57,7 +57,7 @@ class WSGI_Namespace_Test(helper.CPWebCase):
 
                     def __next__(this):
                         line = next(this.iter)
-                        for k, v in self.map.items():
+                        for k, v in list(self.map.items()):
                             line = line.replace(k, v)
                         return line
 

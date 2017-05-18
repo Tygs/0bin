@@ -2390,7 +2390,7 @@ class WSGIGateway_10(WSGIGateway):
             env["SERVER_PORT"] = str(req.server.bind_addr[1])
 
         # Request headers
-        for k, v in req.inheaders.items():
+        for k, v in list(req.inheaders.items()):
             env["HTTP_" + k.upper().replace("-", "_")] = v
 
         # CONTENT_TYPE/CONTENT_LENGTH
@@ -2420,7 +2420,7 @@ class WSGIGateway_u0(WSGIGateway_10):
         req = self.req
         env_10 = WSGIGateway_10.get_environ(self)
         env = dict([(k.decode('ISO-8859-1'), v)
-                   for k, v in env_10.items()])
+                   for k, v in list(env_10.items())])
         env['wsgi.version'] = ('u', 0)
 
         # Request-URI

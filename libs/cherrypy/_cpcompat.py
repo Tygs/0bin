@@ -189,7 +189,7 @@ except ImportError:
 try:
     dict.iteritems
     # Python 2
-    iteritems = lambda d: iter(d.items())
+    iteritems = lambda d: iter(list(d.items()))
     copyitems = lambda d: list(d.items())
 except AttributeError:
     # Python 3
@@ -199,7 +199,7 @@ except AttributeError:
 try:
     dict.iterkeys
     # Python 2
-    iterkeys = lambda d: iter(d.keys())
+    iterkeys = lambda d: iter(list(d.keys()))
     copykeys = lambda d: list(d.keys())
 except AttributeError:
     # Python 3
@@ -209,7 +209,7 @@ except AttributeError:
 try:
     dict.itervalues
     # Python 2
-    itervalues = lambda d: iter(d.values())
+    itervalues = lambda d: iter(list(d.values()))
     copyvalues = lambda d: list(d.values())
 except AttributeError:
     # Python 3
