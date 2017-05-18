@@ -26,7 +26,7 @@ setup(
     author="Sam et Max",
     author_email="lesametlemax@gmail.com",
     description="An client side encrypted pastebin",
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
     install_requires=[
         'cherrypy',
         'bottle',
