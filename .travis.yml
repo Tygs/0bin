@@ -9,12 +9,13 @@ python:
   - "3.6"
   - "3.7-dev" # 3.7 development branch
 
-install: "pip install -r requirements.txt; pip install tox-travis"
-env:
-  - TOXENV=pep8
-  - TOXENV=coverage
-script: tox
 before_install:
   - pip install codecov
+
+install: 
+  - "pip install -r requirements.txt"
+  - "python setup.py install"
+  - "python setup.py test"
+
 after_success:
   - codecov
