@@ -163,7 +163,7 @@ class Session(object):
         self.id_observers = []
         self._data = {}
 
-        for k, v in kwargs.items():
+        for k, v in list(kwargs.items()):
             setattr(self, k, v)
 
         self.originalid = id
@@ -370,19 +370,19 @@ class Session(object):
         """D.keys() -> list of D's keys."""
         if not self.loaded:
             self.load()
-        return self._data.keys()
+        return list(self._data.keys())
 
     def items(self):
         """D.items() -> list of D's (key, value) pairs, as 2-tuples."""
         if not self.loaded:
             self.load()
-        return self._data.items()
+        return list(self._data.items())
 
     def values(self):
         """D.values() -> list of D's values."""
         if not self.loaded:
             self.load()
-        return self._data.values()
+        return list(self._data.values())
 
 
 class RamSession(Session):
@@ -483,7 +483,7 @@ class FileSession(Session):
         # The 'storage_path' arg is required for file-based sessions.
         kwargs['storage_path'] = os.path.abspath(kwargs['storage_path'])
 
-        for k, v in kwargs.items():
+        for k, v in list(kwargs.items()):
             setattr(cls, k, v)
     setup = classmethod(setup)
 
@@ -617,7 +617,7 @@ class PostgresqlSession(Session):
         This should only be called once per process; this will be done
         automatically when using sessions.init (as the built-in Tool does).
         """
-        for k, v in kwargs.items():
+        for k, v in list(kwargs.items()):
             setattr(cls, k, v)
 
         self.db = self.get_db()
@@ -695,7 +695,7 @@ class MemcachedSession(Session):
         This should only be called once per process; this will be done
         automatically when using sessions.init (as the built-in Tool does).
         """
-        for k, v in kwargs.items():
+        for k, v in list(kwargs.items()):
             setattr(cls, k, v)
 
         import memcache

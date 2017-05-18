@@ -5,7 +5,7 @@ import time
 import warnings
 
 import cherrypy
-from cherrypy._cpcompat import basestring, copykeys, ntob, unicodestr
+from cherrypy._cpcompat import str, copykeys, ntob, unicodestr
 from cherrypy._cpcompat import SimpleCookie, CookieError, py3k
 from cherrypy import _cpreqbody, _cpconfig
 from cherrypy._cperror import format_exc, bare_error
@@ -68,7 +68,7 @@ class Hook(object):
                 % (cls.__module__, cls.__name__, self.callback,
                    self.failsafe, self.priority,
                    ", ".join(['%s=%r' % (k, v)
-                              for k, v in self.kwargs.items()])))
+                              for k, v in list(self.kwargs.items())])))
 
 
 class HookMap(dict):
@@ -117,7 +117,7 @@ class HookMap(dict):
         newmap = self.__class__()
         # We can't just use 'update' because we want copies of the
         # mutable values (each is a list) as well.
-        for k, v in self.items():
+        for k, v in list(self.items()):
             newmap[k] = v[:]
         return newmap
     copy = __copy__
@@ -139,7 +139,7 @@ def hooks_namespace(k, v):
     # hookpoint per path (e.g. "hooks.before_handler.1").
     # Little-known fact you only get from reading source ;)
     hookpoint = k.split(".", 1)[0]
-    if isinstance(v, basestring):
+    if isinstance(v, str):
         v = cherrypy.lib.attributes(v)
     if not isinstance(v, Hook):
         v = Hook(v)
@@ -702,8 +702,8 @@ class Request(object):
 
         # Python 2 only: keyword arguments must be byte strings (type 'str').
         if not py3k:
-            for key, value in p.items():
-                if isinstance(key, unicode):
+            for key, value in list(p.items()):
+                if isinstance(key, str):
                     del p[key]
                     p[key.encode(self.query_string_encoding)] = value
         self.params.update(p)
@@ -815,7 +815,7 @@ class ResponseBody(object):
         if py3k and isinstance(value, str):
             raise ValueError(self.unicode_err)
 
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             # strings get wrapped in a list because iterating over a single
             # item list is much faster than iterating over every character
             # in a long string.
@@ -901,7 +901,7 @@ class Response(object):
 
     def collapse_body(self):
         """Collapse self.body to a single string; replace it and return it."""
-        if isinstance(self.body, basestring):
+        if isinstance(self.body, str):
             return self.body
 
         newbody = []

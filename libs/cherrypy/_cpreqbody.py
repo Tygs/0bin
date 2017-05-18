@@ -116,7 +116,7 @@ import re
 import sys
 import tempfile
 try:
-    from urllib import unquote_plus
+    from urllib.parse import unquote_plus
 except ImportError:
     def unquote_plus(bs):
         """Bytes version of urllib.parse.unquote_plus."""
@@ -132,7 +132,7 @@ except ImportError:
         return ntob('').join(atoms)
 
 import cherrypy
-from cherrypy._cpcompat import basestring, ntob, ntou
+from cherrypy._cpcompat import str, ntob, ntou
 from cherrypy.lib import httputil
 
 
@@ -174,7 +174,7 @@ def process_urlencoded(entity):
 
     # Now that all values have been successfully parsed and decoded,
     # apply them to the entity.params dict.
-    for key, value in params.items():
+    for key, value in list(params.items()):
         if key in entity.params:
             if not isinstance(entity.params[key], list):
                 entity.params[key] = [entity.params[key]]
@@ -491,7 +491,7 @@ class Entity(object):
             raise StopIteration
         return line
 
-    def next(self):
+    def __next__(self):
         return self.__next__()
 
     def read_into_file(self, fp_out=None):
@@ -710,7 +710,7 @@ class Part(Entity):
             self.file = self.read_into_file()
         else:
             result = self.read_lines_to_boundary()
-            if isinstance(result, basestring):
+            if isinstance(result, str):
                 self.value = result
             else:
                 self.file = result
@@ -998,11 +998,11 @@ class RequestBody(Entity):
         # Body params should also be a part of the request_params
         # add them in here.
         request_params = self.request_params
-        for key, value in self.params.items():
+        for key, value in list(self.params.items()):
             # Python 2 only: keyword arguments must be byte strings (type
             # 'str').
             if sys.version_info < (3, 0):
-                if isinstance(key, unicode):
+                if isinstance(key, str):
                     key = key.encode('ISO-8859-1')
 
             if key in request_params:

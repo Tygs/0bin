@@ -6,7 +6,7 @@ curdir = os.path.join(os.getcwd(), os.path.dirname(__file__))
 import sys
 import threading
 import time
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 import cherrypy
 from cherrypy._cpcompat import next, ntob, quote, xrange
@@ -309,7 +309,7 @@ class CacheTest(helper.CPWebCase):
             self.getPage("/long_process?seconds=%d" % SECONDS)
             # The response should be the same every time
             self.assertBody('success!')
-        ts = [threading.Thread(target=run) for i in xrange(100)]
+        ts = [threading.Thread(target=run) for i in range(100)]
         for t in ts:
             t.start()
         for t in ts:

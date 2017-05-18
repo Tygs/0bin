@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from __future__ import unicode_literals, absolute_import, print_function
+
 
 """
     Script including controller, rooting, and dependency management.
@@ -11,12 +11,12 @@ import os
 import sys
 
 try:
-    import thread
+    import _thread
 except ImportError:
     import _thread as thread
 
 try:
-    import urlparse
+    import urllib.parse
 except ImportError:
     import urllib.parse as urlparse
 
@@ -56,7 +56,7 @@ def faq():
 @app.route('/paste/create', method='POST')
 def create_paste():
     try:
-        body = urlparse.parse_qs(request.body.read(int(settings.MAX_SIZE * 1.1)))
+        body = urllib.parse.parse_qs(request.body.read(int(settings.MAX_SIZE * 1.1)))
     except ValueError:
         return {'status': 'error', 'message': "Wrong data payload."}
 

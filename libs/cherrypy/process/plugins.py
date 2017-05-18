@@ -7,7 +7,7 @@ import sys
 import time
 import threading
 
-from cherrypy._cpcompat import basestring, get_daemon, get_thread_ident
+from cherrypy._cpcompat import str, get_daemon, get_thread_ident
 from cherrypy._cpcompat import ntob, set, Timer, SetDaemonProperty
 
 # _module__file__base is used by Autoreload to make
@@ -88,7 +88,7 @@ class SignalHandler(object):
     signals = {}
     """A map from signal numbers to names."""
 
-    for k, v in vars(_signal).items():
+    for k, v in list(vars(_signal).items()):
         if k.startswith('SIG') and not k.startswith('SIG_'):
             signals[v] = k
     del k, v
@@ -117,7 +117,7 @@ class SignalHandler(object):
 
     def subscribe(self):
         """Subscribe self.handlers to signals."""
-        for sig, func in self.handlers.items():
+        for sig, func in list(self.handlers.items()):
             try:
                 self.set_handler(sig, func)
             except ValueError:
@@ -125,7 +125,7 @@ class SignalHandler(object):
 
     def unsubscribe(self):
         """Unsubscribe self.handlers from signals."""
-        for signum, handler in self._previous_handlers.items():
+        for signum, handler in list(self._previous_handlers.items()):
             signame = self.signals[signum]
 
             if handler is None:
@@ -153,7 +153,7 @@ class SignalHandler(object):
         If the given signal name or number is not available on the current
         platform, ValueError is raised.
         """
-        if isinstance(signal, basestring):
+        if isinstance(signal, str):
             signum = getattr(_signal, signal, None)
             if signum is None:
                 raise ValueError("No such signal: %r" % signal)
@@ -219,7 +219,7 @@ class DropPrivileges(SimplePlugin):
                 self.bus.log("pwd module not available; ignoring uid.",
                              level=30)
                 val = None
-            elif isinstance(val, basestring):
+            elif isinstance(val, str):
                 val = pwd.getpwnam(val)[2]
         self._uid = val
     uid = property(_get_uid, _set_uid,
@@ -234,7 +234,7 @@ class DropPrivileges(SimplePlugin):
                 self.bus.log("grp module not available; ignoring gid.",
                              level=30)
                 val = None
-            elif isinstance(val, basestring):
+            elif isinstance(val, str):
                 val = grp.getgrnam(val)[2]
         self._gid = val
     gid = property(_get_gid, _set_gid,
@@ -711,7 +711,7 @@ class ThreadManager(SimplePlugin):
 
     def stop(self):
         """Release all threads and run all 'stop_thread' listeners."""
-        for thread_ident, i in self.threads.items():
+        for thread_ident, i in list(self.threads.items()):
             self.bus.publish('stop_thread', i)
         self.threads.clear()
     graceful = stop

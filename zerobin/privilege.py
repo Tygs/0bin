@@ -182,8 +182,8 @@ class proc_credentials:
     This obtains and represents the credentials associated with a process.
     """
     def __init__(self):
-        self.uids = apply(res_ids, getresuid())
-        self.gids = apply(res_ids, getresgid())
+        self.uids = res_ids(*getresuid())
+        self.gids = res_ids(*getresgid())
         self.sups = sort_uniq(os.getgroups())
 
 def get_fs_ids():
@@ -217,7 +217,7 @@ def drop_privileges_permanently(uid, gid, sups):
 
     uid = coerce_user(uid)
     gid = coerce_group(gid)
-    sups = map(coerce_group, sups)
+    sups = list(map(coerce_group, sups))
 
     # This does some syntax checking
     ucred = user_credentials(uid, gid, sups)

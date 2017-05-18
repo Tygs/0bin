@@ -210,7 +210,7 @@ class ServerStateTests(helper.CPWebCase):
         except BadStatusLine:
             pass
         else:
-            print(self.body)
+            print((self.body))
             self.fail("AssertionError: BadStatusLine not raised")
 
         engine.block()

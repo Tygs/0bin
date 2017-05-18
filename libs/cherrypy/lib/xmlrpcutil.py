@@ -8,7 +8,7 @@ def get_xmlrpclib():
     try:
         import xmlrpc.client as x
     except ImportError:
-        import xmlrpclib as x
+        import xmlrpc.client as x
     return x
 
 

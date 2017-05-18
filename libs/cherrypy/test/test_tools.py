@@ -209,7 +209,7 @@ class ToolTests(helper.CPWebCase):
                 return "success!"
 
             def stream(self, id=None):
-                for x in xrange(100000000):
+                for x in range(100000000):
                     yield str(x)
             stream._cp_config = {'response.stream': True}
 

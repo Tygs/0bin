@@ -119,7 +119,7 @@ style) context manager.
 """
 
 import cherrypy
-from cherrypy._cpcompat import set, basestring
+from cherrypy._cpcompat import set, str
 from cherrypy.lib import reprconf
 
 # Deprecated in  CherryPy 3.2--remove in 3.3
@@ -132,11 +132,11 @@ def merge(base, other):
     If the given config is a filename, it will be appended to
     the list of files to monitor for "autoreload" changes.
     """
-    if isinstance(other, basestring):
+    if isinstance(other, str):
         cherrypy.engine.autoreload.files.add(other)
 
     # Load other into base
-    for section, value_map in reprconf.as_dict(other).items():
+    for section, value_map in list(reprconf.as_dict(other).items()):
         if not isinstance(value_map, dict):
             raise ValueError(
                 "Application config must include section headers, but the "
@@ -152,7 +152,7 @@ class Config(reprconf.Config):
 
     def update(self, config):
         """Update self from a dict, file or filename."""
-        if isinstance(config, basestring):
+        if isinstance(config, str):
             # Filename
             cherrypy.engine.autoreload.files.add(config)
         reprconf.Config.update(self, config)
@@ -177,7 +177,7 @@ class Config(reprconf.Config):
         def tool_decorator(f):
             if not hasattr(f, "_cp_config"):
                 f._cp_config = {}
-            for k, v in kwargs.items():
+            for k, v in list(kwargs.items()):
                 f._cp_config[k] = v
             return f
         return tool_decorator
@@ -307,7 +307,7 @@ Config.namespaces["engine"] = _engine_namespace_handler
 def _tree_namespace_handler(k, v):
     """Namespace handler for the 'tree' config namespace."""
     if isinstance(v, dict):
-        for script_name, app in v.items():
+        for script_name, app in list(v.items()):
             cherrypy.tree.graft(app, script_name)
             cherrypy.engine.log("Mounted: %s on %s" %
                                 (app, script_name or "/"))

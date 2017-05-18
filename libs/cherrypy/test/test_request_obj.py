@@ -41,7 +41,7 @@ class RequestObjectTests(helper.CPWebCase):
             """
             def __init__(cls, name, bases, dct):
                 type.__init__(cls, name, bases, dct)
-                for value in dct.values():
+                for value in list(dct.values()):
                     if isinstance(value, types.FunctionType):
                         value.exposed = True
                 setattr(root, name.lower(), cls())
@@ -257,7 +257,7 @@ class RequestObjectTests(helper.CPWebCase):
             def index(self):
                 yield "<h1>Choose your document</h1>\n"
                 yield "<ul>\n"
-                for id, contents in self.documents.items():
+                for id, contents in list(self.documents.items()):
                     yield (
                         "    <li><a href='/divorce/get?ID=%s'>%s</a>:"
                         " %s</li>\n" % (id, id, contents))

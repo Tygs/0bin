@@ -2,6 +2,7 @@
 
 # Deprecated in CherryPy 3.2 -- remove in CherryPy 3.3
 from cherrypy.lib.reprconf import unrepr, modules, attributes
+import collections
 
 def is_iterator(obj):
     '''Returns a boolean indicating if the object provided implements
@@ -29,7 +30,7 @@ def is_closable_iterator(obj):
         return True
     
     # A custom iterator. Look for a close method...
-    if not (hasattr(obj, 'close') and callable(obj.close)):
+    if not (hasattr(obj, 'close') and isinstance(obj.close, collections.Callable)):
         return False
     
     #  ... which doesn't require any arguments.

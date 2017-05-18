@@ -22,7 +22,7 @@ try:
     # Python 3.0+
     from configparser import ConfigParser
 except ImportError:
-    from ConfigParser import ConfigParser
+    from configparser import ConfigParser
 
 try:
     set
@@ -30,16 +30,16 @@ except NameError:
     from sets import Set as set
 
 try:
-    basestring
+    str
 except NameError:
-    basestring = str
+    str = str
 
 try:
     # Python 3
     import builtins
 except ImportError:
     # Python 2
-    import __builtin__ as builtins
+    import builtins as builtins
 
 import operator as _operator
 import sys
@@ -47,7 +47,7 @@ import sys
 
 def as_dict(config):
     """Return a dict from 'config' whether it is a dict, file, or filename."""
-    if isinstance(config, basestring):
+    if isinstance(config, str):
         config = Parser().dict_from_file(config)
     elif hasattr(config, 'read'):
         config = Parser().dict_from_file(config)
@@ -94,14 +94,14 @@ class NamespaceSet(dict):
         #     with handler as callable:
         #         for k, v in ns_confs.get(ns, {}).iteritems():
         #             callable(k, v)
-        for ns, handler in self.items():
+        for ns, handler in list(self.items()):
             exit = getattr(handler, "__exit__", None)
             if exit:
                 callable = handler.__enter__()
                 no_exc = True
                 try:
                     try:
-                        for k, v in ns_confs.get(ns, {}).items():
+                        for k, v in list(ns_confs.get(ns, {}).items()):
                             callable(k, v)
                     except:
                         # The exceptional case is handled here
@@ -116,7 +116,7 @@ class NamespaceSet(dict):
                     if no_exc and exit:
                         exit(None, None, None)
             else:
-                for k, v in ns_confs.get(ns, {}).items():
+                for k, v in list(ns_confs.get(ns, {}).items()):
                     handler(k, v)
 
     def __repr__(self):
@@ -155,7 +155,7 @@ class Config(dict):
 
     def update(self, config):
         """Update self from a dict, file or filename."""
-        if isinstance(config, basestring):
+        if isinstance(config, str):
             # Filename
             config = Parser().dict_from_file(config)
         elif hasattr(config, 'read'):
@@ -192,7 +192,7 @@ class Parser(ConfigParser):
         return optionstr
 
     def read(self, filenames):
-        if isinstance(filenames, basestring):
+        if isinstance(filenames, str):
             filenames = [filenames]
         for filename in filenames:
             # try:
@@ -290,7 +290,7 @@ class _Builder2:
         return kw_dict 
 
     def build_List(self, o):
-        return map(self.build, o.getChildren())
+        return list(map(self.build, o.getChildren()))
 
     def build_Const(self, o):
         return o.value
@@ -299,7 +299,7 @@ class _Builder2:
         d = {}
         i = iter(map(self.build, o.getChildren()))
         for el in i:
-            d[el] = i.next()
+            d[el] = next(i)
         return d
 
     def build_Tuple(self, o):
@@ -329,11 +329,11 @@ class _Builder2:
         raise TypeError("unrepr could not resolve the name %s" % repr(name))
 
     def build_Add(self, o):
-        left, right = map(self.build, o.getChildren())
+        left, right = list(map(self.build, o.getChildren()))
         return left + right
 
     def build_Mul(self, o):
-        left, right = map(self.build, o.getChildren())
+        left, right = list(map(self.build, o.getChildren()))
         return left * right
 
     def build_Getattr(self, o):
@@ -441,11 +441,11 @@ class _Builder3:
         return o.value
 
     def build_UnaryOp(self, o):
-        op, operand = map(self.build, [o.op, o.operand])
+        op, operand = list(map(self.build, [o.op, o.operand]))
         return op(operand)
 
     def build_BinOp(self, o):
-        left, op, right = map(self.build, [o.left, o.op, o.right])
+        left, op, right = list(map(self.build, [o.left, o.op, o.right]))
         return op(left, right)
 
     def build_Add(self, o):

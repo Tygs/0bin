@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 from functools import wraps, partial
 from collections import namedtuple
 import re
@@ -9,6 +9,7 @@ import sys
 import os
 import inspect
 from gettext import gettext as _, ngettext as _n
+import collections
 
 class ArgumentError(TypeError):
 
@@ -242,7 +243,7 @@ def coerce_option(val, option, key, command, name):
             )
 
 def set_arg_value(val, option, key, params, name, command):
-    if callable(option.source):
+    if isinstance(option.source, collections.Callable):
         return option.source(name=name, command=command,
                              val=val, params=params)
     else:
@@ -400,7 +401,7 @@ def clize(
                     raise ArgumentError(_("Too many arguments."), command, name)
 
             for option in command.options:
-                if not callable(option.source):
+                if not isinstance(option.source, collections.Callable):
                     kwargs.setdefault(option.source, option.default)
 
             fn_args = inspect.getargspec(fn).args

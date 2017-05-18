@@ -13,7 +13,7 @@ import string
 import sys
 import types
 try:
-    classtype = (type, types.ClassType)
+    classtype = (type, type)
 except AttributeError:
     classtype = type
 
@@ -117,7 +117,7 @@ def test_callable_spec(callable, callable_args, callable_kwargs):
         except IndexError:
             vararg_usage += 1
 
-    for key in callable_kwargs.keys():
+    for key in list(callable_kwargs.keys()):
         try:
             arg_usage[key] += 1
         except KeyError:
@@ -133,7 +133,7 @@ def test_callable_spec(callable, callable_args, callable_kwargs):
 
     missing_args = []
     multiple_args = []
-    for key, usage in arg_usage.items():
+    for key, usage in list(arg_usage.items()):
         if usage == 0:
             missing_args.append(key)
         elif usage > 1:

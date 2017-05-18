@@ -46,7 +46,7 @@ class WSGIGraftTests(helper.CPWebCase):
                     return next(self.iter)
             else:
                 def next(self):
-                    return self.iter.next()
+                    return next(self.iter)
 
             def close(self):
                 if hasattr(self.appresults, "close"):
@@ -69,7 +69,7 @@ class WSGIGraftTests(helper.CPWebCase):
                             return bytes(line)
                     else:
                         def next(this):
-                            line = list(this.iter.next())
+                            line = list(next(this.iter))
                             line.reverse()
                             return "".join(line)
 

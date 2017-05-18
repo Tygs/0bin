@@ -4,7 +4,7 @@ import sys
 import time
 
 import cherrypy
-from cherrypy._cpcompat import basestring, ntob, unicodestr
+from cherrypy._cpcompat import str, ntob, unicodestr
 
 
 try:
@@ -49,7 +49,7 @@ class LogCase(object):
 
     def _handleLogError(self, msg, data, marker, pattern):
         print("")
-        print("    ERROR: %s" % msg)
+        print(("    ERROR: %s" % msg))
 
         if not self.interactive:
             raise self.failureException(msg)
@@ -64,7 +64,7 @@ class LogCase(object):
             i = getchar().upper()
             if i not in "MPLIRX":
                 continue
-            print(i.upper())  # Also prints new line
+            print((i.upper()))  # Also prints new line
             if i == "L":
                 for x, line in enumerate(data):
                     if (x + 1) % self.console_height == 0:
@@ -75,11 +75,11 @@ class LogCase(object):
                         sys.stdout.write("            \r ")
                         if m == "q":
                             break
-                    print(line.rstrip())
+                    print((line.rstrip()))
             elif i == "M":
-                print(repr(marker or self.lastmarker))
+                print((repr(marker or self.lastmarker)))
             elif i == "P":
-                print(repr(pattern))
+                print((repr(pattern)))
             elif i == "I":
                 # return without raising the normal exception
                 return
@@ -186,7 +186,7 @@ class LogCase(object):
             # Multiple args. Use __getslice__ and require lines to be list.
             if isinstance(lines, tuple):
                 lines = list(lines)
-            elif isinstance(lines, basestring):
+            elif isinstance(lines, str):
                 raise TypeError("The 'lines' arg must be a list when "
                                 "'sliceargs' is a tuple.")
 

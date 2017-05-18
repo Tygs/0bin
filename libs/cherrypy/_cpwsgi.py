@@ -169,7 +169,7 @@ class _TrappedResponse(object):
             return self.trap(next, self.iter_response)
     else:
         def next(self):
-            return self.trap(self.iter_response.next)
+            return self.trap(self.iter_response.__next__)
 
     def close(self):
         if hasattr(self.response, 'close'):
@@ -274,7 +274,7 @@ class AppResponse(object):
             return next(self.iter_response)
     else:
         def next(self):
-            return self.iter_response.next()
+            return next(self.iter_response)
 
     def close(self):
         """Close and de-reference the current request and response. (Core)"""
