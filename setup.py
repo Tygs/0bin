@@ -30,6 +30,7 @@ setup(
     install_requires=[
         'cherrypy>=3.8.0,<9.0.0',
         'bottle',
+        'funcsigs',
         'clize',
         'lockfile',
     ],
