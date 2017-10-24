@@ -206,7 +206,7 @@
     /** Get a tinyurl using JSONP */
     getTinyURL: function(longURL, success) {
         $.ajax({
-  		  url: 'https://www.googleapis.com/urlshortener/v1/url',
+  		  url: 'https://www.googleapis.com/urlshortener/v1/url?key=' + zerobin.shortener_api_key,
   		  type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({

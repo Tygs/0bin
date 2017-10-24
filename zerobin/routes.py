@@ -174,4 +174,7 @@ def get_app(debug=None, settings_file='',
     if settings.DEBUG:
         bottle.debug(True)
 
+    if settings.SHORTENER_API_KEY is None:
+        raise SettingsValidationError('SHORTENER_API_KEY must be set')
+
     return settings, app
