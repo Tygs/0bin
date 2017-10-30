@@ -23,7 +23,9 @@
 <form action="/" method="get" accept-charset="utf-8">
 <p class="lnk-option">
   <a id="clip-button" href="#">Copy To Clipboard</a> |
+%if settings.SHORTENER_API_KEY:
   <a id="short-url" href="#">Get short url</a> |
+%endif
   <a id="email-link" href="#">Email this</a>
 
   <span class="paste-option btn-group top">

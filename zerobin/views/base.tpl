@@ -36,7 +36,9 @@
 
     <script type="text/javascript">
       zerobin.max_size = {{ settings.MAX_SIZE }};
-      zerobin.shortener_api_key = "{{ settings.SHORTENER_API_KEY }}";
+      %if settings.SHORTENER_API_KEY:
+        zerobin.shortener_api_key = "{{ settings.SHORTENER_API_KEY }}";
+      %endif
     </script>
 
   </head>
