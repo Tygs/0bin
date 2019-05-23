@@ -15,7 +15,7 @@ from zerobin.utils import settings, to_ascii, as_unicode, safe_open as open
 
 class Paste(object):
     """
-        A paste objet to deal with the file opening/parsing/saving and the
+        A paste object to deal with the file opening/parsing/saving and the
         calculation of the expiration date.
     """
 
@@ -36,7 +36,7 @@ class Paste(object):
 
         if not uuid:
             # generate the uuid from the decoded content by hashing it
-            # and turning it into base64, with some caracters strippped
+            # and turning it into base64, with some characters strippped
             uuid = hashlib.sha1(self.content.encode('utf8'))
             uuid = base64.b64encode(uuid.digest()).decode()
             uuid = uuid.rstrip('=\n').replace('/', '-')
@@ -149,8 +149,8 @@ class Paste(object):
         # the static files are saved in project_dir/static/xx/yy/uuid
         # xx and yy are generated from the uuid (see get_path())
         # we need to check if they are created before writting
-        # but since we want to prevent to many writes, we create
-        # an in memory cache that will hold the result of this check fo
+        # but since we want to prevent too many writes, we create
+        # an in memory cache that will hold the result of this check for
         # each worker. If the dir is not in cache, we check the FS, and
         # if the dir is not in there, we create the dir
         if head not in self.DIR_CACHE:
