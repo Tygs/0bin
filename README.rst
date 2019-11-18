@@ -24,6 +24,21 @@ but in short::
 
 0bin runs on Python 2.7 and Python 3.4.
 
+
+Docker
+======
+
+A Docker image is available. The [`Dockerfile`](Docker/Dockerfile) is in the `Docker` directory. Once in the directory, build the image with the command:
+
+    docker build -t 0bin .
+
+Then run it with the command:
+
+    docker run -p 8000:8000 -d -v /host/path/to/content/dir:/usr/lib/python3.5/site-packages/zerobin/static/content
+
+The option `-p 8000:8000` is needed to publish the port of the service. As for the option `-v /host/path/to/content/dir:/usr/lib/python3.5/site-packages/zerobin/static/content`, it is needed to persist the data.
+
+
 How it works
 =============
 
@@ -113,7 +128,7 @@ For small fixes (typo and such), you can work on master.
 
 For features, you should create a dedicated branch.
 
-In any case, if you modify Javascript or CSS files, you shall run compress.sh afterward to provide the minified files. It requires your to have yui-compressor installed (apt-get install yui-compressor on the debian family).
+In any case, if you modify Javascript or CSS files, you shall run compress.sh afterward to provide the minified files. It requires your to have yui-compressor installed (`apt-get install yui-compressor` on the debian family).
 
 We don't require you to rebase/merge, ordinary merging is alright.
 
