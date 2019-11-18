@@ -40,8 +40,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'0bin'
-copyright = u'2012, Sam et Max'
+project = '0bin'
+copyright = '2012, Sam et Max'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -183,8 +183,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', '0bin.tex', u'0bin Documentation',
-   u'Sam et Max', 'manual'),
+  ('index', '0bin.tex', '0bin Documentation',
+   'Sam et Max', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -213,8 +213,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', '0bin', u'0bin Documentation',
-     [u'Sam et Max'], 1)
+    ('index', '0bin', '0bin Documentation',
+     ['Sam et Max'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -227,8 +227,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', '0bin', u'0bin Documentation',
-   u'Sam et Max', '0bin', 'One line description of project.',
+  ('index', '0bin', '0bin Documentation',
+   'Sam et Max', '0bin', 'One line description of project.',
    'Miscellaneous'),
 ]
 

@@ -59,7 +59,7 @@ These API's are described in the `CherryPy specification <https://bitbucket.org/
 __version__ = "3.7.0"
 
 from cherrypy._cpcompat import urljoin as _urljoin, urlencode as _urlencode
-from cherrypy._cpcompat import basestring, unicodestr, set
+from cherrypy._cpcompat import str, unicodestr, set
 
 from cherrypy._cperror import HTTPError, HTTPRedirect, InternalRedirect
 from cherrypy._cperror import NotFound, CherryPyException, TimeoutError
@@ -261,7 +261,7 @@ class _ThreadLocalProxy(object):
         child = getattr(serving, self.__attrname__)
         return len(child)
 
-    def __nonzero__(self):
+    def __bool__(self):
         child = getattr(serving, self.__attrname__)
         return bool(child)
     # Python 3
@@ -354,7 +354,7 @@ def expose(func=None, alias=None):
     def expose_(func):
         func.exposed = True
         if alias is not None:
-            if isinstance(alias, basestring):
+            if isinstance(alias, str):
                 parents[alias.replace(".", "_")] = func
             else:
                 for a in alias:
@@ -474,7 +474,7 @@ def popargs(*args, **kwargs):
 
     handler = None
     handler_call = False
-    for k, v in kwargs.items():
+    for k, v in list(kwargs.items()):
         if k == 'handler':
             handler = v
         else:

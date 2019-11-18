@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from __future__ import print_function, unicode_literals, absolute_import
+
 
 import time
 import os
@@ -25,7 +25,7 @@ except ImportError:
     # python-2.6 or earlier - use simplier less-optimized execfile()
     def run_path(file_path):
         mod_globals = {'__file__': file_path}
-        execfile(file_path, mod_globals)
+        exec(compile(open(file_path).read(), file_path, 'exec'), mod_globals)
         return mod_globals
 
 
@@ -89,7 +89,7 @@ class SettingsContainer(object):
             Update settings with values from the given mapping object.
             (Taking only variable with uppercased name)
         """
-        for name, value in dict.items():
+        for name, value in list(dict.items()):
             if name.isupper():
                 setattr(self, name, value)
         return self
@@ -142,6 +142,6 @@ safe_open = partial(codecs.open, encoding="utf8")
 def as_unicode(obj):
     """ Return the unicode representation of an object """
     try:
-        return unicode(obj)
+        return str(obj)
     except NameError:
         return str(obj)

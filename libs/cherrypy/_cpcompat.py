@@ -25,7 +25,7 @@ if sys.version_info >= (3, 0):
     bytestr = bytes
     unicodestr = str
     nativestr = unicodestr
-    basestring = (bytes, str)
+    str = (bytes, str)
 
     def ntob(n, encoding='ISO-8859-1'):
         """Return the given native string as a byte string in the given
@@ -57,9 +57,9 @@ else:
     # Python 2
     py3k = False
     bytestr = str
-    unicodestr = unicode
+    unicodestr = str
     nativestr = bytestr
-    basestring = basestring
+    str = str
 
     def ntob(n, encoding='ISO-8859-1'):
         """Return the given native string as a byte string in the given
@@ -82,9 +82,9 @@ else:
         # escapes, but without having to prefix it with u'' for Python 2,
         # but no prefix for Python 3.
         if encoding == 'escape':
-            return unicode(
+            return str(
                 re.sub(r'\\u([0-9a-zA-Z]{4})',
-                       lambda m: unichr(int(m.group(1), 16)),
+                       lambda m: chr(int(m.group(1), 16)),
                        n.decode('ISO-8859-1')))
         # Assume it's already in the given encoding, which for ISO-8859-1
         # is almost always what was intended.
@@ -93,15 +93,15 @@ else:
     def tonative(n, encoding='ISO-8859-1'):
         """Return the given string as a native string in the given encoding."""
         # In Python 2, the native string type is bytes.
-        if isinstance(n, unicode):
+        if isinstance(n, str):
             return n.encode(encoding)
         return n
     try:
         # type("")
-        from cStringIO import StringIO
+        from io import StringIO
     except ImportError:
         # type("")
-        from StringIO import StringIO
+        from io import StringIO
     # bytes:
     BytesIO = StringIO
 
@@ -174,10 +174,11 @@ try:
     from urllib.request import parse_http_list, parse_keqv_list
 except ImportError:
     # Python 2
-    from urlparse import urljoin
-    from urllib import urlencode, urlopen
-    from urllib import quote, quote_plus
-    from urllib import unquote
+    from urllib.parse import urljoin
+    from urllib.parse import urlencode
+    from urllib.request import urlopen
+    from urllib.parse import quote, quote_plus
+    from urllib.parse import unquote
     from urllib2 import parse_http_list, parse_keqv_list
 
 try:
@@ -188,31 +189,31 @@ except ImportError:
 try:
     dict.iteritems
     # Python 2
-    iteritems = lambda d: d.iteritems()
-    copyitems = lambda d: d.items()
+    iteritems = lambda d: iter(list(d.items()))
+    copyitems = lambda d: list(d.items())
 except AttributeError:
     # Python 3
-    iteritems = lambda d: d.items()
+    iteritems = lambda d: list(d.items())
     copyitems = lambda d: list(d.items())
 
 try:
     dict.iterkeys
     # Python 2
-    iterkeys = lambda d: d.iterkeys()
-    copykeys = lambda d: d.keys()
+    iterkeys = lambda d: iter(list(d.keys()))
+    copykeys = lambda d: list(d.keys())
 except AttributeError:
     # Python 3
-    iterkeys = lambda d: d.keys()
+    iterkeys = lambda d: list(d.keys())
     copykeys = lambda d: list(d.keys())
 
 try:
     dict.itervalues
     # Python 2
-    itervalues = lambda d: d.itervalues()
-    copyvalues = lambda d: d.values()
+    itervalues = lambda d: iter(list(d.values()))
+    copyvalues = lambda d: list(d.values())
 except AttributeError:
     # Python 3
-    itervalues = lambda d: d.values()
+    itervalues = lambda d: list(d.values())
     copyvalues = lambda d: list(d.values())
 
 try:
@@ -220,15 +221,15 @@ try:
     import builtins
 except ImportError:
     # Python 2
-    import __builtin__ as builtins
+    import builtins as builtins
 
 try:
     # Python 2. We try Python 2 first clients on Python 2
     # don't try to import the 'http' module from cherrypy.lib
-    from Cookie import SimpleCookie, CookieError
-    from httplib import BadStatusLine, HTTPConnection, IncompleteRead
-    from httplib import NotConnected
-    from BaseHTTPServer import BaseHTTPRequestHandler
+    from http.cookies import SimpleCookie, CookieError
+    from http.client import BadStatusLine, HTTPConnection, IncompleteRead
+    from http.client import NotConnected
+    from http.server import BaseHTTPRequestHandler
 except ImportError:
     # Python 3
     from http.cookies import SimpleCookie, CookieError
@@ -245,7 +246,7 @@ if py3k:
         HTTPSConnection = None
 else:
     try:
-        from httplib import HTTPSConnection
+        from http.client import HTTPSConnection
     except ImportError:
         HTTPSConnection = None
 
@@ -290,7 +291,7 @@ try:
             errors=errors)
 except ImportError:
     # Python 2
-    from urllib import unquote as parse_unquote
+    from urllib.parse import unquote as parse_unquote
 
     def unquote_qs(atom, encoding, errors='strict'):
         return parse_unquote(atom.replace('+', ' ')).decode(encoding, errors)
@@ -327,7 +328,7 @@ finally:
 
 
 try:
-    import cPickle as pickle
+    import pickle as pickle
 except ImportError:
     # In Python 2, pickle is a Python version.
     # In Python 3, pickle is the sped-up C version.
@@ -349,7 +350,7 @@ except (AttributeError, NotImplementedError):
 try:
     from _thread import get_ident as get_thread_ident
 except ImportError:
-    from thread import get_ident as get_thread_ident
+    from _thread import get_ident as get_thread_ident
 
 try:
     # Python 3
@@ -357,7 +358,7 @@ try:
 except NameError:
     # Python 2
     def next(i):
-        return i.next()
+        return i.__next__()
 
 if sys.version_info >= (3, 3):
     Timer = threading.Timer

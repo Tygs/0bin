@@ -183,7 +183,7 @@ class ConfigTests(helper.CPWebCase):
             'foo': 'this3',
             'bax': 'this4',
         }
-        for key, expected in expectedconf.items():
+        for key, expected in list(expectedconf.items()):
             self.getPage("/foo/bar?key=" + key)
             self.assertBody(repr(expected))
 
@@ -206,7 +206,7 @@ class ConfigTests(helper.CPWebCase):
 
         if not compat.py3k:
             self.getPage("/repr?key=thing3")
-            self.assertBody(repr(unicode('test')))
+            self.assertBody(repr(str('test')))
 
         self.getPage("/repr?key=complex")
         self.assertBody("(3+2j)")

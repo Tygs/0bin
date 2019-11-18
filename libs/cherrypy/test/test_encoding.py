@@ -88,7 +88,7 @@ class EncodingTests(helper.CPWebCase):
 
             def extra_charset(self, *args, **kwargs):
                 return ', '.join([": ".join((k, v))
-                                  for k, v in cherrypy.request.params.items()])
+                                  for k, v in list(cherrypy.request.params.items())])
             extra_charset.exposed = True
             extra_charset._cp_config = {
                 'tools.decode.on': True,
@@ -97,7 +97,7 @@ class EncodingTests(helper.CPWebCase):
 
             def force_charset(self, *args, **kwargs):
                 return ', '.join([": ".join((k, v))
-                                  for k, v in cherrypy.request.params.items()])
+                                  for k, v in list(cherrypy.request.params.items())])
             force_charset.exposed = True
             force_charset._cp_config = {
                 'tools.decode.on': True,

@@ -27,7 +27,7 @@ import types
 from unittest import *
 from unittest import _TextTestResult
 
-from cherrypy._cpcompat import basestring, ntob, py3k, HTTPConnection
+from cherrypy._cpcompat import str, ntob, py3k, HTTPConnection
 from cherrypy._cpcompat import HTTPSConnection, unicodestr
 
 
@@ -124,14 +124,14 @@ class ReloadingTestLoader(TestLoader):
         if isinstance(obj, types.ModuleType):
             return self.loadTestsFromModule(obj)
         elif (((py3k and isinstance(obj, type))
-               or isinstance(obj, (type, types.ClassType)))
+               or isinstance(obj, type))
               and issubclass(obj, TestCase)):
             return self.loadTestsFromTestCase(obj)
         elif isinstance(obj, types.UnboundMethodType):
             if py3k:
                 return obj.__self__.__class__(obj.__name__)
             else:
-                return obj.im_class(obj.__name__)
+                return obj.__self__.__class__(obj.__name__)
         elif hasattr(obj, '__call__'):
             test = obj()
             if not isinstance(test, TestCase) and \
@@ -269,7 +269,7 @@ class WebCase(TestCase):
 
     def _handlewebError(self, msg):
         print("")
-        print("    ERROR: %s" % msg)
+        print(("    ERROR: %s" % msg))
 
         if not self.interactive:
             raise self.failureException(msg)
@@ -285,7 +285,7 @@ class WebCase(TestCase):
                 i = i.decode('ascii')
             if i not in "BHSUIRX":
                 continue
-            print(i.upper())  # Also prints new line
+            print((i.upper()))  # Also prints new line
             if i == "B":
                 for x, line in enumerate(self.body.splitlines()):
                     if (x + 1) % self.console_height == 0:
@@ -300,9 +300,9 @@ class WebCase(TestCase):
             elif i == "H":
                 pprint.pprint(self.headers)
             elif i == "S":
-                print(self.status)
+                print((self.status))
             elif i == "U":
-                print(self.url)
+                print((self.url))
             elif i == "I":
                 # return without raising the normal exception
                 return
@@ -318,7 +318,7 @@ class WebCase(TestCase):
 
     def assertStatus(self, status, msg=None):
         """Fail if self.status != status."""
-        if isinstance(status, basestring):
+        if isinstance(status, str):
             if not self.status == status:
                 if msg is None:
                     msg = 'Status (%r) != %r' % (self.status, status)
@@ -333,7 +333,7 @@ class WebCase(TestCase):
             # status is a tuple or list.
             match = False
             for s in status:
-                if isinstance(s, basestring):
+                if isinstance(s, str):
                     if self.status == s:
                         match = True
                         break
@@ -376,7 +376,7 @@ class WebCase(TestCase):
     def assertHeaderItemValue(self, key, value, msg=None):
         """Fail if the header does not contain the specified value"""
         actual_value = self.assertHeader(key, msg=msg)
-        header_values = map(str.strip, actual_value.split(','))
+        header_values = list(map(str.strip, actual_value.split(',')))
         if value in header_values:
             return value
 
@@ -604,5 +604,5 @@ def server_error(exc=None):
     else:
         ServerError.on = True
         print("")
-        print("".join(traceback.format_exception(*exc)))
+        print(("".join(traceback.format_exception(*exc))))
         return True

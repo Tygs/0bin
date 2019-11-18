@@ -224,7 +224,7 @@ Finished 1000 requests
         try:
             self.output = _cpmodpy.read_process(AB_PATH or "ab", self.args())
         except:
-            print(_cperror.format_exc())
+            print((_cperror.format_exc()))
             raise
 
         for attr, name, pattern in self.parse_patterns:
@@ -255,7 +255,7 @@ def thread_report(path=SCRIPT_NAME + "/hello", concurrency=safe_threads):
         for attr in attrs:
             val = getattr(sess, attr)
             if val is None:
-                print(sess.output)
+                print((sess.output))
                 row = None
                 break
             val = float(val)
@@ -289,18 +289,18 @@ def print_report(rows):
 
 def run_standard_benchmarks():
     print("")
-    print("Client Thread Report (1000 requests, 14 byte response body, "
-          "%s server threads):" % cherrypy.server.thread_pool)
+    print(("Client Thread Report (1000 requests, 14 byte response body, "
+          "%s server threads):" % cherrypy.server.thread_pool))
     print_report(thread_report())
 
     print("")
-    print("Client Thread Report (1000 requests, 14 bytes via staticdir, "
-          "%s server threads):" % cherrypy.server.thread_pool)
+    print(("Client Thread Report (1000 requests, 14 bytes via staticdir, "
+          "%s server threads):" % cherrypy.server.thread_pool))
     print_report(thread_report("%s/static/index.html" % SCRIPT_NAME))
 
     print("")
-    print("Size Report (1000 requests, 50 client threads, "
-          "%s server threads):" % cherrypy.server.thread_pool)
+    print(("Size Report (1000 requests, 50 client threads, "
+          "%s server threads):" % cherrypy.server.thread_pool))
     print_report(size_report())
 
 
@@ -377,22 +377,22 @@ if __name__ == '__main__':
         # can be tested from a standard web browser.
         def run():
             port = cherrypy.server.socket_port
-            print("You may now open http://127.0.0.1:%s%s/" %
-                  (port, SCRIPT_NAME))
+            print(("You may now open http://127.0.0.1:%s%s/" %
+                  (port, SCRIPT_NAME)))
 
             if "--null" in opts:
                 print("Using null Request object")
     else:
         def run():
             end = time.time() - start
-            print("Started in %s seconds" % end)
+            print(("Started in %s seconds" % end))
             if "--null" in opts:
                 print("\nUsing null Request object")
             try:
                 try:
                     run_standard_benchmarks()
                 except:
-                    print(_cperror.format_exc())
+                    print((_cperror.format_exc()))
                     raise
             finally:
                 cherrypy.engine.exit()

@@ -259,7 +259,7 @@ class LogManager(object):
                  'o': dict.get(inheaders, 'Host', '-'),
                  }
         if py3k:
-            for k, v in atoms.items():
+            for k, v in list(atoms.items()):
                 if not isinstance(v, str):
                     v = str(v)
                 v = v.replace('"', '\\"').encode('utf8')
@@ -281,8 +281,8 @@ class LogManager(object):
             except:
                 self(traceback=True)
         else:
-            for k, v in atoms.items():
-                if isinstance(v, unicode):
+            for k, v in list(atoms.items()):
+                if isinstance(v, str):
                     v = v.encode('utf8')
                 elif not isinstance(v, str):
                     v = str(v)

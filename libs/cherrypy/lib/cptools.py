@@ -4,7 +4,7 @@ import logging
 import re
 
 import cherrypy
-from cherrypy._cpcompat import basestring, md5, set, unicodestr
+from cherrypy._cpcompat import str, md5, set, unicodestr
 from cherrypy.lib import httputil as _httputil
 from cherrypy.lib import is_iterator
 
@@ -404,7 +404,7 @@ Message: %(error_msg)s
 
 def session_auth(**kwargs):
     sa = SessionAuth()
-    for k, v in kwargs.items():
+    for k, v in list(kwargs.items()):
         setattr(sa, k, v)
     return sa.run()
 session_auth.__doc__ = """Session authentication hook.
@@ -435,7 +435,7 @@ def log_hooks(debug=False):
     # Sort by the standard points if possible.
     from cherrypy import _cprequest
     points = _cprequest.hookpoints
-    for k in request.hooks.keys():
+    for k in list(request.hooks.keys()):
         if k not in points:
             points.append(k)
 
@@ -531,7 +531,7 @@ def accept(media=None, debug=False):
     """
     if not media:
         return
-    if isinstance(media, basestring):
+    if isinstance(media, str):
         media = [media]
     request = cherrypy.serving.request
 

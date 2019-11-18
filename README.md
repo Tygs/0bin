@@ -1,3 +1,6 @@
+## Travis CI client
+[![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/Python3pkg/0bin)
+
 0bin
 ====
 

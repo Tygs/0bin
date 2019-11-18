@@ -285,8 +285,8 @@ class ByteCountWrapper(object):
     def __iter__(self):
         return self
 
-    def next(self):
-        data = self.rfile.next()
+    def __next__(self):
+        data = next(self.rfile)
         self.bytes_read += len(data)
         return data
 
@@ -605,7 +605,7 @@ table.stats2 th {
         """Return ([headers], [rows]) for the given collection."""
         # E.g., the 'Requests' dict.
         headers = []
-        for record in v.itervalues():
+        for record in list(v.values()):
             for k3 in record:
                 format = formatting.get(k3, missing)
                 if format is None:

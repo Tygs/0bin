@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from __future__ import unicode_literals, absolute_import, print_function
+
 
 """
     Main script including runserver and delete-paste.
@@ -13,7 +13,7 @@ from sigtools.modifiers import annotate, autokwoargs
 import re
 
 try:
-    import thread
+    import _thread
 except ImportError:
     import _thread as thread
 
@@ -47,7 +47,7 @@ def runserver(host='', port='', debug=None, user='', group='',
         print('Configuration error: %s' % err.message, file=sys.stderr)
         sys.exit(1)
 
-    thread.start_new_thread(drop_privileges, (settings.USER, settings.GROUP))
+    _thread.start_new_thread(drop_privileges, (settings.USER, settings.GROUP))
 
     if settings.DEBUG:
         run(app, host=settings.HOST, port=settings.PORT, reloader=True,
@@ -95,7 +95,7 @@ def delete_paste(quiet=False, *pastes):
 def main():
     subcommands = [runserver, delete_paste]
     subcommand_names = [clize.util.name_py2cli(name)
-            for name in clize.util.dict_from_names(subcommands).keys()]
+            for name in list(clize.util.dict_from_names(subcommands).keys())]
     if len(sys.argv) < 2 or sys.argv[1] not in subcommand_names:
         sys.argv.insert(1, subcommand_names[0])
     clize.run(runserver, delete_paste)

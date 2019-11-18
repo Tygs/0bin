@@ -2,8 +2,8 @@ import sys
 from cherrypy._cpcompat import py3k
 
 try:
-    from xmlrpclib import DateTime, Fault, ProtocolError, ServerProxy
-    from xmlrpclib import SafeTransport
+    from xmlrpc.client import DateTime, Fault, ProtocolError, ServerProxy
+    from xmlrpc.client import SafeTransport
 except ImportError:
     from xmlrpc.client import DateTime, Fault, ProtocolError, ServerProxy
     from xmlrpc.client import SafeTransport
