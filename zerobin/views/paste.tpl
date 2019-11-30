@@ -66,6 +66,7 @@
         <option value="burn_after_reading">Burn after reading</option>
         <option selected value="1_day">1 day</option>
         <option value="1_month">1 month</option>
+        <option value="1_year">1 year</option>
         <option value="never">Never</option>
       </select>
       <button type="submit" class="btn btn-primary">Submit</button>
