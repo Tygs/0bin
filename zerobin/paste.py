@@ -125,7 +125,10 @@ class Paste(object):
         """
         path = settings.PASTE_FILES_ROOT
         counter_file = os.path.join(path, 'counter')
-        lock = lockfile.LockFile(counter_file)
+        try:
+            lock = lockfile.LockFile(counter_file)
+        except AttributeError:
+            lock = lockfile.FileLock(counter_file)
 
         with lock:
                 # Read the value from the counter
