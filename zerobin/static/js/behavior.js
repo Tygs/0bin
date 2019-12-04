@@ -894,6 +894,23 @@
         e.target.href = 'mailto:friend@example.com?body=' + window.location.toString();
     });
 
+    /* Use full page width toogle */
+    $('#use-fullwidth').live('click', function (e) {
+      e.preventDefault();
+      $(this).hide();
+      $('#use-fixedwidth').show();
+      $('.container').addClass('container-fluid').removeClass('container');
+      $('.row').addClass('row-fluid').removeClass('row');
+    });
+
+    /* Use fixed page width toogle (initially hidden) */
+    $('#use-fixedwidth').live('click', function (e) {
+      e.preventDefault();
+      $(this).hide();
+      $('#use-fullwidth').show();
+      $('.container-fluid').addClass('container').removeClass('container-fluid');
+      $('.row-fluid').addClass('row').removeClass('row-fluid');
+    });
 
   }); /* End of "document ready" jquery callback */
 

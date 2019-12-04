@@ -24,7 +24,9 @@
 <p class="lnk-option">
   <a id="clip-button" href="#">Copy To Clipboard</a> |
   <a id="short-url" href="#">Get short url</a> |
-  <a id="email-link" href="#">Email this</a>
+  <a id="email-link" href="#">Email this</a> |
+  <a id="use-fullwidth" href="#">Use full width</a>
+  <a id="use-fixedwidth" href="#" class="starthidden">Use fixed width</a>
 
   <span class="paste-option btn-group top">
       <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
