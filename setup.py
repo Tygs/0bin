@@ -28,8 +28,9 @@ setup(
     description="An client side encrypted pastebin",
     long_description=open('README.rst').read(),
     install_requires=[
-        'cherrypy',
+        'cherrypy>=3.8.0,<9.0.0',
         'bottle',
+        'funcsigs',
         'clize',
         'lockfile',
     ],
