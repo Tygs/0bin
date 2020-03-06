@@ -1,6 +1,6 @@
 #! /bin/bash
 
-COMMAND="yui-compressor";
+COMMAND="node node_modules/yui-compressor/lib/index.js";
 command -v $COMMAND >/dev/null 2>&1 || { echo >&2 "Error: this script requires the command '$COMMAND' to be available"; exit 1; }
 
 CURDIR=$(dirname $(readlink -f $0));
@@ -44,8 +44,5 @@ echo $'\n''/* lzw */' >> $ADDITIONAL_JS_OUTPUT;
 $COMMAND $JSDIR'lzw.js' >> $ADDITIONAL_JS_OUTPUT;
 echo $'\n''/* prettify */' >> $ADDITIONAL_JS_OUTPUT;
 cat $JSDIR'prettify.min.js' >> $ADDITIONAL_JS_OUTPUT;
-echo $'\n''/* ZeroClipboard */' >> $ADDITIONAL_JS_OUTPUT;
-$COMMAND $JSDIR'ZeroClipboard.js' >> $ADDITIONAL_JS_OUTPUT;
 
 echo "Done"
-

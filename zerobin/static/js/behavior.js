@@ -654,29 +654,24 @@
         /* Add a continuation to let the UI redraw */
         setTimeout(function () {
 
-          /* Setup flash clipboard button */
-          ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf');
+          /* Setup copy to clipboard link */
+          $('#clip-button').on('mouseup', function () {
+            var pasteData = $('#paste-content').html();
 
-          var clip = new ZeroClipboard.Client();
+            function copyListener(e) {
+              /* Set in both HTML and plain to support pasting in RTF or text */
+              e.clipboardData.setData('text/html', pasteData);
+              e.clipboardData.setData('text/plain', pasteData);
+              e.preventDefault();
+            }
 
-          // Callback to reposition the clibpboad flash animation overlay
-          var reposition = function () {
-            clip.reposition();
-          };
+            document.addEventListener('copy', copyListener);
+            document.execCommand('copy');
+            document.removeEventListener('copy', copyListener);
 
-          clip.addEventListener('mouseup', function () {
-            $('#clip-button').text('Copying paste...');
-            clip.setText(zerobin.getPasteContent());
-          });
-          clip.addEventListener('complete', function () {
-            $('#clip-button').text('Copy to clipboard');
             zerobin.message('info', 'The paste is now in your clipboard', '',
-            true, reposition);
+            true);
           });
-          clip.glue('clip-button');
-
-          window.onresize = reposition;
-
 
           /* Setup link to get the paste short url*/
           $('#short-url').click(function (e) {
@@ -687,16 +682,9 @@
               $('#copy-success').hide();
               zerobin.message('success',
                 '<a href="' + tinyurl + '">' + tinyurl + '</a>',
-                'Short url', true, reposition);
+                'Short url', true);
               $('#short-url').text('Get short url');
             });
-          });
-
-          /* Remap the message close handler to include the clipboard
-           flash reposition */
-          $(".close").die().live('click', function (e) {
-            e.preventDefault();
-            $(this).parent().fadeOut(reposition);
           });
 
           /** Syntaxic coloration */
@@ -710,7 +698,7 @@
                 "The paste did not seem to be code, so it " +
                 "was not colorized. " +
                 "<a id='force-coloration' href='#'>Force coloration</a>",
-                '', false, reposition);
+                '', false);
             }
           }
 
