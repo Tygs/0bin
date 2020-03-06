@@ -1,6 +1,6 @@
 #! /bin/bash
 
-COMMAND="node node_modules/yui-compressor/lib/index.js";
+COMMAND="yui-compressor";
 command -v $COMMAND >/dev/null 2>&1 || { echo >&2 "Error: this script requires the command '$COMMAND' to be available"; exit 1; }
 
 CURDIR=$(dirname $(readlink -f $0));
