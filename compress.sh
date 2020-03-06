@@ -44,8 +44,5 @@ echo $'\n''/* lzw */' >> $ADDITIONAL_JS_OUTPUT;
 $COMMAND $JSDIR'lzw.js' >> $ADDITIONAL_JS_OUTPUT;
 echo $'\n''/* prettify */' >> $ADDITIONAL_JS_OUTPUT;
 cat $JSDIR'prettify.min.js' >> $ADDITIONAL_JS_OUTPUT;
-echo $'\n''/* ZeroClipboard */' >> $ADDITIONAL_JS_OUTPUT;
-$COMMAND $JSDIR'ZeroClipboard.js' >> $ADDITIONAL_JS_OUTPUT;
 
 echo "Done"
-

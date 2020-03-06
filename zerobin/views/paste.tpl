@@ -43,7 +43,7 @@
 
 <p>
   <pre id="paste-content" class="prettyprint">
-    <code>
+    <code id="paste-content-code">
       {{ paste.content }}
     </code>
   </pre>
