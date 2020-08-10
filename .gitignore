@@ -14,6 +14,8 @@
 
 *.pyc
 *.pyo
+__pycache__
+.mypy*
 
 /tools/zerobinpaste.js
 /tools/zerobinpaste.min
@@ -34,3 +36,4 @@ content
 *.sublime-workspace
 settings_local.py
 build
+.vscode
