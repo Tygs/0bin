@@ -7,6 +7,7 @@
 
 import sys
 import re
+import secrets
 import _thread as thread
 
 from zerobin.utils import settings, SettingsValidationError, drop_privileges
@@ -19,6 +20,7 @@ import clize
 
 
 def runserver(
+    *,
     host="",
     port="",
     debug=None,
@@ -30,8 +32,6 @@ def runserver(
     paste_id_length=None,
     server="cherrypy",
 ):
-
-    debug = True
     if version:
         print("0bin V%s" % settings.VERSION)
         sys.exit(0)
@@ -41,6 +41,15 @@ def runserver(
     settings.USER = user or settings.USER
     settings.GROUP = group or settings.GROUP
     settings.PASTE_ID_LENGTH = paste_id_length or settings.PASTE_ID_LENGTH
+    settings.DEBUG = bool(debug) if debug is not None else settings.DEBUG
+
+    settings.VAR_DIR.mkdir(exist_ok=True, parents=True)
+    settings.PASTE_FILES_ROOT.mkdir(exist_ok=True, parents=True)
+
+    secret_key_file = settings.VAR_DIR / "secret_key"
+    if not secret_key_file.is_file():
+        secret_key_file.write_text(secrets.token_urlsafe(64))
+    settings.SECRET_KEY = secret_key_file.read_text()
 
     try:
         _, app = get_app(debug, settings_file, compressed_static, settings=settings)
@@ -52,14 +61,10 @@ def runserver(
 
     if settings.DEBUG:
         run(
-            app,
-            host=settings.HOST,
-            port=settings.PORT,
-            reloader=True,
-            server="cherrypy",
+            app, host=settings.HOST, port=settings.PORT, reloader=True, server=server,
         )
     else:
-        run(app, host=settings.HOST, port=settings.PORT, server="cherrypy")
+        run(app, host=settings.HOST, port=settings.PORT, server=server)
 
 
 # The regex parse the url and separate the paste's id from the decription key
@@ -78,7 +83,7 @@ def unpack_paste(paste):
     return paste
 
 
-def delete_paste(quiet=False, *pastes):
+def delete_paste(*pastes, quiet=False):
     """
     Remove pastes, given its ID or its URL
 

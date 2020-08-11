@@ -1,28 +1,19 @@
-#!/usr/bin/env python
-# coding: utf-8
+from zerobin import ROOT_DIR
 
-from __future__ import unicode_literals, absolute_import
+# Path to the directory that will contains all variable content, such
+# as pastes, the secret key, etc
+VAR_DIR = ROOT_DIR.parent / "var"
 
-
-######## NOT SETTINGS, JUST BOILER PLATE ##############
-import os
-
-VERSION = '0.5'
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-LIBS_DIR = os.path.join(os.path.dirname(ROOT_DIR), 'libs')
-
-######## END OF BOILER PLATE ##############
-
-# debug will get you error message and auto reload
+# debug will get you error messages and auto reload
 # don't set this to True in production
 DEBUG = False
 
 # Should the application serve static files on it's own ?
-# IF yes, set the absolute path to the static files.
+# If yes, set the absolute path to the static files.
 # If no, set it to None
 # In dev this is handy, in prod you probably want the HTTP servers
 # to serve it, but it's OK for small traffic to set it to True in prod too.
-STATIC_FILES_ROOT = os.path.join(ROOT_DIR, 'static')
+STATIC_FILES_ROOT = ROOT_DIR / "static"
 
 # If True, will link the compressed verion of the js and css files,
 # otherwise, will use the ordinary files
@@ -31,15 +22,15 @@ COMPRESSED_STATIC_FILES = False
 # absolute path where the paste files should be store
 # default in projectdirectory/static/content/
 # use "/" even under Windows
-PASTE_FILES_ROOT = os.path.join(STATIC_FILES_ROOT, 'content')
+PASTE_FILES_ROOT = VAR_DIR / "content"
 
-# a tuple of absolute paths of directory where to look the template for
+# A tuple of absolute paths of directory where to look the template for
 # the first one will be the first to be looked into
-# if you want to override a template, create a new dir, write the
-# template with the same name as the one you want to override in it
-# then add the dir path at the top of this tuple
+# if you want to override, it needs to be it a directory at the begining of
+# this tuple. By default, custom_views is meant for that purpose.
 TEMPLATE_DIRS = (
-    os.path.join(ROOT_DIR, 'views'),
+    VAR_DIR / "custom_views",
+    ROOT_DIR / "views",
 )
 
 # Port and host the embeded python server should be using
@@ -62,10 +53,10 @@ REFRESH_COUNTER = 60 * 1
 # Names/links to insert in the menu bar.
 # Any link with "mailto:" will be escaped to prevent spam
 MENU = (
-    ('Home', '/'), # internal link. First link will be highlited
-    ('Download 0bin', 'https://github.com/sametmax/0bin'), # external link
-    ('Faq', '/faq/'), # faq
-    ('Contact', 'mailto:your@email.com') # email
+    ("Home", "/"),  # internal link. First link will be highlited
+    ("Download 0bin", "https://github.com/sametmax/0bin"),  # external link
+    ("Faq", "/faq/"),  # faq
+    ("Contact", "mailto:your@email.com"),  # email
 )
 
 # limit size of pasted text in bytes. Be careful allowing too much size can

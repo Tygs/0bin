@@ -1,7 +1,7 @@
 %if "burn_after_reading" in str(paste.expiration):
 %if keep_alive:
 <p class="alert alert-info">
-  <a class="close" data-dismiss="alert" href="#" @click="$event.target.parentNode.remove()">×</a>
+  <a class="close" data-dismiss="alert" href="#" @click.prevent="$event.target.parentNode.remove()">×</a>
   <strong class="title">Ok!</strong>
   <span class="message">
     This paste will be deleted the next time it is read.
@@ -9,7 +9,7 @@
 </p>
 %else:
 <p class="alert">
-  <a class="close" data-dismiss="alert" href="#" @click="$event.target.parentNode.remove()">×</a>
+  <a class="close" data-dismiss="alert" href="#" @click.prevent="$event.target.parentNode.remove()">×</a>
   <strong class="title">Warning!</strong>
   <span class="message">
     This paste has self-destructed. If you close this window,
@@ -54,6 +54,10 @@
   </pre>
     </p>
 
+    <p v-if="currentPaste.ownerKey">
+      <button type="button" class="btn btn-danger" @click="handleDeletePaste()">Delete this paste</button>
+    </p>
+
     <p class="paste-option btn-group bottom">
       <button class="btn btn-clone" @click.prevent="handleClone()"><i class="icon-camera"></i>&nbsp;Clone</button>
 
@@ -69,7 +73,7 @@
 
 <!-- For cloning -->
 <div class="submit-form clone">
-  <form class="well" method="post" action="/paste/create">
+  <form class="well" method="post" action="/paste/create" @submit.prevent="encryptAndSendPaste()">
     <p class="paste-option">
       <label for="expiration">Expiration:</label>
       <select id="expiration" name="expiration" v-model="newPaste.expiration">
@@ -78,7 +82,7 @@
         <option value="1_month">1 month</option>
         <option value="never">Never</option>
       </select>
-      <button type="submit" class="btn btn-primary" @click="encryptAndSendPaste($event)">Submit</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
       <button class="btn btn-danger" @click.prevent="handleCancelClone()">Cancel clone</button>
     </p>
 
@@ -87,7 +91,7 @@
         <div class="bar"></div>
       </div>
       <textarea rows="10" style="width:100%;" class="input-xlarge" id="content" name="content" autofocus
-        v-on:keydown.ctrl.enter="encryptAndSendPaste($event)"></textarea>
+        v-on:keydown.prevent.ctrl.enter="encryptAndSendPaste()"></textarea>
     </div>
 
     <p class="paste-option down" v-if="displayBottomToolBar">
@@ -98,7 +102,7 @@
         <option value="1_month">1 month</option>
         <option value="never">Never</option>
       </select>
-      <button type="submit" class="btn btn-primary" @click="encryptAndSendPaste($event)">Submit</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </p>
   </form>
 </div>

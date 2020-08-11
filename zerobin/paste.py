@@ -12,7 +12,6 @@ from datetime import datetime, timedelta
 from zerobin.utils import settings, to_ascii, as_unicode, safe_open as open
 
 
-
 class Paste(object):
     """
         A paste object to deal with the file opening/parsing/saving and the
@@ -22,14 +21,12 @@ class Paste(object):
     DIR_CACHE = set()
 
     DURATIONS = {
-        '1_day': 24 * 3600,
-        '1_month': 30 * 24 * 3600,
-        'never': 365 * 24 * 3600 * 100,
+        "1_day": 24 * 3600,
+        "1_month": 30 * 24 * 3600,
+        "never": 365 * 24 * 3600 * 100,
     }
 
-
-    def __init__(self, uuid=None, uuid_length=None,
-                 content=None, expiration=None):
+    def __init__(self, uuid=None, uuid_length=None, content=None, expiration=None):
 
         self.content = content
         self.expiration = self.get_expiration(expiration)
@@ -37,14 +34,13 @@ class Paste(object):
         if not uuid:
             # generate the uuid from the decoded content by hashing it
             # and turning it into base64, with some characters strippped
-            uuid = hashlib.sha1(self.content.encode('utf8'))
+            uuid = hashlib.sha1(self.content.encode("utf8"))
             uuid = base64.b64encode(uuid.digest()).decode()
-            uuid = uuid.rstrip('=\n').replace('/', '-')
+            uuid = uuid.rstrip("=\n").replace("/", "-")
 
             if uuid_length:
                 uuid = uuid[:uuid_length]
         self.uuid = uuid
-
 
     def get_expiration(self, expiration):
         """
@@ -60,7 +56,6 @@ class Paste(object):
         except KeyError:
             return expiration
 
-
     @classmethod
     def build_path(cls, *dirs):
         """
@@ -69,14 +64,12 @@ class Paste(object):
         """
         return os.path.join(settings.PASTE_FILES_ROOT, *dirs)
 
-
     @classmethod
     def get_path(cls, uuid):
         """
             Return the file path of a paste given uuid
         """
         return cls.build_path(uuid[:2], uuid[2:4], uuid)
-
 
     @property
     def path(self):
@@ -85,6 +78,13 @@ class Paste(object):
         """
         return self.get_path(self.uuid)
 
+    @property
+    def owner_key(self):
+        """
+            Return a key that gives you admin rights on this paste
+        """
+        payload = (settings.SECRET_KEY + self.uuid).encode("ascii")
+        return hashlib.sha256(payload).hexdigest()
 
     @classmethod
     def load_from_file(cls, path):
@@ -98,15 +98,14 @@ class Paste(object):
                 expiration = next(paste).strip()
                 content = next(paste).strip()
                 if "burn_after_reading" not in expiration:
-                    expiration = datetime.strptime(expiration, '%Y-%m-%d %H:%M:%S.%f')
+                    expiration = datetime.strptime(expiration, "%Y-%m-%d %H:%M:%S.%f")
 
         except StopIteration:
-            raise TypeError(to_ascii('File %s is malformed' % path))
+            raise TypeError(to_ascii("File %s is malformed" % path))
         except (IOError, OSError):
-            raise ValueError(to_ascii('Can not open paste from file %s' % path))
+            raise ValueError(to_ascii("Can not open paste from file %s" % path))
 
         return Paste(uuid=uuid, expiration=expiration, content=content)
-
 
     @classmethod
     def load(cls, uuid):
@@ -116,7 +115,6 @@ class Paste(object):
         """
         return cls.load_from_file(cls.get_path(uuid))
 
-
     def increment_counter(self):
         """
             Increment pastes counter.
@@ -124,21 +122,20 @@ class Paste(object):
             It uses a lock file to prevent multi access to the file.
         """
         path = settings.PASTE_FILES_ROOT
-        counter_file = os.path.join(path, 'counter')
+        counter_file = os.path.join(path, "counter")
         lock = lockfile.LockFile(counter_file)
 
         with lock:
-                # Read the value from the counter
-                try:
-                    with open(counter_file, "r") as fcounter:
-                        counter_value = int(fcounter.read(50)) + 1
-                except (ValueError, IOError, OSError):
-                    counter_value = 1
+            # Read the value from the counter
+            try:
+                with open(counter_file, "r") as fcounter:
+                    counter_value = int(fcounter.read(50)) + 1
+            except (ValueError, IOError, OSError):
+                counter_value = 1
 
-                # write new value to counter
-                with open(counter_file, "w") as fcounter:
-                    fcounter.write(str(counter_value))
-
+            # write new value to counter
+            with open(counter_file, "w") as fcounter:
+                fcounter.write(str(counter_value))
 
     def save(self):
         """
@@ -171,17 +168,16 @@ class Paste(object):
         # a quick period of time where you can redirect to the page without
         # deleting the paste
         if "burn_after_reading" == self.expiration:
-            expiration = self.expiration + '#%s' % datetime.now()  # TODO: use UTC dates
+            expiration = self.expiration + "#%s" % datetime.now()  # TODO: use UTC dates
         else:
             expiration = as_unicode(self.expiration)
 
         # write the paste
-        with open(self.path, 'w') as f:
-            f.write(expiration + '\n')
-            f.write(self.content + '\n')
+        with open(self.path, "w") as f:
+            f.write(expiration + "\n")
+            f.write(self.content + "\n")
 
         return self
-
 
     @classmethod
     def get_pastes_count(cls):
@@ -190,14 +186,13 @@ class Paste(object):
             (must have option DISPLAY_COUNTER enabled for the pastes to be
              be counted)
         """
-        counter_file = os.path.join(settings.PASTE_FILES_ROOT, 'counter')
+        counter_file = os.path.join(settings.PASTE_FILES_ROOT, "counter")
         try:
             count = int(open(counter_file).read(50))
         except (IOError, OSError):
             count = 0
 
-        return '{0:,}'.format(count)
-
+        return "{0:,}".format(count)
 
     @property
     def humanized_expiration(self):
@@ -215,19 +210,18 @@ class Paste(object):
             return None
 
         if expiration < 60:
-            return 'in %s s' % expiration
+            return "in %s s" % expiration
 
         if expiration < 60 * 60:
-            return 'in %s m' % int(expiration / 60)
+            return "in %s m" % int(expiration / 60)
 
         if expiration < 60 * 60 * 24:
-            return 'in %s h' % int(expiration / (60 * 60))
+            return "in %s h" % int(expiration / (60 * 60))
 
         if expiration < 60 * 60 * 24 * 10:
-            return 'in %s days(s)' % int(expiration / (60 * 60 * 24))
+            return "in %s days(s)" % int(expiration / (60 * 60 * 24))
 
-        return 'the %s' % self.expiration.strftime('%m/%d/%Y')
-
+        return "the %s" % self.expiration.strftime("%m/%d/%Y")
 
     def delete(self):
         """

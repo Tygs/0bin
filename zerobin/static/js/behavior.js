@@ -1,12 +1,16 @@
-/*global sjcl:true, jQuery:true, lzw:true, zerobin:true, prettyPrint:true, confirm:true */
+/*global sjcl:true, jQuery:true, lzw:true, zerobin:true, prettyPrint:true */
 
 /*
-  This file has been migrated away from jQuery, to Vue. Because of the way the code base used to be, a lot of the operation are still using imperative DOM manipulation
-  instead of the Vue declarative style. We haven't had the time to rewrite it completly and it's a bit of a mixed bag at the moment
+  This file has been migrated away from jQuery, to Vue. Because of the way
+  the code base used to be, a lot of the operations are still using imperative
+   DOM manipulation instead of the Vue declarative style. We haven't had the
+   time to rewrite it completly and it's a bit of a mixed bag at the moment.
 */
 
 /* Start random number generator seeding ASAP */
 sjcl.random.startCollectors();
+
+// Vue template syntax conflicts with bottle template syntax
 Vue.options.delimiters = ['{%', '%}'];
 
 // Force focus for textarea (firefox hack)
@@ -14,11 +18,11 @@ setTimeout(function () {
   document.querySelector('textarea').focus()
 }, 100)
 
+// Parse obfuscaded emails and make them usable
 const menu = new Vue({
   el: "#menu-top",
   methods: {
     formatEmail: (email) => {
-      /* Parse obfuscaded emails and make them usable */
       return "mailto:" + email.replace('__AT__', '@');
     },
   }
@@ -32,6 +36,10 @@ const app = new Vue({
     downloadLink: {},
     displayBottomToolBar: false,
     isUploading: false,
+    currentPaste: {
+      ownerKey: '',
+      id: ''
+    },
     newPaste: {
       expiration: '1_day',
       content: '',
@@ -89,30 +97,58 @@ const app = new Vue({
     },
 
     handleUpload: (files) => {
-
       try {
         app.isUploading = true;
         zerobin.upload(files);
       } catch (e) {
         zerobin.message('error', 'Could no upload the file', 'Error');
       }
-
       app.isUploading = false;
     },
 
     handleForceColoration: (e) => {
-      /* Force text coloration when clickin on link */
-
       let content = document.getElementById('paste-content');
       content.classList.add('linenums');
       e.target.innerHTML = 'Applying coloration';
       prettyPrint();
-      e.target.remove()
-
+      e.target.parentNode.remove()
     },
 
     handleSendByEmail: (e) => {
       e.target.href = 'mailto:friend@example.com?body=' + window.location.toString();
+    },
+
+    handleDeletePaste: () => {
+      if (window.confirm("Delete this paste?")) {
+        app.isLoading = true;
+        bar.set('Deleting paste...', '50%');
+
+        fetch('/paste/' + app.currentPaste.id, {
+          method: "DELETE",
+          body: new URLSearchParams({
+            "owner_key": app.currentPaste.ownerKey
+          })
+        }).then(function (response) {
+          if (response.ok) {
+            window.location = "/";
+            window.reload()
+          } else {
+            form.forEach((node) => node.disabled = false);
+            app.isLoading = false
+            zerobin.message(
+              'error',
+              'Paste could not be deleted. Please try again later.',
+              'Error');
+          }
+          app.isLoading = false;
+        }).catch(function (error) {
+          zerobin.message(
+            'error',
+            'Paste could not be delete. Please try again later.',
+            'Error');
+          app.isLoading = false;
+        });
+      }
     },
 
     copyToClipboard: () => {
@@ -153,7 +189,6 @@ const app = new Vue({
 
     encryptAndSendPaste: (e) => {
 
-      e.preventDefault();
       var paste = document.querySelector('textarea').value;
 
       if (paste.trim()) {
@@ -216,11 +251,10 @@ const app = new Vue({
                       form.forEach((node) => node.disabled = false);
                       app.isLoading = false
                     } else {
-                      var paste_url = '/paste/' + data.paste + '#' + key;
                       if (app.support.localStorage) {
-                        zerobin.storePaste(paste_url);
+                        zerobin.storePaste('/paste/' + data.paste + "?owner_key=" + data.owner_key + '#' + key);
                       }
-                      window.location = (paste_url);
+                      window.location = ('/paste/' + data.paste + '#' + key);
                     }
                   })
 
@@ -253,9 +287,9 @@ const app = new Vue({
   }
 })
 
-/***************************
- ****  0bin utilities    ***
- ***************************/
+/****************************
+ ****  0bin utilities    ****
+ ****************************/
 
 window.zerobin = {
   /** Base64 + compress + encrypt, with callbacks before each operation,
@@ -416,11 +450,11 @@ window.zerobin = {
   /** Return a reverse sorted list of all the keys in local storage that
     are prefixed with with the passed version (default being this lib
     version) */
-  getLocalStorageKeys: function () {
-    var version = 'zerobinV0.1';
+  getLocalStorageURLKeys: function () {
+    var version = 'zerobinV' + zerobin.version;
     var keys = [];
     for (var key in localStorage) {
-      if (key.indexOf(version) !== -1) {
+      if (key.indexOf(version) !== -1 && key.indexOf("owner_key") === -1) {
         keys.push(key);
       }
     }
@@ -436,13 +470,14 @@ window.zerobin = {
     date = date || new Date();
     date = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + zerobin.getFormatedTime(date));
 
-    var keys = zerobin.getLocalStorageKeys();
+    var keys = zerobin.getLocalStorageURLKeys();
 
     if (localStorage.length > 19) {
       void localStorage.removeItem(keys[19]);
     }
 
     localStorage.setItem('zerobinV' + zerobin.version + "#" + date, url);
+    localStorage.setItem('zerobinV' + zerobin.version + "#" + zerobin.getPasteId(url) + "#owner_key", zerobin.getPasteOwnerKey(url));
   },
 
   /** Return a list of the previous paste url with the creation date
@@ -450,7 +485,7 @@ window.zerobin = {
       else it should be "the mm-dd-yyy"
   */
   getPreviousPastes: function () {
-    var keys = zerobin.getLocalStorageKeys(),
+    var keys = zerobin.getLocalStorageURLKeys(),
       today = zerobin.getFormatedDate();
 
     return keys.map(function (key, i) {
@@ -463,11 +498,14 @@ window.zerobin = {
         prefix = 'at ';
       }
       let link = localStorage.getItem(key);
+
       return {
         displayDate: displayDate,
         prefix: prefix,
-        link: link,
-        isCurrent: link.replace(/#[^#]+/, '') === window.location.pathname
+        // The owner key is stored in the URL, but we don't want the user
+        // to see it
+        link: link.replace(/\?[^#]+#/, '#'),
+        isCurrent: link.replace(/\?[^?]+/, '') === window.location.pathname
       };
     });
 
@@ -495,6 +533,11 @@ window.zerobin = {
   getPasteId: function (url) {
     var loc = url ? zerobin.parseUrl(url) : window.location;
     return loc.pathname.replace(/\/|paste/g, '');
+  },
+
+  getPasteOwnerKey: function (url) {
+    var loc = url ? zerobin.parseUrl(url) : window.location;
+    return (new URLSearchParams(loc.search)).get("owner_key");
   },
 
   getPasteKey: function (url) {
@@ -541,7 +584,7 @@ window.zerobin = {
       title: title,
       content: message,
       type: type,
-      action: action,
+      action: action || {},
     });
     callback && callback()
   },
@@ -681,6 +724,7 @@ let content = '';
 
 if (pasteContent) {
   content = pasteContent.textContent.trim();
+  app.currentPaste.id = zerobin.getPasteId(window.location);
 }
 
 var key = zerobin.getPasteKey();
@@ -788,6 +832,7 @@ window.onload = function () {
 /* Display previous pastes */
 if (app.support.localStorage) {
   app.previousPastes = zerobin.getPreviousPastes();
+  app.currentPaste.ownerKey = localStorage.getItem('zerobinV' + zerobin.version + "#" + zerobin.getPasteId(window.location) + "#owner_key");
 }
 
 /* Upload file using HTML5 File API */
@@ -804,7 +849,7 @@ if (app.support.fileUpload) {
 /* Remove expired pasted from history */
 if (app.support.history && zerobin.paste_not_found) {
   var paste_id = zerobin.getPasteId();
-  var keys = zerobin.getLocalStorageKeys();
+  var keys = zerobin.getLocalStorageURLKeys();
   keys.forEach((key, i) => {
     if (localStorage[key].indexOf(paste_id) !== -1) {
       localStorage.removeItem(key);

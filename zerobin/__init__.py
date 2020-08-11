@@ -1,8 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
+from pathlib import Path
 
-from __future__ import absolute_import
+__version__ = "1.0.0"
 
-from zerobin.default_settings import VERSION
-
-__version__ = VERSION
+ROOT_DIR = Path(__file__).absolute().parent

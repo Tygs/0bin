@@ -1,7 +1,3 @@
-# coding: utf-8
-
-from __future__ import print_function, unicode_literals, absolute_import
-
 import time
 import os
 import glob
@@ -12,7 +8,6 @@ import unicodedata
 from functools import partial
 
 from zerobin import default_settings
-sys.path.append(default_settings.LIBS_DIR)
 
 try:
     from zerobin.privilege import drop_privileges_permanently, coerce_user, coerce_group
@@ -24,7 +19,7 @@ try:
 except ImportError:
     # python-2.6 or earlier - use simplier less-optimized execfile()
     def run_path(file_path):
-        mod_globals = {'__file__': file_path}
+        mod_globals = {"__file__": file_path}
         execfile(file_path, mod_globals)
         return mod_globals
 
@@ -43,8 +38,7 @@ def drop_privileges(user=None, group=None, wait=5):
             user = coerce_user(user)
             group = coerce_group(group)
 
-            lock_files = glob.glob(os.path.join(tempfile.gettempdir(),
-                                               'bottle.*.lock'))
+            lock_files = glob.glob(os.path.join(tempfile.gettempdir(), "bottle.*.lock"))
             for lock_file in lock_files:
                 os.chown(lock_file, user, group)
 
@@ -78,11 +72,9 @@ class SettingsContainer(object):
     def __new__(cls, *args, **kwargs):
 
         if not cls._instance:
-            cls._instance = super(SettingsContainer, cls).__new__(cls, *args,
-                                                                  **kwargs)
+            cls._instance = super(SettingsContainer, cls).__new__(cls, *args, **kwargs)
             cls._instance.update_with_module(default_settings)
         return cls._instance
-
 
     def update_with_dict(self, dict):
         """
@@ -94,14 +86,12 @@ class SettingsContainer(object):
                 setattr(self, name, value)
         return self
 
-
     def update_with_module(self, module):
         """
             Update settings with values from the given module.
             Uses update_with_dict() behind the scenes.
         """
         return self.update_with_dict(module.__dict__)
-
 
     @classmethod
     def from_module(cls, module):
@@ -112,7 +102,6 @@ class SettingsContainer(object):
         settings = cls()
         settings.update_with_module(module)
         return settings
-
 
     def update_with_file(self, filepath):
         """
@@ -132,7 +121,7 @@ def to_ascii(utext):
         Try to replace non ASCII char by similar ASCII char. If it can't,
         replace it with "?".
     """
-    return unicodedata.normalize('NFKD', utext).encode('ascii', "replace")
+    return unicodedata.normalize("NFKD", utext).encode("ascii", "replace")
 
 
 # Make sure to always specify encoding when using open in Python 2 or 3

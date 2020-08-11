@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-from __future__ import unicode_literals, absolute_import, print_function
-import pdb
-
 """
     Script including controller, rooting, and dependency management.
 """
@@ -11,24 +5,17 @@ import pdb
 import os
 import sys
 
-try:
-    import thread
-except ImportError:
-    import _thread as thread
+import _thread as thread
 
-try:
-    import urlparse
-except ImportError:
-    import urllib.parse as urlparse
+import urllib.parse as urlparse
 
 from datetime import datetime, timedelta
 
-# add project dir and libs dir to the PYTHON PATH to ensure they are
-# importable
-from zerobin.utils import settings, SettingsValidationError, drop_privileges, dmerge
+from zerobin import __version__
+from zerobin.utils import settings, SettingsValidationError, dmerge
 
 import bottle
-from bottle import Bottle, run, static_file, view, request
+from bottle import Bottle, static_file, view, request, HTTPResponse
 
 from zerobin.paste import Paste
 
@@ -36,6 +23,7 @@ from zerobin.paste import Paste
 app = Bottle()
 GLOBAL_CONTEXT = {
     "settings": settings,
+    "VERSION": __version__,
     "pastes_count": Paste.get_pastes_count(),
     "refresh_counter": datetime.now(),
 }
@@ -99,7 +87,7 @@ def create_paste():
                 GLOBAL_CONTEXT["pastes_count"] = Paste.get_pastes_count()
                 GLOBAL_CONTEXT["refresh_counter"] = now
 
-        return {"status": "ok", "paste": paste.uuid}
+        return {"status": "ok", "paste": paste.uuid, "owner_key": paste.owner_key}
 
     return {
         "status": "error",
@@ -107,7 +95,7 @@ def create_paste():
     }
 
 
-@app.route("/paste/:paste_id")
+@app.route("/paste/:paste_id", method="GET")
 @view("paste")
 def display_paste(paste_id):
 
@@ -139,6 +127,25 @@ def display_paste(paste_id):
 
     context = {"paste": paste, "keep_alive": keep_alive}
     return dmerge(context, GLOBAL_CONTEXT)
+
+
+@app.route("/paste/:paste_id", method="DELETE")
+def delete_paste(paste_id):
+
+    try:
+        paste = Paste.load(paste_id)
+    except (TypeError, ValueError):
+        return error404(ValueError)
+
+    if paste.owner_key != request.forms.get("owner_key", None):
+        return HTTPResponse(status=403, body="Wrong owner key")
+
+    paste.delete()
+
+    return {
+        "status": "ok",
+        "message": "Paste deleted",
+    }
 
 
 @app.error(404)

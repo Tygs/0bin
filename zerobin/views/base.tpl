@@ -12,11 +12,11 @@
   <link rel="shortcut icon" href="/favicon.ico">
 
   %if settings.COMPRESSED_STATIC_FILES:
-  <link href="/static/css/style.min.css?{{ settings.VERSION }}" rel="stylesheet" />
+  <link href="/static/css/style.min.css?{{ VERSION }}" rel="stylesheet" />
   %else:
   <link href="/static/css/prettify.css" rel="stylesheet" />
   <link href="/static/css/bootstrap.css" rel="stylesheet">
-  <link href="/static/css/style.css?{{ settings.VERSION }}" rel="stylesheet">
+  <link href="/static/css/style.css?{{ VERSION }}" rel="stylesheet">
   %end
 
   <!-- Le HTML5 shim, for IE7-8 support of HTML5 elements -->
@@ -109,7 +109,7 @@
 
 
         <p :class="'alert alert-' + msg.type" v-for="msg in messages">
-          <a class="close" data-dismiss="alert" href="#" @click="$event.target.parentNode.remove()">×</a>
+          <a class="close" data-dismiss="alert" href="#" @click.prevent="$event.target.parentNode.remove()">×</a>
           <strong class="title" v-if="msg.title" v-html="msg.title"></strong>
           <span class="message" v-html="msg.content"></span>
           <a v-if="msg.action.message" href="#"
@@ -156,10 +156,10 @@
 
   <script src="/static/js/vue.js"></script>
   %if settings.COMPRESSED_STATIC_FILES:
-  <script src="/static/js/main.min.js?{{ settings.VERSION }}"></script>
+  <script src="/static/js/main.min.js?{{ VERSION }}"></script>
   %else:
   <script src="/static/js/sjcl.js"></script>
-  <script src="/static/js/behavior.js?{{ settings.VERSION }}"></script>
+  <script src="/static/js/behavior.js?{{ VERSION }}"></script>
   %end
 
   <script type="text/javascript">
@@ -168,7 +168,7 @@
   </script>
 
   %if settings.COMPRESSED_STATIC_FILES:
-  <script src="/static/js/additional.min.js?{{ settings.VERSION }}"></script>
+  <script src="/static/js/additional.min.js?{{ VERSION }}"></script>
   %else:
 
   <script src="/static/js/lzw.js"></script>
