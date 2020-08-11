@@ -3,7 +3,7 @@
 </script>
 
 <p class="alert alert-error">
-  <a class="close" data-dismiss="alert" href="#">×</a>
+  <a class="close" data-dismiss="alert" href="#" @click.prevent="$event.target.parentNode.remove()">×</a>
   <strong class="title">404 Error!</strong>
   <span class="message">
     Either this paste has expired or this page never existed.
@@ -11,29 +11,39 @@
 </p>
 
 <p class="file-upload">
-	<input type="button" class="btn btn-upload"  value="Upload File">
-	<input type="file" class="hide-upload" id="file-upload" >
+  <input type="button" class="btn btn-upload" :value="isUploading ? 'Uploading...': 'Upload file'"
+    :disabled="isUploading">
+  <input type="file" class="hide-upload" id="file-upload" @change="handleUpload($event.target.files)">
 </p>
 
 <form class="well" method="post" action="/paste/create">
-<p class="paste-option">
-<label for="expiration" >Expiration:</label>
-  <select id="expiration" name="expiration">
-    <option value="burn_after_reading">Burn after reading</option>
-    <option selected value="1_day">1 day</option>
-    <option value="1_month">1 month</option>
-    <option value="never">Never</option>
-  </select>
-<button type="submit" class="btn btn-primary">Submit</button>
-</p>
-<p>
-    <div class="progress progress-striped active">
+  <p class="paste-option">
+    <label for="expiration">Expiration:</label>
+    <select id="expiration" name="expiration" v-model="newPaste.expiration">
+      <option value="burn_after_reading">Burn after reading</option>
+      <option selected value="1_day">1 day</option>
+      <option value="1_month">1 month</option>
+      <option value="never">Never</option>
+    </select>
+    <button type="submit" class="btn btn-primary" @click="encryptAndSendPaste($event)">Submit</button>
+  </p>
+  <p>
+    <div class="progress progress-striped active" v-show="isLoading">
       <div class="bar"></div>
     </div>
-    <textarea rows="10"  style="width:100%;"
-              class="input-xlarge"
-              id="content" name="content"></textarea>
-</p>
+    <textarea rows="10" style="width:100%;" class="input-xlarge" id="content" name="content" autofocus
+      v-on:keydown.ctrl.enter="encryptAndSendPaste($event)"></textarea>
+  </p>
+  <p class="paste-option down" v-if="displayBottomToolBar">
+    <label for="expiration">Expiration:</label>
+    <select id="expiration" name="expiration" v-model="newPaste.expiration">
+      <option value="burn_after_reading">Burn after reading</option>
+      <option selected value="1_day">1 day</option>
+      <option value="1_month">1 month</option>
+      <option value="never">Never</option>
+    </select>
+    <button type="submit" class="btn btn-primary" @click="encryptAndSendPaste($event)">Submit</button>
+  </p>
 </form>
 
 

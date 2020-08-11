@@ -10,9 +10,7 @@
 be pasted in it. The idea is that one can (probably...) not be legally entitled
 to `moderate the pastebin content`_ as they have no way to decrypt it.
 
-It's an Python implementation of the
-`zerobin project`_ under the `WTF licence`_. It's easy to
-install even if you know nothing about Python.
+It's an Python implementation of the `zerobin project`_, created by sebsauvage, under the `WTF licence`_.
 
 For now tested with IE9, and the last opera, safari, chrome and FF.
 
@@ -22,7 +20,7 @@ but in short::
     pip install zerobin
     zerobin
 
-0bin runs on Python 2.7 and Python 3.4.
+0bin runs on Python 3.7.
 
 How it works
 =============
@@ -73,7 +71,6 @@ Technologies used
 - VizHash.js_ to create visual hashes from pastes
 - Cherrypy_ (server only)
 - `node.js`_ (for optional command-line tool only)
-
 
 Known issues
 ============

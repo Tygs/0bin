@@ -31,6 +31,7 @@ def runserver(
     server="cherrypy",
 ):
 
+    debug = True
     if version:
         print("0bin V%s" % settings.VERSION)
         sys.exit(0)
