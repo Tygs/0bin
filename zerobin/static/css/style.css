@@ -50,6 +50,11 @@ body {
   padding-bottom: 40px;
 }
 
+.blk-space {
+    height: 20px;
+    display: block;
+}
+
 .sidebar-nav {
   padding: 9px 0;
 }
@@ -93,6 +98,8 @@ blockquote {
 .alert .title {
   display: block;
 }
+
+/* Footer */
 
 .footer {
   text-align: center;
@@ -201,58 +208,19 @@ li.L9 {
 pre.prettyprint {
   width: 100%;
   min-height: 100px;
-}
-
-.prettyprint.linenums {
-  /* -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
-     -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
-          box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0; */
-}
+} 
 
 /* Specify class=linenums on a pre to get line numbering */
 ol.linenums {
   margin: 0 0 0 55px;
   /* IE indents via margin-left */
-}
+} 
 
-ol.linenums li {
-  /* color: #bebec5;
-  line-height: 18px;
-  text-shadow: 0 1px 0 #fff; */
-}
-
-.prettyprint {
-  /* padding: 8px;
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8; */
-}
-
-pre {
-  /* font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, monospace, serif;
-	line-height: 21px;
-	font-size: 12px; */
+pre { 
   white-space: pre-wrap;
   overflow: visible;
 }
-
-.kwd {
-  color: #66F;
-}
-
-.pun,
-.opn,
-.clo {
-  color: #0A0;
-}
-
-.lit {
-  color: #933;
-}
-
-.com {
-  color: #C0C;
-}
-
+ 
 /* Common css */
 
 .form-control,
@@ -282,7 +250,7 @@ pre {
 
 .container-md {
   margin-top: 20px;
-  padding-bottom: 80px;
+  padding-bottom: 130px;
 }
 
 form textarea {

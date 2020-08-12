@@ -2,7 +2,7 @@
   zerobin.paste_not_found = true;
 </script>
 
-<p class="alert alert-error">
+<p class="alert alert-warning alert-dismissible">
   <a class="close" data-dismiss="alert" href="#" @click.prevent="$event.target.parentNode.remove()">×</a>
   <strong class="title">404 Error!</strong>
   <span class="message">
@@ -10,41 +10,61 @@
   </span>
 </p>
 
-<p class="file-upload">
-  <input type="button" class="btn btn-upload" :value="isUploading ? 'Uploading...': 'Upload file'"
-    :disabled="isUploading">
-  <input type="file" class="hide-upload" id="file-upload" @change="handleUpload($event.target.files)">
-</p>
-
 <form class="well" method="post" action="/paste/create" @submit.prevent="encryptAndSendPaste()">
-  <p class=" paste-option">
-    <label for="expiration">Expiration:</label>
-    <select id="expiration" name="expiration" v-model="newPaste.expiration">
-      <option value="burn_after_reading">Burn after reading</option>
-      <option selected value="1_day">1 day</option>
-      <option value="1_month">1 month</option>
-      <option value="never">Never</option>
-    </select>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </p>
-  <p>
-    <div class=" progress progress-striped active" v-show="isLoading">
-      <div class="bar"></div>
+  <div class="d-flex justify-content-between">
+
+    <div>
+      <label class="col-form-label"><span class="blk-space"></span></label>
+      <div class="file-upload" v-if="support.fileUpload">
+        <input type="button" class="btn btn-primary" :value="isUploading ? 'Uploading...': 'Upload file'"
+          :disabled="isUploading">
+        <input type="file" class="hide-upload" id="file-upload" @change="handleUpload($event.target.files)">
+      </div>
     </div>
-    <textarea rows="10" style="width:100%;" class="input-xlarge" id="content" name="content" autofocus
-      v-on:keydown.prevent.ctrl.enter="encryptAndSendPaste()"></textarea>
-  </p>
-  <p class="paste-option down" v-if="displayBottomToolBar">
-    <label for="expiration">Expiration:</label>
-    <select id="expiration" name="expiration" v-model="newPaste.expiration">
-      <option value="burn_after_reading">Burn after reading</option>
-      <option selected value="1_day">1 day</option>
-      <option value="1_month">1 month</option>
-      <option value="never">Never</option>
-    </select>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </p>
+
+    <div class="form-group select-date paste-option">
+      <label class="col-form-label">Expiration:</label>
+      <div class="input-group">
+        <select id="expiration" name="expiration" class="custom-select" v-model="newPaste.expiration">
+          <option value="burn_after_reading">Burn after reading</option>
+          <option selected value="1_day">1 day</option>
+          <option value="1_month">1 month</option>
+          <option value="never">Never</option>
+        </select>
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div>
+    <div class="progress" v-show="isLoading">
+      <div class="progress-bar progress-bar-striped" role="progressbar"></div>
+    </div>
+    <textarea rows="10" style="width:100%;" class="form-control" id="content" name="content" autofocus
+      @keydown.ctrl.enter="encryptAndSendPaste()"></textarea>
+  </div>
+
+  <div class="form-group select-date paste-option down" v-if="displayBottomToolBar">
+    <label class="col-form-label">Expiration:</label>
+    <div class="input-group">
+      <select id="expiration" name="expiration" class="custom-select" v-model="newPaste.expiration">
+        <option value="burn_after_reading">Burn after reading</option>
+        <option selected value="1_day">1 day</option>
+        <option value="1_month">1 month</option>
+        <option value="never">Never</option>
+      </select>
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+
 </form>
+
+
 
 
 % rebase('base', settings=settings, pastes_count=pastes_count)
