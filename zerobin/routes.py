@@ -75,15 +75,19 @@ def admin():
     if paste_id:
         try:
             if "/paste/" in paste_id:
-                paste_id = urlparse(paste_id).path.split("/path/")[-1]
+                paste_id = urlparse(paste_id).path.split("/paste/")[-1]
             paste = Paste.load(paste_id)
             paste.delete()
         except (TypeError, ValueError, FileNotFoundError):
-            return {"status": "error", "message": f"Cannot find paste '{paste_id}'"}
+            return {
+                "status": "error",
+                "message": f"Cannot find paste '{paste_id}'",
+                **GLOBAL_CONTEXT,
+            }
 
-        return {"status": "ok", "message": "Paste deleted"}
+        return {"status": "ok", "message": "Paste deleted", **GLOBAL_CONTEXT}
 
-    return {"status": "ok", **GLOBAL_CONTEXT}
+    return {"status": "ok", "message": "" ** GLOBAL_CONTEXT}
 
 
 @app.get(ADMIN_LOGIN_URL)

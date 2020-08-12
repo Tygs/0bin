@@ -1,6 +1,11 @@
-<form action="./delete/" method="post">
+<form action="." method="post">
     %if status == "error":
     <div class="alert alert-danger" role="alert alert-danger">
+        {{message}}
+    </div>
+    %end
+    %if status == "ok" and message:
+    <div class="alert alert-success" role="alert">
         {{message}}
     </div>
     %end

@@ -26,7 +26,7 @@
 
   <div id="app">
 
-    <div class="topnav">
+    <div class="topnav" @mouseleave="openPreviousPastesMenu =false">
       <a class="brand" href="/"><span>ø</span>bin<em>.net</em></a>
       <span class="tagline">"A client side encrypted PasteBin"<br><span>All pastes are AES256 encrypted, we cannot know
           what you paste...</span>
@@ -36,8 +36,7 @@
         <ul>
           <li class="submenu"><a href="#" @click.prevent="openPreviousPastesMenu = !openPreviousPastesMenu">Previous
               pastes v</a>
-            <ul class="previous-pastes" id="topmenu" v-if="openPreviousPastesMenu"
-              @mouseleave="openPreviousPastesMenu =false">
+            <ul class="previous-pastes" id="topmenu" v-if="openPreviousPastesMenu">
               <li class="item active" v-if="previousPastes.length === 0">
                 <a href="#">No paste yet</a>
               </li>
@@ -64,19 +63,18 @@
     <footer class="footer">
       <ul>
         %for i, entry in enumerate(settings.MENU):
-          <li>
-            %if "mailto:" in entry[1]:
-              <span :title='formatEmail(`{{ entry[1].replace("mailto:", "").replace("@", "__AT__") }}`)'
-                    class="email-link" >
-                {{ entry[0] }}
-              </span>
-            %else:
-              <a href="{{ entry[1] }}">{{ entry[0] }}</a>
-            %end
-          </li>
+        <li>
+          %if "mailto:" in entry[1]:
+          <span :title='formatEmail(`{{ entry[1].replace("mailto:", "").replace("@", "__AT__") }}`)' class="email-link">
+            {{ entry[0] }}
+          </span>
+          %else:
+          <a href="{{ entry[1] }}">{{ entry[0] }}</a>
+          %end
+        </li>
         %end
       </ul>
-      
+
       %if settings.DISPLAY_COUNTER:
       <strong>{{ pastes_count }}</strong> pastes øbinned
       %end
