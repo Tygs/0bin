@@ -102,7 +102,7 @@
   <script src="/static/js/additional.min.js?{{ settings.VERSION }}"></script>
   %else:
   <script src="/static/js/lzw.js"></script>
-  <script src="/static/js/prettify.min.js"></script> 
+  <script src="/static/js/prettify.min.js"></script>
   %end
 
   <p id="alert-template" class="alert-primary">

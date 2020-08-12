@@ -19,14 +19,16 @@
 %end
 %end
 
+<h1>{% currentPaste.type %}</h1>
+
 <div class="well paste-form">
   <form action="/" method="get" accept-charset="utf-8">
 
     <div class="d-flex justify-content-between">
 
       <div class="btn-group" role="group">
-        <button v-if="support.clipboard" @click.prevent="copyToClipboard()" type="button" id="clip-button"
-          class="btn btn-secondary">Copy To Clipboard</button>
+        <button v-if="support.clipboard && currentPaste.type === 'text'" @click.prevent="copyToClipboard()"
+          type="button" id="clip-button" class="btn btn-secondary">Copy to clipboard</button>
         <button type="button" id="email-link" class="btn btn-secondary" @click="handleSendByEmail($event)">Email
           this</button>
       </div>
@@ -119,7 +121,7 @@
     </div>
 
     <div>
-      <textarea rows="10" style="width:100%;" class=" form-control" @keydown.prevent.ctrl.enter="encryptAndSendPaste()"
+      <textarea rows="10" style="width:100%;" class=" form-control" @keydown.ctrl.enter="encryptAndSendPaste()"
         id="content" name="content"></textarea>
     </div>
 

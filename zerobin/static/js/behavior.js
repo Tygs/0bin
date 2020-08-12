@@ -37,7 +37,8 @@ const app = new Vue({
     isUploading: false,
     currentPaste: {
       ownerKey: '',
-      id: ''
+      id: '',
+      type: '',
     },
     newPaste: {
       expiration: '1_day',
@@ -48,11 +49,7 @@ const app = new Vue({
     and add a class to the html tag with the result */
     support: {
 
-      clipboard: (function () {
-        var val = !!(navigator.clipboard);
-        document.querySelector('html').classList.add((val ? '' : 'no-') + 'clipboard');
-        return val;
-      })(),
+      clipboard: !!(isSecureContext && navigator.clipboard && navigator.clipboard.writeText),
 
       localStorage: (function () {
         var val = !!(localStorage);
@@ -157,23 +154,7 @@ const app = new Vue({
     copyToClipboard: () => {
 
       var pasteContent = zerobin.getPasteContent();
-      let promise;
-
-      if (pasteContent.indexOf("data:image") === 0) {
-
-        promise = fetch(pasteContent).then((res) => {
-          return res.blob().then(blob => {
-            return navigator.clipboard.write([
-              new ClipboardItem({
-                [blob.type]: blob
-              })
-            ])
-          })
-        })
-
-      } else {
-        promise = navigator.clipboard.writeText(pasteContent);
-      }
+      let promise = navigator.clipboard.writeText(pasteContent);
 
       promise.then(function () {
         zerobin.message('info', 'The paste is now in your clipboard', '', true);
@@ -765,6 +746,7 @@ if (content && key) {
       if (content.indexOf('data:image') == 0) {
         // Display Image
 
+        app.currentPaste.type = "image";
         let pasteContent = document.querySelector('#paste-content');
         pasteContent.style.display = "none";
 
@@ -782,6 +764,8 @@ if (content && key) {
           url: content
         }
 
+      } else {
+        app.currentPaste.type = "text"
       }
       bar.set('Code coloration...', '95%');
 
@@ -821,9 +805,9 @@ if (content && key) {
 
 } /* End of "DECRYPTION" */
 
-/* Display bottom paste option buttons when needed */
-
 window.onload = function () {
+
+  /* Display bottom paste option buttons when needed */
   ["keyup", "change"].forEach((event) => {
     let content = document.getElementById("content");
     content.addEventListener(event, () => {
@@ -860,4 +844,16 @@ if (app.support.history && zerobin.paste_not_found) {
       return false;
     }
   })
+}
+
+/* Autofit text area height */
+const tx = document.getElementsByTagName('textarea');
+for (let i = 0; i < tx.length; i++) {
+  tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
+  tx[i].addEventListener("input", OnInput, false);
+}
+
+function OnInput() {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
 }
