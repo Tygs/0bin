@@ -10,7 +10,7 @@
 be pasted in it. The idea is that one can (probably...) not be legally entitled
 to `moderate the pastebin content`_ as they have no way to decrypt it.
 
-It's an Python implementation of the `zerobin project`_, created by sebsauvage, under the `WTF licence`_.
+It's an Python implementation of the `zerobin project`_, created by sebsauvage, under the `WTFPL licence`_.
 
 For now tested with IE9, and the last opera, safari, chrome and FF.
 

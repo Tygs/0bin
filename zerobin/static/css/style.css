@@ -51,8 +51,8 @@ body {
 }
 
 .blk-space {
-    height: 20px;
-    display: block;
+  height: 20px;
+  display: block;
 }
 
 .sidebar-nav {
@@ -68,7 +68,7 @@ ol {
   padding: 0;
   margin: 0;
 }
- 
+
 a {
   color: #2ea1d7;
 }
@@ -115,24 +115,23 @@ blockquote {
 }
 
 .footer li {
-	list-style-type: none;
-	display: inline;
+  list-style-type: none;
+  display: inline;
 }
 
-.footer li span{
-	color: #2ea1d7;
+.footer li span {
+  color: #2ea1d7;
 }
 
-.footer li span:hover{
-	color: #1888bc;
-	text-decoration: underline;
-	cursor: pointer;
+.footer li span:hover {
+  color: #1888bc;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .footer li:not(:last-child):after {
-    content:' -';
+  content: ' -';
 }
- 
 
 /* Home */
 
@@ -208,19 +207,19 @@ li.L9 {
 pre.prettyprint {
   width: 100%;
   min-height: 100px;
-} 
+}
 
 /* Specify class=linenums on a pre to get line numbering */
 ol.linenums {
   margin: 0 0 0 55px;
   /* IE indents via margin-left */
-} 
+}
 
-pre { 
+pre {
   white-space: pre-wrap;
   overflow: visible;
 }
- 
+
 /* Common css */
 
 .form-control,
@@ -385,11 +384,6 @@ canvas {
   display: none;
 }
 
-.topnav .bi-list {
-  width: 2em;
-  height: 2em;
-}
-
 /* Styling the sub menu */
 nav {
   float: right;
@@ -421,15 +415,15 @@ nav ul li a:hover {
   position: relative;
 }
 
-.submenu ul { 
-	display: none;
-	position: absolute;
-	margin: 8px 0 0px 9px;
-	width: -webkit-fill-available;
-	z-index: 9999; 
-	border: 1px solid #666;
-	border-radius: 3px;
-	padding: 0;
+.submenu ul {
+  display: none;
+  position: absolute;
+  margin: 6px 0 0px 9px;
+  width: fill-available;
+  z-index: 999;
+  border: 1px solid #666;
+  border-radius: 3px;
+  padding: 0;
 }
 
 .submenu li {

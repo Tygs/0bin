@@ -36,7 +36,7 @@ def runserver(
     compressed_static=None,
     version=False,
     paste_id_length=None,
-    server="cherrypy",
+    server="paste",
 ):
     if version:
         print("0bin V%s" % settings.VERSION)
