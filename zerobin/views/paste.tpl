@@ -121,7 +121,7 @@
     </div>
 
     <div>
-      <textarea rows="10" style="width:100%;" class=" form-control" @keydown.prevent.ctrl.enter="encryptAndSendPaste()"
+      <textarea rows="10" style="width:100%;" class=" form-control" @keydown.ctrl.enter="encryptAndSendPaste()"
         id="content" name="content"></textarea>
     </div>
 
