@@ -10,36 +10,8 @@ from functools import partial
 
 from zerobin import default_settings
 
-try:
-    from zerobin.privilege import drop_privileges_permanently, coerce_user, coerce_group
-except (AttributeError):
-    pass  # privilege does't work on several plateforms
-
 
 from runpy import run_path
-
-
-def drop_privileges(user=None, group=None, wait=5):
-    """
-        Try to set the process user and group to another one.
-        If no group is provided, it's set to the same as the user.
-        You can wait for a certain time before doing so.
-    """
-    if wait:
-        time.sleep(wait)
-    if user:
-        group = group or user
-        try:
-            user = coerce_user(user)
-            group = coerce_group(group)
-
-            lock_files = glob.glob(os.path.join(tempfile.gettempdir(), "bottle.*.lock"))
-            for lock_file in lock_files:
-                os.chown(lock_file, user, group)
-
-            drop_privileges_permanently(user, group, ())
-        except Exception:
-            print("Failed to drop privileges. Running with current user.")
 
 
 class SettingsValidationError(Exception):

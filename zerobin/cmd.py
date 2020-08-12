@@ -7,13 +7,10 @@
 
 import sys
 import re
-import hashlib
-import _thread as thread
 
 from zerobin.utils import (
     settings,
     SettingsValidationError,
-    drop_privileges,
     ensure_var_env,
     hash_password,
 )
@@ -56,8 +53,6 @@ def runserver(
     except SettingsValidationError as err:
         print("Configuration error: %s" % err.message, file=sys.stderr)
         sys.exit(1)
-
-    thread.start_new_thread(drop_privileges, (settings.USER, settings.GROUP))
 
     if settings.DEBUG:
         print(f"Admin URL: http://{settings.HOST}:{settings.PORT}{settings.ADMIN_URL}")
