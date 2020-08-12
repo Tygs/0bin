@@ -63,11 +63,7 @@ ol {
   padding: 0;
   margin: 0;
 }
-
-li {
-  margin-left: -9px;
-}
-
+ 
 a {
   color: #2ea1d7;
 }
@@ -110,6 +106,26 @@ blockquote {
   left: 0;
   background-color: #424141;
 }
+
+.footer li {
+	list-style-type: none;
+	display: inline;
+}
+
+.footer li span{
+	color: #2ea1d7;
+}
+
+.footer li span:hover{
+	color: #1888bc;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.footer li:not(:last-child):after {
+    content:' -';
+}
+ 
 
 /* Home */
 
@@ -437,12 +453,15 @@ nav ul li a:hover {
   position: relative;
 }
 
-.submenu ul {
-  position: absolute;
-  margin: 8px 0 0px 9px;
-  display: none;
-  width: -webkit-fill-available;
-  z-index: 9999;
+.submenu ul { 
+	display: none;
+	position: absolute;
+	margin: 8px 0 0px 9px;
+	width: -webkit-fill-available;
+	z-index: 9999; 
+	border: 1px solid #666;
+	border-radius: 3px;
+	padding: 0;
 }
 
 .submenu li {
