@@ -19,11 +19,6 @@ STATIC_FILES_ROOT = ROOT_DIR / "static"
 # otherwise, will use the ordinary files
 COMPRESSED_STATIC_FILES = False
 
-# absolute path where the paste files should be store
-# default in projectdirectory/static/content/
-# use "/" even under Windows
-PASTE_FILES_ROOT = VAR_DIR / "content"
-
 # A tuple of absolute paths of directory where to look the template for
 # the first one will be the first to be looked into
 # if you want to override, it needs to be it a directory at the begining of
@@ -48,7 +43,12 @@ GROUP = None
 # Be carreful if your site have to many pastes this can hurt your hard drive performances.
 # Refresh counter interval. Default to every minute after a paste.
 DISPLAY_COUNTER = True
-REFRESH_COUNTER = 60 * 1
+REFRESH_COUNTER = 60 * 1  # Fill this if you want to
+ADMIN_CREDENTIALS = {
+    "username": None,
+    "password": None,
+}
+
 
 # Names/links to insert in the menu bar.
 # Any link with "mailto:" will be escaped to prevent spam
@@ -68,3 +68,4 @@ MAX_SIZE = 1024 * 500
 # total number of unique pastes can be calculated as 2^(6*PASTE_ID_LENGTH)
 # for PASTE_ID_LENGTH=8, for example, it's 2^(6*8) = 281 474 976 710 656
 PASTE_ID_LENGTH = 8
+

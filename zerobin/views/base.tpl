@@ -35,14 +35,14 @@
       <nav>
         <ul>
           <li class="submenu"><a href="#" @click.prevent="openPreviousPastesMenu = !openPreviousPastesMenu">Previous
-              pastes +</a>
+              pastes v</a>
             <ul class="previous-pastes" id="topmenu" v-if="openPreviousPastesMenu"
               @mouseleave="openPreviousPastesMenu =false">
               <li class="item active" v-if="previousPastes.length === 0">
-                <a href="#">No paste yet...</a>
+                <a href="#">No paste yet</a>
               </li>
               <li class="item active" v-for="paste in previousPastes">
-                <a :href="paste.link" @click="forceLoad(paste.link)">{% paste.displayDate %}.</a>
+                <a :href="paste.link" @click="forceLoad(paste.link)">{% paste.displayDate %}</a>
               </li>
             </ul>
           </li>

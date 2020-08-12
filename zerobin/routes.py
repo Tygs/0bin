@@ -7,20 +7,37 @@ import sys
 
 import _thread as thread
 
-import urllib.parse as urlparse
+from urllib.parse import urlparse, parse_qs
 
 from datetime import datetime, timedelta
 
-from zerobin import __version__
-from zerobin.utils import settings, SettingsValidationError, dmerge
-
 import bottle
-from bottle import Bottle, static_file, view, request, HTTPResponse
+from bottle import (
+    Bottle,
+    debug,
+    static_file,
+    view,
+    request,
+    HTTPResponse,
+    redirect,
+    abort,
+)
 
+from beaker.middleware import SessionMiddleware
+
+from zerobin import __version__
+from zerobin.utils import (
+    settings,
+    SettingsValidationError,
+    ensure_var_env,
+    check_password,
+)
 from zerobin.paste import Paste
 
 
-app = Bottle()
+ensure_var_env()
+
+
 GLOBAL_CONTEXT = {
     "settings": settings,
     "VERSION": __version__,
@@ -29,23 +46,79 @@ GLOBAL_CONTEXT = {
 }
 
 
+app = Bottle()
+
+ADMIN_LOGIN_URL = settings.ADMIN_URL + "login/"
+
+
 @app.route("/")
 @view("home")
 def index():
     return GLOBAL_CONTEXT
 
 
-@app.route("/faq/")
+@app.get("/faq/")
 @view("faq")
 def faq():
     return GLOBAL_CONTEXT
 
 
-@app.route("/paste/create", method="POST")
+@app.get(settings.ADMIN_URL)
+@app.post(settings.ADMIN_URL)
+@view("admin")
+def admin():
+    session = request.environ.get("beaker.session")
+    if not session or not session.get("is_authenticated"):
+        redirect(ADMIN_LOGIN_URL)
+
+    paste_id = request.forms.get("paste", "")
+    if paste_id:
+        try:
+            if "/paste/" in paste_id:
+                paste_id = urlparse(paste_id).path.split("/path/")[-1]
+            paste = Paste.load(paste_id)
+            paste.delete()
+        except (TypeError, ValueError, FileNotFoundError):
+            return {"status": "error", "message": f"Cannot find paste '{paste_id}'"}
+
+        return {"status": "ok", "message": "Paste deleted"}
+
+    return {"status": "ok", **GLOBAL_CONTEXT}
+
+
+@app.get(ADMIN_LOGIN_URL)
+@app.post(ADMIN_LOGIN_URL)
+@view("login")
+def login():
+
+    password = request.forms.get("password")
+    if password:
+        if not check_password(password):
+            return {"status": "error", "message": "Wrong password", **GLOBAL_CONTEXT}
+
+        session = request.environ.get("beaker.session")
+        session["is_authenticated"] = True
+        session.save()
+
+        redirect(settings.ADMIN_URL)
+
+    return {"status": "ok", **GLOBAL_CONTEXT}
+
+
+@app.post(settings.ADMIN_URL + "logout/")
+@view("logout")
+def logout():
+    session = request.environ.get("beaker.session")
+    session["is_authenticated"] = False
+    session.save()
+    redirect("/")
+
+
+@app.post("/paste/create")
 def create_paste():
 
     try:
-        body = urlparse.parse_qs(request.body.read(int(settings.MAX_SIZE * 1.1)))
+        body = parse_qs(request.body.read(int(settings.MAX_SIZE * 1.1)))
     except ValueError:
         return {"status": "error", "message": "Wrong data payload."}
 
@@ -95,7 +168,7 @@ def create_paste():
     }
 
 
-@app.route("/paste/:paste_id", method="GET")
+@app.get("/paste/:paste_id")
 @view("paste")
 def display_paste(paste_id):
 
@@ -125,11 +198,10 @@ def display_paste(paste_id):
     except (TypeError, ValueError):
         return error404(ValueError)
 
-    context = {"paste": paste, "keep_alive": keep_alive}
-    return dmerge(context, GLOBAL_CONTEXT)
+    return {"paste": paste, "keep_alive": keep_alive, **GLOBAL_CONTEXT}
 
 
-@app.route("/paste/:paste_id", method="DELETE")
+@app.delete("/paste/:paste_id")
 def delete_paste(paste_id):
 
     try:
@@ -154,7 +226,7 @@ def error404(code):
     return GLOBAL_CONTEXT
 
 
-@app.route("/static/<filename:path>")
+@app.get("/static/<filename:path>")
 def server_static(filename):
     return static_file(filename, root=settings.STATIC_FILES_ROOT)
 
@@ -187,3 +259,14 @@ def get_app(debug=None, settings_file="", compressed_static=None, settings=setti
         bottle.debug(True)
 
     return settings, app
+
+
+app = SessionMiddleware(
+    app,
+    {
+        "session.type": "file",
+        "session.cookie_expires": 300,
+        "session.data_dir": settings.SESSIONS_DIR,
+        "session.auto": True,
+    },
+)
