@@ -9,7 +9,8 @@
                    pastebin featuring burn after reading, history, and
                    a clipboard">
 
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico" />
+
 
   %if settings.COMPRESSED_STATIC_FILES:
   <link href="/static/css/style.min.css?{{ VERSION }}" rel="stylesheet" />

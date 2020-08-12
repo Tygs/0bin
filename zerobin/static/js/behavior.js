@@ -18,13 +18,7 @@ setTimeout(function () {
   document.getElementById('content').focus()
 }, 100)
 
-// Parse obfuscaded emails and make them usable
-const menu = new Vue({
-  el: "#menu-top",
-  methods: {
 
-  }
-})
 
 const app = new Vue({
 
@@ -829,7 +823,6 @@ window.onload = function () {
     })
   }
 
-
 }
 
 /* Display previous pastes */
@@ -848,7 +841,6 @@ if (app.support.fileUpload) {
   content.addEventListener('dragleave', zerobin.handleDragLeave);
 
 }
-
 
 /* Autofit text area height */
 const tx = document.getElementsByTagName('textarea');
