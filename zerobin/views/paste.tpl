@@ -46,8 +46,8 @@
     </div>
 
     <div class="progress-container">
-      <div class="progress progress-bar progress-bar-striped active" v-show="isLoading">
-        <div class="bar"></div>
+      <div class="progress  active" v-show="isLoading">
+        <div class="progress-bar progress-bar-striped" role="progressbar"></div>
       </div>
     </div>
 
@@ -113,8 +113,8 @@
     </div>
 
     <div class="progress-container progress-clone">
-      <div class="progress progress-bar progress-bar-striped active" v-show="isLoading">
-        <div class="bar"></div>
+      <div class="progress active" v-show="isLoading">
+        <div class="progress-bar progress-bar-striped" role="progressbar"></div>
       </div>
     </div>
 

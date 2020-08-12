@@ -339,13 +339,13 @@ window.zerobin = {
             if (doneCallback) {
               doneCallback(content);
             }
-          }, 250);
+          }, 50);
 
-        }, 250);
+        }, 50);
 
-      }, 250);
+      }, 50);
 
-    }, 250);
+    }, 50);
   },
 
   /** Base64 decoding + uncompress + decrypt, with callbacks before each operation,
@@ -394,25 +394,25 @@ window.zerobin = {
                     errorCallback(err);
                   }
 
-                }, 250); /* "End of from bits to string" */
+                }, 50); /* "End of from bits to string" */
 
               } catch (err) {
                 errorCallback(err);
               }
 
-            }, 250); /* End of "from base 64 to bits" */
+            }, 50); /* End of "from base 64 to bits" */
 
           } catch (err) {
             errorCallback(err);
           }
 
-        }, 250); /* End of "decompress" */
+        }, 50); /* End of "decompress" */
 
       } catch (err) {
         errorCallback(err);
       }
 
-    }, 250); /* End of "decrypt" */
+    }, 50); /* End of "decrypt" */
   },
 
   /** Create a random base64-like string long enought to be suitable as

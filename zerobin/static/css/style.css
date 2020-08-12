@@ -290,7 +290,6 @@ form textarea {
 .progress {
   margin: 8px 0 8px 0;
   height: 1.5rem;
-  display: none;
 }
 
 .progress .bar {
