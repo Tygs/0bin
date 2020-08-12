@@ -21,52 +21,61 @@
 
 <div class="well paste-form">
   <form action="/" method="get" accept-charset="utf-8">
-    <p class="lnk-option">
-      <a id="clip-button" v-if="support.clipboard" href="#" @click.prevent="copyToClipboard()">Copy To Clipboard</a> |
 
-      <a id="email-link" href="#" @click="handleSendByEmail($event)">Email this</a>
+    <div class="d-flex justify-content-between">
+ 
+      <div class="btn-group" role="group" >
+        <button v-if="support.clipboard" @click.prevent="copyToClipboard()" type="button" id="clip-button" class="btn btn-secondary">Copy To Clipboard</button>
+        <button type="button" id="email-link" class="btn btn-secondary"  @click="handleSendByEmail($event)>Email this</button>
+      </div>
 
-      <span class="paste-option btn-group top">
-        <button class="btn btn-clone" @click.prevent="handleClone()"><i class="icon-camera"></i>&nbsp;Clone</button>
-        <button class="btn" v-if="downloadLink.url">
-          <a :href="downloadLink.url" :download="downloadLink.name"><i class="icon-download"></i> Download</a>
+      <div> 
+        <span class="paste-option btn-group">
+            <button class="btn btn-clone btn-secondary" @click.prevent="handleClone()">Clone</button>
+           
+        <button class="btn  btn-secondar" v-if="downloadLink.url">
+          <a :href="downloadLink.url" :download="downloadLink.name"> Download</a>
         </button>
 
-
-        <button class="btn">New Paste</button>
-      </span>
-    </p>
-
-    <div class="progress progress-striped active" v-show="isLoading">
-      <div class="bar"></div>
+           <button class="btn btn-secondary">New Paste</button>
+        </span>
+      </div> 
+      
+    </div> 
+ 
+    <div class="progress-container">
+      <div class="progress progress-bar progress-bar-striped active"  v-show="isLoading">
+        <div class="bar"></div>
+      </div>
     </div>
 
     %expiration = paste.humanized_expiration
     %if expiration:
-    <p id="expiration-tag">Expire {{ expiration }}</p>
+      <span id="expiration-tag">Expire {{ expiration }}</span>
     %end
 
-    <p>
-      <pre id="paste-content" class="prettyprint">
-    <code>
-      {{ paste.content }}
-    </code>
-  </pre>
-    </p>
+    <pre id="paste-content" class="prettyprint">
+      <code>
+        {{ paste.content }}
+      </code>
+    </pre>
 
-    <p v-if="currentPaste.ownerKey">
-      <button type="button" class="btn btn-danger" @click="handleDeletePaste()">Delete this paste</button>
-    </p>
+    <div class="d-flex justify-content-between down">
+      <div v-if="currentPaste.ownerKey">  
+        <button class="btn btn-clone btn-secondary" @click="handleDeletePaste()">Delete Paste</button> 
+      </div> 
+      <div> 
+        <span class="paste-option btn-group">
+            <button class="btn btn-clone btn-secondary" @click.prevent="handleClone()">Clone</button>
+           
+        <button class="btn  btn-secondar" v-if="downloadLink.url">
+          <a :href="downloadLink.url" :download="downloadLink.name"> Download</a>
+        </button>
 
-    <p class="paste-option btn-group bottom">
-      <button class="btn btn-clone" @click.prevent="handleClone()"><i class="icon-camera"></i>&nbsp;Clone</button>
-
-      <button class="btn" v-if="downloadLink.url">
-        <a :href="downloadLink.url" :download="downloadLink.name"><i class="icon-download"></i> Download</a>
-      </button>
-
-      <button class="btn">New Paste</button>
-    </p>
+           <button class="btn btn-secondary">New Paste</button>
+        </span>
+      </div> 
+    </div>
 
   </form>
 </div>
@@ -74,39 +83,72 @@
 <!-- For cloning -->
 <div class="submit-form clone">
   <form class="well" method="post" action="/paste/create" @submit.prevent="encryptAndSendPaste()">
-    <p class="paste-option">
-      <label for="expiration">Expiration:</label>
-      <select id="expiration" name="expiration" v-model="newPaste.expiration">
-        <option value="burn_after_reading">Burn after reading</option>
-        <option selected value="1_day">1 day</option>
-        <option value="1_month">1 month</option>
-        <option value="never">Never</option>
-      </select>
-      <button type="submit" class="btn btn-primary">Submit</button>
-      <button class="btn btn-danger" @click.prevent="handleCancelClone()">Cancel clone</button>
-    </p>
 
-    <div>
-      <div class="progress progress-striped active" v-show="isLoading">
+    <div class="d-flex justify-content-between">
+    
+      <div>
+        <label class="col-form-label">&nbsp;</label>
+        <div class="file-upload"> 
+          <button type="button" class="btn btn-danger" @click.prevent="handleCancelClone()">Cancel clone</button> 
+        </div>
+      </div> 
+
+      <div class="form-group select-date-clone paste-option">
+        <label class="col-form-label" >Expiration:</label>
+        <div class="input-group"> 
+          <select id="expiration" name="expiration" class="custom-select" v-model="newPaste.expiration">
+            <option value="burn_after_reading">Burn after reading</option>
+            <option selected value="1_day">1 day</option>
+            <option value="1_month">1 month</option>
+            <option value="never">Never</option>
+          </select>
+          <div class="input-group-append"> 
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+      
+    </div> 
+
+    <div class="progress-container progress-clone" >
+      <div class="progress progress-bar progress-bar-striped active"  v-show="isLoading">
         <div class="bar"></div>
       </div>
-      <textarea rows="10" style="width:100%;" class="input-xlarge" id="content" name="content" autofocus
-        v-on:keydown.prevent.ctrl.enter="encryptAndSendPaste()"></textarea>
     </div>
 
-    <p class="paste-option down" v-if="displayBottomToolBar">
-      <label for="expiration">Expiration:</label>
-      <select id="expiration" name="expiration" v-model="newPaste.expiration">
-        <option value="burn_after_reading">Burn after reading</option>
-        <option selected value="1_day">1 day</option>
-        <option value="1_month">1 month</option>
-        <option value="never">Never</option>
-      </select>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </p>
+    <div> 
+        <textarea rows="10"  style="width:100%;"
+                  class=" form-control" @keydown.prevent.ctrl.enter="encryptAndSendPaste()"
+                  id="content" name="content"></textarea>
+    </div>
+
+    <div class="d-flex justify-content-between" v-if="displayBottomToolBar">>
+    
+      <div>
+        <label class="col-form-label">&nbsp;</label>
+        <div class="file-upload"> 
+          <button type="button" class="btn btn-danger" @click.prevent="handleCancelClone()">Cancel clone</button> 
+        </div>
+      </div> 
+
+      <div class="form-group select-date-clone paste-option">
+        <label class="col-form-label" >Expiration:</label>
+        <div class="input-group"> 
+          <select id="expiration" name="expiration" class="custom-select" v-model="newPaste.expiration">
+            <option value="burn_after_reading">Burn after reading</option>
+            <option selected value="1_day">1 day</option>
+            <option value="1_month">1 month</option>
+            <option value="never">Never</option>
+          </select>
+          <div class="input-group-append"> 
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+      
+    </div> 
   </form>
 </div>
-
 
 
 % rebase("base", settings=settings, pastes_count=pastes_count)

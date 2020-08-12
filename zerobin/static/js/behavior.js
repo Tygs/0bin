@@ -791,7 +791,7 @@ if (content && key) {
           prettyPrint();
         } else {
           if (content.indexOf('data:image') != 0) {
-            zerobin.message('info',
+            zerobin.message('dismissible',
               "The paste did not seem to be code, so it " +
               "was not colorized. ",
               '', false, undefined, {
