@@ -11,22 +11,41 @@ import urllib.parse as urlparse
 
 from datetime import datetime, timedelta
 
-from zerobin import __version__
-from zerobin.utils import settings, SettingsValidationError, dmerge
-
 import bottle
-from bottle import Bottle, static_file, view, request, HTTPResponse
+from bottle import Bottle, static_file, view, request, HTTPResponse, redirect, abort
 
+from beaker.middleware import SessionMiddleware
+
+from zerobin import __version__
+from zerobin.utils import (
+    settings,
+    SettingsValidationError,
+    ensure_var_env,
+    check_password,
+)
 from zerobin.paste import Paste
 
 
-app = Bottle()
+ensure_var_env()
+
+
 GLOBAL_CONTEXT = {
     "settings": settings,
     "VERSION": __version__,
     "pastes_count": Paste.get_pastes_count(),
     "refresh_counter": datetime.now(),
 }
+
+
+app = SessionMiddleware(
+    Bottle(),
+    {
+        "session.type": "file",
+        "session.cookie_expires": 300,
+        "session.data_dir": settings.SESSIONS_DIR,
+        "session.auto": True,
+    },
+)
 
 
 @app.route("/")
@@ -39,6 +58,50 @@ def index():
 @view("faq")
 def faq():
     return GLOBAL_CONTEXT
+
+
+@app.route(settings.ADMIN_URL, method="GET")
+@view("admin")
+def admin():
+    session = request.environ.get("beaker.session")
+    if not session or not session.get("is_authenticated"):
+        redirect(settings.ADMIN_URL + "/login")
+
+    return {}
+
+
+@app.route(settings.ADMIN_URL + "/:paste_id", method="DELETE")
+@view("admin")
+def delete_paste_from_admin(paste_id):
+    session = request.environ.get("beaker.session")
+    if not session or not session.get("is_authenticated"):
+        abort(403, "Sorry, access denied.")
+
+    try:
+        paste = Paste.load(paste_id)
+    except (TypeError, ValueError):
+        return error404(ValueError)
+
+    paste.delete()
+
+    return {"status": "ok", "message": "Paste deleted"}
+
+
+@app.route(settings.ADMIN_URL + "/login")
+def login():
+
+    password = request.forms.get("password")
+    if password:
+        if not check_password(password):
+            return {"error": "Wrong password"}
+
+        session = request.environ.get("beaker.session")
+        session["is_authenticated"] = True
+        session.save()
+
+        redirect(settings.ADMIN_URL)
+    else:
+        return {}
 
 
 @app.route("/paste/create", method="POST")
@@ -125,8 +188,7 @@ def display_paste(paste_id):
     except (TypeError, ValueError):
         return error404(ValueError)
 
-    context = {"paste": paste, "keep_alive": keep_alive}
-    return dmerge(context, GLOBAL_CONTEXT)
+    return {"paste": paste, "keep_alive": keep_alive, **GLOBAL_CONTEXT}
 
 
 @app.route("/paste/:paste_id", method="DELETE")

@@ -2,9 +2,10 @@ import time
 import os
 import glob
 import tempfile
-import sys
 import codecs
 import unicodedata
+import hashlib
+import secrets
 from functools import partial
 
 from zerobin import default_settings
@@ -12,16 +13,10 @@ from zerobin import default_settings
 try:
     from zerobin.privilege import drop_privileges_permanently, coerce_user, coerce_group
 except (AttributeError):
-    pass  # privilege does't work on several plateform
+    pass  # privilege does't work on several plateforms
 
-try:
-    from runpy import run_path
-except ImportError:
-    # python-2.6 or earlier - use simplier less-optimized execfile()
-    def run_path(file_path):
-        mod_globals = {"__file__": file_path}
-        execfile(file_path, mod_globals)
-        return mod_globals
+
+from runpy import run_path
 
 
 def drop_privileges(user=None, group=None, wait=5):
@@ -45,17 +40,6 @@ def drop_privileges(user=None, group=None, wait=5):
             drop_privileges_permanently(user, group, ())
         except Exception:
             print("Failed to drop privileges. Running with current user.")
-
-
-def dmerge(*args):
-    """
-        Return new directionay being the sum of all merged dictionaries passed
-        as arguments
-    """
-    dictionary = {}
-    for arg in args:
-        dictionary.update(arg)
-    return dictionary
 
 
 class SettingsValidationError(Exception):
@@ -134,3 +118,55 @@ def as_unicode(obj):
         return unicode(obj)
     except NameError:
         return str(obj)
+
+
+def ensure_var_env():
+    """ Ensure all the variable things we generate are available.
+
+        This will make sure we have:
+
+        - a var dir
+        - a content dir
+        - a secret key
+        - an admin URL
+    """
+
+    settings.VAR_DIR.mkdir(exist_ok=True, parents=True)
+    settings.PASTE_FILES_ROOT = VAR_DIR / "content"
+    settings.PASTE_FILES_ROOT.mkdir(exist_ok=True)
+    settings.SESSIONS_DIR = VAR_DIR / "sessions"
+    settings.SESSIONS_DIR.mkdir(exist_ok=True)
+
+    secret_key_file = settings.VAR_DIR / "secret_key"
+    if not secret_key_file.is_file():
+        secret_key_file.write_text(secrets.token_urlsafe(64))
+    settings.SECRET_KEY = secret_key_file.read_text()
+
+    admin_password_file = settings.VAR_DIR / "admin_password"
+    if not secret_key_file.is_file():
+        admin_password_file.write_text(
+            "No password set. Use the set_admin_passord command. Don't write this file by hand."
+        )
+    settings.ADMIN_PASSWORD_FILE = admin_password_file
+
+    payload = ("admin" + settings.SECRET_KEY).encode("ascii")
+    settings.ADMIN_URL = "/admin/" + hashlib.sha256(payload).hexdigest()
+
+
+def hash_password(password):
+    return hashlib.scrypt(
+        password.encode("utf8"),
+        salt=settings.SECRET_KEY.encode("ascii"),
+        n=16384,
+        r=8,
+        p=1,
+        dklen=32,
+    )
+
+
+def check_password(password):
+    try:
+        return settings.ADMIN_PASSWORD_FILE.read_bytes() != hash_password(password)
+    except (FileNotFoundError, AttributeError):
+        return False
+
