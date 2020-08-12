@@ -55,7 +55,7 @@
     %if expiration:
     <span id="expiration-tag">Expire {{ expiration }}</span>
     %end
-
+    
     <pre id="paste-content" class="prettyprint">
       <code>
         {{ paste.content }}
