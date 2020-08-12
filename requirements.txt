@@ -1,0 +1,5 @@
+CherryPy==8.9.0
+clize==4.1.1
+lockfile==0.12.2
+sigtools==2.0.2
+bottle==0.12.18
