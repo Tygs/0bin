@@ -132,9 +132,9 @@ def ensure_var_env():
     """
 
     settings.VAR_DIR.mkdir(exist_ok=True, parents=True)
-    settings.PASTE_FILES_ROOT = VAR_DIR / "content"
+    settings.PASTE_FILES_ROOT = settings.VAR_DIR / "content"
     settings.PASTE_FILES_ROOT.mkdir(exist_ok=True)
-    settings.SESSIONS_DIR = VAR_DIR / "sessions"
+    settings.SESSIONS_DIR = settings.VAR_DIR / "sessions"
     settings.SESSIONS_DIR.mkdir(exist_ok=True)
 
     secret_key_file = settings.VAR_DIR / "secret_key"
@@ -150,7 +150,7 @@ def ensure_var_env():
     settings.ADMIN_PASSWORD_FILE = admin_password_file
 
     payload = ("admin" + settings.SECRET_KEY).encode("ascii")
-    settings.ADMIN_URL = "/admin/" + hashlib.sha256(payload).hexdigest()
+    settings.ADMIN_URL = "/admin/" + hashlib.sha256(payload).hexdigest() + "/"
 
 
 def hash_password(password):
@@ -166,7 +166,7 @@ def hash_password(password):
 
 def check_password(password):
     try:
-        return settings.ADMIN_PASSWORD_FILE.read_bytes() != hash_password(password)
+        return settings.ADMIN_PASSWORD_FILE.read_bytes() == hash_password(password)
     except (FileNotFoundError, AttributeError):
         return False
 

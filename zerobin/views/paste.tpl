@@ -19,8 +19,6 @@
 %end
 %end
 
-<h1>{% currentPaste.type %}</h1>
-
 <div class="well paste-form">
   <form action="/" method="get" accept-charset="utf-8">
 
@@ -57,7 +55,7 @@
     %if expiration:
     <span id="expiration-tag">Expire {{ expiration }}</span>
     %end
-    
+
     <pre id="paste-content" class="prettyprint">
       <code>
         {{ paste.content }}

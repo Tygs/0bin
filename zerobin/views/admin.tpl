@@ -1,32 +1,25 @@
-%if is_authenticated:
-
-<form action="" method="delete">
-
+<form action="./delete/" method="post">
+    %if status == "error":
+    <div class="alert alert-danger" role="alert alert-danger">
+        {{message}}
+    </div>
+    %end
     <div>
-        <form>
-            <div class="form-group">
-                <label>Paste to delete</label>
-                <input type="text" class="form-control" placeholder="Paste URL or ID">
-            </div>
-            <button type="submit" class="btn btn-black">Delete</button>
-        </form>
+        <div class="form-group">
+            <label>Paste to delete</label>
+            <input name="paste" type="text" class="form-control" placeholder="Paste URL or ID">
+        </div>
+        <button type="submit" class="btn btn-black">Delete</button>
+
     </div>
 
+</form>
 
-    %else:
-    <form action="/login" method="post">
-
-        <div class="login-form">
-            <form>
-
-                <label>Password</label>
-                <input type="password" class="form-control" placeholder="Password">
-                <button type="submit" class="btn btn-black">Login</button>
-            </form>
-        </div>
-
-    </form>
-    %end
+<form action="./logout/" method="post">
+    <div>
+        <button type="submit" class="btn btn-black">Logout</button>
+    </div>
+</form>
 
 
-    % rebase('base', settings=settings, pastes_count=pastes_count)
+% rebase('base', settings=settings, pastes_count=pastes_count)
