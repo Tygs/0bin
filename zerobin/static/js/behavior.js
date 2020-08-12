@@ -15,26 +15,25 @@ Vue.options.delimiters = ['{%', '%}'];
 
 // Force focus for textarea (firefox hack)
 setTimeout(function () {
-  document.querySelector('textarea').focus()
+  document.getElementById('content').focus()
 }, 100)
 
 // Parse obfuscaded emails and make them usable
 const menu = new Vue({
   el: "#menu-top",
   methods: {
-    formatEmail: (email) => {
-      return "mailto:" + email.replace('__AT__', '@');
-    },
+
   }
 })
 
 const app = new Vue({
 
-  el: '#wrap-content',
+  el: '#app',
   data: {
     previousPastes: [],
     downloadLink: {},
     displayBottomToolBar: false,
+    openPreviousPastesMenu: false,
     isUploading: false,
     currentPaste: {
       ownerKey: '',
@@ -77,7 +76,12 @@ const app = new Vue({
     isLoading: false
   },
   methods: {
-    forceLoadPaste: (link) => {
+
+    formatEmail: (email) => {
+      return "mailto:" + email.replace('__AT__', '@');
+    },
+
+    forceLoad: (link) => {
       window.location = link;
       window.location.reload();
     },
@@ -130,8 +134,7 @@ const app = new Vue({
           })
         }).then(function (response) {
           if (response.ok) {
-            window.location = "/";
-            window.reload()
+            app.forceLoad("/");
           } else {
             form.forEach((node) => node.disabled = false);
             app.isLoading = false
