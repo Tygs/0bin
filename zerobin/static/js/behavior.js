@@ -15,26 +15,25 @@ Vue.options.delimiters = ['{%', '%}'];
 
 // Force focus for textarea (firefox hack)
 setTimeout(function () {
-  document.querySelector('textarea').focus()
+  document.getElementById('content').focus()
 }, 100)
 
 // Parse obfuscaded emails and make them usable
 const menu = new Vue({
   el: "#menu-top",
   methods: {
-    formatEmail: (email) => {
-      return "mailto:" + email.replace('__AT__', '@');
-    },
+
   }
 })
 
 const app = new Vue({
 
-  el: '#wrap-content',
+  el: '#app',
   data: {
     previousPastes: [],
     downloadLink: {},
     displayBottomToolBar: false,
+    openPreviousPastesMenu: false,
     isUploading: false,
     currentPaste: {
       ownerKey: '',
@@ -77,7 +76,12 @@ const app = new Vue({
     isLoading: false
   },
   methods: {
-    forceLoadPaste: (link) => {
+
+    formatEmail: (email) => {
+      return "mailto:" + email.replace('__AT__', '@');
+    },
+
+    forceLoad: (link) => {
       window.location = link;
       window.location.reload();
     },
@@ -115,7 +119,7 @@ const app = new Vue({
     },
 
     handleSendByEmail: (e) => {
-      e.target.href = 'mailto:friend@example.com?body=' + window.location.toString();
+      window.location = 'mailto:friend@example.com?body=' + window.location.toString();
     },
 
     handleDeletePaste: () => {
@@ -130,8 +134,7 @@ const app = new Vue({
           })
         }).then(function (response) {
           if (response.ok) {
-            window.location = "/";
-            window.reload()
+            app.forceLoad("/");
           } else {
             form.forEach((node) => node.disabled = false);
             app.isLoading = false
@@ -336,13 +339,13 @@ window.zerobin = {
             if (doneCallback) {
               doneCallback(content);
             }
-          }, 250);
+          }, 50);
 
-        }, 250);
+        }, 50);
 
-      }, 250);
+      }, 50);
 
-    }, 250);
+    }, 50);
   },
 
   /** Base64 decoding + uncompress + decrypt, with callbacks before each operation,
@@ -391,25 +394,25 @@ window.zerobin = {
                     errorCallback(err);
                   }
 
-                }, 250); /* "End of from bits to string" */
+                }, 50); /* "End of from bits to string" */
 
               } catch (err) {
                 errorCallback(err);
               }
 
-            }, 250); /* End of "from base 64 to bits" */
+            }, 50); /* End of "from base 64 to bits" */
 
           } catch (err) {
             errorCallback(err);
           }
 
-        }, 250); /* End of "decompress" */
+        }, 50); /* End of "decompress" */
 
       } catch (err) {
         errorCallback(err);
       }
 
-    }, 250); /* End of "decrypt" */
+    }, 50); /* End of "decrypt" */
   },
 
   /** Create a random base64-like string long enought to be suitable as

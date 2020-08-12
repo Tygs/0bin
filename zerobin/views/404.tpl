@@ -25,14 +25,14 @@
       <option value="1_month">1 month</option>
       <option value="never">Never</option>
     </select>
-    <button type="submit" class="btn btn-primary" ">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </p>
   <p>
     <div class=" progress progress-striped active" v-show="isLoading">
       <div class="bar"></div>
-      </div>
-      <textarea rows="10" style="width:100%;" class="input-xlarge" id="content" name="content" autofocus
-        v-on:keydown.prevent.ctrl.enter="encryptAndSendPaste()"></textarea>
+    </div>
+    <textarea rows="10" style="width:100%;" class="input-xlarge" id="content" name="content" autofocus
+      v-on:keydown.prevent.ctrl.enter="encryptAndSendPaste()"></textarea>
   </p>
   <p class="paste-option down" v-if="displayBottomToolBar">
     <label for="expiration">Expiration:</label>
