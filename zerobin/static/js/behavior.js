@@ -336,13 +336,13 @@ window.zerobin = {
             if (doneCallback) {
               doneCallback(content);
             }
-          }, 50);
+          }, 250);
 
-        }, 50);
+        }, 250);
 
-      }, 50);
+      }, 250);
 
-    }, 50);
+    }, 250);
   },
 
   /** Base64 decoding + uncompress + decrypt, with callbacks before each operation,
@@ -391,25 +391,25 @@ window.zerobin = {
                     errorCallback(err);
                   }
 
-                }, 50); /* "End of from bits to string" */
+                }, 250); /* "End of from bits to string" */
 
               } catch (err) {
                 errorCallback(err);
               }
 
-            }, 50); /* End of "from base 64 to bits" */
+            }, 250); /* End of "from base 64 to bits" */
 
           } catch (err) {
             errorCallback(err);
           }
 
-        }, 50); /* End of "decompress" */
+        }, 250); /* End of "decompress" */
 
       } catch (err) {
         errorCallback(err);
       }
 
-    }, 50); /* End of "decrypt" */
+    }, 250); /* End of "decrypt" */
   },
 
   /** Create a random base64-like string long enought to be suitable as
@@ -629,7 +629,7 @@ window.zerobin = {
       }
     }
 
-    return total * 1000 / size;
+    return total * 250 / size;
   },
 
   // prevent defaults
