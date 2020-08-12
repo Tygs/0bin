@@ -53,10 +53,11 @@ REFRESH_COUNTER = 60 * 1
 # Names/links to insert in the menu bar.
 # Any link with "mailto:" will be escaped to prevent spam
 MENU = (
-    ("Home", "/"),  # internal link. First link will be highlited
-    ("Download 0bin", "https://github.com/sametmax/0bin"),  # external link
+    ("Create paste", "/"),  # internal link. First link will be highlited
+    ("Github", "https://github.com/Tygs/0bin"),  # external link
     ("Faq", "/faq/"),  # faq
     ("Contact", "mailto:your@email.com"),  # email
+    ("Zerobin Pastebin", "https://www.0bin.net/"),  # Thanks the authors :)
 )
 
 # limit size of pasted text in bytes. Be careful allowing too much size can

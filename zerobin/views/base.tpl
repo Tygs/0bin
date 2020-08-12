@@ -34,7 +34,7 @@
 
       <nav>
         <ul>
-          <li class="submenu"><a href="#" @click="openPreviousPastesMenu = !openPreviousPastesMenu">Previous
+          <li class="submenu"><a href="#" @click.prevent="openPreviousPastesMenu = !openPreviousPastesMenu">Previous
               pastes +</a>
             <ul class="previous-pastes" id="topmenu" v-if="openPreviousPastesMenu"
               @mouseleave="openPreviousPastesMenu =false">
@@ -62,9 +62,21 @@
     </div>
 
     <footer class="footer">
-      <a href="https://www.0bin.net/">Create a paste</a> - <a href="/faq/">Faq</a> - <a
-        href="https://github.com/sametmax/0bin">Github</a>
-      <br>
+      <ul>
+        %for i, entry in enumerate(settings.MENU):
+          <li>
+            %if "mailto:" in entry[1]:
+              <span :title='formatEmail(`{{ entry[1].replace("mailto:", "").replace("@", "__AT__") }}`)'
+                    class="email-link" >
+                {{ entry[0] }}
+              </span>
+            %else:
+              <a href="{{ entry[1] }}">{{ entry[0] }}</a>
+            %end
+          </li>
+        %end
+      </ul>
+      
       %if settings.DISPLAY_COUNTER:
       <strong>{{ pastes_count }}</strong> pastes øbinned
       %end
@@ -90,8 +102,7 @@
   <script src="/static/js/additional.min.js?{{ settings.VERSION }}"></script>
   %else:
   <script src="/static/js/lzw.js"></script>
-  <script src="/static/js/prettify.min.js"></script>
-  <script src="/static/js/ZeroClipboard.js"></script>
+  <script src="/static/js/prettify.min.js"></script> 
   %end
 
   <p id="alert-template" class="alert-primary">
