@@ -613,7 +613,8 @@ window.zerobin = {
       }
     }
 
-    return total * 250 / size;
+    // return total * 250 / size;
+    return total * 1000 / size;
   },
 
   // prevent defaults
@@ -740,7 +741,7 @@ if (content && key) {
     function (content) {
 
       /* Decrypted content goes back to initial container*/
-      document.querySelector('#paste-content').innerHTML = content;
+      document.querySelector('#paste-content').innerText = content;
 
       if (content.indexOf('data:image') == 0) {
         // Display Image
