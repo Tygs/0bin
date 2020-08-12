@@ -1,6 +1,6 @@
 %if "burn_after_reading" in str(paste.expiration):
 %if keep_alive:
-<p class="alert alert-info">
+<p class="alert alert-dismissible alert-primary">
   <a class="close" data-dismiss="alert" href="#" @click.prevent="$event.target.parentNode.remove()">×</a>
   <strong class="title">Ok!</strong>
   <span class="message">
@@ -8,7 +8,7 @@
   </span>
 </p>
 %else:
-<p class="alert">
+<p class="alert alert-warning alert-dismissible">
   <a class="close" data-dismiss="alert" href="#" @click.prevent="$event.target.parentNode.remove()">×</a>
   <strong class="title">Warning!</strong>
   <span class="message">
@@ -18,9 +18,6 @@
 </p>
 %end
 %end
-
-<h1>{% currentPaste.type %}</h1>
-
 <div class="well paste-form">
   <form action="/" method="get" accept-charset="utf-8">
 
