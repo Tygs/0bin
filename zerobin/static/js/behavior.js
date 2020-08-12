@@ -119,7 +119,7 @@ const app = new Vue({
     },
 
     handleSendByEmail: (e) => {
-      e.target.href = 'mailto:friend@example.com?body=' + window.location.toString();
+      window.location = 'mailto:friend@example.com?body=' + window.location.toString();
     },
 
     handleDeletePaste: () => {
