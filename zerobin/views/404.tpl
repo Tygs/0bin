@@ -1,8 +1,4 @@
-<script type="text/javascript">
-  zerobin.paste_not_found = true;
-</script>
-
-<p class="alert alert-warning alert-dismissible">
+<p class="alert alert-warning alert-dismissible" :dummy="currentPaste.type = 'not_found'">
   <a class="close" data-dismiss="alert" href="#" @click.prevent="$event.target.parentNode.remove()">×</a>
   <strong class="title">404 Error!</strong>
   <span class="message">

@@ -102,7 +102,7 @@ const app = new Vue({
         app.isUploading = true;
         zerobin.upload(files);
       } catch (e) {
-        zerobin.message('error', 'Could no upload the file', 'Error');
+        zerobin.message('danger', 'Could no upload the file', 'Error');
       }
       app.isUploading = false;
     },
@@ -136,14 +136,14 @@ const app = new Vue({
             form.forEach((node) => node.disabled = false);
             app.isLoading = false
             zerobin.message(
-              'error',
+              'danger',
               'Paste could not be deleted. Please try again later.',
               'Error');
           }
           app.isLoading = false;
         }).catch(function (error) {
           zerobin.message(
-            'error',
+            'danger',
             'Paste could not be delete. Please try again later.',
             'Error');
           app.isLoading = false;
@@ -157,9 +157,9 @@ const app = new Vue({
       let promise = navigator.clipboard.writeText(pasteContent);
 
       promise.then(function () {
-        zerobin.message('info', 'The paste is now in your clipboard', '', true);
+        zerobin.message('primary', 'The paste is now in your clipboard', '', true);
       }, function (err) {
-        zerobin.message('error', 'The paste could not be copied', '', true);
+        zerobin.message('danger', 'The paste could not be copied', '', true);
       });
 
     },
@@ -216,7 +216,7 @@ const app = new Vue({
               if (oversized) {
                 app.isLoading = false
                 form.forEach((node) => node.disabled = false);
-                zerobin.message('error', ('The encrypted file was <strong class="file-size">' + readableFsize +
+                zerobin.message('danger', ('The encrypted file was <strong class="file-size">' + readableFsize +
                     '</strong>KB. You have reached the maximum size limit of ' + readableMaxsize + 'KB.'),
                   'Warning!', true);
                 return;
@@ -231,7 +231,7 @@ const app = new Vue({
 
                   response.json().then((data) => {
                     if (data.status === 'error') {
-                      zerobin.message('error', data.message, 'Error');
+                      zerobin.message('danger', data.message, 'Error');
                       form.forEach((node) => node.disabled = false);
                       app.isLoading = false
                     } else {
@@ -246,7 +246,7 @@ const app = new Vue({
                   form.forEach((node) => node.disabled = false);
                   app.isLoading = false
                   zerobin.message(
-                    'error',
+                    'danger',
                     'Paste could not be saved. Please try again later.',
                     'Error');
                 }
@@ -254,7 +254,7 @@ const app = new Vue({
                 form.forEach((node) => node.disabled = false);
                 app.isLoading = false
                 zerobin.message(
-                  'error',
+                  'danger',
                   'Paste could not be saved. Please try again later.',
                   'Error');
               });
@@ -263,7 +263,7 @@ const app = new Vue({
         } catch (err) {
           form.forEach((node) => node.disabled = false);
           app.isLoading = false
-          zerobin.message('error', 'Paste could not be encrypted. Aborting.',
+          zerobin.message('danger', 'Paste could not be encrypted. Aborting.',
             'Error');
         }
       }
@@ -314,7 +314,7 @@ window.zerobin = {
 
               app.isLoading = false;
 
-              zerobin.message('error', 'Paste could not be encrypted. Aborting.',
+              zerobin.message('danger', 'Paste could not be encrypted. Aborting.',
                 'Error');
             }
             if (doneCallback) {
@@ -729,7 +729,7 @@ if (content && key) {
     /* On error*/
     function () {
       app.isLoading = false;
-      zerobin.message('error', 'Could not decrypt data (Wrong key ?)', 'Error');
+      zerobin.message('danger', 'Could not decrypt data (Wrong key ?)', 'Error');
     },
 
     /* Update progress bar */
@@ -779,7 +779,7 @@ if (content && key) {
           prettyPrint();
         } else {
           if (content.indexOf('data:image') != 0) {
-            zerobin.message('dismissible',
+            zerobin.message('primary',
               "The paste did not seem to be code, so it " +
               "was not colorized. ",
               '', false, undefined, {
@@ -815,6 +815,21 @@ window.onload = function () {
       app.displayBottomToolBar = height > 400;
     })
   })
+
+  /* Remove expired pasted from history **/
+  if (app.support.history && app.currentPaste.type === 'not_found') {
+
+    var paste_id = zerobin.getPasteId();
+    var keys = zerobin.getLocalStorageURLKeys();
+    keys.forEach((key, i) => {
+      if (localStorage[key].indexOf(paste_id) !== -1) {
+        localStorage.removeItem(key);
+        return false;
+      }
+    })
+  }
+
+
 }
 
 /* Display previous pastes */
@@ -834,17 +849,6 @@ if (app.support.fileUpload) {
 
 }
 
-/* Remove expired pasted from history */
-if (app.support.history && zerobin.paste_not_found) {
-  var paste_id = zerobin.getPasteId();
-  var keys = zerobin.getLocalStorageURLKeys();
-  keys.forEach((key, i) => {
-    if (localStorage[key].indexOf(paste_id) !== -1) {
-      localStorage.removeItem(key);
-      return false;
-    }
-  })
-}
 
 /* Autofit text area height */
 const tx = document.getElementsByTagName('textarea');
