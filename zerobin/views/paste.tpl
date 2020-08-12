@@ -20,64 +20,95 @@
 %end
 
 <div class="well paste-form">
-<form action="/" method="get" accept-charset="utf-8">
-<p class="lnk-option">
-  <a id="clip-button" href="#">Copy To Clipboard</a> |
-  <a id="short-url" href="#">Get short url</a> |
-  <a id="email-link" href="#">Email this</a>
+  <form action="/" method="get" accept-charset="utf-8">
 
-  <span class="paste-option btn-group top">
-      <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
-      <button class="btn">New Paste</button>
-  </span>
-</p>
+    <div class="d-flex justify-content-between">
+ 
+      <div class="btn-group" role="group" >
+        <button type="button" id="clip-button" class="btn btn-secondary">Copy To Clipboard</button>
+        <button type="button" id="email-link" class="btn btn-secondary">Email this</button>
+      </div>
 
-<div class="progress progress-striped active">
-  <div class="bar"></div>
-</div>
+      <div> 
+        <span class="paste-option btn-group">
+            <button class="btn btn-clone btn-secondary">Clone</button>
+            <button class="btn btn-secondary">New Paste</button>
+        </span>
+      </div> 
+      
+    </div> 
+ 
+    <div class="progress-container">
+      <div class="progress progress-bar progress-bar-striped active">
+        <div class="bar"></div>
+      </div>
+    </div>
 
-%expiration = paste.humanized_expiration
-%if expiration:
-  <p id="expiration-tag">Expire {{ expiration }}</p>
-%end
+    %expiration = paste.humanized_expiration
+    %if expiration:
+      <span id="expiration-tag">Expire {{ expiration }}</span>
+    %end
 
-<p>
-  <pre id="paste-content" class="prettyprint">
-    <code>
-      {{ paste.content }}
-    </code>
-  </pre>
-</p>
+    <pre id="paste-content" class="prettyprint">
+      <code>
+        {{ paste.content }}
+      </code>
+    </pre>
 
-<p class="paste-option btn-group bottom">
-    <button class="btn btn-clone"><i class="icon-camera"></i>&nbsp;Clone</button>
-    <button class="btn">New Paste</button>
-</p>
+    <div class="d-flex justify-content-between">
+      <div>  
+        <button class="btn btn-clone btn-secondary">Delete Paste</button> 
+      </div> 
+      <div> 
+      <span class="paste-option btn-group">
+          <button class="btn btn-clone btn-secondary">Clone</button>
+          <button class="btn btn-secondary">New Paste</button>
+      </span>
+      </div> 
+    </div>
 
-</form>
+  </form>
 </div>
 
 <!-- For cloning -->
 <div class="submit-form clone">
   <form class="well" method="post" action="/paste/create">
-    <p class="paste-option">
-    <label for="expiration" >Expiration:</label>
-      <select id="expiration" name="expiration">
-        <option value="burn_after_reading">Burn after reading</option>
-        <option selected value="1_day">1 day</option>
-        <option value="1_month">1 month</option>
-        <option value="never">Never</option>
-      </select>
-      <button type="submit" class="btn btn-primary">Submit</button>
-      <button class="btn btn-danger">Cancel clone</button>
-    </p>
 
-    <div>
-        <div class="progress progress-striped active">
-          <div class="bar"></div>
+    <div class="d-flex justify-content-between">
+    
+      <div>
+        <label class="col-form-label">&nbsp;</label>
+        <div class="file-upload"> 
+          <button type="button" class="btn btn-danger">Cancel clone</button> 
         </div>
+      </div> 
+
+      <div class="form-group select-date-clone paste-option">
+        <label class="col-form-label">Expiration:</label>
+        <div class="input-group"> 
+          <select id="expiration" name="expiration" class="custom-select">
+            <option value="burn_after_reading">Burn after reading</option>
+            <option selected value="1_day">1 day</option>
+            <option value="1_month">1 month</option>
+            <option value="never">Never</option>
+          </select>
+          <div class="input-group-append"> 
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+      
+    </div> 
+
+    <div class="progress-container progress-clone">
+      <div class="progress progress-bar progress-bar-striped active">
+        <div class="bar"></div>
+      </div>
+    </div>
+
+    <div> 
         <textarea rows="10"  style="width:100%;"
-                  class="input-xlarge"
+                  class=" form-control"
                   id="content" name="content"></textarea>
     </div>
   </form>

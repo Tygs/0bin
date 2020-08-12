@@ -653,29 +653,7 @@
 
         /* Add a continuation to let the UI redraw */
         setTimeout(function () {
-
-          /* Setup flash clipboard button */
-          ZeroClipboard.setMoviePath('/static/js/ZeroClipboard.swf');
-
-          var clip = new ZeroClipboard.Client();
-
-          // Callback to reposition the clibpboad flash animation overlay
-          var reposition = function () {
-            clip.reposition();
-          };
-
-          clip.addEventListener('mouseup', function () {
-            $('#clip-button').text('Copying paste...');
-            clip.setText(zerobin.getPasteContent());
-          });
-          clip.addEventListener('complete', function () {
-            $('#clip-button').text('Copy to clipboard');
-            zerobin.message('info', 'The paste is now in your clipboard', '',
-            true, reposition);
-          });
-          clip.glue('clip-button');
-
-          window.onresize = reposition;
+ 
 
 
           /* Setup link to get the paste short url*/
@@ -706,7 +684,7 @@
             prettyPrint();
           } else {
             if (content.indexOf('data:image') != 0) {
-              zerobin.message('info',
+              zerobin.message('dismissible',
                 "The paste did not seem to be code, so it " +
                 "was not colorized. " +
                 "<a id='force-coloration' href='#'>Force coloration</a>",
@@ -737,7 +715,7 @@
 
 
     /* Resize Textarea according to content */
-    $('#content').elastic();
+    //$('#content').elastic();
 
 
     /* Display bottom paste option buttons when needed */
@@ -767,15 +745,15 @@
           $container.find('.item').remove();
           $.each(zerobin.getPreviousPastes(), function (i, paste) {
 
-            var $li = $('<li class="item"></li>').appendTo($container);
+            var $li = $('<li></li >').appendTo($container);
             var $link = $('<a></a>').attr('href', paste.link)
-              .text(paste.prefix + paste.displayDate)
+              .text('Paste - ' + paste.displayDate)
               .appendTo($li);
 
             if (vizhash.supportCanvas) {
               var pasteId = zerobin.getPasteId(paste.link);
               var vhash = vizhash.canvasHash(pasteId, 24, 24).canvas;
-              $link.prepend($(vhash).addClass('vhash'));
+              //$link.prepend($(vhash).addClass('vhash'));
             }
 
             // hightlite the current link and make sure clicking the link
