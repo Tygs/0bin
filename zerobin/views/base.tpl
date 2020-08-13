@@ -11,7 +11,6 @@
 
   <link rel="icon" href="/static/img/favicon.ico" />
 
-
   %if not settings.DEBUG:
   <link href="/static/css/style.min.css?{{ VERSION }}" rel="stylesheet" />
   %else:
@@ -57,7 +56,7 @@
       <p>Please enable JavaScript for this website or use a JavaScript-capable web browser.</p>
     </noscript>
 
-    <div class="container-md" id="wrap-content">
+    <div class="container-md reader-mode" id="wrap-content">
 
       <p :class="'alert alert-' + msg.type" v-for="msg in messages">
         <a class="close" data-dismiss="alert" href="#" @click="$event.target.parentNode.remove()">×</a>
