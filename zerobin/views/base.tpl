@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>0bin - encrypted pastebin</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
   <meta name="description" content="0bin is a client-side-encrypted
                    pastebin featuring burn after reading, history, and
                    a clipboard">

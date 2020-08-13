@@ -744,11 +744,14 @@ if (content && key) {
         let pasteContent = document.querySelector('#paste-content');
         pasteContent.style.display = "none";
 
-        var img = document.createElement('img')
+        var imgWrapper = document.createElement('div');
+        imgWrapper.classList.add('paste-wrapper');
+        var img = document.createElement('img');
         img.src = content;
-        img.style.maxWidth = '742px';
+        //img.style.maxWidth = '742px';
 
-        pasteContent.after(img);
+        pasteContent.after(imgWrapper);
+        imgWrapper.appendChild(img);
 
         // Display Download button
         document.querySelectorAll('.btn-clone').forEach((node) => node.style.display = "none")

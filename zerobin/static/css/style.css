@@ -163,19 +163,34 @@ input.btn-upload {
 
 input.hide-upload {
   position: relative;
-  left: -110px;
+  left: -80px;
   -moz-opacity: 0;
   filter: alpha(opacity=0);
   opacity: 0;
   z-index: 2;
-  width: 100px;
+  width: 80px;
   margin-top: -20px;
   cursor: pointer;
   cursor: hand;
-  height: 49px;
+  height: 24px;
 }
 
 /* Paste Page */
+
+.paste-wrapper {
+  width: 100%;
+  text-align: center;
+  background-color: #333333;
+  margin-bottom: 8px;
+}
+
+.pre-wrapper {
+  margin: 8px 0 8px 0;
+}
+
+.paste-wrapper img{
+  width: 94%;
+}
 
 #paste-content.linenums {
   padding-left: 0;
@@ -233,8 +248,20 @@ pre {
 }
 
 .form-group {
-  /* margin-bottom: 1rem; */
   margin-bottom: 0;
+}
+
+.download-link {
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+
+.download-link a{
+	color: #eee;
+}
+
+.download-link a:hover{
+	text-decoration: none;
 }
 
 .select-date {
@@ -288,11 +315,6 @@ form textarea {
   clear: both;
 }
 
-.previous-pastes canvas {
-  display: block;
-  float: left;
-  margin-right: 5px;
-}
 
 html.local-storage .no-local-storage {
   display: none;
@@ -416,14 +438,15 @@ nav ul li a:hover {
 }
 
 .submenu ul {
-  display: none;
   position: absolute;
-  margin: 6px 0 0px 9px;
+  margin: 6px 0 0px 0px;
   width: fill-available;
   z-index: 999;
   border: 1px solid #666;
   border-radius: 3px;
   padding: 0;
+  width: 133px;
+  border-top: 0px;
 }
 
 .submenu li {
@@ -450,7 +473,7 @@ nav ul li a:hover {
 }
 
 /* Responsive */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 840px) {
   .topnav a:not(:first-child) {
     display: none;
   }
@@ -471,4 +494,7 @@ nav ul li a:hover {
   pre {
     font-size: 70%;
   }
+
+
+
 }

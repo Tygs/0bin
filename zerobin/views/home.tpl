@@ -2,7 +2,6 @@
   <div class="d-flex justify-content-between">
 
     <div>
-      <label class="col-form-label"><span class="blk-space"></span></label>
       <div class="file-upload" v-if="support.fileUpload">
         <input type="button" class="btn btn-primary" :value="isUploading ? 'Uploading...': 'Upload file'"
           :disabled="isUploading">
@@ -26,7 +25,7 @@
 
   </div>
 
-  <div>
+  <div class="pre-wrapper">
     <div class="progress" v-show="isLoading">
       <div class="progress-bar progress-bar-striped" role="progressbar"></div>
     </div>

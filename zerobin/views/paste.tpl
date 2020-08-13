@@ -33,9 +33,8 @@
       <div>
         <span class="paste-option btn-group">
           <button class="btn btn-clone btn-secondary" @click.prevent="handleClone()">Clone</button>
-
-          <button class="btn  btn-secondar" v-if="downloadLink.url">
-            <a :href="downloadLink.url" :download="downloadLink.name"> Download</a>
+          <button class="btn btn-secondary download-link" v-if="downloadLink.url">
+            <a :href="downloadLink.url" :download="downloadLink.name">Download</a>
           </button>
 
           <button class="btn btn-secondary">New Paste</button>
@@ -56,9 +55,11 @@
     %end
 
     <pre id="paste-content" class="prettyprint">
-      <code>
-        {{ paste.content }}
-      </code>
+      <div class="paste-wrapper">
+        <code>
+          {{ paste.content }}
+        </code>
+      </div>
     </pre>
 
     <div class="d-flex justify-content-between down">
@@ -69,7 +70,7 @@
         <span class="paste-option btn-group">
           <button class="btn btn-clone btn-secondary" @click.prevent="handleClone()">Clone</button>
 
-          <button class="btn  btn-secondar" v-if="downloadLink.url">
+          <button class="btn btn-secondary download-link" v-if="downloadLink.url">
             <a :href="downloadLink.url" :download="downloadLink.name"> Download</a>
           </button>
 
@@ -88,7 +89,6 @@
     <div class="d-flex justify-content-between">
 
       <div>
-        <label class="col-form-label">&nbsp;</label>
         <div class="file-upload">
           <button type="button" class="btn btn-danger" @click.prevent="handleCancelClone()">Cancel clone</button>
         </div>
