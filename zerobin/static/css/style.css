@@ -46,7 +46,6 @@
 
 /* body & other stuff */
 
-
 .blk-space {
   height: 20px;
   display: block;
@@ -97,6 +96,10 @@ blockquote {
 }
 
 /* Footer */
+
+/* See:
+https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
+*/
 
 #app {
   display: flex;
@@ -293,12 +296,6 @@ form textarea {
   clear: both;
 }
 
-.previous-pastes canvas {
-  display: block;
-  float: left;
-  margin-right: 5px;
-}
-
 html.local-storage .no-local-storage {
   display: none;
 }
@@ -421,7 +418,6 @@ nav ul li a:hover {
 }
 
 .submenu ul {
-  display: none;
   position: absolute;
   margin: 6px 0 0px 9px;
   width: fill-available;
