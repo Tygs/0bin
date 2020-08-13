@@ -26,11 +26,13 @@ const app = new Vue({
     downloadLink: {},
     displayBottomToolBar: false,
     openPreviousPastesMenu: false,
+    readerMode: false,
     isUploading: false,
     currentPaste: {
       ownerKey: '',
       id: '',
       type: '',
+      content: ''
     },
     newPaste: {
       expiration: '1_day',
@@ -65,6 +67,28 @@ const app = new Vue({
     isLoading: false
   },
   methods: {
+
+    toggleReaderMode: function () {
+      if (!this.readerMode) {
+        this.messages = [];
+        this.currentPaste.content = zerobin.getPasteContent();
+      }
+
+      this.readerMode = !this.readerMode;
+    },
+
+    increaseFontSize: function (amount) {
+      let readableModeContent = document.getElementById('readable-paste-content')
+
+      let fontSize = window.getComputedStyle(readableModeContent, null).getPropertyValue('font-size');
+
+      amount = amount || 5;
+      readableModeContent.style.fontSize = (parseFloat(fontSize) + amount) + "px";
+    },
+
+    decreaseFontSize: function () {
+      this.increaseFontSize(-5);
+    },
 
     formatEmail: (email) => {
       return "mailto:" + email.replace('__AT__', '@');

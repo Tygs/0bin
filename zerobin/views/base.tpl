@@ -11,6 +11,7 @@
 
   <link rel="icon" href="/static/img/favicon.ico" />
 
+
   %if not settings.DEBUG:
   <link href="/static/css/style.min.css?{{ VERSION }}" rel="stylesheet" />
   %else:
@@ -26,7 +27,7 @@
 
   <div id="app">
 
-    <div class="topnav" @mouseleave="openPreviousPastesMenu =false">
+    <div :class="{'topnav': true, 'reader-mode': readerMode}" @mouseleave="openPreviousPastesMenu =false">
       <a class="brand" href="/"><span>ø</span>bin<em>.net</em></a>
       <span class="tagline">"A client side encrypted PasteBin"<br><span>All pastes are AES256 encrypted, we cannot know
           what you paste...</span>
@@ -34,6 +35,14 @@
 
       <nav>
         <ul>
+          <li>
+            <a href="#" v-if="currentPaste.type === 'text'" @click.prevent="toggleReaderMode()">📖</a>
+            <span v-if="readerMode">
+              <a href="#" @click.prevent="increaseFontSize()">+</a>
+              <a href="#" @click.prevent="decreaseFontSize()">-</a>
+              🔍
+            </span>
+          </li>
           <li class="submenu"><a href="#" @click.prevent="openPreviousPastesMenu = !openPreviousPastesMenu">Previous
               pastes v</a>
             <ul class="previous-pastes" id="topmenu" v-if="openPreviousPastesMenu">

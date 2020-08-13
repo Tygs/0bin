@@ -9,7 +9,7 @@ PORT = "3255"
 # Names/links to insert in the footer.
 #
 MENU = (
-    ("Create paste", "/"),  # First link will be highlighted
+    ("Create paste", "/"),
     ("Github", "https://github.com/Tygs/0bin"),
     ("Faq", "/faq/"),  # You probably want to keep this
     # Any link with "mailto:" will be escaped to limit spam, but displayed
