@@ -55,11 +55,9 @@
     %end
 
     <pre id="paste-content" class="prettyprint">
-      <div class="paste-wrapper">
         <code>
           {{ paste.content }}
         </code>
-      </div>
     </pre>
 
     <div class="d-flex justify-content-between down">

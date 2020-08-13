@@ -243,6 +243,15 @@ pre {
   overflow: visible;
 }
 
+.reader-wrapper {
+  color: #f2f2f2;
+  max-width: 800px;
+  width: 90%;
+  text-align: justify;
+  margin: auto;
+  margin-top: 20px;
+}
+
 /* Common css */
 
 .form-control,
