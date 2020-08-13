@@ -670,6 +670,7 @@ window.zerobin = {
       reader.onload = function (event) {
         var image = new Image();
         image.src = event.target.result;
+        content.value = event.target.result
 
         image.onload = function () {
           var imgWrapper = document.createElement('div');
@@ -733,10 +734,6 @@ if (content && key) {
     /* When done */
     function (content) {
 
-      /* Decrypted content goes back to initial container*/
-      document.querySelector('#paste-content').innerText = content;
-      app.currentPaste.content = content
-
       if (content.indexOf('data:image') == 0) {
         // Display Image
 
@@ -748,21 +745,30 @@ if (content && key) {
         imgWrapper.classList.add('paste-wrapper');
         var img = document.createElement('img');
         img.src = content;
-        //img.style.maxWidth = '742px';
 
         pasteContent.after(imgWrapper);
         imgWrapper.appendChild(img);
 
-        // Display Download button
         document.querySelectorAll('.btn-clone').forEach((node) => node.style.display = "none")
 
+        let extension = /data:image\/([^;]+);base64/.exec(content)[1];
+
         app.downloadLink = {
-          name: '0bin_' + document.location.pathname.split('/').pop(),
+          name: '0bin_' + document.location.pathname.split('/').pop() + '.' + extension,
           url: content
         }
 
       } else {
         app.currentPaste.type = "text"
+        /* Decrypted content goes back to initial container*/
+        document.querySelector('#paste-content').innerText = content;
+        app.currentPaste.content = content
+
+        app.downloadLink = {
+          name: '0bin_' + document.location.pathname.split('/').pop() + ".txt",
+          url: "data:text/html;charset=UTF-8," + content
+        }
+
       }
       bar.set('Code coloration...', '95%');
 
