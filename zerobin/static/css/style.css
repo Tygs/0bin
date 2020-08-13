@@ -46,9 +46,6 @@
 
 /* body & other stuff */
 
-body {
-  padding-bottom: 40px;
-}
 
 .blk-space {
   height: 20px;
@@ -101,16 +98,24 @@ blockquote {
 
 /* Footer */
 
+#app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+#wrap-content {
+  flex: 1;
+}
+
 .footer {
   text-align: center;
-  bottom: 0px;
-  position: fixed;
   height: 60px;
   width: 100%;
+  position: relative;
   display: block;
   margin: 0px 0px 0px 0px;
   padding: 8px 0 0 0;
-  left: 0;
   background-color: #424141;
 }
 
