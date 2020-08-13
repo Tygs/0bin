@@ -628,21 +628,29 @@ window.zerobin = {
       }
     }
 
-    // return total * 250 / size;
     return total * 1000 / size;
   },
 
-  // prevent defaults
   ignoreDrag: function (e) {
     e.stopPropagation();
     e.preventDefault();
   },
 
-  // Handle Drop
   handleDrop: function (e) {
     e.preventDefault();
     zerobin.upload(e.dataTransfer.files);
     document.getElementById("content").classList.remove("hover");
+  },
+
+  handlePaste: function (e) {
+    var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf("image") === 0) {
+        e.preventDefault()
+        return zerobin.upload([items[i].getAsFile()]);
+      }
+    }
+
   },
 
   handleDragOver: function (e) {
@@ -656,58 +664,28 @@ window.zerobin = {
 
   upload: function (files) {
     let content = document.getElementById('content');
-    var current_file = files[0];
+    var currentFile = files[0];
     var reader = new FileReader();
-    if (current_file.type.indexOf('image') == 0) {
+    if (currentFile.type.indexOf('image') == 0) {
       reader.onload = function (event) {
         var image = new Image();
         image.src = event.target.result;
 
         image.onload = function () {
-          var maxWidth = 1024,
-            maxHeight = 1024,
-            imageWidth = image.width,
-            imageHeight = image.height;
-
-          if (imageWidth > imageHeight) {
-            if (imageWidth > maxWidth) {
-              imageHeight *= maxWidth / imageWidth;
-              imageWidth = maxWidth;
-            }
-          } else {
-            if (imageHeight > maxHeight) {
-              imageWidth *= maxHeight / imageHeight;
-              imageHeight = maxHeight;
-            }
-          }
-
-          var canvas = document.createElement('canvas');
-          canvas.width = imageWidth;
-          canvas.height = imageHeight;
-          image.width = imageWidth;
-          image.height = imageHeight;
-          var ctx = canvas.getContext("2d");
-          ctx.drawImage(this, 0, 0, imageWidth, imageHeight);
-
-          var paste = canvas.toDataURL(current_file.type);
-
-          content.value = paste;
-          content.dispatchEvent(new Event('change'));
-
-          image.style.maxWidth = '742px';
-
+          var imgWrapper = document.createElement('div');
+          imgWrapper.classList.add('paste-wrapper');
+          imgWrapper.appendChild(image)
           content.style.display = "none";
-          content.after(image);
-
+          content.after(imgWrapper);
         }
       }
-      reader.readAsDataURL(current_file);
+      reader.readAsDataURL(currentFile);
     } else {
       reader.onload = function (event) {
         content.value = event.target.result
         content.dispatchEvent(new Event('change'));
       };
-      reader.readAsText(current_file);
+      reader.readAsText(currentFile);
     }
   }
 };
@@ -862,6 +840,7 @@ if (app.support.fileUpload) {
   // Implements drag & drop upload
   let content = document.getElementById('content');
   content.addEventListener('drop', zerobin.handleDrop);
+  content.addEventListener('paste', zerobin.handlePaste);
   content.addEventListener('dragover', zerobin.handleDragOver);
   content.addEventListener('dragleave', zerobin.handleDragLeave);
 
