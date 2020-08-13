@@ -71,7 +71,6 @@ const app = new Vue({
     toggleReaderMode: function () {
       if (!this.readerMode) {
         this.messages = [];
-        this.currentPaste.content = zerobin.getPasteContent();
       }
 
       this.readerMode = !this.readerMode;
@@ -758,6 +757,7 @@ if (content && key) {
 
       /* Decrypted content goes back to initial container*/
       document.querySelector('#paste-content').innerText = content;
+      app.currentPaste.content = content
 
       if (content.indexOf('data:image') == 0) {
         // Display Image

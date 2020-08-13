@@ -60,9 +60,9 @@
         </code>
     </pre>
 
-    <pre id="readable-paste-content" v-if="readerMode">
-      {% currentPaste.content %}
-    </pre>
+    <div id="readable-paste-content" v-if="readerMode">
+      fsdqfd{% currentPaste.content %}
+    </div>
 
     <div class="d-flex justify-content-between down">
       <div v-if="currentPaste.ownerKey">

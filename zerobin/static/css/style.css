@@ -196,7 +196,7 @@ input.hide-upload {
   margin: 8px 0 8px 0;
 }
 
-.paste-wrapper img{
+.paste-wrapper img {
   width: 94%;
 }
 
@@ -264,12 +264,12 @@ pre {
   border-bottom-left-radius: 3px !important;
 }
 
-.download-link a{
-	color: #eee;
+.download-link a {
+  color: #eee;
 }
 
-.download-link a:hover{
-	text-decoration: none;
+.download-link a:hover {
+  text-decoration: none;
 }
 
 .select-date {
@@ -322,7 +322,6 @@ form textarea {
   margin: 8px 0 8px 0;
   clear: both;
 }
-
 
 html.local-storage .no-local-storage {
   display: none;
@@ -503,6 +502,10 @@ nav ul li a:hover {
     font-size: 70%;
   }
 
+}
 
+/* reader mode */
 
+#readable-paste-content {
+  white-space: pre;
 }
