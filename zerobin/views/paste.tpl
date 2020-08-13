@@ -54,12 +54,14 @@
     <span id="expiration-tag">Expire {{ expiration }}</span>
     %end
 
-    <pre id="paste-content" class="prettyprint">
-      <div class="paste-wrapper">
+    <pre id="paste-content" class="prettyprint" v-if="!readerMode">
         <code>
           {{ paste.content }}
         </code>
-      </div>
+    </pre>
+
+    <pre id="readable-paste-content" v-if="readerMode">
+      {% currentPaste.content %}
     </pre>
 
     <div class="d-flex justify-content-between down">
