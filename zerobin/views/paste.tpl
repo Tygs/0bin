@@ -61,7 +61,7 @@
     </pre>
 
     <div id="readable-paste-content" v-if="readerMode">
-      fsdqfd{% currentPaste.content %}
+      {% currentPaste.content %}
     </div>
 
     <div class="d-flex justify-content-between down">
