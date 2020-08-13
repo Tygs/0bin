@@ -18,8 +18,6 @@ setTimeout(function () {
   document.getElementById('content').focus()
 }, 100)
 
-
-
 const app = new Vue({
 
   el: '#app',

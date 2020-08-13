@@ -12,7 +12,7 @@
   <link rel="icon" href="/static/img/favicon.ico" />
 
 
-  %if settings.COMPRESSED_STATIC_FILES:
+  %if not settings.DEBUG:
   <link href="/static/css/style.min.css?{{ VERSION }}" rel="stylesheet" />
   %else:
   <link href="/static/css/prettify.css" rel="stylesheet" />
@@ -94,10 +94,11 @@
   </div>
 
 
-  <script src="/static/js/vue.js"></script>
-  %if settings.COMPRESSED_STATIC_FILES:
+
+  %if not settings.DEBUG:
   <script src="/static/js/main.min.js?{{ VERSION }}"></script>
   %else:
+  <script src="/static/js/vue.js"></script>
   <script src="/static/js/sjcl.js"></script>
   <script src="/static/js/behavior.js?{{ VERSION }}"></script>
   %end
@@ -107,8 +108,8 @@
 
   </script>
 
-  %if settings.COMPRESSED_STATIC_FILES:
-  <script src="/static/js/additional.min.js?{{ settings.VERSION }}"></script>
+  %if not settings.DEBUG:
+  <script src="/static/js/additional.min.js?{{ VERSION }}"></script>
   %else:
   <script src="/static/js/lzw.js"></script>
   <script src="/static/js/prettify.min.js"></script>

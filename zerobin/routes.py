@@ -27,15 +27,15 @@ from beaker.middleware import SessionMiddleware
 
 from zerobin import __version__
 from zerobin.utils import (
-    settings,
     SettingsValidationError,
-    ensure_var_env,
+    ensure_app_context,
     check_password,
+    settings,
 )
 from zerobin.paste import Paste
 
 
-ensure_var_env()
+ensure_app_context()
 
 
 GLOBAL_CONTEXT = {
@@ -235,32 +235,32 @@ def server_static(filename):
     return static_file(filename, root=settings.STATIC_FILES_ROOT)
 
 
-def get_app(debug=None, settings_file="", compressed_static=None, settings=settings):
+def get_app(debug=None, config_dir="", data_dir=""):
     """
         Return a tuple (settings, app) configured using passed
         parameters and/or a setting file.
     """
 
-    settings_file = settings_file or os.environ.get("ZEROBIN_SETTINGS_FILE")
+    data_dir = data_dir or os.environ.get("ZEROBIN_DATA_DIR")
+    config_dir = config_dir or os.environ.get("ZEROBIN_CONFIG_DIR")
 
-    if settings_file:
-        settings.update_with_file(os.path.realpath(settings_file))
+    ensure_app_context(config_dir=config_dir, data_dir=data_dir)
+
+    settings.DEBUG = bool(debug or os.environ.get("ZEROBIN_DEBUG", settings.DEBUG))
+
+    settings.DISPLAY_COUNTER = bool(
+        os.environ.get("ZEROBIN_DISPLAY_COUNTER", settings.DISPLAY_COUNTER)
+    )
+    settings.REFRESH_COUNTER = int(
+        os.environ.get("ZEROBIN_REFRESH_COUNTER", settings.REFRESH_COUNTER)
+    )
+    settings.MAX_SIZE = int(os.environ.get("ZEROBIN_MAX_SIZE", settings.MAX_SIZE))
+    settings.PASTE_ID_LENGTH = int(
+        os.environ.get("ZEROBIN_PASTE_ID_LENGTH", settings.PASTE_ID_LENGTH)
+    )
 
     if settings.PASTE_ID_LENGTH < 4:
         raise SettingsValidationError("PASTE_ID_LENGTH cannot be lower than 4")
-
-    if compressed_static is not None:
-        settings.COMPRESSED_STATIC_FILES = compressed_static
-
-    if debug is not None:
-        settings.DEBUG = debug
-
-    # make sure the templates can be loaded
-    for d in reversed(settings.TEMPLATE_DIRS):
-        bottle.TEMPLATE_PATH.insert(0, d)
-
-    if settings.DEBUG:
-        bottle.debug(True)
 
     return settings, app
 
