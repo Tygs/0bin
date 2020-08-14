@@ -1,9 +1,10 @@
 <form action="." method="post">
-    %if status == "error":
+    <!-- %if status == "error": -->
     <div class="alert alert-danger" role="alert alert-danger">
         {{message}}
+        dededede
     </div>
-    %end
+    <!-- %end -->
     %if status == "ok" and message:
     <div class="alert alert-success" role="alert">
         {{message}}
@@ -15,7 +16,6 @@
             <input name="paste" type="text" class="form-control" placeholder="Paste URL or ID">
         </div>
         <button type="submit" class="btn btn-black">Delete</button>
-
     </div>
 
 </form>
