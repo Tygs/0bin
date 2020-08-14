@@ -56,7 +56,9 @@ def runserver(
     )
 
     if updated_settings.DEBUG:
-        print(f"Admin URL: {settings.ADMIN_URL}")
+        print(
+            f"Admin URL for dev: http://{updated_settings.HOST}:{updated_settings.PORT}{settings.ADMIN_URL}"
+        )
         print()
         run(
             app,
