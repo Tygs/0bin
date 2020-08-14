@@ -75,7 +75,6 @@ const app = new Vue({
   methods: {
 
     toggleReaderMode: function () {
-      debugger;
       if (!this.readerMode) {
         this.messages = [];
         if (this.support.URLSearchParams) {
