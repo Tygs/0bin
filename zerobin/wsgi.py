@@ -1,3 +1,3 @@
-from zerobin.wsgi import setup_app
+from zerobin.routes import get_app
 
 settings, app = get_app()
