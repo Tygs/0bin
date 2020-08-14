@@ -176,7 +176,7 @@ input.hide-upload {
   filter: alpha(opacity=0);
   opacity: 0;
   z-index: 2;
-  width: 80px;
+  width: 0;
   margin-top: -20px;
   cursor: pointer;
   cursor: hand;
