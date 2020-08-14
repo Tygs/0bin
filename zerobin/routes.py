@@ -3,6 +3,7 @@
 """
 
 import os
+import pdb
 import sys
 
 import _thread as thread
@@ -87,7 +88,7 @@ def admin():
 
         return {"status": "ok", "message": "Paste deleted", **GLOBAL_CONTEXT}
 
-    return {"status": "ok", "message": "", ** GLOBAL_CONTEXT}
+    return {"status": "ok", "message": "", **GLOBAL_CONTEXT}
 
 
 @app.get(ADMIN_LOGIN_URL)
@@ -121,55 +122,37 @@ def logout():
 @app.post("/paste/create")
 def create_paste():
 
-    try:
-        body = parse_qs(request.body.read(int(settings.MAX_SIZE * 1.1)))
-    except ValueError:
+    # Reject what is too small, too big, or what does not seem encrypted to
+    # limit a abuses
+    content = request.forms.get("content", "")
+    if '{"iv":' not in content or not (0 < len(content) < settings.MAX_SIZE):
         return {"status": "error", "message": "Wrong data payload."}
 
-    try:
-        content = "".join(x.decode("utf8") for x in body[b"content"])
-    except (UnicodeDecodeError, KeyError):
-        return {
-            "status": "error",
-            "message": "Encoding error: the paste couldn't be saved.",
-        }
+    expiration = request.forms.get("expiration", "burn_after_reading")
+    title = request.forms.get("title", "")
 
-    if '{"iv":' not in content:  # reject silently non encrypted content
-        return {"status": "error", "message": "Wrong data payload."}
+    paste = Paste(
+        expiration=expiration,
+        content=content,
+        uuid_length=settings.PASTE_ID_LENGTH,
+        title=title,
+    )
+    paste.save()
 
-    # check size of the paste. if more than settings return error
-    # without saving paste.  prevent from unusual use of the
-    # system.  need to be improved
-    if 0 < len(content) < settings.MAX_SIZE:
-        expiration = body.get(b"expiration", [b"burn_after_reading"])[0]
-        paste = Paste(
-            expiration=expiration.decode("utf8"),
-            content=content,
-            uuid_length=settings.PASTE_ID_LENGTH,
+    # If refresh time elapsed pick up, update the counter
+    if settings.DISPLAY_COUNTER:
+
+        paste.increment_counter()
+
+        now = datetime.now()
+        timeout = GLOBAL_CONTEXT["refresh_counter"] + timedelta(
+            seconds=settings.REFRESH_COUNTER
         )
-        paste.save()
+        if timeout < now:
+            GLOBAL_CONTEXT["pastes_count"] = Paste.get_pastes_count()
+            GLOBAL_CONTEXT["refresh_counter"] = now
 
-        # display counter
-        if settings.DISPLAY_COUNTER:
-
-            # increment paste counter
-            paste.increment_counter()
-
-            # if refresh time elapsed pick up new counter value
-            now = datetime.now()
-            timeout = GLOBAL_CONTEXT["refresh_counter"] + timedelta(
-                seconds=settings.REFRESH_COUNTER
-            )
-            if timeout < now:
-                GLOBAL_CONTEXT["pastes_count"] = Paste.get_pastes_count()
-                GLOBAL_CONTEXT["refresh_counter"] = now
-
-        return {"status": "ok", "paste": paste.uuid, "owner_key": paste.owner_key}
-
-    return {
-        "status": "error",
-        "message": "Serveur error: the paste couldn't be saved. " "Please try later.",
-    }
+    return {"status": "ok", "paste": paste.uuid, "owner_key": paste.owner_key}
 
 
 @app.get("/paste/:paste_id")

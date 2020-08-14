@@ -5,3 +5,4 @@ bottle==0.12.18
 Beaker==1.11.0
 Paste==3.4.3
 appdirs==1.4.4
+bleach==3.1.5

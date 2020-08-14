@@ -81,6 +81,11 @@
 
     <div class="container-md" id="wrap-content">
 
+      %if defined('paste') and paste.title:
+      <h1>{{ paste.title }}</h1>
+      %end
+
+
       <p :class="'alert alert-' + msg.type" v-for="msg in messages">
         <a class="close" data-dismiss="alert" href="#" @click="$event.target.parentNode.remove()">×</a>
         <strong class="title" v-if="msg.title" v-html="msg.title"></strong>
