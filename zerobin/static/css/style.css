@@ -243,14 +243,6 @@ pre {
   overflow: visible;
 }
 
-.reader-wrapper {
-  color: #f2f2f2;
-  max-width: 800px;
-  width: 90%;
-  text-align: justify;
-  margin: auto;
-  margin-top: 20px;
-}
 
 /* Common css */
 
@@ -489,7 +481,7 @@ nav ul li a:hover {
 }
 
 /* Responsive */
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 1060px) {
   .topnav a:not(:first-child) {
     display: none;
   }
@@ -511,10 +503,60 @@ nav ul li a:hover {
     font-size: 70%;
   }
 
+  .reader-tools {
+    bottom: 30px;
+  }
+
 }
+
+@media screen and (max-width: 660px) {
+  .submenu {
+    display: none;
+  }
+}
+
 
 /* reader mode */
 
 #readable-paste-content {
-  white-space: pre;
+  color: #f2f2f2;
+  max-width: 800px;
+  width: 90%;
+  text-align: justify;
+  margin: auto;
+  margin-top: 20px;
+  white-space: pre-wrap;
+  overflow: visible;
+}
+
+.reader-mode-bg {
+  background-color: #333;
+}
+
+.reader-book svg {
+  font-size: 26px;
+}
+
+.reader-tools {
+  color: #eee;
+}
+
+.reader-tools.min a{
+  font-size: 14px;
+}
+
+.reader-tools.max a{
+  font-size: 18px;
+}
+
+/* Admin */
+
+.login-form {
+  width: 80%;
+  max-width: 500px;
+  margin: auto;
+}
+
+#password-field {
+  width: 80%;
 }

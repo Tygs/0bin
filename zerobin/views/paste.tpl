@@ -60,8 +60,10 @@
         </code>
     </pre>
 
-    <div id="readable-paste-content" v-if="readerMode">
-      {% currentPaste.content %}
+    <div>
+      <div id="readable-paste-content" v-if="readerMode">
+        {% currentPaste.content %}
+      </div>
     </div>
 
     <div class="d-flex justify-content-between down">
