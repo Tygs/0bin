@@ -27,14 +27,28 @@
   </div>
 
   <div class="pre-wrapper">
+
     <div class="progress" v-show="isLoading">
       <div class="progress-bar progress-bar-striped" role="progressbar"></div>
     </div>
+
     <textarea rows="10" style="width:100%;" class="form-control" id="content" name="content" autofocus
       @keydown.ctrl.enter="encryptAndSendPaste()"></textarea>
-    <input type="text" class="paste-excerpt" name="paste-excerpt"
+
+    <div class="paste-options">
+      <h5>Paste Options (these options are optionals)</h5>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Title</span>
+        </div>
+        <input type="text" class="form-control paste-excerpt" name="paste-excerpt"
       placeholder="Optional paste title. This part is NOT encrypted: anything you type here will be visible by anyone"
       v-model="newPaste.title" maxlength="60">
+      </div>
+
+    </div>
+
   </div>
 
   <div class="form-group select-date paste-option down" v-if="displayBottomToolBar">

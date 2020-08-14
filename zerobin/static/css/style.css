@@ -185,6 +185,30 @@ input.hide-upload {
 
 /* Paste Page */
 
+.paste-options {
+  background-color: #424141;
+  padding: 10px;
+  opacity: 0.5;
+}
+
+.paste-options span {
+  background-color: #375A7F;
+  color: #f9fafc;
+}
+
+.paste-options:hover{
+  opacity: 1;
+}
+
+.paste-options input{
+  background-color: #375A7F;
+  color: #eee;
+}
+::placeholder {
+  color: #f9fafc !important;
+  opacity: 1;
+}
+
 .paste-wrapper {
   width: 100%;
   text-align: center;
