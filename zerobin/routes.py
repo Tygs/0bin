@@ -3,25 +3,21 @@
 """
 
 import os
-import pdb
-import sys
 
-import _thread as thread
+from distutils.util import strtobool
 
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse
 
 from datetime import datetime, timedelta
 
 import bottle
 from bottle import (
     Bottle,
-    debug,
     static_file,
     view,
     request,
     HTTPResponse,
     redirect,
-    abort,
 )
 
 from beaker.middleware import SessionMiddleware
@@ -231,7 +227,12 @@ def get_app(debug=None, config_dir="", data_dir=""):
 
     ensure_app_context(config_dir=config_dir, data_dir=data_dir)
 
-    settings.DEBUG = bool(debug or os.environ.get("ZEROBIN_DEBUG", settings.DEBUG))
+    if debug is None:
+        settings.DEBUG = bool(
+            strtobool(os.environ.get("ZEROBIN_DEBUG", str(settings.DEBUG)))
+        )
+    else:
+        settings.DEBUG = debug
 
     settings.DISPLAY_COUNTER = bool(
         os.environ.get("ZEROBIN_DISPLAY_COUNTER", settings.DISPLAY_COUNTER)
