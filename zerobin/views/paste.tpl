@@ -33,10 +33,8 @@
       <div>
         <span class="paste-option btn-group">
           <button class="btn btn-clone btn-secondary" @click.prevent="handleClone()">Clone</button>
-          <button class="btn btn-secondary download-link" v-if="downloadLink.url">
-            <a :href="downloadLink.url" :download="downloadLink.name">Download</a>
-          </button>
-
+          <a class="btn btn-secondary download-link" :href="currentPaste.downloadLink.url"
+            :download="currentPaste.downloadLink.name">Download</a>
           <button class="btn btn-secondary">New Paste</button>
         </span>
       </div>
@@ -74,9 +72,8 @@
         <span class="paste-option btn-group">
           <button class="btn btn-clone btn-secondary" @click.prevent="handleClone()">Clone</button>
 
-          <button class="btn btn-secondary download-link" v-if="downloadLink.url">
-            <a :href="downloadLink.url" :download="downloadLink.name"> Download</a>
-          </button>
+          <a class="btn btn-secondary download-link" :href="currentPaste.downloadLink.url"
+            :download="currentPaste.downloadLink.name"> Download</a>
 
           <button class="btn btn-secondary">New Paste</button>
         </span>

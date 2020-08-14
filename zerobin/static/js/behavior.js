@@ -23,7 +23,6 @@ const app = new Vue({
   el: '#app',
   data: {
     previousPastes: [],
-    downloadLink: {},
     displayBottomToolBar: false,
     openPreviousPastesMenu: false,
     readerMode: false,
@@ -32,7 +31,8 @@ const app = new Vue({
       ownerKey: '',
       id: '',
       type: '',
-      content: ''
+      content: '',
+      downloadLink: {},
     },
     newPaste: {
       expiration: '1_day',
@@ -44,6 +44,8 @@ const app = new Vue({
     support: {
 
       clipboard: !!(isSecureContext && navigator.clipboard && navigator.clipboard.writeText),
+
+      URLSearchParams: !!window.URLSearchParams,
 
       localStorage: (function () {
         var val = !!(localStorage);
@@ -69,8 +71,20 @@ const app = new Vue({
   methods: {
 
     toggleReaderMode: function () {
+      debugger;
       if (!this.readerMode) {
         this.messages = [];
+        if (this.support.URLSearchParams) {
+          var searchParams = new URLSearchParams(window.location.search)
+          searchParams.set('readerMode', 1);
+          window.location.search = searchParams.toString();
+        }
+      } else {
+        if (this.support.URLSearchParams) {
+          var searchParams = new URLSearchParams(window.location.search);
+          searchParams.delete('readerMode');
+          window.location.search = searchParams.toString();
+        }
       }
 
       this.readerMode = !this.readerMode;
@@ -387,6 +401,7 @@ window.zerobin = {
                       doneCallback(content);
                     }
                   } catch (err) {
+                    debugger;
                     errorCallback(err);
                   }
 
@@ -628,21 +643,29 @@ window.zerobin = {
       }
     }
 
-    // return total * 250 / size;
     return total * 1000 / size;
   },
 
-  // prevent defaults
   ignoreDrag: function (e) {
     e.stopPropagation();
     e.preventDefault();
   },
 
-  // Handle Drop
   handleDrop: function (e) {
     e.preventDefault();
     zerobin.upload(e.dataTransfer.files);
     document.getElementById("content").classList.remove("hover");
+  },
+
+  handlePaste: function (e) {
+    var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf("image") === 0) {
+        e.preventDefault()
+        return zerobin.upload([items[i].getAsFile()]);
+      }
+    }
+
   },
 
   handleDragOver: function (e) {
@@ -656,58 +679,29 @@ window.zerobin = {
 
   upload: function (files) {
     let content = document.getElementById('content');
-    var current_file = files[0];
+    var currentFile = files[0];
     var reader = new FileReader();
-    if (current_file.type.indexOf('image') == 0) {
+    if (currentFile.type.indexOf('image') == 0) {
       reader.onload = function (event) {
         var image = new Image();
         image.src = event.target.result;
+        content.value = event.target.result
 
         image.onload = function () {
-          var maxWidth = 1024,
-            maxHeight = 1024,
-            imageWidth = image.width,
-            imageHeight = image.height;
-
-          if (imageWidth > imageHeight) {
-            if (imageWidth > maxWidth) {
-              imageHeight *= maxWidth / imageWidth;
-              imageWidth = maxWidth;
-            }
-          } else {
-            if (imageHeight > maxHeight) {
-              imageWidth *= maxHeight / imageHeight;
-              imageHeight = maxHeight;
-            }
-          }
-
-          var canvas = document.createElement('canvas');
-          canvas.width = imageWidth;
-          canvas.height = imageHeight;
-          image.width = imageWidth;
-          image.height = imageHeight;
-          var ctx = canvas.getContext("2d");
-          ctx.drawImage(this, 0, 0, imageWidth, imageHeight);
-
-          var paste = canvas.toDataURL(current_file.type);
-
-          content.value = paste;
-          content.dispatchEvent(new Event('change'));
-
-          image.style.maxWidth = '742px';
-
+          var imgWrapper = document.createElement('div');
+          imgWrapper.classList.add('paste-wrapper');
+          imgWrapper.appendChild(image)
           content.style.display = "none";
-          content.after(image);
-
+          content.after(imgWrapper);
         }
       }
-      reader.readAsDataURL(current_file);
+      reader.readAsDataURL(currentFile);
     } else {
       reader.onload = function (event) {
         content.value = event.target.result
         content.dispatchEvent(new Event('change'));
       };
-      reader.readAsText(current_file);
+      reader.readAsText(currentFile);
     }
   }
 };
@@ -755,9 +749,7 @@ if (content && key) {
     /* When done */
     function (content) {
 
-      /* Decrypted content goes back to initial container*/
-      document.querySelector('#paste-content').innerText = content;
-      app.currentPaste.content = content
+      let readerMode = false;
 
       if (content.indexOf('data:image') == 0) {
         // Display Image
@@ -770,21 +762,34 @@ if (content && key) {
         imgWrapper.classList.add('paste-wrapper');
         var img = document.createElement('img');
         img.src = content;
-        //img.style.maxWidth = '742px';
 
         pasteContent.after(imgWrapper);
         imgWrapper.appendChild(img);
 
-        // Display Download button
         document.querySelectorAll('.btn-clone').forEach((node) => node.style.display = "none")
 
-        app.downloadLink = {
-          name: '0bin_' + document.location.pathname.split('/').pop(),
+        let extension = /data:image\/([^;]+);base64/.exec(content)[1];
+
+        app.currentPaste.downloadLink = {
+          name: '0bin_' + document.location.pathname.split('/').pop() + '.' + extension,
           url: content
         }
 
       } else {
         app.currentPaste.type = "text"
+        /* Decrypted content goes back to initial container*/
+        document.querySelector('#paste-content').innerText = content;
+        app.currentPaste.content = content
+
+        app.currentPaste.downloadLink = {
+          name: '0bin_' + document.location.pathname.split('/').pop() + ".txt",
+          url: "data:text/html;charset=UTF-8," + content
+        }
+
+        if (app.support.URLSearchParams) {
+          readerMode = (new URLSearchParams(window.location.search)).get('readerMode');
+        }
+
       }
       bar.set('Code coloration...', '95%');
 
@@ -793,7 +798,7 @@ if (content && key) {
 
         /** Syntaxic coloration */
 
-        if (zerobin.isCode(content) > 100) {
+        if (zerobin.isCode(content) > 100 && !readerMode) {
           document.getElementById('paste-content').classList.add('linenums');
           prettyPrint();
         } else {
@@ -817,6 +822,9 @@ if (content && key) {
 
         form.forEach((node) => node.disabled = false);
         content = '';
+        if (readerMode) {
+          app.toggleReaderMode()
+        }
 
       }, 100);
 
@@ -862,6 +870,7 @@ if (app.support.fileUpload) {
   // Implements drag & drop upload
   let content = document.getElementById('content');
   content.addEventListener('drop', zerobin.handleDrop);
+  content.addEventListener('paste', zerobin.handlePaste);
   content.addEventListener('dragover', zerobin.handleDragOver);
   content.addEventListener('dragleave', zerobin.handleDragLeave);
 

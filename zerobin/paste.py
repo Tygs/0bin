@@ -101,9 +101,9 @@ class Paste(object):
                     expiration = datetime.strptime(expiration, "%Y-%m-%d %H:%M:%S.%f")
 
         except StopIteration:
-            raise TypeError(to_ascii("File %s is malformed" % path))
+            raise TypeError("File %s is malformed" % path)
         except (IOError, OSError):
-            raise ValueError(to_ascii("Can not open paste from file %s" % path))
+            raise ValueError("Can not open paste from file %s" % path)
 
         return Paste(uuid=uuid, expiration=expiration, content=content)
 
@@ -228,3 +228,19 @@ class Paste(object):
             Delete the paste file.
         """
         os.remove(self.path)
+
+    @classmethod
+    def iter_all(cls, on_error=lambda e: e):
+        for p in settings.PASTE_FILES_ROOT.rglob("*"):
+            if p.is_file() and "counter" not in str(p):
+                try:
+                    yield Paste.load_from_file(p)
+                except (TypeError, ValueError) as e:
+                    on_error(e)
+
+    @property
+    def has_expired(self):
+        try:
+            return self.expiration < datetime.now()
+        except TypeError:
+            return False
