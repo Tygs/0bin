@@ -45,6 +45,8 @@ const app = new Vue({
 
       clipboard: !!(isSecureContext && navigator.clipboard && navigator.clipboard.writeText),
 
+      URLSearchParams: !!window.URLSearchParams,
+
       localStorage: (function () {
         var val = !!(localStorage);
         document.querySelector('html').classList.add((val ? '' : 'no-') + 'local-storage');
@@ -68,13 +70,21 @@ const app = new Vue({
   },
   methods: {
 
-    // handleDownload: function () {
-    //   this.$refs.downloadLink.dispatchEvent(new Event("click"));
-    // },
-
     toggleReaderMode: function () {
+      debugger;
       if (!this.readerMode) {
         this.messages = [];
+        if (this.support.URLSearchParams) {
+          var searchParams = new URLSearchParams(window.location.search)
+          searchParams.set('readerMode', 1);
+          window.location.search = searchParams.toString();
+        }
+      } else {
+        if (this.support.URLSearchParams) {
+          var searchParams = new URLSearchParams(window.location.search);
+          searchParams.delete('readerMode');
+          window.location.search = searchParams.toString();
+        }
       }
 
       this.readerMode = !this.readerMode;
@@ -391,6 +401,7 @@ window.zerobin = {
                       doneCallback(content);
                     }
                   } catch (err) {
+                    debugger;
                     errorCallback(err);
                   }
 
@@ -738,6 +749,8 @@ if (content && key) {
     /* When done */
     function (content) {
 
+      let readerMode = false;
+
       if (content.indexOf('data:image') == 0) {
         // Display Image
 
@@ -773,6 +786,10 @@ if (content && key) {
           url: "data:text/html;charset=UTF-8," + content
         }
 
+        if (app.support.URLSearchParams) {
+          readerMode = (new URLSearchParams(window.location.search)).get('readerMode');
+        }
+
       }
       bar.set('Code coloration...', '95%');
 
@@ -781,7 +798,7 @@ if (content && key) {
 
         /** Syntaxic coloration */
 
-        if (zerobin.isCode(content) > 100) {
+        if (zerobin.isCode(content) > 100 && !readerMode) {
           document.getElementById('paste-content').classList.add('linenums');
           prettyPrint();
         } else {
@@ -805,6 +822,9 @@ if (content && key) {
 
         form.forEach((node) => node.disabled = false);
         content = '';
+        if (readerMode) {
+          app.toggleReaderMode()
+        }
 
       }, 100);
 
