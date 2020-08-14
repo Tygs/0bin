@@ -257,6 +257,10 @@ pre {
   border-radius: 3px;
 }
 
+.upload-file {
+  min-width: 100px;
+}
+
 .form-group {
   margin-bottom: 0;
 }
@@ -392,7 +396,7 @@ canvas {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
-  width: 175px;
+  width: calc(22% - 30px);
 }
 
 .topnav .tagline {
@@ -419,7 +423,6 @@ canvas {
 nav {
   float: right;
   margin: 18px;
-
 }
 
 nav ul li {
@@ -430,8 +433,10 @@ nav ul li {
 nav ul li a {
   color: white;
   background: #333333;
-  padding: 10px;
+  padding: 2px 10px 0 10px;
   text-decoration: none;
+  height: 30px;
+  display: block;
 }
 
 nav ul li a:hover {
@@ -511,8 +516,12 @@ nav ul li a:hover {
 }
 
 @media screen and (max-width: 660px) {
-  .submenu {
+  .reader-mode .submenu {
     display: none;
+  }
+
+  .reader-mode .reader-book {
+    display: block;
   }
 }
 
@@ -559,5 +568,28 @@ nav ul li a:hover {
 }
 
 #password-field {
-  width: 80%;
+  width: calc(100% - 65px);
+}
+
+.admin-header {
+  text-align: center;
+  font-size: 1.5em;
+  color: #f2f2f2;
+  margin: 20px 0px 20px 0px;
+  clear: both;
+}
+
+.admin-header svg {
+  font-size: 4em;
+  opacity: 0.3;
+}
+
+form {
+  clear: both;
+}
+
+.logout svg {
+  width: 16px;
+  height: 16px;
+  margin: 0px 10px 2px 0px;
 }

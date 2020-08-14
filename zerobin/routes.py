@@ -87,7 +87,7 @@ def admin():
 
         return {"status": "ok", "message": "Paste deleted", **GLOBAL_CONTEXT}
 
-    return {"status": "ok", "message": "" ** GLOBAL_CONTEXT}
+    return {"status": "ok", "message": "", ** GLOBAL_CONTEXT}
 
 
 @app.get(ADMIN_LOGIN_URL)
