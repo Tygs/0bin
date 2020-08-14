@@ -82,7 +82,7 @@
     <div class="container-md" id="wrap-content">
 
       %if defined('paste') and paste.title:
-      <h1>{{ paste.title }}</h1>
+      <h3>{{ paste.title }}</h3>
       %end
 
 

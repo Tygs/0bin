@@ -1,7 +1,3 @@
-# coding: utf-8
-
-from __future__ import unicode_literals, absolute_import
-
 import os
 import hashlib
 import base64
@@ -12,7 +8,7 @@ from datetime import datetime, timedelta
 
 import bleach
 
-from zerobin.utils import settings, to_ascii, as_unicode, safe_open as open
+from zerobin.utils import settings
 
 
 class Paste(object):
@@ -21,7 +17,7 @@ class Paste(object):
         calculation of the expiration date.
     """
 
-    DIR_CACHE = set()
+    DIR_CACHE: set = set()
 
     DURATIONS = {
         "1_day": 24 * 3600,
@@ -30,12 +26,19 @@ class Paste(object):
     }
 
     def __init__(
-        self, uuid=None, uuid_length=None, content=None, expiration=None, title=""
+        self,
+        uuid=None,
+        uuid_length=None,
+        content=None,
+        expiration=None,
+        title="",
+        btc_tip_address="",
     ):
 
         self.content = content
         self.expiration = self.get_expiration(expiration)
         self.title = bleach.clean(title, strip=True)[:60]
+        self.btc_tip_address = bleach.clean(btc_tip_address, strip=True)[:50]
 
         if not uuid:
             # generate the uuid from the decoded content by hashing it
@@ -120,6 +123,7 @@ class Paste(object):
             expiration=expiration,
             content=content,
             title=" ".join(metadata.get("title", "").split()),
+            btc_tip_address=" ".join(metadata.get("btc_tip_address", "").split()),
         )
 
     @classmethod
@@ -184,14 +188,18 @@ class Paste(object):
         if "burn_after_reading" == self.expiration:
             expiration = self.expiration + "#%s" % datetime.now()  # TODO: use UTC dates
         else:
-            expiration = as_unicode(self.expiration)
+            expiration = str(self.expiration)
 
         # write the paste
         with open(self.path, "w") as f:
             f.write(expiration + "\n")
             f.write(self.content + "\n")
+            metadata = {}
             if self.title:
-                f.write(json.dumps({"title": self.title}) + "\n")
+                metadata["title"] = self.title
+            if self.btc_tip_address:
+                metadata["btc_tip_address"] = self.btc_tip_address
+            f.write(json.dumps(metadata) + "\n")
 
         return self
 

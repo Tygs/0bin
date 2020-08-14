@@ -1,8 +1,5 @@
-import codecs
-import unicodedata
 import hashlib
 import secrets
-from functools import partial
 
 from pathlib import Path
 
@@ -35,12 +32,12 @@ class SettingsContainer(object):
             cls._instance.update_with_module(default_settings)
         return cls._instance
 
-    def update_with_dict(self, dict):
+    def update_with_dict(self, mapping):
         """
             Update settings with values from the given mapping object.
             (Taking only variable with uppercased name)
         """
-        for name, value in dict.items():
+        for name, value in mapping.items():
             if name.isupper():
                 setattr(self, name, value)
         return self
@@ -58,41 +55,20 @@ class SettingsContainer(object):
             Create an instance of SettingsContainer with values based
             on the one in the passed module.
         """
-        settings = cls()
-        settings.update_with_module(module)
-        return settings
+        params = cls()
+        params.update_with_module(module)
+        return params
 
     def update_with_file(self, filepath):
         """
             Update settings with values from the given module file.
             Uses update_with_dict() behind the scenes.
         """
-        settings = run_path(filepath)
-        return self.update_with_dict(settings)
+        params = run_path(filepath)
+        return self.update_with_dict(params)
 
 
 settings = SettingsContainer()
-
-
-def to_ascii(utext):
-    """ Take a unicode string and return ascii bytes.
-
-        Try to replace non ASCII char by similar ASCII char. If it can't,
-        replace it with "?".
-    """
-    return unicodedata.normalize("NFKD", utext).encode("ascii", "replace")
-
-
-# Make sure to always specify encoding when using open in Python 2 or 3
-safe_open = partial(codecs.open, encoding="utf8")
-
-
-def as_unicode(obj):
-    """ Return the unicode representation of an object """
-    try:
-        return unicode(obj)
-    except NameError:
-        return str(obj)
 
 
 def ensure_app_context(data_dir=None, config_dir=None):

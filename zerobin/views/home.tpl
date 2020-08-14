@@ -3,7 +3,7 @@
 
     <div>
       <div class="file-upload" v-if="support.fileUpload">
-        <label type="button" class="btn btn-primary"
+        <label type="button" class="btn btn-primary upload-file"
           :disabled="isUploading">{% isUploading ? 'Uploading...': 'Upload file' %}
           <input type="file" class="hide-upload" id="file-upload" @change="handleUpload($event.target.files)">
         </label>
@@ -36,15 +36,24 @@
       @keydown.ctrl.enter="encryptAndSendPaste()"></textarea>
 
     <div class="paste-options">
-      <h5>Paste Options (these options are optionals)</h5>
+      <h6>Paste Options (these options are optionals)</h6>
 
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">Title</span>
         </div>
         <input type="text" class="form-control paste-excerpt" name="paste-excerpt"
-      placeholder="Optional paste title. This part is NOT encrypted: anything you type here will be visible by anyone"
-      v-model="newPaste.title" maxlength="60">
+          placeholder="Optional paste title. This part is NOT encrypted: anything you type here will be visible by anyone"
+          v-model="newPaste.title" maxlength="60">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">BTC tip</span>
+        </div>
+        <input type="text" class="form-control paste-btc-tip-address" name="paste-btc-tip-address"
+          placeholder="Put a BTC address to ask for a tip. Leave it empty to let us use our."
+          v-model="newPaste.btcTipAddress" maxlength="50">
       </div>
 
     </div>

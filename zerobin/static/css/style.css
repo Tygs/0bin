@@ -185,15 +185,31 @@ input.hide-upload {
 
 /* Paste Page */
 
-.paste-options {
-  background-color: #424141;
+.paste-options-res {
+  text-align: center;
+  margin-bottom: 10px;
+  opacity: 0.9 !important;
+}
+
+.paste-options-res .btn-group{
+  float: none;
+}
+
+.paste-options,
+.paste-options-res {
+  background-color: #333333;
   padding: 10px;
   opacity: 0.5;
+}
+
+.paste-options-res svg {
+margin-left: 8px;
 }
 
 .paste-options span {
   background-color: #375A7F;
   color: #f9fafc;
+  width: 70px;
 }
 
 .paste-options:hover{
@@ -255,6 +271,8 @@ pre.prettyprint {
   width: 100%;
   min-height: 100px;
   padding: 5px;
+  word-break: break-word;
+  margin-bottom: 0px;
 }
 
 /* Specify class=linenums on a pre to get line numbering */
@@ -283,6 +301,7 @@ pre {
 
 .upload-file {
   min-width: 100px;
+  margin-right: 4px;
 }
 
 .form-group {
@@ -525,13 +544,11 @@ nav ul li a:hover {
   }
 
   /* Fonts */
-  .btn {
+  .btn,
+  .btn-group span {
     font-size: 0.77em;
   }
 
-  pre {
-    font-size: 70%;
-  }
 
   .reader-tools {
     bottom: 30px;

@@ -130,12 +130,14 @@ def create_paste():
 
     expiration = request.forms.get("expiration", "burn_after_reading")
     title = request.forms.get("title", "")
+    btc_tip_address = request.forms.get("btcTipAddress", "")
 
     paste = Paste(
         expiration=expiration,
         content=content,
         uuid_length=settings.PASTE_ID_LENGTH,
         title=title,
+        btc_tip_address=btc_tip_address,
     )
     paste.save()
 
