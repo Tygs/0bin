@@ -6,8 +6,11 @@ import os
 import hashlib
 import base64
 import lockfile
+import json
 
 from datetime import datetime, timedelta
+
+import bleach
 
 from zerobin.utils import settings, to_ascii, as_unicode, safe_open as open
 
@@ -26,10 +29,13 @@ class Paste(object):
         "never": 365 * 24 * 3600 * 100,
     }
 
-    def __init__(self, uuid=None, uuid_length=None, content=None, expiration=None):
+    def __init__(
+        self, uuid=None, uuid_length=None, content=None, expiration=None, title=""
+    ):
 
         self.content = content
         self.expiration = self.get_expiration(expiration)
+        self.title = bleach.clean(title, strip=True)[:60]
 
         if not uuid:
             # generate the uuid from the decoded content by hashing it
@@ -97,6 +103,10 @@ class Paste(object):
                 uuid = os.path.basename(path)
                 expiration = next(paste).strip()
                 content = next(paste).strip()
+                try:
+                    metadata = json.loads(next(paste).strip())
+                except (StopIteration, json.decoder.JSONDecodeError):
+                    metadata = {}
                 if "burn_after_reading" not in expiration:
                     expiration = datetime.strptime(expiration, "%Y-%m-%d %H:%M:%S.%f")
 
@@ -105,7 +115,12 @@ class Paste(object):
         except (IOError, OSError):
             raise ValueError("Can not open paste from file %s" % path)
 
-        return Paste(uuid=uuid, expiration=expiration, content=content)
+        return Paste(
+            uuid=uuid,
+            expiration=expiration,
+            content=content,
+            title=" ".join(metadata.get("title", "").split()),
+        )
 
     @classmethod
     def load(cls, uuid):
@@ -123,9 +138,8 @@ class Paste(object):
         """
         path = settings.PASTE_FILES_ROOT
         counter_file = os.path.join(path, "counter")
-        lock = lockfile.LockFile(counter_file)
 
-        with lock:
+        with lockfile.LockFile(counter_file):
             # Read the value from the counter
             try:
                 with open(counter_file, "r") as fcounter:
@@ -176,6 +190,8 @@ class Paste(object):
         with open(self.path, "w") as f:
             f.write(expiration + "\n")
             f.write(self.content + "\n")
+            if self.title:
+                f.write(json.dumps({"title": self.title}) + "\n")
 
         return self
 

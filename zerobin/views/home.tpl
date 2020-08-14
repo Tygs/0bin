@@ -32,6 +32,9 @@
     </div>
     <textarea rows="10" style="width:100%;" class="form-control" id="content" name="content" autofocus
       @keydown.ctrl.enter="encryptAndSendPaste()"></textarea>
+    <input type="text" class="paste-excerpt" name="paste-excerpt"
+      placeholder="Optional paste title. This part is NOT encrypted: anything you type here will be visible by anyone"
+      v-model="newPaste.title" maxlength="60">
   </div>
 
   <div class="form-group select-date paste-option down" v-if="displayBottomToolBar">

@@ -1,7 +1,3 @@
-import time
-import os
-import glob
-import tempfile
 import codecs
 import unicodedata
 import hashlib
@@ -134,6 +130,8 @@ def ensure_app_context(data_dir=None, config_dir=None):
     CUSTOM_VIEWS_DIR.mkdir(exist_ok=True)
 
     bottle.TEMPLATE_PATH.insert(0, CUSTOM_VIEWS_DIR)
+
+    bottle.BaseRequest.MEMFILE_MAX = settings.MAX_SIZE + (1024 * 100)
 
     secret_key_file = settings.CONFIG_DIR / "secret_key"
     if not secret_key_file.is_file():

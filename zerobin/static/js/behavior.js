@@ -33,10 +33,12 @@ const app = new Vue({
       type: '',
       content: '',
       downloadLink: {},
+      title: '',
     },
     newPaste: {
       expiration: '1_day',
       content: '',
+      title: '',
     },
     messages: [],
     /** Check for browser support of the named featured. Store the result
@@ -112,18 +114,21 @@ const app = new Vue({
       window.location.reload();
     },
 
-    handleClone: () => {
+    handleClone: function () {
 
       document.querySelector('.submit-form').style.display = "inherit";
       document.querySelector('.paste-form').style.display = "none";
+      document.querySelector('h1').style.display = "none";
       let content = document.getElementById('content');
       content.value = zerobin.getPasteContent();
       content.dispatchEvent(new Event('change'));
+      this.newPaste.title = this.currentPaste.title;
     },
 
     handleCancelClone: () => {
       document.querySelector('.submit-form').style.display = "none";
       document.querySelector('.paste-form').style.display = "inherit";
+      document.querySelector('h1').style.display = "inherit";
     },
 
     handleUpload: (files) => {
@@ -200,7 +205,7 @@ const app = new Vue({
       newly created paste, adding the key in the hash.
     */
 
-    encryptAndSendPaste: (e) => {
+    encryptAndSendPaste: () => {
 
       var paste = document.querySelector('textarea').value;
 
@@ -235,7 +240,8 @@ const app = new Vue({
               bar.set('Sending...', '95%');
               var data = {
                 content: content,
-                expiration: app.newPaste.expiration
+                expiration: app.newPaste.expiration,
+                title: app.newPaste.title
               };
               var sizebytes = zerobin.count(JSON.stringify(data));
               var oversized = sizebytes > zerobin.max_size; // 100kb - the others header information
@@ -854,6 +860,11 @@ window.onload = function () {
         return false;
       }
     })
+  }
+
+  let title = document.querySelector('h1');
+  if (title) {
+    app.currentPaste.title = title.innerText;
   }
 
 }

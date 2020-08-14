@@ -118,6 +118,9 @@
     <div>
       <textarea rows="10" style="width:100%;" class=" form-control" @keydown.ctrl.enter="encryptAndSendPaste()"
         id="content" name="content"></textarea>
+      <input type="text" class="paste-excerpt" name="paste-excerpt"
+        placeholder="Optional paste title. This part is NOT encrypted: anything you type here will be visible by anyone"
+        v-model="newPaste.title" maxlength="60">
     </div>
 
     <div class="d-flex justify-content-between" v-if="displayBottomToolBar">>
