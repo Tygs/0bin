@@ -228,3 +228,16 @@ class Paste(object):
             Delete the paste file.
         """
         os.remove(self.path)
+
+    @classmethod
+    def iter_all(cls):
+        for p in settings.PASTE_FILES_ROOT.rglob("*"):
+            if p.is_file() and "counter" not in str(p):
+                yield Paste.load_from_file(p)
+
+    @property
+    def has_expired(self):
+        try:
+            return self.expiration < datetime.now()
+        except TypeError:
+            return False

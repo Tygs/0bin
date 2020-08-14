@@ -23,7 +23,6 @@ const app = new Vue({
   el: '#app',
   data: {
     previousPastes: [],
-    downloadLink: {},
     displayBottomToolBar: false,
     openPreviousPastesMenu: false,
     readerMode: false,
@@ -32,7 +31,8 @@ const app = new Vue({
       ownerKey: '',
       id: '',
       type: '',
-      content: ''
+      content: '',
+      downloadLink: {},
     },
     newPaste: {
       expiration: '1_day',
@@ -67,6 +67,10 @@ const app = new Vue({
     isLoading: false
   },
   methods: {
+
+    // handleDownload: function () {
+    //   this.$refs.downloadLink.dispatchEvent(new Event("click"));
+    // },
 
     toggleReaderMode: function () {
       if (!this.readerMode) {
@@ -753,7 +757,7 @@ if (content && key) {
 
         let extension = /data:image\/([^;]+);base64/.exec(content)[1];
 
-        app.downloadLink = {
+        app.currentPaste.downloadLink = {
           name: '0bin_' + document.location.pathname.split('/').pop() + '.' + extension,
           url: content
         }
@@ -764,7 +768,7 @@ if (content && key) {
         document.querySelector('#paste-content').innerText = content;
         app.currentPaste.content = content
 
-        app.downloadLink = {
+        app.currentPaste.downloadLink = {
           name: '0bin_' + document.location.pathname.split('/').pop() + ".txt",
           url: "data:text/html;charset=UTF-8," + content
         }
