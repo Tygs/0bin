@@ -32,9 +32,19 @@
     </div>
     <textarea rows="10" style="width:100%;" class="form-control" id="content" name="content" autofocus
       @keydown.ctrl.enter="encryptAndSendPaste()"></textarea>
-    <input type="text" class="paste-excerpt" name="paste-excerpt"
-      placeholder="Optional paste title. This part is NOT encrypted: anything you type here will be visible by anyone"
-      v-model="newPaste.title" maxlength="60">
+    <p>
+      <input type="text" class="paste-excerpt" name="paste-excerpt"
+        placeholder="Optional paste title. This part is NOT encrypted: anything you type here will be visible by anyone"
+        v-model="newPaste.title" maxlength="60">
+    </p>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">BTC tip</span>
+      </div>
+      <input type="text" class="form-control paste-btc-tip-address" name="paste-btc-tip-address"
+        placeholder="Put a BTC address to ask for a tip. Leave it empty to let us use our."
+        v-model="newPaste.btcTipAddress" maxlength="50">
+    </div>
   </div>
 
   <div class="form-group select-date paste-option down" v-if="displayBottomToolBar">

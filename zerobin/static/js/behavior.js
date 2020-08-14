@@ -34,11 +34,13 @@ const app = new Vue({
       content: '',
       downloadLink: {},
       title: '',
+      btcTipAddress: ''
     },
     newPaste: {
       expiration: '1_day',
       content: '',
       title: '',
+      btcTipAddress: ''
     },
     messages: [],
     /** Check for browser support of the named featured. Store the result
@@ -118,11 +120,15 @@ const app = new Vue({
 
       document.querySelector('.submit-form').style.display = "inherit";
       document.querySelector('.paste-form').style.display = "none";
-      document.querySelector('h1').style.display = "none";
+      let title = document.querySelector('h1');
+      if (title) {
+        title.style.display = "none";
+      }
       let content = document.getElementById('content');
       content.value = zerobin.getPasteContent();
       content.dispatchEvent(new Event('change'));
       this.newPaste.title = this.currentPaste.title;
+      this.newPaste.btcTipAddress = this.currentPaste.btcTipAddress;
     },
 
     handleCancelClone: () => {
@@ -241,7 +247,8 @@ const app = new Vue({
               var data = {
                 content: content,
                 expiration: app.newPaste.expiration,
-                title: app.newPaste.title
+                title: app.newPaste.title,
+                btcTipAddress: app.newPaste.btcTipAddress
               };
               var sizebytes = zerobin.count(JSON.stringify(data));
               var oversized = sizebytes > zerobin.max_size; // 100kb - the others header information
@@ -865,6 +872,11 @@ window.onload = function () {
   let title = document.querySelector('h1');
   if (title) {
     app.currentPaste.title = title.innerText;
+  }
+
+  let btcTipAddress = document.querySelector('.btc-tip-address a');
+  if (btcTipAddress) {
+    app.currentPaste.btcTipAddress = btcTipAddress.innerText;
   }
 
 }

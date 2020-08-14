@@ -64,6 +64,11 @@
       </div>
     </div>
 
+    <div class="btc-tip-address">
+      Tip in bitcoin: <a
+        href="bitcoin:{{ paste.btc_tip_address or  settings.DEFAULT_BTC_TIP_ADDRESS }}">{{ paste.btc_tip_address or settings.DEFAULT_BTC_TIP_ADDRESS}}</a>
+    </div>
+
     <div class="d-flex justify-content-between down">
       <div v-if="currentPaste.ownerKey">
         <button class="btn btn-clone btn-secondary" @click="handleDeletePaste()">Delete Paste</button>
@@ -120,9 +125,22 @@
     <div>
       <textarea rows="10" style="width:100%;" class=" form-control" @keydown.ctrl.enter="encryptAndSendPaste()"
         id="content" name="content"></textarea>
-      <input type="text" class="paste-excerpt" name="paste-excerpt"
-        placeholder="Optional paste title. This part is NOT encrypted: anything you type here will be visible by anyone"
-        v-model="newPaste.title" maxlength="60">
+      <p>
+        <input type="text" class="paste-excerpt" name="paste-excerpt"
+          placeholder="Optional paste title. This part is NOT encrypted: anything you type here will be visible by anyone"
+          v-model="newPaste.title" maxlength="60">
+      </p>
+      <p>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">BTC tip</span>
+          </div>
+          <input type="text" class="form-control paste-btc-tip-address" name="paste-btc-tip-address"
+            placeholder="Put a BTC address to ask for a tip" v-model="newPaste.btcTipAddress" maxlength="50">
+        </div>
+
+      </p>
     </div>
 
     <div class="d-flex justify-content-between" v-if="displayBottomToolBar">>

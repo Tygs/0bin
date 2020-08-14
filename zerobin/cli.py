@@ -34,7 +34,6 @@ def runserver(
     data_dir="",
     debug=None,
     version=False,
-    paste_id_length=None,
     server="paste",
 ):
     if version:
@@ -42,22 +41,32 @@ def runserver(
         sys.exit(0)
 
     try:
-        settings, app = get_app(debug=debug, config_dir=config_dir, data_dir=data_dir,)
+        updated_settings, app = get_app(
+            debug=debug, config_dir=config_dir, data_dir=data_dir,
+        )
     except SettingsValidationError as err:
-        print("Configuration error: %s" % err.message, file=sys.stderr)
+        print("Configuration error: %s" % err, file=sys.stderr)
         sys.exit(1)
 
-    settings.HOST = host or os.environ.get("ZEROBIN_HOST", settings.HOST)
-    settings.PORT = port or os.environ.get("ZEROBIN_PORT", settings.PORT)
+    updated_settings.HOST = host or os.environ.get(
+        "ZEROBIN_HOST", updated_settings.HOST
+    )
+    updated_settings.PORT = port or os.environ.get(
+        "ZEROBIN_PORT", updated_settings.PORT
+    )
 
-    if settings.DEBUG:
+    if updated_settings.DEBUG:
         print(f"Admin URL: {settings.ADMIN_URL}")
         print()
         run(
-            app, host=settings.HOST, port=settings.PORT, reloader=True, server=server,
+            app,
+            host=updated_settings.HOST,
+            port=updated_settings.PORT,
+            reloader=True,
+            server=server,
         )
     else:
-        run(app, host=settings.HOST, port=settings.PORT, server=server)
+        run(app, host=settings.HOST, port=updated_settings.PORT, server=server)
 
 
 # The regex parse the url and separate the paste's id from the decription key
