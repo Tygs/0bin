@@ -158,13 +158,62 @@ def set_admin_password(password):
     settings.ADMIN_PASSWORD_FILE.write_bytes(hash_password(password))
 
 
+def clean_expired_pastes(*, dry_run=False, verbose=False):
+    """ Clean expired file pastes and empty paste directories
+
+        This features delete files from the data dir, make sure it's safe.
+
+        Use "dry_run" and "verbose" options to check first
+    """
+
+    ensure_app_context()
+
+    print("Deleting expired pastes...")
+    i = 0
+    for p in Paste.iter_all():
+        if p.has_expired:
+            if not dry_run:
+                p.delete()
+            if verbose:
+                print(p.path, "has expired")
+            i += 1
+    if dry_run:
+        print(f"{i} pastes would have been deleted")
+    else:
+        print(f"{i} pastes deleted")
+
+    print("Deleting empty paste directories...")
+    i = 0
+    for p in settings.DATA_DIR.rglob("*"):
+        try:
+            if p.is_dir() and not next(p.iterdir(), None):
+                if not dry_run:
+                    p.rmdir()
+                if verbose:
+                    print(p, "is empty")
+                i += 1
+        except OSError as e:
+            print(f'Error while processing "{p}: {e}')
+    if dry_run:
+        print(f"{i} directories would have been deleted")
+    else:
+        print(f"{i} directories deleted")
+    print("Done")
+
+
 def main():
-    subcommands = [runserver, delete_paste, infos, set_admin_password]
+    subcommands = [
+        runserver,
+        delete_paste,
+        infos,
+        set_admin_password,
+        clean_expired_pastes,
+    ]
     subcommand_names = [
         clize.util.name_py2cli(name)
         for name in clize.util.dict_from_names(subcommands).keys()
     ]
     if len(sys.argv) < 2 or sys.argv[1] not in subcommand_names:
         sys.argv.insert(1, subcommand_names[0])
-    clize.run(runserver, delete_paste, infos, set_admin_password)
+    clize.run(runserver, delete_paste, infos, set_admin_password, clean_expired_pastes)
 
