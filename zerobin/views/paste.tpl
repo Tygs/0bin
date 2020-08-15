@@ -103,8 +103,9 @@
           {{ paste.btc_tip_address or 'bc1q4x6nwp56s9enmwtsa8um0gywpxdzeyrdluga04'}}
         </a>
         <button v-if="support.clipboard" class="btn btn-secondary" @click.prevent="copyBTCAdressToClipboard()">
-          {% this.btcCopied ? "copied :)" : "copy"  %}
+          {% this.btcCopied ? "Copied :)" : "Copy"  %}
         </button>
+        <a href="https://www.binance.com/en/register?ref=CAWS9NNE" class="btn btn-secondary buy-btc" target="_blank" title="Be cool, Buy Bitcoins!">Buy Bitcoins!</a>
       </div>
     </div>
 
