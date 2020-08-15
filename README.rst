@@ -69,7 +69,7 @@ Known issues
 .. _zerobin project: https://github.com/sebsauvage/ZeroBin/
 .. _node.js: http://nodejs.org/
 .. _is not worth it: http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions
-.. _WTF licence: http://en.wikipedia.org/wiki/WTFPL
+.. _WTFPL licence: http://en.wikipedia.org/wiki/WTFPL
 
 Contributing
 =============
