@@ -1,7 +1,7 @@
-0bin
-====
+0bin: a client side encrypted pastebin
+===========================================
 
-0bin is a client side encrypted pastebin that can run without a database.
+0bin is a pastebin that encrypts the user content in the browsder and can run without a database.
 
 * Try it: `0bin.net <http://0bin.net>`_
 * `Report a bug <https://github.com/sametmax/0bin/issues>`_
