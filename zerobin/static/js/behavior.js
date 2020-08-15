@@ -171,7 +171,7 @@ var app = new Vue({
           })
         }).then(function (response) {
           if (response.ok) {
-            app.forceLoad("/");
+            window.location = "/";
           } else {
             form.forEach(function (node) {
               node.disabled = false;

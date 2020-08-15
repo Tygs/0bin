@@ -21,7 +21,7 @@
 <div class="well paste-form">
   <form action="/" method="get" accept-charset="utf-8">
 
-    <div :class="{'d-flex': true, 'justify-content-between': true , 'reader-mode-tools': readerMode}" >
+    <div :class="{'d-flex': true, 'justify-content-between': true , 'reader-mode-tools': readerMode}">
 
       <div class="btn-group" role="group">
         <button v-if="support.clipboard && currentPaste.type === 'text'" @click.prevent="copyToClipboard()"
@@ -111,7 +111,7 @@
 
     <div class="d-flex justify-content-between down">
       <div v-if="currentPaste.ownerKey">
-        <button class="btn btn-clone btn-secondary" @click="handleDeletePaste()">Delete Paste</button>
+        <button class="btn btn-secondary" @click.prevent="handleDeletePaste()">Delete Paste</button>
       </div>
       <div>
         <span class="paste-option btn-group responsive-icons">
@@ -179,7 +179,7 @@
     <div>
       <textarea rows="10" style="width:100%;" class=" form-control" @keydown.ctrl.enter="encryptAndSendPaste()"
         id="content" name="content"></textarea>
-  <div class="paste-options">
+      <div class="paste-options">
         <h6>Optional fields (those are <em>not</em> encrypted):</h6>
 
         <div class="input-group mb-3">
