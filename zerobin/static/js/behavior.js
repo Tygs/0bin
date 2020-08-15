@@ -27,6 +27,7 @@ var app = new Vue({
     openPreviousPastesMenu: false,
     readerMode: false,
     isUploading: false,
+    btcCopied: false,
     currentPaste: {
       ownerKey: '',
       id: '',
@@ -201,6 +202,26 @@ var app = new Vue({
         zerobin.message('primary', 'The paste is now in your clipboard', '', true);
       }, function (err) {
         zerobin.message('danger', 'The paste could not be copied', '', true);
+      });
+
+    },
+
+    copyBTCToClipboard: function () {
+
+      var promise = navigator.clipboard.writeText(this.currentPaste.btcTipAddress);
+
+      app.btcCopied = true;
+
+      promise.then(function () {
+
+        if (app.btcCopied) {
+          clearTimeout(app.btcCopied);
+        }
+        app.btcCopied = setTimeout(function () {
+          app.btcCopied = false;
+        }, 3000)
+      }, function (err) {
+        zerobin.message('danger', 'The BTC addresse could not be copied', '', true);
       });
 
     },
@@ -907,7 +928,7 @@ window.onload = function () {
     app.currentPaste.title = title.innerText;
   }
 
-  var btcTipAddress = document.querySelector('.btc-tip-address a');
+  var btcTipAddress = document.querySelector('.btc-tip-address');
   if (btcTipAddress) {
     app.currentPaste.btcTipAddress = btcTipAddress.innerText;
   }
