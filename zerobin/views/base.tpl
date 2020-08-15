@@ -10,7 +10,7 @@
                    a clipboard">
 
   <link rel="icon" href="/static/img/favicon.ico" />
-
+  <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png" />
 
   %if not settings.DEBUG:
   <link href="/static/css/style.min.css?{{ VERSION }}" rel="stylesheet" />
