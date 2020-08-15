@@ -158,7 +158,9 @@ def set_admin_password(password):
     settings.ADMIN_PASSWORD_FILE.write_bytes(hash_password(password))
 
 
-def clean_expired_pastes(*, dry_run=False, verbose=False):
+def clean_expired_pastes(
+    *, dry_run=False, verbose=False, config_dir="", data_dir="",
+):
     """ Clean expired file pastes and empty paste directories
 
         This features delete files from the data dir, make sure it's safe.
@@ -166,7 +168,7 @@ def clean_expired_pastes(*, dry_run=False, verbose=False):
         Use "dry_run" and "verbose" options to check first
     """
 
-    ensure_app_context()
+    ensure_app_context(config_dir=config_dir, data_dir=data_dir)
 
     print("Deleting expired pastes...")
     i = 0
