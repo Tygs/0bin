@@ -626,6 +626,7 @@ nav ul li a:hover {
     max-width: 120px;
     width: 100%;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
 
 }
