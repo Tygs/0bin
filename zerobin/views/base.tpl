@@ -61,7 +61,8 @@
             </a>
           </li>
           <li class="submenu"><a href="#" @click.prevent="openPreviousPastesMenu = !openPreviousPastesMenu">Previous
-              pastes v</a>
+              pastes <span class="caret"></span></a>
+
             <ul class="previous-pastes" id="topmenu" v-if="openPreviousPastesMenu">
               <li class="item" v-if="previousPastes.length === 0">
                 <a href="#">No paste yet</a>
@@ -85,7 +86,7 @@
     <div class="container-md" id="wrap-content">
 
       %if defined('paste') and paste.title:
-      <h3>{{ paste.title }}</h3>
+      <h1 :class="{ 'reader-mode-title': readerMode}">{{ paste.title }}</h1>
       %end
 
 
@@ -96,7 +97,6 @@
         <a v-if="msg.action.message" href="#"
           @click.once.prevent="msg.action.callback($event)">{% msg.action.message %}</a>
       </p>
-
 
       <div id='main'>{{!base}}</div>
     </div>

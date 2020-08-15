@@ -185,14 +185,31 @@ input.hide-upload {
 
 /* Paste Page */
 
+h1 {
+  font-size: 2em;
+}
+
+.reader-mode-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
 .paste-options-res {
   text-align: center;
   margin-bottom: 10px;
   opacity: 0.9 !important;
 }
 
-.paste-options-res .btn-group{
+.reader-mode-tools {
+  display: none !important;
+}
+
+.paste-options-res .btn-group {
   float: none;
+  border: 0px;
+}
+.paste-options-res span {
+  border: 0px;
 }
 
 .paste-options,
@@ -207,7 +224,7 @@ margin-left: 8px;
 }
 
 .paste-options span {
-  background-color: #375A7F;
+  background-color: #3c4a59;
   color: #f9fafc;
   width: 70px;
 }
@@ -229,16 +246,16 @@ margin-left: 8px;
   width: 100%;
   text-align: center;
   background-color: #333333;
-  margin-bottom: 8px;
+}
+
+.paste-wrapper img {
+  max-width: 100%;
 }
 
 .pre-wrapper {
   margin: 8px 0 8px 0;
 }
 
-.paste-wrapper img {
-  width: 94%;
-}
 
 #paste-content.linenums {
   padding-left: 0;
@@ -273,6 +290,9 @@ pre.prettyprint {
   padding: 5px;
   word-break: break-word;
   margin-bottom: 0px;
+  /* background-repeat: no-repeat;
+  background-position: 0 calc(100% + 6px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 330'%3E%3Cpath fill='%23273036' fill-opacity='0.1' d='M0,128L40,154.7C80,181,160,235,240,266.7C320,299,400,309,480,304C560,299,640,277,720,240C800,203,880,149,960,160C1040,171,1120,245,1200,261.3C1280,277,1360,235,1400,213.3L1440,192L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z'%3E%3C/path%3E%3C/svg%3E"); */
 }
 
 /* Specify class=linenums on a pre to get line numbering */
@@ -288,6 +308,16 @@ pre {
 
 
 /* Common css */
+
+
+.caret {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #f9fafc;
+  width: 1px;
+  margin: 8px 0px 0px 4px;
+  display: inline-block;
+}
 
 .form-control,
 .form-control:focus,
@@ -455,7 +485,7 @@ canvas {
 
 .topnav a.active {
   background-color: #4CAF50;
-  color: white;
+  color: #f9fafc;
 }
 
 .topnav .icon {
@@ -474,12 +504,12 @@ nav ul li {
 }
 
 nav ul li a {
-  color: white;
+  color: #f9fafc;
   background: #333333;
   padding: 2px 10px 0 10px;
   text-decoration: none;
   height: 30px;
-  display: block;
+  display: inline-block;
 }
 
 nav ul li a:hover {
@@ -518,9 +548,12 @@ nav ul li a:hover {
   background: transparent;
   padding: 10px;
   display: block;
+  display: inline-table;
+  width: -webkit-fill-available;
 }
 
-.submenu li a:hover {
+.submenu li a:hover,
+.submenu li.active {
   background: gray;
 }
 
@@ -564,8 +597,12 @@ nav ul li a:hover {
   .reader-mode .reader-book {
     display: block;
   }
-}
 
+  .paste-wrapper img {
+    width: 94%;
+    max-width: 50%;
+  }
+}
 
 /* reader mode */
 
