@@ -15,10 +15,10 @@ Vue.options.delimiters = ['{%', '%}'];
 
 // Force focus for textarea (firefox hack)
 setTimeout(function () {
-  document.getElementById('content').focus()
+  document.getElementById('content').focus();
 }, 100)
 
-const app = new Vue({
+var app = new Vue({
 
   el: '#app',
   data: {
@@ -78,7 +78,7 @@ const app = new Vue({
       if (!this.readerMode) {
         this.messages = [];
         if (this.support.URLSearchParams) {
-          var searchParams = new URLSearchParams(window.location.search)
+          var searchParams = new URLSearchParams(window.location.search);
           searchParams.set('readerMode', 1);
           window.location.search = searchParams.toString();
         }
@@ -94,9 +94,9 @@ const app = new Vue({
     },
 
     increaseFontSize: function (amount) {
-      let readableModeContent = document.getElementById('readable-paste-content')
+      var readableModeContent = document.getElementById('readable-paste-content');
 
-      let fontSize = window.getComputedStyle(readableModeContent, null).getPropertyValue('font-size');
+      var fontSize = window.getComputedStyle(readableModeContent, null).getPropertyValue('font-size');
 
       amount = amount || 5;
       readableModeContent.style.fontSize = (parseFloat(fontSize) + amount) + "px";
@@ -106,11 +106,11 @@ const app = new Vue({
       this.increaseFontSize(-5);
     },
 
-    formatEmail: (email) => {
+    formatEmail: function (email) {
       return "mailto:" + email.replace('__AT__', '@');
     },
 
-    forceLoad: (link) => {
+    forceLoad: function (link) {
       window.location = link;
       window.location.reload();
     },
@@ -119,24 +119,24 @@ const app = new Vue({
 
       document.querySelector('.submit-form').style.display = "inherit";
       document.querySelector('.paste-form').style.display = "none";
-      let title = document.querySelector('h1');
+      var title = document.querySelector('h1');
       if (title) {
         title.style.display = "none";
       }
-      let content = document.getElementById('content');
+      var content = document.getElementById('content');
       content.value = zerobin.getPasteContent();
       content.dispatchEvent(new Event('change'));
       this.newPaste.title = this.currentPaste.title;
       this.newPaste.btcTipAddress = this.currentPaste.btcTipAddress;
     },
 
-    handleCancelClone: () => {
+    handleCancelClone: function () {
       document.querySelector('.submit-form').style.display = "none";
       document.querySelector('.paste-form').style.display = "inherit";
       document.querySelector('h1').style.display = "inherit";
     },
 
-    handleUpload: (files) => {
+    handleUpload: function (files) {
       try {
         app.isUploading = true;
         zerobin.upload(files);
@@ -146,19 +146,19 @@ const app = new Vue({
       app.isUploading = false;
     },
 
-    handleForceColoration: (e) => {
-      let content = document.getElementById('paste-content');
+    handleForceColoration: function (e) {
+      var content = document.getElementById('paste-content');
       content.classList.add('linenums');
       e.target.innerHTML = 'Applying coloration';
       prettyPrint();
       e.target.parentNode.remove()
     },
 
-    handleSendByEmail: (e) => {
+    handleSendByEmail: function (e) {
       window.location = 'mailto:friend@example.com?body=' + window.location.toString();
     },
 
-    handleDeletePaste: () => {
+    handleDeletePaste: function () {
       if (window.confirm("Delete this paste?")) {
         app.isLoading = true;
         bar.set('Deleting paste...', '50%');
@@ -172,7 +172,9 @@ const app = new Vue({
           if (response.ok) {
             app.forceLoad("/");
           } else {
-            form.forEach((node) => node.disabled = false);
+            form.forEach(function (node) {
+              node.disabled = false;
+            });
             app.isLoading = false
             zerobin.message(
               'danger',
@@ -190,10 +192,10 @@ const app = new Vue({
       }
     },
 
-    copyToClipboard: () => {
+    copyToClipboard: function () {
 
       var pasteContent = zerobin.getPasteContent();
-      let promise = navigator.clipboard.writeText(pasteContent);
+      var promise = navigator.clipboard.writeText(pasteContent);
 
       promise.then(function () {
         zerobin.message('primary', 'The paste is now in your clipboard', '', true);
@@ -210,7 +212,7 @@ const app = new Vue({
       newly created paste, adding the key in the hash.
     */
 
-    encryptAndSendPaste: () => {
+    encryptAndSendPaste: function () {
 
       var paste = document.querySelector('textarea').value;
 
@@ -218,7 +220,9 @@ const app = new Vue({
 
         var form = document.querySelectorAll('input, textarea, select, button');
 
-        form.forEach((node) => node.disabled = true);
+        form.forEach(function (node) {
+          node.disabled = true;
+        });
 
         // set up progress bar
         var bar = zerobin.progressBar('form.well .progress');
@@ -235,9 +239,15 @@ const app = new Vue({
 
           zerobin.encrypt(key, paste,
 
-            () => bar.set('Encoding to base64...', '45%'),
-            () => bar.set('Compressing...', '65%'),
-            () => bar.set('Encrypting...', '85%'),
+            function () {
+              bar.set('Encoding to base64...', '45%')
+            },
+            function () {
+              bar.set('Compressing...', '65%')
+            },
+            function () {
+              bar.set('Encrypting...', '85%')
+            },
 
             /* This block deals with sending the data, redirection or error handling */
             function (content) {
@@ -256,7 +266,9 @@ const app = new Vue({
 
               if (oversized) {
                 app.isLoading = false
-                form.forEach((node) => node.disabled = false);
+                form.forEach(function (node) {
+                  node.disabled = false;
+                });
                 zerobin.message('danger', ('The encrypted file was <strong class="file-size">' + readableFsize +
                     '</strong>KB. You have reached the maximum size limit of ' + readableMaxsize + 'KB.'),
                   'Warning!', true);
@@ -270,11 +282,13 @@ const app = new Vue({
                 if (response.ok) {
                   bar.set('Redirecting to new paste...', '100%');
 
-                  response.json().then((data) => {
+                  response.json().then(function (data) {
                     if (data.status === 'error') {
                       zerobin.message('danger', data.message, 'Error');
-                      form.forEach((node) => node.disabled = false);
-                      app.isLoading = false
+                      form.forEach(function (node) {
+                        node.disabled = false;
+                      });
+                      app.isLoading = false;
                     } else {
                       if (app.support.localStorage) {
                         zerobin.storePaste('/paste/' + data.paste + "?owner_key=" + data.owner_key + '#' + key);
@@ -284,16 +298,20 @@ const app = new Vue({
                   })
 
                 } else {
-                  form.forEach((node) => node.disabled = false);
-                  app.isLoading = false
+                  form.forEach(function (node) {
+                    node.disabled = false
+                  });
+                  app.isLoading = false;
                   zerobin.message(
                     'danger',
                     'Paste could not be saved. Please try again later.',
                     'Error');
                 }
               }).catch(function (error) {
-                form.forEach((node) => node.disabled = false);
-                app.isLoading = false
+                form.forEach(function (node) {
+                  node.disabled = false;
+                });
+                app.isLoading = false;
                 zerobin.message(
                   'danger',
                   'Paste could not be saved. Please try again later.',
@@ -302,8 +320,10 @@ const app = new Vue({
 
             });
         } catch (err) {
-          form.forEach((node) => node.disabled = false);
-          app.isLoading = false
+          form.forEach(function (node) {
+            node.disabled = false;
+          });
+          app.isLoading = false;
           zerobin.message('danger', 'Paste could not be encrypted. Aborting.',
             'Error');
         }
@@ -351,7 +371,9 @@ window.zerobin = {
               content = sjcl.encrypt(key, content);
             } catch (e) {
 
-              document.querySelectorAll('input, textarea, select, button').forEach((node) => node.disabled = true);
+              document.querySelectorAll('input, textarea, select, button').forEach(function (node) {
+                node.disabled = true
+              });
 
               app.isLoading = false;
 
@@ -392,7 +414,7 @@ window.zerobin = {
         /* Decompress */
         setTimeout(function () {
           try {
-            content = lzw.decompress(content);
+
             if (fromBase64Callback) {
               fromBase64Callback();
             }
@@ -523,7 +545,7 @@ window.zerobin = {
         displayDate = pasteDateTime.split(' ')[1];
         prefix = 'at ';
       }
-      let link = localStorage.getItem(key);
+      var link = localStorage.getItem(key);
 
       return {
         displayDate: displayDate,
@@ -574,10 +596,10 @@ window.zerobin = {
   /** Return the paste content stripted from any code coloration */
   getPasteContent: function () {
     var copy = '';
-    document.querySelectorAll("#paste-content li").forEach((node) => {
+    document.querySelectorAll("#paste-content li").forEach(function (node) {
       copy = copy + node.textContent.replace(/[\u00a0]+/g, ' ') + '\n';
 
-    })
+    });
     if (copy === '') {
       copy = document.querySelector("#paste-content").textContent;
     }
@@ -602,7 +624,7 @@ window.zerobin = {
   message: function (type, message, title, flush, callback, action) {
     window.scrollTo(0, 0);
     if (flush) {
-      app.messages = app.messages.filter((msg) => {
+      app.messages = app.messages.filter(function (msg) {
         msg.type !== type
       });
     }
@@ -612,7 +634,7 @@ window.zerobin = {
       type: type,
       action: action || {},
     });
-    callback && callback()
+    callback && callback();
   },
 
   /** Return a progress bar object */
@@ -690,7 +712,7 @@ window.zerobin = {
   },
 
   upload: function (files) {
-    let content = document.getElementById('content');
+    var content = document.getElementById('content');
     var currentFile = files[0];
     var reader = new FileReader();
     if (currentFile.type.indexOf('image') == 0) {
@@ -725,8 +747,8 @@ window.zerobin = {
     Also calculate and set the paste visual hash.
 */
 
-let pasteContent = document.querySelector('#paste-content');
-let content = '';
+var pasteContent = document.querySelector('#paste-content');
+var content = '';
 
 if (pasteContent) {
   content = pasteContent.textContent.trim();
@@ -739,7 +761,9 @@ var error = false;
 if (content && key) {
 
   var form = document.querySelectorAll('input, textarea, select, button');
-  form.forEach((node) => node.disabled = true);
+  form.forEach(function (node) {
+    node.disabled = true;
+  });
 
   var bar = zerobin.progressBar('.well form .progress');
   app.isLoading = true;
@@ -754,20 +778,26 @@ if (content && key) {
     },
 
     /* Update progress bar */
-    () => bar.set('Decompressing...', '45%'),
-    () => bar.set('Base64 decoding...', '65%'),
-    () => bar.set('From bits to string...', '85%'),
+    function () {
+      bar.set('Decompressing...', '45%');
+    },
+    function () {
+      bar.set('Base64 decoding...', '65%');
+    },
+    function () {
+      bar.set('From bits to string...', '85%');
+    },
 
     /* When done */
     function (content) {
 
-      let readerMode = false;
+      var readerMode = false;
 
       if (content.indexOf('data:image') == 0) {
         // Display Image
 
         app.currentPaste.type = "image";
-        let pasteContent = document.querySelector('#paste-content');
+        var pasteContent = document.querySelector('#paste-content');
         pasteContent.style.display = "none";
 
         var imgWrapper = document.createElement('div');
@@ -778,9 +808,11 @@ if (content && key) {
         pasteContent.after(imgWrapper);
         imgWrapper.appendChild(img);
 
-        document.querySelectorAll('.btn-clone').forEach((node) => node.style.display = "none")
+        document.querySelectorAll('.btn-clone').forEach(function (node) {
+          node.style.display = "none";
+        });
 
-        let extension = /data:image\/([^;]+);base64/.exec(content)[1];
+        var extension = /data:image\/([^;]+);base64/.exec(content)[1];
 
         app.currentPaste.downloadLink = {
           name: '0bin_' + document.location.pathname.split('/').pop() + '.' + extension,
@@ -788,10 +820,10 @@ if (content && key) {
         }
 
       } else {
-        app.currentPaste.type = "text"
+        app.currentPaste.type = "text";
         /* Decrypted content goes back to initial container*/
         document.querySelector('#paste-content').innerText = content;
-        app.currentPaste.content = content
+        app.currentPaste.content = content;
 
         app.currentPaste.downloadLink = {
           name: '0bin_' + document.location.pathname.split('/').pop() + ".txt",
@@ -805,7 +837,7 @@ if (content && key) {
       }
       bar.set('Code coloration...', '95%');
 
-      /* Add a continuation to let the UI redraw */
+      /* Add a continuation to var the UI redraw */
       setTimeout(function () {
 
         /** Syntaxic coloration */
@@ -832,10 +864,12 @@ if (content && key) {
         bar.set('Done', '100%');
         app.isLoading = false;
 
-        form.forEach((node) => node.disabled = false);
+        form.forEach(function (node) {
+          node.disabled = false;
+        });
         content = '';
         if (readerMode) {
-          app.toggleReaderMode()
+          app.toggleReaderMode();
         }
 
       }, 100);
@@ -847,10 +881,10 @@ if (content && key) {
 window.onload = function () {
 
   /* Display bottom paste option buttons when needed */
-  ["keyup", "change"].forEach((event) => {
-    let content = document.getElementById("content");
-    content.addEventListener(event, () => {
-      let height = parseFloat(getComputedStyle(content, null).height.replace("px", ""))
+  ["keyup", "change"].forEach(function (event) {
+    var content = document.getElementById("content");
+    content.addEventListener(event, function () {
+      var height = parseFloat(getComputedStyle(content, null).height.replace("px", ""))
       app.displayBottomToolBar = height > 400;
     })
   })
@@ -860,7 +894,7 @@ window.onload = function () {
 
     var paste_id = zerobin.getPasteId();
     var keys = zerobin.getLocalStorageURLKeys();
-    keys.forEach((key, i) => {
+    keys.forEach(function (key, i) {
       if (localStorage[key].indexOf(paste_id) !== -1) {
         localStorage.removeItem(key);
         return false;
@@ -868,12 +902,12 @@ window.onload = function () {
     })
   }
 
-  let title = document.querySelector('h1');
+  var title = document.querySelector('h1');
   if (title) {
     app.currentPaste.title = title.innerText;
   }
 
-  let btcTipAddress = document.querySelector('.btc-tip-address');
+  var btcTipAddress = document.querySelector('.btc-tip-address a');
   if (btcTipAddress) {
     app.currentPaste.btcTipAddress = btcTipAddress.innerText;
   }
@@ -890,7 +924,7 @@ if (app.support.localStorage) {
 if (app.support.fileUpload) {
 
   // Implements drag & drop upload
-  let content = document.getElementById('content');
+  var content = document.getElementById('content');
   content.addEventListener('drop', zerobin.handleDrop);
   content.addEventListener('paste', zerobin.handlePaste);
   content.addEventListener('dragover', zerobin.handleDragOver);
@@ -899,8 +933,8 @@ if (app.support.fileUpload) {
 }
 
 /* Autofit text area height */
-const tx = document.getElementsByTagName('textarea');
-for (let i = 0; i < tx.length; i++) {
+var tx = document.getElementsByTagName('textarea');
+for (var i = 0; i < tx.length; i++) {
   tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
   tx[i].addEventListener("input", OnInput, false);
 }

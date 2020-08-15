@@ -9,6 +9,8 @@ import sys
 import re
 import os
 
+from distutils.util import strtobool
+
 import zerobin
 
 from zerobin.utils import (
@@ -41,6 +43,8 @@ def runserver(
         sys.exit(0)
 
     try:
+        if debug is not None:
+            debug = strtobool(debug)
         updated_settings, app = get_app(
             debug=debug, config_dir=config_dir, data_dir=data_dir,
         )
