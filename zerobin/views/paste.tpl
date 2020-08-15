@@ -68,7 +68,7 @@
           href="bitcoin:{{ paste.btc_tip_address or  settings.DEFAULT_BTC_TIP_ADDRESS }}">
           {{ paste.btc_tip_address or settings.DEFAULT_BTC_TIP_ADDRESS}}
         </a>
-        <button v-if="support.clipboard" class="btn btn-secondary" @click.prevent="copyBTCToClipboard()">
+        <button v-if="support.clipboard" class="btn btn-secondary" @click.prevent="copyBTCAdressToClipboard()">
           {% this.btcCopied ? "copied :)" : "copy"  %}
         </button>
       </div>
@@ -107,7 +107,7 @@
 
       <div>
         <div class="file-upload">
-          <button type="button" class="btn btn-danger" @click.prevent="handleCancelClone()">Cancel clone</button>
+          <button type="button" class="btn btn-info" @click.prevent="handleCancelClone()">Cancel clone</button>
         </div>
       </div>
 

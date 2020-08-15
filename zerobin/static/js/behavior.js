@@ -206,7 +206,7 @@ var app = new Vue({
 
     },
 
-    copyBTCToClipboard: function () {
+    copyBTCAdressToClipboard: function () {
 
       var promise = navigator.clipboard.writeText(this.currentPaste.btcTipAddress);
 
@@ -743,6 +743,12 @@ window.zerobin = {
         content.value = event.target.result
 
         image.onload = function () {
+
+          app.messages = []
+          var previousImage = document.querySelector('.paste-wrapper');
+          if (previousImage) {
+            previousImage.remove();
+          }
           var imgWrapper = document.createElement('div');
           imgWrapper.classList.add('paste-wrapper');
           imgWrapper.appendChild(image)
