@@ -212,6 +212,29 @@ h1 {
   border: 0px;
 }
 
+.paste-form {
+    position: relative;
+}
+
+#expiration-tag {
+  position: absolute;
+  right: 10px;
+  margin: 1em;
+  background: grey;
+  color: white;
+  font-size: 0.8em;
+  padding: 0 1ex;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  font-weight: bold;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
 .paste-options,
 .paste-options-res {
   background-color: #333333;
@@ -256,13 +279,16 @@ margin-left: 8px;
   margin: 8px 0 8px 0;
 }
 
-
 #paste-content.linenums {
   padding-left: 0;
 }
 
 .submit-form {
   display: none;
+}
+
+.tip svg{
+margin-left: 6px;
 }
 
 a#clip-button.hover {
@@ -432,23 +458,6 @@ canvas {
   text-decoration: underline;
 }
 
-#expiration-tag {
-  float: right;
-  margin: 1em;
-  background: grey;
-  color: white;
-  font-size: 0.8em;
-  padding: 0 1ex;
-  opacity: 0.5;
-  filter: alpha(opacity=50);
-  font-weight: bold;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-}
 
 #content.hover {
   background-color: #eee;
@@ -589,6 +598,11 @@ nav ul li a:hover {
 
 }
 
+
+.responsive-icons svg{
+  display: none;
+}
+
 @media screen and (max-width: 660px) {
   .reader-mode .submenu {
     display: none;
@@ -602,6 +616,26 @@ nav ul li a:hover {
     width: 94%;
     max-width: 50%;
   }
+
+  .paste-options-res a {
+    max-width: 80px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+}
+
+@media screen and (max-width: 460px) {
+
+  /* Responsive icons */
+  .responsive-icons {
+    font-size: 0;
+  }
+
+  .responsive-icons svg{
+    display: block;
+  }
+
 }
 
 /* reader mode */
