@@ -91,7 +91,7 @@
 
 
       <p :class="'alert alert-' + msg.type" v-for="msg in messages">
-        <a class="close" data-dismiss="alert" href="#" @click="$event.target.parentNode.remove()">×</a>
+        <a class="close" data-dismiss="alert" href="#" @click.prevent="$event.target.parentNode.remove()">×</a>
         <strong class="title" v-if="msg.title" v-html="msg.title"></strong>
         <span class="message" v-html="msg.content"></span>
         <a v-if="msg.action.message" href="#"
