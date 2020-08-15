@@ -20,7 +20,7 @@ MENU = (
 
 # Size limit of the paste content in bytes. Be careful, allowing a size too big can
 # slow down the user's browser
-MAX_SIZE = 1024 * 500
+MAX_SIZE = 1024 * 600
 
 # Display a tiny counter for pastes created.
 DISPLAY_COUNTER = True
@@ -31,6 +31,3 @@ REFRESH_COUNTER = 60  # in seconds
 # total number of unique pastes can be calculated as 2^(6*PASTE_ID_LENGTH)
 # for PASTE_ID_LENGTH=8, for example, it's 2^(6*8) = 281 474 976 710 656
 PASTE_ID_LENGTH = 8
-
-# The Bitcoin address displayed in the paste if the author didn't chose one
-DEFAULT_BTC_TIP_ADDRESS = "bc1q4x6nwp56s9enmwtsa8um0gywpxdzeyrdluga04"

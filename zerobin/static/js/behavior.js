@@ -226,6 +226,45 @@ var app = new Vue({
 
     },
 
+    compressImage: function (base64) {
+      var canvas = document.createElement('canvas')
+      var img = document.createElement('img')
+
+      return new Promise(function (resolve, reject) {
+        img.onload = function () {
+          var width = img.width;
+          var height = img.height;
+          var biggest = width > height ? width : height;
+          var maxHeight = height;
+          var maxWidth = width;
+
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height *= maxWidth / width));
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width *= maxHeight / height));
+              height = maxHeight;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          resolve(canvas.toDataURL('image/jpeg', 0.7));
+        }
+        img.onerror = function (err) {
+          reject(err);
+        }
+        img.src = base64;
+
+      })
+    },
+
     /**
       On the create paste page:
       On click on the send button, compress and encrypt data before
@@ -258,88 +297,108 @@ var app = new Vue({
 
           var key = zerobin.makeKey(256);
 
-          zerobin.encrypt(key, paste,
+          var promise = new Promise(function (resolve, reject) {
+            resolve(paste);
+          }); // noop to avoid branching
+          if (paste.indexOf('data:image') == 0) {
+            promise = app.compressImage(paste);
+          }
 
-            function () {
-              bar.set('Encoding to base64...', '45%')
-            },
-            function () {
-              bar.set('Compressing...', '65%')
-            },
-            function () {
-              bar.set('Encrypting...', '85%')
-            },
+          promise.then(function (base64) {
+              zerobin.encrypt(key, base64,
 
-            /* This block deals with sending the data, redirection or error handling */
-            function (content) {
+                function () {
+                  bar.set('Encoding to base64...', '45%')
+                },
+                function () {
+                  bar.set('Compressing...', '65%')
+                },
+                function () {
+                  bar.set('Encrypting...', '85%')
+                },
 
-              bar.set('Sending...', '95%');
-              var data = {
-                content: content,
-                expiration: app.newPaste.expiration,
-                title: app.newPaste.title,
-                btcTipAddress: app.newPaste.btcTipAddress
-              };
-              var sizebytes = zerobin.count(JSON.stringify(data));
-              var oversized = sizebytes > zerobin.max_size; // 100kb - the others header information
-              var readableFsize = Math.round(sizebytes / 1024);
-              var readableMaxsize = Math.round(zerobin.max_size / 1024);
+                /* This block deals with sending the data, redirection or error handling */
+                function (content) {
 
-              if (oversized) {
-                app.isLoading = false
-                form.forEach(function (node) {
-                  node.disabled = false;
-                });
-                zerobin.message('danger', ('The encrypted file was <strong class="file-size">' + readableFsize +
-                    '</strong>KB. You have reached the maximum size limit of ' + readableMaxsize + 'KB.'),
-                  'Warning!', true);
-                return;
-              }
+                  bar.set('Sending...', '95%');
+                  var data = {
+                    content: content,
+                    expiration: app.newPaste.expiration,
+                    title: app.newPaste.title,
+                    btcTipAddress: app.newPaste.btcTipAddress
+                  };
+                  var sizebytes = zerobin.count(JSON.stringify(data));
+                  var oversized = sizebytes > zerobin.max_size; // 100kb - the others header information
+                  var readableFsize = Math.round(sizebytes / 1024);
+                  var readableMaxsize = Math.round(zerobin.max_size / 1024);
 
-              fetch('/paste/create', {
-                method: "POST",
-                body: new URLSearchParams(data)
-              }).then(function (response) {
-                if (response.ok) {
-                  bar.set('Redirecting to new paste...', '100%');
+                  if (oversized) {
+                    app.isLoading = false
+                    form.forEach(function (node) {
+                      node.disabled = false;
+                    });
 
-                  response.json().then(function (data) {
-                    if (data.status === 'error') {
-                      zerobin.message('danger', data.message, 'Error');
+                    zerobin.message('danger', ('The file was <strong class="file-size">' + readableFsize +
+                        '</strong>KB after encryption. You have reached the maximum size limit of ' + readableMaxsize + 'KB.'),
+                      'Warning!', true);
+                    return;
+                  }
+
+                  fetch('/paste/create', {
+                    method: "POST",
+                    body: new URLSearchParams(data)
+                  }).then(function (response) {
+                    if (response.ok) {
+                      bar.set('Redirecting to new paste...', '100%');
+
+                      response.json().then(function (data) {
+                        if (data.status === 'error') {
+                          zerobin.message('danger', data.message, 'Error');
+                          form.forEach(function (node) {
+                            node.disabled = false;
+                          });
+                          app.isLoading = false;
+                        } else {
+                          if (app.support.localStorage) {
+                            zerobin.storePaste('/paste/' + data.paste + "?owner_key=" + data.owner_key + '#' + key);
+                          }
+                          window.location = ('/paste/' + data.paste + '#' + key);
+                        }
+                      })
+
+                    } else {
                       form.forEach(function (node) {
-                        node.disabled = false;
+                        node.disabled = false
                       });
                       app.isLoading = false;
-                    } else {
-                      if (app.support.localStorage) {
-                        zerobin.storePaste('/paste/' + data.paste + "?owner_key=" + data.owner_key + '#' + key);
-                      }
-                      window.location = ('/paste/' + data.paste + '#' + key);
+                      zerobin.message(
+                        'danger',
+                        'Paste could not be saved. Please try again later.',
+                        'Error');
                     }
-                  })
-
-                } else {
-                  form.forEach(function (node) {
-                    node.disabled = false
+                  }).catch(function (error) {
+                    form.forEach(function (node) {
+                      node.disabled = false;
+                    });
+                    app.isLoading = false;
+                    zerobin.message(
+                      'danger',
+                      'Paste could not be saved. Please try again later.',
+                      'Error');
                   });
-                  app.isLoading = false;
-                  zerobin.message(
-                    'danger',
-                    'Paste could not be saved. Please try again later.',
-                    'Error');
-                }
-              }).catch(function (error) {
-                form.forEach(function (node) {
-                  node.disabled = false;
-                });
-                app.isLoading = false;
-                zerobin.message(
-                  'danger',
-                  'Paste could not be saved. Please try again later.',
-                  'Error');
-              });
 
-            });
+                })
+            }),
+            function (err) {
+              debugger;
+              form.forEach(function (node) {
+                node.disabled = false;
+              });
+              app.isLoading = false;
+              zerobin.message('danger', 'Paste could not be encrypted. Aborting.',
+                'Error');
+            };
+
         } catch (err) {
           form.forEach(function (node) {
             node.disabled = false;
@@ -878,7 +937,7 @@ if (content && key) {
               "The paste did not seem to be code, so it " +
               "was not colorized. ",
               '', false, undefined, {
-                message: "Force coloration",
+                message: "Click here to force coloration",
                 callback: app.handleForceColoration
               });
           }
