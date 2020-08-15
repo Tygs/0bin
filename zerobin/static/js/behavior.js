@@ -24,7 +24,7 @@ var app = new Vue({
   data: {
     previousPastes: [],
     displayBottomToolBar: false,
-    openPreviousPastesMenu: true,
+    openPreviousPastesMenu: false,
     readerMode: false,
     isUploading: false,
     btcCopied: false,

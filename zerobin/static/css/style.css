@@ -550,6 +550,7 @@ nav ul li a:hover {
   background: #375A7F;
   color: white;
   float: none;
+  text-align: center;
 }
 
 /* Styling drop down links */
