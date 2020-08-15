@@ -623,7 +623,7 @@ nav ul li a:hover {
   }
 
   .paste-options-res a {
-    max-width: 80px;
+    max-width: 120px;
     width: 100%;
     overflow: hidden;
   }
