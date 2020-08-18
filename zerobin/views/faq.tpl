@@ -2,9 +2,10 @@
 
    <h1>FAQ</h1>
 
-   <table>
-      <tr>How does 0bin work?</tr>
-      <td>
+      <p></p>
+
+      <h4>How does 0bin work?</h4>
+
          <p>A random key is generated and used to encrypt the paste, thanks to
             the <a href="http://crypto.stanford.edu/sjcl/">sjcl</a>
             JavaScript library.</p>
@@ -17,10 +18,10 @@
             JavaScript will use it to decrypt the content sent by the server.</p>
          <p>The browser never sends the hash to the server, so the latter does not
             receives the key at any time.</p>
-      </td>
 
-      <tr>But JavaScript encryption is not secure!</tr>
-      <td>
+
+      <h4>But JavaScript encryption is not secure!</h4>
+
          <p>No, it isn't.</p>
          <p>The goal of 0bin is <strong>not</strong> to protect the user and their data
             (including, obviously, their secrets).</p>
@@ -32,12 +33,12 @@
          <p>Remember that as an user, you should use 0bin in the same way as unencrypted and
             insecure pastebins - that is, with caution. The only difference with those is that if
             you decide to host a 0bin server, the encryption feature hopefully be used as a defense.
-            This is not proven, though! :-)
+            This is not proven, though! :-)</p>
 
-      </td>
-      <tr>What if the server changes the JavaScript code? And what happens in the case of a <a
-            href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">MITM attack</a>?</tr>
-      <td>
+
+      <h4>What if the server changes the JavaScript code? And what happens in the case of a <a
+            href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">MITM attack</a>?</h4>
+
          <p>Read above.</p>
          <p>0bin is not built, and does not aim, to protect user data - but rather the host.
             If any user data is compromised, 0bin still provides the host with
@@ -53,22 +54,20 @@
          <p>It would be unlikely for those softwares to fail you. Errors will nearly always come from your side - you
             ought to have a perfect <a href="https://en.wikipedia.org/wiki/Operations_security">operations security</a>
             if you do not want your data to be leaked. Remember to use your common sense.</p>
-      </td>
-      <tr>How did the idea of 0bin emerge?</tr>
-      <td>
+
+      <h4>How did the idea of 0bin emerge?</h4>
+
          <p>0bin is based on <a href="http://sebsauvage.net/wiki/doku.php?id=php:zerobin">sebsauvage's work</a>.
             The project sprang as a reaction to <a
                href="https://www.zdnet.com/blog/security/pastebin-to-hunt-for-hacker-pastes-anonymous-cries-censorship/11336">the
                implementation of a moderation system on Pastebin</a>,
             due to the significant amount of illegal content pasted on it, or that it linked to.</p>
-      </td>
-      <tr>How can I get 0bin?</tr>
-      <td>
+
+      <h4>How can I get 0bin?</h4>
+
          <p>0bin is an open-source project, and the code is hosted on <a
                href="https://github.com/sametmax/0bin">GitHub</a>.
             You can either download a tarball or clone the repository.</p>
-      </td>
-   </table>
 
 </div>
 
