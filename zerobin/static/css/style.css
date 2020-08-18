@@ -8,6 +8,10 @@
   border: 25px solid red;
 }
 
+body {
+  color: #eee;
+}
+
 /* logo */
 
 .brand {
@@ -335,6 +339,22 @@ pre {
 
 /* Common css */
 
+
+#faq {
+    max-width: 80%;
+    margin: auto;
+}
+
+#buy_bitcoin {
+    max-width: 80%;
+    margin: auto;
+}
+
+#buy_bitcoin img{
+    width: 85%;
+    display: block;
+    margin: 20px auto;
+}
 
 .caret {
   border-left: 6px solid transparent;

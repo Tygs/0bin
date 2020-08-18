@@ -33,8 +33,10 @@ dist
 
 content
 *.sublime-project
-*.sublime-workspace
+*-workspace
+*_old*
 settings_local.py
 build
 .vscode
 var
+0bin

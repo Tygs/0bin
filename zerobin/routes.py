@@ -59,6 +59,11 @@ def index():
 def faq():
     return GLOBAL_CONTEXT
 
+@app.route("/buy_bitcoin")
+@view("buy_bitcoin")
+def index():
+    return GLOBAL_CONTEXT
+
 
 @app.get(settings.ADMIN_URL)
 @app.post(settings.ADMIN_URL)
