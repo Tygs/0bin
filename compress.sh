@@ -1,22 +1,20 @@
 #! /bin/bash
 
-command -v "yui-compressor" >/dev/null 2>&1 || {
-    echo >&2 "Error: this script requires the command 'yui-compressor' to be available"
+python -c "import scss" || {
+    echo >&2 "Error: this script requires the scss python module. pip install -r dev-requirements.txt"
     exit 1
 }
 
 command -v "uglifyjs" >/dev/null 2>&1 || {
-    echo >&2 "Error: this script requires the command 'uglifyjs' to be available"
+    echo >&2 "Error: this script requires the command 'uglifyjs' to be available."
     exit 1
 }
 
 CURDIR=$(dirname $(readlink -f $0))
-STATICDIR=$CURDIR'/zerobin/static/'
-CSSDIR=$STATICDIR'css/'
-JSDIR=$STATICDIR'js/'
+CSSDIR=$CURDIR'/zerobin/static/css/'
+JSDIR=$CURDIR'/zerobin/static/js/'
 
 MAIN_JS_OUTPUT=$JSDIR"main.min.js"
-ADDITIONAL_JS_OUTPUT=$JSDIR"additional.min.js"
 CSS_OUTPUT=$CSSDIR"style.min.css"
 
 cat /dev/null >$CSS_OUTPUT
@@ -24,16 +22,19 @@ cat /dev/null >$CSS_OUTPUT
 echo "Compressing CSS..."
 
 echo $'\n''/* Prettify */' >>$CSS_OUTPUT
-cat $CSSDIR'prettify.css' >>$CSS_OUTPUT
+python -m scss $CSSDIR'prettify.css' >>$CSS_OUTPUT
+rm $CSSDIR'prettify.min.css'
 
 echo $'\n''/* Desert prettify theme */' >>$CSS_OUTPUT
-cat $CSSDIR'desert.css' >>$CSS_OUTPUT
+python -m scss $CSSDIR'desert.css' >>$CSS_OUTPUT
+rm $CSSDIR'desert.min.css'
 
 echo $'\n''/* Bootswatch bootstrap theme */' >>$CSS_OUTPUT
-yui-compressor $CSSDIR'bootswatch.4.5.css' >>$CSS_OUTPUT
+python -m scss $CSSDIR'bootswatch.4.5.css' >>$CSS_OUTPUT
+rm $CSSDIR'bootswatch.4.5.min.css'
 
 echo $'\n''/* Our own CSS */' >>$CSS_OUTPUT
-yui-compressor $CSSDIR'style.css' >>$CSS_OUTPUT
+python -m scss $CSSDIR'style.css' >>$CSS_OUTPUT
 
 echo "Compressing JS..."
 
