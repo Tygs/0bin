@@ -1,6 +1,6 @@
 # Get error messages and auto reload.
 # Don't set this to True in production
-DEBUG = True
+DEBUG = False
 
 # Port and host for the embedded python server
 HOST = "127.0.0.1"
@@ -9,18 +9,18 @@ PORT = "3255"
 # Names/links to insert in the footer.
 #
 MENU = (
-    ("Create paste", "/"),
     ("Github", "https://github.com/Tygs/0bin"),
     ("Faq", "/faq/"),  # You probably want to keep this
     # Any link with "mailto:" will be escaped to limit spam, but displayed
     # correctly to the user using JS.
     ("Contact", "mailto:your@email.com"),
     ("Zerobin Pastebin", "https://www.0bin.net/"),  # Thanks the authors :)
+    ("How to buy Bitcoin?", "/buy_bitcoin"),  # Thanks the authors :)
 )
 
 # Size limit of the paste content in bytes. Be careful, allowing a size too big can
 # slow down the user's browser
-MAX_SIZE = 1024 * 600
+MAX_SIZE = 1024 * 1000
 
 # Display a tiny counter for pastes created.
 DISPLAY_COUNTER = True
