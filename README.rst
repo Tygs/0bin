@@ -12,15 +12,18 @@ to `moderate the pastebin content`_ as they have no way to decrypt it.
 
 It's an Python implementation of the `zerobin project`_, created by sebsauvage, under the `WTFPL licence`_.
 
-For now tested with IE9, and the last opera, safari, chrome and FF.
+To run zerobin, download zerobin.pyz from the latest release_ then:
 
-There is a `good doc <http://readthedocs.org/docs/0bin/en/latest/>`_,
-but in short::
+::
 
-    pip install zerobin
-    zerobin
+    python zerobin.pyz
 
-0bin runs on Python 3.7+.
+0bin requires Python 3.7 or higher.
+
+You may need to type `py -3.7 zerobin.pyz` on Windows, or `python3.7 zerobin.pyz` on Mac/Linux, depending on your configuration.
+
+If you are familiar with the Python ecosystem, you can also `python -m pip install zerobin --user` and run `python -m zerobin` for the same effect.
+
 
 How it works
 =============
@@ -70,6 +73,7 @@ Known issues
 .. _node.js: http://nodejs.org/
 .. _is not worth it: http://stackoverflow.com/questions/201705/how-many-random-elements-before-md5-produces-collisions
 .. _WTFPL licence: http://en.wikipedia.org/wiki/WTFPL
+.. _release: https://github.com/Tygs/0bin/releases
 
 Contributing
 =============
