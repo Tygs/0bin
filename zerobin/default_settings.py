@@ -1,6 +1,6 @@
 # Get error messages and auto reload.
 # Don't set this to True in production
-DEBUG = True
+DEBUG = False
 
 # Port and host for the embedded python server
 HOST = "127.0.0.1"
@@ -20,7 +20,7 @@ MENU = (
 
 # Size limit of the paste content in bytes. Be careful, allowing a size too big can
 # slow down the user's browser
-MAX_SIZE = 1024 * 600
+MAX_SIZE = 1024 * 1000
 
 # Display a tiny counter for pastes created.
 DISPLAY_COUNTER = True
