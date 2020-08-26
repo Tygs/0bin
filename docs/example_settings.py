@@ -44,10 +44,15 @@ GROUP = None
 
 # Names/links to insert in the menu bar.
 # Any link with "mailto:" will be escaped to prevent spam
+
 MENU = (
-    ('Home', '/'), # internal link. First link will be highlited
-    ('Download 0bin', 'https://github.com/sametmax/0bin'), # external link
-    ('Contact', 'mailto:your@email.com') # email
+    ("Github", "https://github.com/Tygs/0bin"),
+    ("Faq", "/faq/"),  # You probably want to keep this
+    # Any link with "mailto:" will be escaped to limit spam, but displayed
+    # correctly to the user using JS.
+    ("Contact", "mailto:your@email.com"),
+    ("Zerobin Pastebin", "https://www.0bin.net/"),  # Thanks the authors :)
+    ("How to buy Bitcoin?", "/buy_bitcoin"),  # Thanks the authors :)
 )
 
 # limit size of pasted text in bytes. Be careful allowing too much size can slow down user's
