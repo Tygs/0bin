@@ -1,16 +1,10 @@
-import re
 import sys
 
 from pathlib import Path
 from fnmatch import fnmatch
+from subprocess import check_output, STDOUT
 
-import doit
 from doit.tools import PythonInteractiveAction
-
-from git import Repo
-
-import zerobin
-
 
 try:
     from local_dodo import *
@@ -28,7 +22,11 @@ DOIT_CONFIG = {
     "action_string_formatting": "new",
 }
 
-REPO = Repo(".")
+
+def git(*args):
+    return check_output(
+        ["git", *args], stderr=STDOUT, timeout=3, universal_newlines=True,
+    ).rstrip("\n")
 
 
 def source_files(extensions=None, exclude=()):
@@ -86,18 +84,23 @@ def task_publish_to_pypi():
     }
 
 
-def task_release():
-    pass
-
-
 def task_bump_version():
     def bump():
 
-        if REPO.active_branch.name != "master":
+        if git("branch", "--show-current") != "master":
             sys.exit("You must be on the branch master to do that")
 
+        if git("fetch", "origin", "v2", "--dry-run"):
+            sys.exit("Cannot push a new version, you need to pull first")
+
+        git_status = git("status", "--porcelain=1").split("\n")
+        if not all(
+            line.startswith(" ") for line in git_status if not line.startswith("?")
+        ):
+            sys.exit("Cannot commit the new version: you have changes to be commited.")
+
         print("Current version is:", ZEROBIN_VERSION)
-        action = 0
+        action = "0"
         while action not in "123":
 
             print("What kind of version is it?\n")
@@ -106,7 +109,7 @@ def task_bump_version():
             print("3) Fix")
             action = input("Enter 1, 2 or 3 (Ctrl + C to quit): ")
 
-        new_version = list(ZEROBIN_VERSION.split("."))
+        new_version = list(map(int, ZEROBIN_VERSION.split(".")))
         action = int(action) - 1
         new_version[action] += 1
         new_version = ".".join(map(str, new_version))
@@ -115,9 +118,21 @@ def task_bump_version():
         if input("Ok? [y/N] ").strip().lower() != "y":
             sys.exit("The version has NOT been bumped")
 
-        print(f"""REPO.create_tag("v" + {new_version})""")
+        print("- Updating VERSION file")
+        (SOURCE_DIR / "VERSION").write_text(new_version)
+        print("- Commiting VERSION file")
+        git("commit", "-m", f"Bumping to version {new_version}")
+        print(f"- Adding v{new_version} tag")
+        git("tag", f"v{new_version}")
+        print("- Pushing tag")
+        git("push", "origin", "master", "--tag")
 
     return {
         "actions": [PythonInteractiveAction(bump),],
     }
 
+
+def task_release_to_pypi():
+    return {
+        "actions": [task_bump_version, task_release_to_pypi],
+    }
