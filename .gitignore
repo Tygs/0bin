@@ -7,12 +7,15 @@
 *_index
 *.orig
 *.swp
+*.old
 
 
 # binaries
 
 *.pyc
 *.pyo
+*.pyz
+*.zip
 __pycache__
 .mypy*
 *.db

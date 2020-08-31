@@ -1,5 +1,5 @@
 from pathlib import Path
 
-__version__ = "1.0.3"
+__version__ = (Path(__file__).parent / "VERSION").read_text().strip()
 
 ROOT_DIR = Path(__file__).absolute().parent

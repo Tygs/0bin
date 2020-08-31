@@ -1,5 +1,7 @@
 #! /bin/bash
 
+export PYTHONWARNINGS=ignore::FutureWarning # scss prints future warnings
+
 python -c "import scss" || {
     echo >&2 "Error: this script requires the scss python module. pip install -r dev-requirements.txt"
     exit 1
@@ -23,15 +25,12 @@ echo "Compressing CSS..."
 
 echo $'\n''/* Prettify */' >>$CSS_OUTPUT
 python -m scss $CSSDIR'prettify.css' >>$CSS_OUTPUT
-rm $CSSDIR'prettify.min.css'
 
 echo $'\n''/* Desert prettify theme */' >>$CSS_OUTPUT
 python -m scss $CSSDIR'desert.css' >>$CSS_OUTPUT
-rm $CSSDIR'desert.min.css'
 
 echo $'\n''/* Bootswatch bootstrap theme */' >>$CSS_OUTPUT
 python -m scss $CSSDIR'bootswatch.4.5.css' >>$CSS_OUTPUT
-rm $CSSDIR'bootswatch.4.5.min.css'
 
 echo $'\n''/* Our own CSS */' >>$CSS_OUTPUT
 python -m scss $CSSDIR'style.css' >>$CSS_OUTPUT
