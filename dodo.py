@@ -1,8 +1,8 @@
 import sys
+import subprocess
 
 from pathlib import Path
 from fnmatch import fnmatch
-from subprocess import check_output, STDOUT
 
 from doit.tools import PythonInteractiveAction
 
@@ -23,9 +23,9 @@ DOIT_CONFIG = {
 }
 
 
-def git(*args):
-    return check_output(
-        ["git", *args], stderr=STDOUT, timeout=3, universal_newlines=True,
+def git(*args, **kwargs):
+    return subprocess.check_output(
+        ["git", *args], stderr=subprocess.STDOUT, universal_newlines=True,
     ).rstrip("\n")
 
 
@@ -77,10 +77,16 @@ def task_build():
 
 
 def task_publish_to_pypi():
+
     return {
         "task_dep": ["build"],
-        "file_dep": [DIST_DIR / f"zerobin-{ZEROBIN_VERSION}-py3-none-any.whl"],
-        "actions": ["twine upload ./dist/*.whl"],
+        "actions": ["echo twine upload ./dist/*.whl"],
+    }
+
+
+def task_build_pyz():
+    return {
+        "actions": ["shiv zerobin -o dist/zerobin.pyz -c zerobin"],
     }
 
 
@@ -122,7 +128,10 @@ def task_bump_version():
         print("- Updating VERSION file")
         (SOURCE_DIR / "VERSION").write_text(new_version)
         print("- Commiting VERSION file")
-        git("commit", "-m", f"Bumping to version {new_version}")
+        git("add", "zerobin/VERSION")
+        git(
+            "commit", "-m", f"Bumping to version {new_version}",
+        )
         print(f"- Adding v{new_version} tag")
         git("tag", f"v{new_version}")
         print("- Pushing tag")

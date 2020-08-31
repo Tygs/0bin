@@ -64,7 +64,7 @@ class SettingsContainer(object):
             Update settings with values from the given module file.
             Uses update_with_dict() behind the scenes.
         """
-        params = run_path(filepath)
+        params = run_path(str(filepath))
         return self.update_with_dict(params)
 
 
