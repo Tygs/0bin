@@ -90,7 +90,7 @@ def task_bump_version():
         if git("branch", "--show-current") != "master":
             sys.exit("You must be on the branch master to do that")
 
-        if git("fetch", "origin", "master", "--dry-run"):
+        if git("git", "rev-list", "HEAD...origin/master", "--count") != "0":
             sys.exit("Cannot push a new version, you need to pull first")
 
         git_status = git("status", "--porcelain=1").split("\n")
