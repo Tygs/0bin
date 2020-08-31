@@ -90,7 +90,7 @@ def task_bump_version():
         if git("branch", "--show-current") != "master":
             sys.exit("You must be on the branch master to do that")
 
-        if git("fetch", "origin", "v2", "--dry-run"):
+        if git("fetch", "origin", "master", "--dry-run"):
             sys.exit("Cannot push a new version, you need to pull first")
 
         git_status = git("status", "--porcelain=1").split("\n")
@@ -133,6 +133,4 @@ def task_bump_version():
 
 
 def task_release_to_pypi():
-    return {
-        "actions": [task_bump_version, task_release_to_pypi],
-    }
+    return {"task_dep": ["bump_version", "publish_to_pypi"], "actions": []}
