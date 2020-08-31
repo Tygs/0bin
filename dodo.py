@@ -80,7 +80,7 @@ def task_publish_to_pypi():
 
     return {
         "task_dep": ["build"],
-        "actions": ["echo twine upload ./dist/*.whl"],
+        "actions": ["twine upload ./dist/*.whl"],
     }
 
 
