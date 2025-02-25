@@ -1,3 +1,8 @@
+***WARNING*: 0bin.net is dead and will stay that way. We got a surge in CP report and decided to not keep it up. It was to be expected, and we always had to perform some take down, but this is now too much.
+
+The code stays available if you choose to host your own instance.*
+
+
 0bin: a client side encrypted pastebin
 ===========================================
 
